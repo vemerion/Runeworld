@@ -7,6 +7,8 @@ import mod.vemerion.runeworld.init.ModFluids;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fluids.ForgeFlowingFluid;
 
+// TODO: Blood bucket
+// TODO: Maybe add water tag to blood, to add water physics etc?
 public class BloodFluid {
 	private static final ForgeFlowingFluid.Properties properties = new ForgeFlowingFluid.Properties(
 			() -> ModFluids.BLOOD, () -> ModFluids.BLOOD_FLOWING,

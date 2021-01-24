@@ -20,6 +20,5 @@ public class ModFluids {
 	public static void onRegisterFluid(RegistryEvent.Register<Fluid> event) {
 		event.getRegistry().register(Init.setup(new BloodFluid.Flowing(), "blood_flowing"));
 		event.getRegistry().register(Init.setup(new BloodFluid.Source(), "blood"));
-
 	}
 }
