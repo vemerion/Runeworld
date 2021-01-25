@@ -30,6 +30,10 @@ public class Runesword {
 		return runes;
 	}
 	
+	public static boolean isRune(Item item) {
+		return getRunes().contains(item);
+	}
+	
 	public static boolean isLoaded() {
 		return ModList.get().isLoaded(MODID);
 	}
