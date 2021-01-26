@@ -5,6 +5,8 @@ import mod.vemerion.runeworld.helpers.Helper;
 import mod.vemerion.runeworld.init.ModBlocks;
 import mod.vemerion.runeworld.init.ModFluids;
 import mod.vemerion.runeworld.init.ModItems;
+import mod.vemerion.runeworld.init.ModParticleTypes;
+import net.minecraft.particles.IParticleData;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.SoundEvents;
 import net.minecraftforge.fluids.ForgeFlowingFluid;
@@ -26,11 +28,21 @@ public class BloodFluid {
 		public Flowing() {
 			super(properties);
 		}
+		
+		@Override
+		protected IParticleData getDripParticleData() {
+			return ModParticleTypes.DRIPPING_BLOOD;
+		}
 	}
 
 	public static class Source extends ForgeFlowingFluid.Source {
 		public Source() {
 			super(properties);
+		}
+		
+		@Override
+		protected IParticleData getDripParticleData() {
+			return ModParticleTypes.DRIPPING_BLOOD;
 		}
 	}
 }

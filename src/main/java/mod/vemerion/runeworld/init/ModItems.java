@@ -18,7 +18,7 @@ public class ModItems {
 	public static final Item BLOOD_BUCKET = null;
 
 	@SubscribeEvent
-	public static void onRegisterFluid(RegistryEvent.Register<Item> event) {
+	public static void onRegisterItem(RegistryEvent.Register<Item> event) {
 		event.getRegistry()
 				.register(Init.setup(new BucketItem(() -> ModFluids.BLOOD,
 						new Item.Properties().containerItem(Items.BUCKET).maxStackSize(1).group(ItemGroup.SEARCH)),
