@@ -18,7 +18,8 @@ public class EventSubscriber {
 		ExistingFileHelper existingFileHelper = event.getExistingFileHelper();
 
 		if (event.includeClient()) {
-			dataGenerator.addProvider(new ModLanguageProvider(dataGenerator, Main.MODID));
+			dataGenerator.addProvider(new ModLanguageProvider(dataGenerator));
+			dataGenerator.addProvider(new ModBlockStateProvider(dataGenerator, existingFileHelper));
 		}
 		if (event.includeServer()) {
 		}
