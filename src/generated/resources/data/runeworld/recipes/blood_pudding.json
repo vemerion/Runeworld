@@ -1,0 +1,18 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "ingredients": [
+    {
+      "item": "minecraft:wheat"
+    },
+    {
+      "item": "minecraft:porkchop"
+    },
+    {
+      "item": "runeworld:blood_bucket"
+    }
+  ],
+  "result": {
+    "item": "runeworld:blood_pudding",
+    "count": 4
+  }
+}

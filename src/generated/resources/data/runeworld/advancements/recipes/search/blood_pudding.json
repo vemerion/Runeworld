@@ -1,0 +1,32 @@
+{
+  "parent": "minecraft:recipes/root",
+  "rewards": {
+    "recipes": [
+      "runeworld:blood_pudding"
+    ]
+  },
+  "criteria": {
+    "has_blood_bucket": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "item": "runeworld:blood_bucket"
+          }
+        ]
+      }
+    },
+    "has_the_recipe": {
+      "trigger": "minecraft:recipe_unlocked",
+      "conditions": {
+        "recipe": "runeworld:blood_pudding"
+      }
+    }
+  },
+  "requirements": [
+    [
+      "has_blood_bucket",
+      "has_the_recipe"
+    ]
+  ]
+}

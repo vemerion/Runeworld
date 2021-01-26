@@ -16,6 +16,7 @@ public class ModLanguageProvider extends LanguageProvider {
 	protected void addTranslations() {
 		add(ModBlocks.BLOOD, "Blood");
 		add(ModItems.BLOOD_BUCKET, "Blood Bucket");
+		add(ModItems.BLOOD_PUDDING, "Blood Pudding");
 	}
 
 }

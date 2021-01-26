@@ -23,6 +23,7 @@ public class EventSubscriber {
 			dataGenerator.addProvider(new ModItemModelProvider(dataGenerator, existingFileHelper));
 		}
 		if (event.includeServer()) {
+			dataGenerator.addProvider(new ModRecipeProvider(dataGenerator));
 		}
 	}
 }

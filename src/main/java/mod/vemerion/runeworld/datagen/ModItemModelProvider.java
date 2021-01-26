@@ -16,6 +16,7 @@ public class ModItemModelProvider extends ItemModelProvider {
 	@Override
 	protected void registerModels() {
 		simpleItem(ModItems.BLOOD_BUCKET);
+		simpleItem(ModItems.BLOOD_PUDDING);
 	}
 	
 	private void simpleItem(Item item) {
