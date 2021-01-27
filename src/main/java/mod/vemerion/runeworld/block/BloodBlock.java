@@ -9,7 +9,6 @@ import mod.vemerion.runeworld.init.Runesword;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
 import net.minecraft.block.FlowingFluidBlock;
-import net.minecraft.block.IBucketPickupHandler;
 import net.minecraft.block.material.Material;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.item.ItemEntity;
