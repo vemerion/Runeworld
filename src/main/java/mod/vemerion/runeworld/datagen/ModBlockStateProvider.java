@@ -16,10 +16,12 @@ public class ModBlockStateProvider extends BlockStateProvider {
 	@Override
 	protected void registerStatesAndModels() {
 		simpleBlock(ModBlocks.BLOOD, empty("blood"));
+		simpleBlock(ModBlocks.BLOOD_FLOWER, models().singleTexture("blood_flower", mcLoc("block/cross"), "cross",
+				modLoc("block/blood_flower")));
 	}
-	
+
 	private BlockModelBuilder empty(String name) {
 		return models().getBuilder(name);
 	}
-	
+
 }

@@ -2,6 +2,7 @@ package mod.vemerion.runeworld.init;
 
 import mod.vemerion.runeworld.Main;
 import mod.vemerion.runeworld.item.BloodBucketItem;
+import mod.vemerion.runeworld.item.BloodFlowerItem;
 import mod.vemerion.runeworld.item.BloodPuddingItem;
 import net.minecraft.item.Item;
 import net.minecraftforge.event.RegistryEvent;
@@ -16,13 +17,14 @@ public class ModItems {
 
 	public static final Item BLOOD_BUCKET = null;
 	public static final Item BLOOD_PUDDING = null;
+	public static final Item BLOOD_FLOWER = null;
 
 	@SubscribeEvent
 	public static void onRegisterItem(RegistryEvent.Register<Item> event) {
 		Item bloodBucket = Init.setup(new BloodBucketItem(), "blood_bucket");
-
 		Item bloodPudding = Init.setup(new BloodPuddingItem(), "blood_pudding");
+		Item bloodFlower = Init.setup(new BloodFlowerItem(), "blood_flower");
 
-		event.getRegistry().registerAll(bloodBucket, bloodPudding);
+		event.getRegistry().registerAll(bloodBucket, bloodPudding, bloodFlower);
 	}
 }

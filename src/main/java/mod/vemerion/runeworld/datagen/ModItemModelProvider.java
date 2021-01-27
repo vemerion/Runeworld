@@ -17,10 +17,15 @@ public class ModItemModelProvider extends ItemModelProvider {
 	protected void registerModels() {
 		simpleItem(ModItems.BLOOD_BUCKET);
 		simpleItem(ModItems.BLOOD_PUDDING);
+		simpleItem(ModItems.BLOOD_FLOWER, BLOCK_FOLDER);
 	}
 	
 	private void simpleItem(Item item) {
+		simpleItem(item, ITEM_FOLDER);
+	}
+	
+	private void simpleItem(Item item, String folder) {
 		String name = item.getRegistryName().getPath();
-		singleTexture(name, mcLoc(ITEM_FOLDER + "/generated"), "layer0", modLoc(ITEM_FOLDER + "/" + name));
+		singleTexture(name, mcLoc(ITEM_FOLDER + "/generated"), "layer0", modLoc(folder + "/" + name));
 	}
 }

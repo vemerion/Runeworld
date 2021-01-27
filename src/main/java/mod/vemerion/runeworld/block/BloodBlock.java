@@ -16,13 +16,23 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.particles.ItemParticleData;
 import net.minecraft.particles.ParticleTypes;
+import net.minecraft.util.Direction;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.world.IBlockReader;
 import net.minecraft.world.World;
+import net.minecraftforge.common.IPlantable;
+import net.minecraftforge.common.PlantType;
 
 public class BloodBlock extends FlowingFluidBlock {
 	public BloodBlock() {
 		super(BloodFluid.Source::new,
 				Properties.create(Material.LAVA).doesNotBlockMovement().hardnessAndResistance(100.0F).noDrops());
+	}
+
+	@Override
+	public boolean canSustainPlant(BlockState state, IBlockReader world, BlockPos pos, Direction facing,
+			IPlantable plantable) {
+		return plantable.getPlantType(world, pos) == PlantType.get("blood");
 	}
 
 	@Override
@@ -32,14 +42,14 @@ public class BloodBlock extends FlowingFluidBlock {
 		ItemEntity itemEntity = (ItemEntity) entityIn;
 		ItemStack stack = itemEntity.getItem();
 		Item item = stack.getItem();
-		
+
 		if (!(Runesword.isRune(item) && item != Runesword.BLOOD_RUNE))
 			return;
-		
+
 		double x = itemEntity.getPosX();
 		double y = itemEntity.getPosY() + itemEntity.getHeight() * 0.5;
 		double z = itemEntity.getPosZ();
-		
+
 		if (!worldIn.isRemote) {
 			if (worldIn.getRandom().nextInt(100) == 0) {
 				List<BlockPos> nearbyBlood = getNearbyBlood(worldIn, pos);
