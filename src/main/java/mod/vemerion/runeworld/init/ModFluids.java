@@ -5,6 +5,7 @@ import mod.vemerion.runeworld.fluid.BloodFluid;
 import net.minecraft.fluid.Fluid;
 import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
+import net.minecraftforge.fluids.ForgeFlowingFluid;
 import net.minecraftforge.fml.common.Mod.EventBusSubscriber;
 import net.minecraftforge.fml.common.Mod.EventBusSubscriber.Bus;
 import net.minecraftforge.registries.ObjectHolder;
@@ -13,8 +14,8 @@ import net.minecraftforge.registries.ObjectHolder;
 @EventBusSubscriber(bus = Bus.MOD, modid = Main.MODID)
 public class ModFluids {
 	
-	public static final Fluid BLOOD_FLOWING = null;
-	public static final Fluid BLOOD = null;
+	public static final ForgeFlowingFluid BLOOD_FLOWING = null;
+	public static final ForgeFlowingFluid BLOOD = null;
 
 	@SubscribeEvent
 	public static void onRegisterFluid(RegistryEvent.Register<Fluid> event) {

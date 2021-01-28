@@ -10,6 +10,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
 import net.minecraft.item.UseAction;
 import net.minecraft.util.ActionResult;
+import net.minecraft.util.ActionResultType;
 import net.minecraft.util.DrinkHelper;
 import net.minecraft.util.Hand;
 import net.minecraft.world.World;
@@ -45,7 +46,12 @@ public class BloodBucketItem extends BucketItem {
 
 	@Override
 	public ActionResult<ItemStack> onItemRightClick(World worldIn, PlayerEntity playerIn, Hand handIn) {
-		return DrinkHelper.startDrinking(worldIn, playerIn, handIn);
+		ActionResult<ItemStack> bucket = super.onItemRightClick(worldIn, playerIn, handIn);
+		if (bucket.getType() == ActionResultType.PASS) {
+			return DrinkHelper.startDrinking(worldIn, playerIn, handIn);
+		} else {
+			return bucket;
+		}
 	}
 
 }
