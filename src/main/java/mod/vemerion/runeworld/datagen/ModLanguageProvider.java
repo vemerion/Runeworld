@@ -17,6 +17,9 @@ public class ModLanguageProvider extends LanguageProvider {
 	protected void addTranslations() {
 		add(ModBlocks.BLOOD, "Blood");
 		add(ModBlocks.BLOOD_FLOWER, "Blood Flower");
+		add(ModBlocks.BLOOD_PILLAR_LARGE, "Blood Pillar Large");
+		add(ModBlocks.BLOOD_PILLAR_MEDIUM, "Blood Pillar Medium");
+		add(ModBlocks.BLOOD_PILLAR_SMALL, "Blood Pillar Small");
 		add(ModItems.BLOOD_BUCKET, "Blood Bucket");
 		add(ModItems.BLOOD_PUDDING, "Blood Pudding");
 		add(ModEffects.BLOOD_DRAINED, "Blood Drained");

@@ -1,0 +1,12 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "ingredients": [
+    {
+      "item": "runeworld:blood_pillar_large"
+    }
+  ],
+  "result": {
+    "item": "runeworld:blood_pillar_medium",
+    "count": 2
+  }
+}

@@ -1,0 +1,32 @@
+{
+  "parent": "minecraft:recipes/root",
+  "rewards": {
+    "recipes": [
+      "runeworld:blood_pillar_small_to_blood_pillar_medium"
+    ]
+  },
+  "criteria": {
+    "has_blood_pillar_small": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "item": "runeworld:blood_pillar_small"
+          }
+        ]
+      }
+    },
+    "has_the_recipe": {
+      "trigger": "minecraft:recipe_unlocked",
+      "conditions": {
+        "recipe": "runeworld:blood_pillar_small_to_blood_pillar_medium"
+      }
+    }
+  },
+  "requirements": [
+    [
+      "has_blood_pillar_small",
+      "has_the_recipe"
+    ]
+  ]
+}
