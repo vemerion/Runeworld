@@ -39,11 +39,6 @@ public class BloodPoolFeature extends Feature<NoFeatureConfig> {
 			pos = positions.remove(0);
 			if (isSurrounded(reader, pos)) {
 				bloods.add(pos);
-				reader.setBlockState(pos, BLOOD, 2);
-				if (rand.nextDouble() < 0.1)
-					reader.setBlockState(pos.up(), FLOWER, 2);
-				else
-					reader.setBlockState(pos.up(), AIR, 2);
 
 				for (int i = -1; i < 2; i++) {
 					for (int j = -1; j < 2; j++) {
@@ -59,7 +54,38 @@ public class BloodPoolFeature extends Feature<NoFeatureConfig> {
 			}
 		}
 
-		return !bloods.isEmpty();
+		if (bloods.size() < 10) // Too small pool
+			return false;
+
+		for (BlockPos blood : bloods) { // Actually create blood pool
+			BlockPos up = blood.up();
+			if (reader.getBlockState(up).isSolid())
+				continue;
+			
+			reader.setBlockState(blood, BLOOD, 2);
+			if (rand.nextDouble() < 0.1)
+				reader.setBlockState(up, FLOWER, 2);
+			else
+				reader.setBlockState(up, AIR, 2);
+		}
+		
+		for (BlockPos blood : bloods) { // Make the pool deeper at certain parts
+			if (shouldBeDeep(reader, rand, blood))
+				reader.setBlockState(blood.down(), BLOOD, 2);
+		}
+
+		return true;
+	}
+
+	private boolean shouldBeDeep(ISeedReader reader, Random rand, BlockPos blood) {
+		int limit = rand.nextBoolean() ? 1 : 2;
+		for (int i = -limit; i <= limit; i++) {
+			for (int j = -limit; j <= limit; j++) {
+				if (reader.getBlockState(blood.add(i, 0, j)) != BLOOD)
+					return false;
+			}
+		}
+		return true;
 	}
 
 	private boolean isSurrounded(ISeedReader reader, BlockPos pos) {
