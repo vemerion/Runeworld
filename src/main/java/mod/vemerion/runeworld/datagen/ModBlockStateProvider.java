@@ -8,6 +8,7 @@ import net.minecraft.util.Direction;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.client.model.generators.BlockModelBuilder;
 import net.minecraftforge.client.model.generators.BlockStateProvider;
+import net.minecraftforge.client.model.generators.ModelFile;
 import net.minecraftforge.common.data.ExistingFileHelper;
 
 public class ModBlockStateProvider extends BlockStateProvider {
@@ -21,6 +22,7 @@ public class ModBlockStateProvider extends BlockStateProvider {
 		simpleBlock(ModBlocks.BLOOD, empty("blood"));
 		simpleBlock(ModBlocks.BLOOD_FLOWER,
 				models().singleTexture("blood_flower", mcLoc("block/cross"), "cross", modLoc("block/blood_flower")));
+		simpleBlockWithItem(ModBlocks.BLOOD_ROCK);
 		ResourceLocation bloodPillar = modLoc("block/blood_pillar");
 		pillar(ModBlocks.BLOOD_PILLAR_LARGE, 12, bloodPillar, bloodPillar);
 		pillar(ModBlocks.BLOOD_PILLAR_MEDIUM, 8, bloodPillar, bloodPillar);
@@ -29,6 +31,12 @@ public class ModBlockStateProvider extends BlockStateProvider {
 
 	private BlockModelBuilder empty(String name) {
 		return models().getBuilder(name);
+	}
+	
+	private void simpleBlockWithItem(Block block) {
+		ModelFile model = cubeAll(block);
+		simpleBlock(block, model);
+		simpleBlockItem(block, model);
 	}
 
 	private void pillar(Block block, int length, ResourceLocation side, ResourceLocation end) {

@@ -29,5 +29,6 @@ public class ModBlockLootTables extends BlockLootTables {
 		registerDropSelfLootTable(ModBlocks.BLOOD_PILLAR_LARGE);
 		registerDropSelfLootTable(ModBlocks.BLOOD_PILLAR_MEDIUM);
 		registerDropSelfLootTable(ModBlocks.BLOOD_PILLAR_SMALL);
+		registerDropSelfLootTable(ModBlocks.BLOOD_ROCK);
 	}
 }

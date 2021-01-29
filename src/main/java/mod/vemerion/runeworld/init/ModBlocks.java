@@ -4,7 +4,9 @@ import mod.vemerion.runeworld.Main;
 import mod.vemerion.runeworld.block.BloodBlock;
 import mod.vemerion.runeworld.block.BloodFlowerBlock;
 import mod.vemerion.runeworld.block.BloodPillarBlock;
+import net.minecraft.block.AbstractBlock;
 import net.minecraft.block.Block;
+import net.minecraft.block.Blocks;
 import net.minecraft.block.FlowingFluidBlock;
 import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
@@ -21,6 +23,7 @@ public class ModBlocks {
 	public static final Block BLOOD_PILLAR_LARGE = null;
 	public static final Block BLOOD_PILLAR_MEDIUM = null;
 	public static final Block BLOOD_PILLAR_SMALL = null;
+	public static final Block BLOOD_ROCK = null;
 
 	@SubscribeEvent
 	public static void onRegisterBlock(RegistryEvent.Register<Block> event) {
@@ -29,5 +32,6 @@ public class ModBlocks {
 		event.getRegistry().register(Init.setup(new BloodPillarBlock(BloodPillarBlock.LARGE), "blood_pillar_large"));
 		event.getRegistry().register(Init.setup(new BloodPillarBlock(BloodPillarBlock.MEDIUM), "blood_pillar_medium"));
 		event.getRegistry().register(Init.setup(new BloodPillarBlock(BloodPillarBlock.SMALL), "blood_pillar_small"));
+		event.getRegistry().register(Init.setup(new Block(AbstractBlock.Properties.from(Blocks.COBBLESTONE)), "blood_rock"));
 	}
 }

@@ -23,6 +23,7 @@ public class ModItems {
 	public static final Item BLOOD_PILLAR_LARGE = null;
 	public static final Item BLOOD_PILLAR_MEDIUM = null;
 	public static final Item BLOOD_PILLAR_SMALL = null;
+	public static final Item BLOOD_ROCK = null;
 
 	@SubscribeEvent
 	public static void onRegisterItem(RegistryEvent.Register<Item> event) {
@@ -38,8 +39,9 @@ public class ModItems {
 		Item bloodPillarSmall = Init.setup(
 				new BlockItem(ModBlocks.BLOOD_PILLAR_SMALL, new Item.Properties().group(ItemGroup.SEARCH)),
 				"blood_pillar_small");
-
+		Item bloodRock = Init.setup(new BlockItem(ModBlocks.BLOOD_ROCK, new Item.Properties().group(ItemGroup.SEARCH)),
+				"blood_rock");
 		event.getRegistry().registerAll(bloodBucket, bloodPudding, bloodFlower, bloodPillarLarge, bloodPillarMedium,
-				bloodPillarSmall);
+				bloodPillarSmall, bloodRock);
 	}
 }
