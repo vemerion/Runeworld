@@ -20,6 +20,7 @@ public class BloodPoolFeature extends Feature<NoFeatureConfig> {
 	private static final BlockState BLOOD = ModBlocks.BLOOD.getDefaultState();
 	private static final BlockState AIR = Blocks.AIR.getDefaultState();
 	private static final BlockState FLOWER = ModBlocks.BLOOD_FLOWER.getDefaultState();
+	private static final BlockState ROCK = ModBlocks.BLOOD_ROCK.getDefaultState();
 
 	public BloodPoolFeature() {
 		super(NoFeatureConfig.field_236558_a_);
@@ -61,20 +62,31 @@ public class BloodPoolFeature extends Feature<NoFeatureConfig> {
 			BlockPos up = blood.up();
 			if (reader.getBlockState(up).isSolid())
 				continue;
-			
+
 			reader.setBlockState(blood, BLOOD, 2);
 			if (rand.nextDouble() < 0.1)
 				reader.setBlockState(up, FLOWER, 2);
 			else
 				reader.setBlockState(up, AIR, 2);
 		}
-		
-		for (BlockPos blood : bloods) { // Make the pool deeper at certain parts
+
+		for (BlockPos blood : bloods) {
 			if (shouldBeDeep(reader, rand, blood))
-				reader.setBlockState(blood.down(), BLOOD, 2);
+				reader.setBlockState(blood.down(), BLOOD, 2); // Make the pool deeper at certain parts
+			surroundWithBloodRock(reader, rand, blood);
 		}
 
 		return true;
+	}
+
+	private void surroundWithBloodRock(ISeedReader reader, Random rand, BlockPos blood) {
+		for (int i = -1; i < 2; i++) {
+			for (int j = -1; j < 2; j++) {
+				BlockPos pos = blood.add(i, 0, j);
+				if (reader.getBlockState(blood.add(i, 0, j)).isSolid() && rand.nextDouble() < 0.5)
+					reader.setBlockState(pos, ROCK, 2);
+			}
+		}
 	}
 
 	private boolean shouldBeDeep(ISeedReader reader, Random rand, BlockPos blood) {
