@@ -1,10 +1,12 @@
 package mod.vemerion.runeworld.datagen;
 
 import mod.vemerion.runeworld.Main;
+import mod.vemerion.runeworld.init.ModBiomes;
 import mod.vemerion.runeworld.init.ModBlocks;
 import mod.vemerion.runeworld.init.ModEffects;
 import mod.vemerion.runeworld.init.ModItems;
 import net.minecraft.data.DataGenerator;
+import net.minecraft.world.biome.Biome;
 import net.minecraftforge.common.data.LanguageProvider;
 
 public class ModLanguageProvider extends LanguageProvider {
@@ -24,6 +26,10 @@ public class ModLanguageProvider extends LanguageProvider {
 		add(ModItems.BLOOD_BUCKET, "Blood Bucket");
 		add(ModItems.BLOOD_PUDDING, "Blood Pudding");
 		add(ModEffects.BLOOD_DRAINED, "Blood Drained");
+		add(ModBiomes.BLOOD_BIOME, "Blood Biome");
 	}
 
+	private void add(Biome key, String name) {
+		add("biome." + key.getRegistryName().getNamespace() + "." + key.getRegistryName().getPath(), name);
+	}
 }
