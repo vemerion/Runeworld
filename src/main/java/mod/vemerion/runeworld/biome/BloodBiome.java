@@ -19,6 +19,8 @@ public class BloodBiome extends ModBiome {
 				.withSurfaceBuilder(ConfiguredSurfaceBuilders.field_244178_j);
 
 		generation.withFeature(GenerationStage.Decoration.LAKES, ModConfiguredFeatures.BLOOD_POOL);
+		generation.withFeature(GenerationStage.Decoration.LAKES, ModConfiguredFeatures.BLOOD_PILLAR_SINGLE);
+		generation.withFeature(GenerationStage.Decoration.LAKES, ModConfiguredFeatures.BLOOD_PILLAR_CLUSTER);
 
 		int waterColor = Helper.color(200, 70, 70, 100);
 		int skyColor = Helper.color(255, 180, 180, 255);

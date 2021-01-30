@@ -1,6 +1,8 @@
 package mod.vemerion.runeworld.init;
 
 import mod.vemerion.runeworld.Main;
+import mod.vemerion.runeworld.feature.BloodPillarClusterFeature;
+import mod.vemerion.runeworld.feature.BloodPillarSingleFeature;
 import mod.vemerion.runeworld.feature.BloodPoolFeature;
 import net.minecraft.world.gen.feature.Feature;
 import net.minecraft.world.gen.feature.NoFeatureConfig;
@@ -17,12 +19,16 @@ public class ModFeatures {
 	private static boolean init = true;
 
 	public static Feature<NoFeatureConfig> BLOOD_POOL;
+	public static Feature<NoFeatureConfig> BLOOD_PILLAR_SINGLE;
+	public static Feature<NoFeatureConfig> BLOOD_PILLAR_CLUSTER;
 
 	public static void init() {
 		if (init) {
 			init = false;
 
 			BLOOD_POOL = new BloodPoolFeature();
+			BLOOD_PILLAR_SINGLE = new BloodPillarSingleFeature();
+			BLOOD_PILLAR_CLUSTER = new BloodPillarClusterFeature();
 			
 			ModConfiguredFeatures.onRegisterConfiguredFeature();
 		}
@@ -33,6 +39,8 @@ public class ModFeatures {
 		init();
 		
 		event.getRegistry().register(Init.setup(BLOOD_POOL, "blood_pool"));
+		event.getRegistry().register(Init.setup(BLOOD_PILLAR_SINGLE, "blood_pillar_single"));
+		event.getRegistry().register(Init.setup(BLOOD_PILLAR_CLUSTER, "blood_pillar_cluster"));
 
 	}
 }
