@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Random;
 import java.util.Set;
 
+import mod.vemerion.runeworld.block.BloodPillarBlock;
 import mod.vemerion.runeworld.init.ModBlocks;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
@@ -76,7 +77,19 @@ public class BloodPoolFeature extends Feature<NoFeatureConfig> {
 			surroundWithBloodRock(reader, rand, blood);
 		}
 
+		if (rand.nextDouble() < 0.3)
+			generateBloodPillars(bloods, reader, rand);
+
 		return true;
+	}
+
+	private void generateBloodPillars(Set<BlockPos> bloods, ISeedReader reader, Random rand) {
+		for (BlockPos pos : bloods) {
+			while (reader.getBlockState(pos.down()) == BLOOD)
+				pos = pos.down();
+			if (rand.nextDouble() < 0.1)
+				BloodPillarBlock.generatePillar(reader, rand, pos);
+		}
 	}
 
 	private void surroundWithBloodRock(ISeedReader reader, Random rand, BlockPos blood) {
@@ -90,6 +103,9 @@ public class BloodPoolFeature extends Feature<NoFeatureConfig> {
 	}
 
 	private boolean shouldBeDeep(ISeedReader reader, Random rand, BlockPos blood) {
+		if (reader.getBlockState(blood) != BLOOD)
+			return false;
+
 		int limit = rand.nextBoolean() ? 1 : 2;
 		for (int i = -limit; i <= limit; i++) {
 			for (int j = -limit; j <= limit; j++) {

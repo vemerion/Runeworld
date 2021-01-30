@@ -20,9 +20,9 @@ public class ModBlocks {
 	
 	public static final FlowingFluidBlock BLOOD = null;
 	public static final Block BLOOD_FLOWER = null;
-	public static final Block BLOOD_PILLAR_LARGE = null;
-	public static final Block BLOOD_PILLAR_MEDIUM = null;
-	public static final Block BLOOD_PILLAR_SMALL = null;
+	public static final BloodPillarBlock BLOOD_PILLAR_LARGE = null;
+	public static final BloodPillarBlock BLOOD_PILLAR_MEDIUM = null;
+	public static final BloodPillarBlock BLOOD_PILLAR_SMALL = null;
 	public static final Block BLOOD_ROCK = null;
 
 	@SubscribeEvent

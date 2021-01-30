@@ -1,5 +1,8 @@
 package mod.vemerion.runeworld.block;
 
+import java.util.Random;
+
+import mod.vemerion.runeworld.init.ModBlocks;
 import mod.vemerion.runeworld.init.ModFluids;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
@@ -95,5 +98,68 @@ public class BloodPillarBlock extends Block implements IWaterLoggable {
 		} else {
 			return Fluids.EMPTY;
 		}
+	}
+
+	public static boolean generatePillar(IWorld world, Random rand, BlockPos pos) {
+		int height = 0;
+		for (int i = 0; i < 4; i++) {
+			if (!isValidPos(world, pos))
+				break;
+			height++;
+		}
+
+		if (height < 2)
+			return false;
+
+		height = rand.nextInt(height + 1 - 2) + 2;
+
+		if (height == 2) {
+			if (rand.nextBoolean()) {
+				setPillar(world, pos, ModBlocks.BLOOD_PILLAR_MEDIUM, 2);
+				setPillar(world, pos.up(), ModBlocks.BLOOD_PILLAR_SMALL, 2);
+			} else {
+				setPillar(world, pos, ModBlocks.BLOOD_PILLAR_LARGE, 2);
+				setPillar(world, pos.up(), ModBlocks.BLOOD_PILLAR_MEDIUM, 2);
+			}
+		} else if (height == 3) {
+			if (rand.nextBoolean()) {
+				setPillar(world, pos, ModBlocks.BLOOD_PILLAR_LARGE, 2);
+				setPillar(world, pos.up(), ModBlocks.BLOOD_PILLAR_MEDIUM, 2);
+				setPillar(world, pos.up(2), ModBlocks.BLOOD_PILLAR_SMALL, 2);
+
+			} else {
+				setPillar(world, pos, ModBlocks.BLOOD_PILLAR_MEDIUM, 2);
+				setPillar(world, pos.up(), ModBlocks.BLOOD_PILLAR_MEDIUM, 2);
+				setPillar(world, pos.up(2), ModBlocks.BLOOD_PILLAR_SMALL, 2);
+			}
+		} else if (height == 4) {
+			if (rand.nextBoolean()) {
+				setPillar(world, pos, ModBlocks.BLOOD_PILLAR_LARGE, 2);
+				setPillar(world, pos.up(), ModBlocks.BLOOD_PILLAR_LARGE, 2);
+				setPillar(world, pos.up(2), ModBlocks.BLOOD_PILLAR_MEDIUM, 2);
+				setPillar(world, pos.up(3), ModBlocks.BLOOD_PILLAR_SMALL, 2);
+			} else {
+				setPillar(world, pos, ModBlocks.BLOOD_PILLAR_MEDIUM, 2);
+				setPillar(world, pos.up(), ModBlocks.BLOOD_PILLAR_MEDIUM, 2);
+				setPillar(world, pos.up(2), ModBlocks.BLOOD_PILLAR_SMALL, 2);
+				setPillar(world, pos.up(3), ModBlocks.BLOOD_PILLAR_SMALL, 2);
+			}
+		}
+
+		return true;
+	}
+
+	private static void setPillar(IWorld world, BlockPos pos, BloodPillarBlock pillar, int i) {
+		FluidState fluidState = world.getFluidState(pos);
+		world.setBlockState(pos, pillar.getDefaultState(), 2);
+		BlockState state = world.getBlockState(pos);
+		pillar.receiveFluid(world, pos, state, fluidState);
+
+	}
+
+	private static boolean isValidPos(IWorld world, BlockPos pos) {
+		BlockState state = world.getBlockState(pos);
+		return state.getFluidState().getFluid().isEquivalentTo(ModFluids.BLOOD)
+				|| state.getBlock().isAir(state, world, pos);
 	}
 }
