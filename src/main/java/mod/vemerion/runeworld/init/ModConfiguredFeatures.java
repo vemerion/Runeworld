@@ -14,6 +14,7 @@ public class ModConfiguredFeatures {
 	public static ConfiguredFeature<?, ?> BLOOD_POOL;
 	public static ConfiguredFeature<?, ?> BLOOD_PILLAR_SINGLE;
 	public static ConfiguredFeature<?, ?> BLOOD_PILLAR_CLUSTER;
+	public static ConfiguredFeature<?, ?> BLOOD_ROCK_PATCH;
 
 	public static void onRegisterConfiguredFeature() {
 
@@ -27,6 +28,10 @@ public class ModConfiguredFeatures {
 		BLOOD_PILLAR_CLUSTER = ModFeatures.BLOOD_PILLAR_CLUSTER
 				.withConfiguration(IFeatureConfig.NO_FEATURE_CONFIG)
 				.withPlacement(Placement.CHANCE.configure(new ChanceConfig(15)));
+		
+		BLOOD_ROCK_PATCH = ModFeatures.BLOOD_ROCK_PATCH
+				.withConfiguration(IFeatureConfig.NO_FEATURE_CONFIG)
+				.withPlacement(Placement.CHANCE.configure(new ChanceConfig(15)));
 
 
 		Registry<ConfiguredFeature<?, ?>> registry = WorldGenRegistries.CONFIGURED_FEATURE;
@@ -34,5 +39,6 @@ public class ModConfiguredFeatures {
 		Registry.register(registry, new ResourceLocation(Main.MODID, "blood_pool"), BLOOD_POOL);
 		Registry.register(registry, new ResourceLocation(Main.MODID, "blood_pillar_single"), BLOOD_PILLAR_SINGLE);
 		Registry.register(registry, new ResourceLocation(Main.MODID, "blood_pillar_cluster"), BLOOD_PILLAR_CLUSTER);
+		Registry.register(registry, new ResourceLocation(Main.MODID, "blood_rock_patch"), BLOOD_ROCK_PATCH);
 	}
 }

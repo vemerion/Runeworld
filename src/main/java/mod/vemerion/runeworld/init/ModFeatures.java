@@ -4,6 +4,7 @@ import mod.vemerion.runeworld.Main;
 import mod.vemerion.runeworld.feature.BloodPillarClusterFeature;
 import mod.vemerion.runeworld.feature.BloodPillarSingleFeature;
 import mod.vemerion.runeworld.feature.BloodPoolFeature;
+import mod.vemerion.runeworld.feature.BloodRockPatchFeature;
 import net.minecraft.world.gen.feature.Feature;
 import net.minecraft.world.gen.feature.NoFeatureConfig;
 import net.minecraftforge.event.RegistryEvent;
@@ -21,6 +22,7 @@ public class ModFeatures {
 	public static Feature<NoFeatureConfig> BLOOD_POOL;
 	public static Feature<NoFeatureConfig> BLOOD_PILLAR_SINGLE;
 	public static Feature<NoFeatureConfig> BLOOD_PILLAR_CLUSTER;
+	public static Feature<NoFeatureConfig> BLOOD_ROCK_PATCH;
 
 	public static void init() {
 		if (init) {
@@ -29,6 +31,7 @@ public class ModFeatures {
 			BLOOD_POOL = new BloodPoolFeature();
 			BLOOD_PILLAR_SINGLE = new BloodPillarSingleFeature();
 			BLOOD_PILLAR_CLUSTER = new BloodPillarClusterFeature();
+			BLOOD_ROCK_PATCH = new BloodRockPatchFeature();
 			
 			ModConfiguredFeatures.onRegisterConfiguredFeature();
 		}
@@ -41,6 +44,7 @@ public class ModFeatures {
 		event.getRegistry().register(Init.setup(BLOOD_POOL, "blood_pool"));
 		event.getRegistry().register(Init.setup(BLOOD_PILLAR_SINGLE, "blood_pillar_single"));
 		event.getRegistry().register(Init.setup(BLOOD_PILLAR_CLUSTER, "blood_pillar_cluster"));
+		event.getRegistry().register(Init.setup(BLOOD_ROCK_PATCH, "blood_rock_patch"));
 
 	}
 }
