@@ -27,7 +27,7 @@ public class ModLanguageProvider extends LanguageProvider {
 		add(ModItems.BLOOD_BUCKET, "Blood Bucket");
 		add(ModItems.BLOOD_PUDDING, "Blood Pudding");
 		add(ModEffects.BLOOD_DRAINED, "Blood Drained");
-		add(ModBiomes.BLOOD_BIOME, "Blood Biome");
+		add(ModBiomes.BLOOD_PLAINS, "Blood Plains");
 	}
 
 	private void add(Biome key, String name) {

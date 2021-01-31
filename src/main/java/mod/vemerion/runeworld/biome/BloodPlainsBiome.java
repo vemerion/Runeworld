@@ -10,7 +10,7 @@ import net.minecraft.world.biome.MoodSoundAmbience;
 import net.minecraft.world.gen.GenerationStage;
 import net.minecraft.world.gen.surfacebuilders.ConfiguredSurfaceBuilders;
 
-public class BloodBiome extends ModBiome {
+public class BloodPlainsBiome extends ModBiome {
 
 	@Override
 	public Biome create() {
