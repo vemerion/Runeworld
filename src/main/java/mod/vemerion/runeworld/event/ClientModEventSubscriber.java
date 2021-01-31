@@ -28,5 +28,6 @@ public class ClientModEventSubscriber {
 	@SubscribeEvent
 	public static void onClientSetup(FMLClientSetupEvent event) {
 		RenderTypeLookup.setRenderLayer(ModBlocks.BLOOD_FLOWER, RenderType.getCutout());
+		RenderTypeLookup.setRenderLayer(ModBlocks.BLOOD_CRYSTAL, RenderType.getCutout());
 	}
 }

@@ -18,6 +18,7 @@ public class ModItemModelProvider extends ItemModelProvider {
 		simpleItem(ModItems.BLOOD_BUCKET);
 		simpleItem(ModItems.BLOOD_PUDDING);
 		simpleItem(ModItems.BLOOD_FLOWER, BLOCK_FOLDER);
+		simpleItem(ModItems.BLOOD_CRYSTAL, BLOCK_FOLDER);
 	}
 	
 	private void simpleItem(Item item) {
