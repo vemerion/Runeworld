@@ -151,8 +151,8 @@ public class BloodPillarBlock extends Block implements IWaterLoggable {
 
 	private static void setPillar(IWorld world, BlockPos pos, BloodPillarBlock pillar, int i) {
 		FluidState fluidState = world.getFluidState(pos);
-		world.setBlockState(pos, pillar.getDefaultState(), 2);
-		BlockState state = world.getBlockState(pos);
+		BlockState state = pillar.getDefaultState();
+		world.setBlockState(pos, state, 2);
 		pillar.receiveFluid(world, pos, state, fluidState);
 
 	}

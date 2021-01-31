@@ -1,0 +1,7 @@
+{
+  "parent": "minecraft:block/cube_top",
+  "textures": {
+    "side": "runeworld:block/blood_moss_side",
+    "top": "runeworld:block/blood_moss_top"
+  }
+}

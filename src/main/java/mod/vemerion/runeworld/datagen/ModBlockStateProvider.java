@@ -27,6 +27,7 @@ public class ModBlockStateProvider extends BlockStateProvider {
 		pillar(ModBlocks.BLOOD_PILLAR_LARGE, 12, bloodPillar, bloodPillar);
 		pillar(ModBlocks.BLOOD_PILLAR_MEDIUM, 8, bloodPillar, bloodPillar);
 		pillar(ModBlocks.BLOOD_PILLAR_SMALL, 4, bloodPillar, bloodPillar);
+		bloodMoss();
 	}
 
 	private BlockModelBuilder empty(String name) {
@@ -49,6 +50,14 @@ public class ModBlockStateProvider extends BlockStateProvider {
 		});
 		simpleBlock(block, model);
 		simpleBlockItem(block, model);
+	}
+	
+	private void bloodMoss() {
+		Block bloodMoss = ModBlocks.BLOOD_MOSS;
+		String name = bloodMoss.getRegistryName().getPath();
+		ModelFile model = models().cubeTop(name, modLoc("block/blood_moss_side"), modLoc("block/blood_moss_top"));
+		simpleBlock(bloodMoss, model);
+		simpleBlockItem(bloodMoss, model);
 	}
 
 }
