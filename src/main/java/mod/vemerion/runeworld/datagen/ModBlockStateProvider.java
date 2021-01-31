@@ -33,7 +33,7 @@ public class ModBlockStateProvider extends BlockStateProvider {
 	private BlockModelBuilder empty(String name) {
 		return models().getBuilder(name);
 	}
-	
+
 	private void simpleBlockWithItem(Block block) {
 		ModelFile model = cubeAll(block);
 		simpleBlock(block, model);
@@ -51,11 +51,12 @@ public class ModBlockStateProvider extends BlockStateProvider {
 		simpleBlock(block, model);
 		simpleBlockItem(block, model);
 	}
-	
+
 	private void bloodMoss() {
 		Block bloodMoss = ModBlocks.BLOOD_MOSS;
 		String name = bloodMoss.getRegistryName().getPath();
-		ModelFile model = models().cubeTop(name, modLoc("block/blood_moss_side"), modLoc("block/blood_moss_top"));
+		ModelFile model = models().cubeBottomTop(name, modLoc("block/blood_moss_side"), modLoc("block/blood_rock"),
+				modLoc("block/blood_moss_top"));
 		simpleBlock(bloodMoss, model);
 		simpleBlockItem(bloodMoss, model);
 	}
