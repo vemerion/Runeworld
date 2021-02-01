@@ -26,6 +26,7 @@ public class BloodPlainsBiome extends ModBiome {
 		generation.withFeature(GenerationStage.Decoration.LAKES, ModConfiguredFeatures.BLOOD_POOL);
 		generation.withFeature(GenerationStage.Decoration.VEGETAL_DECORATION, ModConfiguredFeatures.BLOOD_PILLAR_SINGLE);
 		generation.withFeature(GenerationStage.Decoration.VEGETAL_DECORATION, ModConfiguredFeatures.BLOOD_PILLAR_CLUSTER);
+		generation.withFeature(GenerationStage.Decoration.VEGETAL_DECORATION, ModConfiguredFeatures.BLOOD_CRYSTAL);
 		generation.withFeature(GenerationStage.Decoration.TOP_LAYER_MODIFICATION, ModConfiguredFeatures.BLOOD_ROCK_PATCH);
 
 		int waterColor = Helper.color(200, 70, 70, 100);
