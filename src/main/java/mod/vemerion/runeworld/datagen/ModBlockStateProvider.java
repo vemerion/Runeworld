@@ -22,7 +22,7 @@ public class ModBlockStateProvider extends BlockStateProvider {
 		simpleBlock(ModBlocks.BLOOD, empty("blood"));
 		simpleBlock(ModBlocks.BLOOD_FLOWER,
 				models().singleTexture("blood_flower", mcLoc("block/cross"), "cross", modLoc("block/blood_flower")));
-		simpleBlock(ModBlocks.BLOOD_CRYSTAL,
+		directionalBlock(ModBlocks.BLOOD_CRYSTAL,
 				models().singleTexture("blood_crystal", mcLoc("block/cross"), "cross", modLoc("block/blood_crystal")));
 		simpleBlockWithItem(ModBlocks.BLOOD_ROCK);
 		ResourceLocation bloodPillar = modLoc("block/blood_pillar");
