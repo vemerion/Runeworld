@@ -19,7 +19,7 @@ public class ModBlockStateProvider extends BlockStateProvider {
 
 	@Override
 	protected void registerStatesAndModels() {
-		simpleBlock(ModBlocks.BLOOD, empty("blood"));
+		simpleBlock(ModBlocks.BLOOD, empty("blood").texture("particle", modLoc("block/blood_moss_top")));
 		simpleBlock(ModBlocks.BLOOD_FLOWER,
 				models().singleTexture("blood_flower", mcLoc("block/cross"), "cross", modLoc("block/blood_flower")));
 		directionalBlock(ModBlocks.BLOOD_CRYSTAL,
