@@ -4,6 +4,7 @@ import mod.vemerion.runeworld.Main;
 import mod.vemerion.runeworld.init.ModBiomes;
 import mod.vemerion.runeworld.init.ModBlocks;
 import mod.vemerion.runeworld.init.ModEffects;
+import mod.vemerion.runeworld.init.ModEntities;
 import mod.vemerion.runeworld.init.ModItems;
 import net.minecraft.data.DataGenerator;
 import net.minecraft.world.biome.Biome;
@@ -29,6 +30,7 @@ public class ModLanguageProvider extends LanguageProvider {
 		add(ModItems.BLOOD_PUDDING, "Blood Pudding");
 		add(ModEffects.BLOOD_DRAINED, "Blood Drained");
 		add(ModBiomes.BLOOD_PLAINS, "Blood Plains");
+		add(ModEntities.MOSQUITO, "Mosquito");
 	}
 
 	private void add(Biome key, String name) {
