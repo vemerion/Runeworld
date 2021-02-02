@@ -24,7 +24,7 @@ public class ModEntities {
 	@SubscribeEvent
 	public static void onRegisterEntity(RegistryEvent.Register<EntityType<?>> event) {
 		EntityType<?> mosquito = EntityType.Builder
-				.<MosquitoEntity>create(MosquitoEntity::new, EntityClassification.CREATURE).size(1, 1)
+				.<MosquitoEntity>create(MosquitoEntity::new, EntityClassification.MONSTER).size(1, 1)
 				.build(new ResourceLocation(Main.MODID, "mosquito").toString());
 		event.getRegistry().register(Init.setup(mosquito, "mosquito"));
 	}

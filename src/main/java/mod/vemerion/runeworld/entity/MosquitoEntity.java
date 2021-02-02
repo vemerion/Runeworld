@@ -1,6 +1,7 @@
 package mod.vemerion.runeworld.entity;
 
 import java.util.EnumSet;
+import java.util.List;
 import java.util.Random;
 
 import mod.vemerion.runeworld.init.ModFluids;
@@ -23,6 +24,7 @@ import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.nbt.NBTUtil;
 import net.minecraft.pathfinding.FlyingPathNavigator;
 import net.minecraft.pathfinding.PathNavigator;
+import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.vector.Vector3d;
 import net.minecraft.world.Difficulty;
@@ -47,8 +49,14 @@ public class MosquitoEntity extends CreatureEntity implements IFlyingAnimal {
 
 	public static boolean canSpawn(EntityType<MosquitoEntity> type, IServerWorld world, SpawnReason spawnReason,
 			BlockPos pos, Random random) {
-		return world.getDifficulty() != Difficulty.PEACEFUL
-				&& (isBlood(world, pos.down()) || isBlood(world, pos.down(2)));
+		if (world.getDifficulty() != Difficulty.PEACEFUL
+				&& (isBlood(world, pos.down()) || isBlood(world, pos.down(2)))) {
+			AxisAlignedBB box = new AxisAlignedBB(pos).grow(16);
+			List<MosquitoEntity> entities = world.getEntitiesWithinAABB(MosquitoEntity.class, box, null);
+			return entities.size() < 5;
+		}
+
+		return false;
 	}
 
 	private static boolean isBlood(IServerWorld world, BlockPos pos) {
