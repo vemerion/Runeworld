@@ -1,11 +1,14 @@
 package mod.vemerion.runeworld.entity;
 
 import java.util.EnumSet;
+import java.util.Random;
 
+import mod.vemerion.runeworld.init.ModFluids;
 import net.minecraft.block.BlockState;
 import net.minecraft.entity.CreatureEntity;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.MobEntity;
+import net.minecraft.entity.SpawnReason;
 import net.minecraft.entity.ai.RandomPositionGenerator;
 import net.minecraft.entity.ai.attributes.AttributeModifierMap;
 import net.minecraft.entity.ai.attributes.Attributes;
@@ -19,6 +22,8 @@ import net.minecraft.pathfinding.FlyingPathNavigator;
 import net.minecraft.pathfinding.PathNavigator;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.vector.Vector3d;
+import net.minecraft.world.Difficulty;
+import net.minecraft.world.IServerWorld;
 import net.minecraft.world.World;
 
 public class MosquitoEntity extends CreatureEntity implements IFlyingAnimal {
@@ -34,6 +39,16 @@ public class MosquitoEntity extends CreatureEntity implements IFlyingAnimal {
 				.createMutableAttribute(Attributes.FOLLOW_RANGE, 16.0D)
 				.createMutableAttribute(Attributes.FLYING_SPEED, 0.4D)
 				.createMutableAttribute(Attributes.ATTACK_DAMAGE, 1.0D);
+	}
+
+	public static boolean canSpawn(EntityType<MosquitoEntity> type, IServerWorld world, SpawnReason spawnReason,
+			BlockPos pos, Random random) {
+		return world.getDifficulty() != Difficulty.PEACEFUL
+				&& (isBlood(world, pos.down()) || isBlood(world, pos.down(2)));
+	}
+
+	private static boolean isBlood(IServerWorld world, BlockPos pos) {
+		return world.getBlockState(pos).getFluidState().getFluid().isEquivalentTo(ModFluids.BLOOD);
 	}
 
 	@Override
@@ -103,7 +118,7 @@ public class MosquitoEntity extends CreatureEntity implements IFlyingAnimal {
 		private Vector3d wanderPos() {
 			Vector3d look = mosquito.getLook(0);
 			Vector3d pos = RandomPositionGenerator.findGroundTarget(mosquito, 8, 4, -2, look, (float) Math.PI / 2);
-			if (!mosquito.world.getBlockState(new BlockPos(pos).up()).getMaterial().isSolid())
+			if (pos != null && !mosquito.world.getBlockState(new BlockPos(pos).up()).getMaterial().isSolid())
 				pos = pos.add(0, 1, 0);
 			return pos;
 		}
