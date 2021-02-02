@@ -4,9 +4,11 @@ import java.util.EnumSet;
 import java.util.List;
 import java.util.Random;
 
+import mod.vemerion.runeworld.init.ModEffects;
 import mod.vemerion.runeworld.init.ModFluids;
 import net.minecraft.block.BlockState;
 import net.minecraft.entity.CreatureEntity;
+import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.ILivingEntityData;
 import net.minecraft.entity.MobEntity;
@@ -24,6 +26,7 @@ import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.nbt.NBTUtil;
 import net.minecraft.pathfinding.FlyingPathNavigator;
 import net.minecraft.pathfinding.PathNavigator;
+import net.minecraft.potion.EffectInstance;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.vector.Vector3d;
@@ -102,6 +105,16 @@ public class MosquitoEntity extends CreatureEntity implements IFlyingAnimal {
 		navigator.setCanSwim(false);
 		navigator.setCanOpenDoors(false);
 		return navigator;
+	}
+
+	@Override
+	public boolean attackEntityAsMob(Entity entityIn) {
+		if (super.attackEntityAsMob(entityIn)) {
+			if (rand.nextDouble() < 0.1 && entityIn instanceof PlayerEntity)
+				((PlayerEntity) entityIn).addPotionEffect(new EffectInstance(ModEffects.BLOOD_DRAINED, 20 * 45));
+			return true;
+		}
+		return false;
 	}
 
 	@Override
