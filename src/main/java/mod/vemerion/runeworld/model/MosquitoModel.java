@@ -234,6 +234,15 @@ public class MosquitoModel extends EntityModel<MosquitoEntity> {
 
 		// Legs
 		animateLegs(entityIn, limbSwing, limbSwingAmount, ageInTicks, netHeadYaw, headPitch);
+		
+		// Hit
+		limbSwingAmount = (float) Math.max(0, limbSwingAmount - 0.4);
+		bodyLower.rotateAngleZ = MathHelper.cos(limbSwing * 0.6662f) * 2f * limbSwingAmount * 0.2f;
+		tail1.rotateAngleZ = MathHelper.cos(limbSwing * 0.6662f) * 2f * limbSwingAmount * 0.2f;
+		
+		// Look
+		head.rotateAngleY = (float) Math.toRadians(netHeadYaw) * 0.25f;
+		head.rotateAngleZ = (float) Math.toRadians(netHeadYaw) * 0.25f;
 	}
 
 	private void animateLegs(MosquitoEntity entityIn, float limbSwing, float limbSwingAmount, float ageInTicks,
