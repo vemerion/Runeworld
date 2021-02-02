@@ -11,7 +11,10 @@ import net.minecraft.entity.ai.attributes.AttributeModifierMap;
 import net.minecraft.entity.ai.attributes.Attributes;
 import net.minecraft.entity.ai.controller.FlyingMovementController;
 import net.minecraft.entity.ai.goal.Goal;
+import net.minecraft.entity.ai.goal.MeleeAttackGoal;
+import net.minecraft.entity.ai.goal.NearestAttackableTargetGoal;
 import net.minecraft.entity.passive.IFlyingAnimal;
+import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.pathfinding.FlyingPathNavigator;
 import net.minecraft.pathfinding.PathNavigator;
 import net.minecraft.util.math.BlockPos;
@@ -35,7 +38,9 @@ public class MosquitoEntity extends CreatureEntity implements IFlyingAnimal {
 
 	@Override
 	protected void registerGoals() {
-		goalSelector.addGoal(1, new WanderGoal(this));
+		goalSelector.addGoal(1, new MeleeAttackGoal(this, 1.4, true));
+		goalSelector.addGoal(2, new WanderGoal(this));
+		targetSelector.addGoal(1, new NearestAttackableTargetGoal<>(this, PlayerEntity.class, true));
 	}
 
 	@Override
