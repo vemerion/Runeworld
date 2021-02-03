@@ -43,7 +43,8 @@ public class EventSubscriber {
 			dataGenerator.addProvider(new LootTableProvider(dataGenerator) {
 				@Override
 				protected List<Pair<Supplier<Consumer<BiConsumer<ResourceLocation, Builder>>>, LootParameterSet>> getTables() {
-					return ImmutableList.of(Pair.of(ModBlockLootTables::new, LootParameterSets.BLOCK));
+					return ImmutableList.of(Pair.of(ModBlockLootTables::new, LootParameterSets.BLOCK),
+							Pair.of(ModEntityLootTables::new, LootParameterSets.ENTITY));
 				};
 
 				@Override
