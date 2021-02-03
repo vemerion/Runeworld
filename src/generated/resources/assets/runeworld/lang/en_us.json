@@ -12,5 +12,6 @@
   "entity.runeworld.mosquito": "Mosquito",
   "item.runeworld.blood_bucket": "Blood Bucket",
   "item.runeworld.blood_pudding": "Blood Pudding",
-  "item.runeworld.mosquito_spawn_egg": "Mosquito Spawn Egg"
+  "item.runeworld.mosquito_spawn_egg": "Mosquito Spawn Egg",
+  "itemGroup.runeworld": "Runeworld"
 }

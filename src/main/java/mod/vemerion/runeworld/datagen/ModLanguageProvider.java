@@ -32,6 +32,7 @@ public class ModLanguageProvider extends LanguageProvider {
 		add(ModBiomes.BLOOD_PLAINS, "Blood Plains");
 		add(ModEntities.MOSQUITO, "Mosquito");
 		add(ModEntities.MOSQUITO_SPAWN_EGG, "Mosquito Spawn Egg");
+		add("itemGroup." + Main.MODID, "Runeworld");
 	}
 
 	private void add(Biome key, String name) {
