@@ -10,8 +10,10 @@
   "block.runeworld.blood_rock": "Blood Rock",
   "effect.runeworld.blood_drained": "Blood Drained",
   "entity.runeworld.mosquito": "Mosquito",
+  "entity.runeworld.mosquito_eggs": "Mosquito Eggs",
   "item.runeworld.blood_bucket": "Blood Bucket",
   "item.runeworld.blood_pudding": "Blood Pudding",
+  "item.runeworld.mosquito_eggs": "Mosquito Eggs",
   "item.runeworld.mosquito_spawn_egg": "Mosquito Spawn Egg",
   "itemGroup.runeworld": "Runeworld"
 }

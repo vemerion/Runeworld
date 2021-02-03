@@ -9,6 +9,7 @@ import mod.vemerion.runeworld.renderer.MosquitoRenderer;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.RenderTypeLookup;
+import net.minecraft.client.renderer.entity.SpriteRenderer;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.client.event.ParticleFactoryRegisterEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
@@ -27,12 +28,16 @@ public class ClientModEventSubscriber {
 		mc.particles.registerFactory(ModParticleTypes.DRIPPING_BLOOD, (s) -> new DrippingBloodFactory(s));
 
 	}
-	
+
 	@SubscribeEvent
 	public static void onClientSetup(FMLClientSetupEvent event) {
 		RenderTypeLookup.setRenderLayer(ModBlocks.BLOOD_FLOWER, RenderType.getCutout());
 		RenderTypeLookup.setRenderLayer(ModBlocks.BLOOD_CRYSTAL, RenderType.getCutout());
-		
+
+		Minecraft mc = event.getMinecraftSupplier().get();
+
 		RenderingRegistry.registerEntityRenderingHandler(ModEntities.MOSQUITO, MosquitoRenderer::new);
+		RenderingRegistry.registerEntityRenderingHandler(ModEntities.MOSQUITO_EGGS,
+				m -> new SpriteRenderer<>(m, mc.getItemRenderer()));
 	}
 }

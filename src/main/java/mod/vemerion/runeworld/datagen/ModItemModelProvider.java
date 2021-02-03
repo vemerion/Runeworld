@@ -18,6 +18,7 @@ public class ModItemModelProvider extends ItemModelProvider {
 	protected void registerModels() {
 		simpleItem(ModItems.BLOOD_BUCKET);
 		simpleItem(ModItems.BLOOD_PUDDING);
+		simpleItem(ModItems.MOSQUITO_EGGS);
 		simpleItem(ModItems.BLOOD_FLOWER, BLOCK_FOLDER);
 		simpleItem(ModItems.BLOOD_CRYSTAL, BLOCK_FOLDER);
 		spawnEgg(ModEntities.MOSQUITO_SPAWN_EGG);
