@@ -34,6 +34,7 @@ public class ModLanguageProvider extends LanguageProvider {
 		add(ModEntities.MOSQUITO, "Mosquito");
 		add(ModEntities.MOSQUITO_SPAWN_EGG, "Mosquito Spawn Egg");
 		add(ModEntities.MOSQUITO_EGGS, "Mosquito Eggs");
+		add(ModEntities.BLOOD_BAT, "Blood Bat");
 		add("itemGroup." + Main.MODID, "Runeworld");
 	}
 

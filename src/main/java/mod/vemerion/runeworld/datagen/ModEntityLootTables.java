@@ -19,12 +19,13 @@ import net.minecraftforge.registries.ForgeRegistries;
 public class ModEntityLootTables extends EntityLootTables {
 	@Override
 	protected void addTables() {
-		this.registerLootTable(ModEntities.MOSQUITO,
+		registerLootTable(ModEntities.MOSQUITO,
 				LootTable.builder()
 						.addLootPool(LootPool.builder().rolls(ConstantRange.of(1))
 								.addEntry(ItemLootEntry.builder(ModItems.MOSQUITO_EGGS))
 								.acceptCondition(KilledByPlayer.builder())
 								.acceptCondition(RandomChanceWithLooting.builder(0.05f, 0.02f))));
+		registerLootTable(ModEntities.BLOOD_BAT, LootTable.builder());
 	}
 
 	@Override

@@ -5,6 +5,7 @@ import mod.vemerion.runeworld.init.ModBlocks;
 import mod.vemerion.runeworld.init.ModEntities;
 import mod.vemerion.runeworld.init.ModParticleTypes;
 import mod.vemerion.runeworld.particle.DrippingBloodFactory;
+import mod.vemerion.runeworld.renderer.BloodBatRenderer;
 import mod.vemerion.runeworld.renderer.MosquitoRenderer;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.RenderType;
@@ -37,6 +38,7 @@ public class ClientModEventSubscriber {
 		Minecraft mc = event.getMinecraftSupplier().get();
 
 		RenderingRegistry.registerEntityRenderingHandler(ModEntities.MOSQUITO, MosquitoRenderer::new);
+		RenderingRegistry.registerEntityRenderingHandler(ModEntities.BLOOD_BAT, BloodBatRenderer::new);
 		RenderingRegistry.registerEntityRenderingHandler(ModEntities.MOSQUITO_EGGS,
 				m -> new SpriteRenderer<>(m, mc.getItemRenderer()));
 	}
