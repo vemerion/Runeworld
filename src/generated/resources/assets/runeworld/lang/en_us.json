@@ -11,5 +11,6 @@
   "effect.runeworld.blood_drained": "Blood Drained",
   "entity.runeworld.mosquito": "Mosquito",
   "item.runeworld.blood_bucket": "Blood Bucket",
-  "item.runeworld.blood_pudding": "Blood Pudding"
+  "item.runeworld.blood_pudding": "Blood Pudding",
+  "item.runeworld.mosquito_spawn_egg": "Mosquito Spawn Egg"
 }

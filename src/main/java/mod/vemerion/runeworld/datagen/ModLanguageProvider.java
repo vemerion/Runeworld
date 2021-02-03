@@ -31,6 +31,7 @@ public class ModLanguageProvider extends LanguageProvider {
 		add(ModEffects.BLOOD_DRAINED, "Blood Drained");
 		add(ModBiomes.BLOOD_PLAINS, "Blood Plains");
 		add(ModEntities.MOSQUITO, "Mosquito");
+		add(ModEntities.MOSQUITO_SPAWN_EGG, "Mosquito Spawn Egg");
 	}
 
 	private void add(Biome key, String name) {
