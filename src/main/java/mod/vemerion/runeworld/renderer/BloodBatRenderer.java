@@ -21,7 +21,10 @@ public class BloodBatRenderer extends MobRenderer<BloodBatEntity, BloodBatModel>
 	@Override
 	public void render(BloodBatEntity entityIn, float entityYaw, float partialTicks, MatrixStack matrixStackIn,
 			IRenderTypeBuffer bufferIn, int packedLightIn) {
+		matrixStackIn.push();
+		matrixStackIn.translate(0, entityIn.getAnimationHeight(partialTicks) * 0.1, 0);
 		super.render(entityIn, entityYaw, partialTicks, matrixStackIn, bufferIn, packedLightIn);
+		matrixStackIn.pop();
 	}
 
 	@Override

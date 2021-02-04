@@ -11,6 +11,7 @@ import net.minecraft.entity.passive.IFlyingAnimal;
 import net.minecraft.pathfinding.FlyingPathNavigator;
 import net.minecraft.pathfinding.PathNavigator;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.World;
 
 public class BloodBatEntity extends CreatureEntity implements IFlyingAnimal {
@@ -42,6 +43,10 @@ public class BloodBatEntity extends CreatureEntity implements IFlyingAnimal {
 		navigator.setCanSwim(false);
 		navigator.setCanOpenDoors(false);
 		return navigator;
+	}
+	
+	public float getAnimationHeight(float partialTicks) {
+		return MathHelper.cos((ticksExisted + partialTicks) / 5);
 	}
 
 	@Override
