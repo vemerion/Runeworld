@@ -30,6 +30,9 @@ public class BloodBatModel extends EntityModel<BloodBatEntity> {
 	public ModelRenderer rightLeg2;
 	public ModelRenderer rightFoot;
 
+	private final float HEAD_ROT;
+	private final float BODY_ROT;
+
 	public BloodBatModel() {
 		this.textureWidth = 64;
 		this.textureHeight = 64;
@@ -116,6 +119,9 @@ public class BloodBatModel extends EntityModel<BloodBatEntity> {
 		this.rightWing1.addChild(this.rightWing2);
 		this.rightLeg2.addChild(this.rightFoot);
 		this.leftLeg1.addChild(this.leftLeg2);
+
+		this.HEAD_ROT = this.head.rotateAngleX;
+		this.BODY_ROT = this.body.rotateAngleX;
 	}
 
 	@Override
@@ -156,6 +162,12 @@ public class BloodBatModel extends EntityModel<BloodBatEntity> {
 		// Look
 		head.rotateAngleY = (float) Math.toRadians(netHeadYaw) * 0.35f;
 		head.rotateAngleZ = (float) Math.toRadians(netHeadYaw) * 0.35f;
+
+		// Attack
+		head.rotateAngleX = HEAD_ROT + MathHelper.sin(swingProgress * (float) Math.PI * 2) * (float) Math.toRadians(20);
+
+		// Body
+		body.rotateAngleX = BODY_ROT + limbSwingAmount * (float) Math.toRadians(100);
 	}
 
 	/**

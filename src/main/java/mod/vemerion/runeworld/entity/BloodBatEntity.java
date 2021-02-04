@@ -7,7 +7,10 @@ import net.minecraft.entity.MobEntity;
 import net.minecraft.entity.ai.attributes.AttributeModifierMap;
 import net.minecraft.entity.ai.attributes.Attributes;
 import net.minecraft.entity.ai.controller.FlyingMovementController;
+import net.minecraft.entity.ai.goal.MeleeAttackGoal;
+import net.minecraft.entity.ai.goal.NearestAttackableTargetGoal;
 import net.minecraft.entity.passive.IFlyingAnimal;
+import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.pathfinding.FlyingPathNavigator;
 import net.minecraft.pathfinding.PathNavigator;
 import net.minecraft.util.math.BlockPos;
@@ -28,7 +31,12 @@ public class BloodBatEntity extends CreatureEntity implements IFlyingAnimal {
 				.createMutableAttribute(Attributes.FLYING_SPEED, 0.4D)
 				.createMutableAttribute(Attributes.ATTACK_DAMAGE, 1.0D);
 	}
-
+	
+	@Override
+	public void tick() {
+		super.tick();
+		updateArmSwingProgress();
+	}
 
 	@Override
 	protected PathNavigator createNavigator(World world) {
@@ -43,6 +51,12 @@ public class BloodBatEntity extends CreatureEntity implements IFlyingAnimal {
 		navigator.setCanSwim(false);
 		navigator.setCanOpenDoors(false);
 		return navigator;
+	}
+	
+	@Override
+	protected void registerGoals() {
+		goalSelector.addGoal(1, new MeleeAttackGoal(this, 1.4, true));
+		targetSelector.addGoal(1, new NearestAttackableTargetGoal<>(this, PlayerEntity.class, true));
 	}
 	
 	public float getAnimationHeight(float partialTicks) {
