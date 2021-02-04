@@ -136,38 +136,49 @@ public class BloodBatModel extends EntityModel<BloodBatEntity> {
 	public void setLivingAnimations(BloodBatEntity entityIn, float limbSwing, float limbSwingAmount,
 			float partialTick) {
 		super.setLivingAnimations(entityIn, limbSwing, limbSwingAmount, partialTick);
-
 		// Wings
-		float animationHeight = entityIn.getAnimationHeight(partialTick);
-		leftWing1.rotateAngleY = animationHeight * (float) Math.toRadians(20);
-		leftWing2.rotateAngleY = animationHeight * (float) Math.toRadians(20);
-		rightWing1.rotateAngleY = -animationHeight * (float) Math.toRadians(20);
-		rightWing2.rotateAngleY = -animationHeight * (float) Math.toRadians(20);
+		if (!entityIn.isHanging()) {
+			float animationHeight = entityIn.getAnimationHeight(partialTick);
+			leftWing1.rotateAngleY = animationHeight * (float) Math.toRadians(20);
+			leftWing2.rotateAngleY = animationHeight * (float) Math.toRadians(20);
+			rightWing1.rotateAngleY = -animationHeight * (float) Math.toRadians(20);
+			rightWing2.rotateAngleY = -animationHeight * (float) Math.toRadians(20);
+		} else {
+			leftWing1.rotateAngleY = (float) Math.toRadians(70);
+			leftWing2.rotateAngleY = (float) Math.toRadians(70);
+			rightWing1.rotateAngleY = -(float) Math.toRadians(70);
+			rightWing2.rotateAngleY = -(float) Math.toRadians(70);
+		}
 	}
 
 	@Override
 	public void setRotationAngles(BloodBatEntity entityIn, float limbSwing, float limbSwingAmount, float ageInTicks,
 			float netHeadYaw, float headPitch) {
 
-		// Legs
-		leftLeg1.rotateAngleX = -MathHelper.cos(ageInTicks / 10) * (float) Math.toRadians(5)
-				+ (float) Math.toRadians(10);
-		leftLeg2.rotateAngleX = -MathHelper.cos(ageInTicks / 10) * (float) Math.toRadians(5)
-				+ (float) Math.toRadians(10);
-		rightLeg1.rotateAngleX = -MathHelper.cos(ageInTicks / 10) * (float) Math.toRadians(5)
-				+ (float) Math.toRadians(10);
-		rightLeg2.rotateAngleX = -MathHelper.cos(ageInTicks / 10) * (float) Math.toRadians(5)
-				+ (float) Math.toRadians(10);
+		if (!entityIn.isHanging()) {
+			// Legs
+			leftLeg1.rotateAngleX = -MathHelper.cos(ageInTicks / 10) * (float) Math.toRadians(5)
+					+ (float) Math.toRadians(10);
+			leftLeg2.rotateAngleX = -MathHelper.cos(ageInTicks / 10) * (float) Math.toRadians(5)
+					+ (float) Math.toRadians(10);
+			rightLeg1.rotateAngleX = -MathHelper.cos(ageInTicks / 10) * (float) Math.toRadians(5)
+					+ (float) Math.toRadians(10);
+			rightLeg2.rotateAngleX = -MathHelper.cos(ageInTicks / 10) * (float) Math.toRadians(5)
+					+ (float) Math.toRadians(10);
 
-		// Look
-		head.rotateAngleY = (float) Math.toRadians(netHeadYaw) * 0.35f;
-		head.rotateAngleZ = (float) Math.toRadians(netHeadYaw) * 0.35f;
+			// Look
+			head.rotateAngleY = (float) Math.toRadians(netHeadYaw) * 0.35f;
+			head.rotateAngleZ = (float) Math.toRadians(netHeadYaw) * 0.35f;
 
-		// Attack
-		head.rotateAngleX = HEAD_ROT + MathHelper.sin(swingProgress * (float) Math.PI * 2) * (float) Math.toRadians(20);
+			// Attack
+			head.rotateAngleX = HEAD_ROT
+					+ MathHelper.sin(swingProgress * (float) Math.PI * 2) * (float) Math.toRadians(20);
 
-		// Body
-		body.rotateAngleX = BODY_ROT + limbSwingAmount * (float) Math.toRadians(100);
+			// Body
+			body.rotateAngleX = BODY_ROT + limbSwingAmount * (float) Math.toRadians(100);
+		} else {
+			body.rotateAngleX = (float) Math.toRadians(180);
+		}
 	}
 
 	/**
