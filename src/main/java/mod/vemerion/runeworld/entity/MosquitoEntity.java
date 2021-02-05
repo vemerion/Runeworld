@@ -1,9 +1,9 @@
 package mod.vemerion.runeworld.entity;
 
-import java.util.EnumSet;
 import java.util.List;
 import java.util.Random;
 
+import mod.vemerion.runeworld.goal.HoverWanderGoal;
 import mod.vemerion.runeworld.init.ModEffects;
 import mod.vemerion.runeworld.init.ModFluids;
 import net.minecraft.block.BlockState;
@@ -13,11 +13,9 @@ import net.minecraft.entity.EntityType;
 import net.minecraft.entity.ILivingEntityData;
 import net.minecraft.entity.MobEntity;
 import net.minecraft.entity.SpawnReason;
-import net.minecraft.entity.ai.RandomPositionGenerator;
 import net.minecraft.entity.ai.attributes.AttributeModifierMap;
 import net.minecraft.entity.ai.attributes.Attributes;
 import net.minecraft.entity.ai.controller.FlyingMovementController;
-import net.minecraft.entity.ai.goal.Goal;
 import net.minecraft.entity.ai.goal.MeleeAttackGoal;
 import net.minecraft.entity.ai.goal.NearestAttackableTargetGoal;
 import net.minecraft.entity.passive.IFlyingAnimal;
@@ -29,7 +27,6 @@ import net.minecraft.pathfinding.PathNavigator;
 import net.minecraft.potion.EffectInstance;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.vector.Vector3d;
 import net.minecraft.world.Difficulty;
 import net.minecraft.world.DifficultyInstance;
 import net.minecraft.world.IServerWorld;
@@ -88,7 +85,7 @@ public class MosquitoEntity extends CreatureEntity implements IFlyingAnimal {
 	@Override
 	protected void registerGoals() {
 		goalSelector.addGoal(1, new MeleeAttackGoal(this, 1.4, true));
-		goalSelector.addGoal(2, new WanderGoal(this));
+		goalSelector.addGoal(2, new HoverWanderGoal(this));
 		targetSelector.addGoal(1, new NearestAttackableTargetGoal<>(this, PlayerEntity.class, true));
 	}
 
@@ -131,41 +128,4 @@ public class MosquitoEntity extends CreatureEntity implements IFlyingAnimal {
 	public boolean hasNoGravity() {
 		return true;
 	}
-
-	private static class WanderGoal extends Goal {
-		private MosquitoEntity mosquito;
-
-		private WanderGoal(MosquitoEntity mosquito) {
-			this.mosquito = mosquito;
-			this.setMutexFlags(EnumSet.of(Goal.Flag.MOVE));
-		}
-
-		@Override
-		public boolean shouldExecute() {
-			return mosquito.getNavigator().noPath() && mosquito.getRNG().nextInt(4) == 0;
-		}
-
-		@Override
-		public boolean shouldContinueExecuting() {
-			return mosquito.getNavigator().hasPath();
-		}
-
-		@Override
-		public void startExecuting() {
-			Vector3d pos = wanderPos();
-			if (pos != null) {
-				mosquito.getNavigator().setPath(mosquito.getNavigator().getPathToPos(new BlockPos(pos), 1), 1);
-			}
-
-		}
-
-		private Vector3d wanderPos() {
-			Vector3d look = mosquito.getLook(0);
-			Vector3d pos = RandomPositionGenerator.findGroundTarget(mosquito, 8, 4, -2, look, (float) Math.PI / 2);
-			if (pos != null && !mosquito.world.getBlockState(new BlockPos(pos).up()).getMaterial().isSolid())
-				pos = pos.add(0, 1, 0);
-			return pos;
-		}
-	}
-
 }

@@ -2,6 +2,7 @@ package mod.vemerion.runeworld.entity;
 
 import java.util.EnumSet;
 
+import mod.vemerion.runeworld.goal.HoverWanderGoal;
 import net.minecraft.block.BlockState;
 import net.minecraft.entity.CreatureEntity;
 import net.minecraft.entity.EntityType;
@@ -10,6 +11,8 @@ import net.minecraft.entity.ai.attributes.AttributeModifierMap;
 import net.minecraft.entity.ai.attributes.Attributes;
 import net.minecraft.entity.ai.controller.FlyingMovementController;
 import net.minecraft.entity.ai.goal.Goal;
+import net.minecraft.entity.ai.goal.LookAtGoal;
+import net.minecraft.entity.ai.goal.LookRandomlyGoal;
 import net.minecraft.entity.ai.goal.MeleeAttackGoal;
 import net.minecraft.entity.ai.goal.NearestAttackableTargetGoal;
 import net.minecraft.entity.passive.IFlyingAnimal;
@@ -53,7 +56,7 @@ public class BloodBatEntity extends CreatureEntity implements IFlyingAnimal {
 		updateArmSwingProgress();
 		if (isHanging() && !world.isRemote) {
 			setPosition(hangingPos.x, hangingPos.y, hangingPos.z);
-			
+
 			if (!world.getBlockState(getPosition().up(2)).isSolid())
 				stopHanging();
 		}
@@ -76,9 +79,37 @@ public class BloodBatEntity extends CreatureEntity implements IFlyingAnimal {
 
 	@Override
 	protected void registerGoals() {
-		goalSelector.addGoal(1, new MeleeAttackGoal(this, 1.4, true));
+		goalSelector.addGoal(1, new MeleeAttackGoal(this, 1.4, true) {
+			@Override
+			public boolean shouldExecute() {
+				return super.shouldExecute() && !isHanging();
+			}
+		});
 		goalSelector.addGoal(2, new FindLedgeGoal(this));
-		targetSelector.addGoal(1, new NearestAttackableTargetGoal<>(this, PlayerEntity.class, true));
+		goalSelector.addGoal(3, new HoverWanderGoal(this) {
+			@Override
+			public boolean shouldExecute() {
+				return super.shouldExecute() && !isHanging();
+			}
+		});
+		goalSelector.addGoal(4, new LookAtGoal(this, PlayerEntity.class, 6.0F) {
+			@Override
+			public boolean shouldExecute() {
+				return super.shouldExecute() && !isHanging();
+			}
+		});
+		goalSelector.addGoal(5, new LookRandomlyGoal(this) {
+			@Override
+			public boolean shouldExecute() {
+				return super.shouldExecute() && !isHanging();
+			}
+		});
+		targetSelector.addGoal(1, new NearestAttackableTargetGoal<PlayerEntity>(this, PlayerEntity.class, true) {
+			@Override
+			public boolean shouldExecute() {
+				return super.shouldExecute() && !isHanging();
+			}
+		});
 	}
 
 	@Override
@@ -95,7 +126,7 @@ public class BloodBatEntity extends CreatureEntity implements IFlyingAnimal {
 					compound.getDouble("hangingZ")));
 		}
 	}
-	
+
 	@Override
 	protected Vector3d handlePistonMovement(Vector3d pos) {
 		if (isHanging())
@@ -177,7 +208,7 @@ public class BloodBatEntity extends CreatureEntity implements IFlyingAnimal {
 
 		@Override
 		public boolean shouldExecute() {
-			return bat.getNavigator().noPath() && bat.getRNG().nextInt(4) == 0 && !bat.isHanging();
+			return bat.getNavigator().noPath() && bat.getRNG().nextInt(2) == 0 && !bat.isHanging();
 		}
 
 		@Override
