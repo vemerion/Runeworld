@@ -11,7 +11,9 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.RenderTypeLookup;
 import net.minecraft.client.renderer.entity.SpriteRenderer;
+import net.minecraft.item.SpawnEggItem;
 import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.client.event.ColorHandlerEvent;
 import net.minecraftforge.client.event.ParticleFactoryRegisterEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.client.registry.RenderingRegistry;
@@ -41,5 +43,11 @@ public class ClientModEventSubscriber {
 		RenderingRegistry.registerEntityRenderingHandler(ModEntities.BLOOD_BAT, BloodBatRenderer::new);
 		RenderingRegistry.registerEntityRenderingHandler(ModEntities.MOSQUITO_EGGS,
 				m -> new SpriteRenderer<>(m, mc.getItemRenderer()));
+	}
+
+	@SubscribeEvent
+	public static void onRegisterColor(ColorHandlerEvent.Item event) {
+		event.getItemColors().register((stack, color) -> ((SpawnEggItem) stack.getItem()).getColor(color),
+				ModEntities.getSpawnEggs().toArray(new SpawnEggItem[0]));
 	}
 }
