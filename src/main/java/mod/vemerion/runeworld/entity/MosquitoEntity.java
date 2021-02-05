@@ -37,6 +37,7 @@ public class MosquitoEntity extends CreatureEntity implements IFlyingAnimal {
 	public MosquitoEntity(EntityType<? extends MosquitoEntity> type, World worldIn) {
 		super(type, worldIn);
 		this.moveController = new FlyingMovementController(this, 20, true);
+		this.experienceValue = 2;
 	}
 
 	public static AttributeModifierMap.MutableAttribute attributes() {
