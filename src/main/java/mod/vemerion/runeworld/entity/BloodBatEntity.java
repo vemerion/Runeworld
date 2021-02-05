@@ -3,8 +3,10 @@ package mod.vemerion.runeworld.entity;
 import java.util.EnumSet;
 
 import mod.vemerion.runeworld.goal.HoverWanderGoal;
+import mod.vemerion.runeworld.init.ModEffects;
 import net.minecraft.block.BlockState;
 import net.minecraft.entity.CreatureEntity;
+import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.MobEntity;
 import net.minecraft.entity.ai.attributes.AttributeModifierMap;
@@ -23,6 +25,7 @@ import net.minecraft.network.datasync.DataSerializers;
 import net.minecraft.network.datasync.EntityDataManager;
 import net.minecraft.pathfinding.FlyingPathNavigator;
 import net.minecraft.pathfinding.PathNavigator;
+import net.minecraft.potion.EffectInstance;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
@@ -162,6 +165,16 @@ public class BloodBatEntity extends CreatureEntity implements IFlyingAnimal {
 
 	public float getAnimationHeight(float partialTicks) {
 		return MathHelper.cos((ticksExisted + partialTicks) / 5);
+	}
+	
+	@Override
+	public boolean attackEntityAsMob(Entity entityIn) {
+		if (super.attackEntityAsMob(entityIn)) {
+			if (rand.nextDouble() < 0.15 && entityIn instanceof PlayerEntity)
+				((PlayerEntity) entityIn).addPotionEffect(new EffectInstance(ModEffects.BLOOD_DRAINED, 20 * 60));
+			return true;
+		}
+		return false;
 	}
 
 	@Override
