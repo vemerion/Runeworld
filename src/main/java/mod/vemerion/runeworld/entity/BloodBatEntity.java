@@ -43,14 +43,15 @@ public class BloodBatEntity extends CreatureEntity implements IFlyingAnimal {
 	public BloodBatEntity(EntityType<? extends BloodBatEntity> type, World worldIn) {
 		super(type, worldIn);
 		this.moveController = new FlyingMovementController(this, 20, true);
+		this.experienceValue = 5;
 	}
 
 	public static AttributeModifierMap.MutableAttribute attributes() {
-		return MobEntity.func_233666_p_().createMutableAttribute(Attributes.MAX_HEALTH, 5.0D)
+		return MobEntity.func_233666_p_().createMutableAttribute(Attributes.MAX_HEALTH, 20)
 				.createMutableAttribute(Attributes.MOVEMENT_SPEED, 0.2D)
-				.createMutableAttribute(Attributes.FOLLOW_RANGE, 16.0D)
+				.createMutableAttribute(Attributes.FOLLOW_RANGE, 24)
 				.createMutableAttribute(Attributes.FLYING_SPEED, 0.4D)
-				.createMutableAttribute(Attributes.ATTACK_DAMAGE, 1.0D);
+				.createMutableAttribute(Attributes.ATTACK_DAMAGE, 3);
 	}
 
 	@Override
@@ -166,7 +167,7 @@ public class BloodBatEntity extends CreatureEntity implements IFlyingAnimal {
 	public float getAnimationHeight(float partialTicks) {
 		return MathHelper.cos((ticksExisted + partialTicks) / 5);
 	}
-	
+
 	@Override
 	public boolean attackEntityAsMob(Entity entityIn) {
 		if (super.attackEntityAsMob(entityIn)) {
