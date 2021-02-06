@@ -213,7 +213,7 @@ public class BloodBatEntity extends CreatureEntity implements IFlyingAnimal {
 
 	private static class FindLedgeGoal extends Goal {
 		private BloodBatEntity bat;
-		private Vector3d ledgePos;
+		private BlockPos ledgePos;
 
 		private FindLedgeGoal(BloodBatEntity mosquito) {
 			this.bat = mosquito;
@@ -232,37 +232,52 @@ public class BloodBatEntity extends CreatureEntity implements IFlyingAnimal {
 
 		@Override
 		public void startExecuting() {
-			Vector3d pos = ledgePos();
-			if (pos != null) {
-				ledgePos = pos;
-				bat.getNavigator().setPath(bat.getNavigator().getPathToPos(new BlockPos(pos), 1), 1);
-			}
+			updateLedgePos();
 		}
 
 		@Override
 		public void tick() {
-			if (ledgePos != null && ledgePos.squareDistanceTo(bat.getPositionVec()) < 3) {
-				bat.getNavigator().setPath(null, 0);
-				bat.setPosition(ledgePos.x, ledgePos.y, ledgePos.z);
-				bat.startHanging(ledgePos);
+			if (!isValidLedgePos(bat.world, ledgePos))
+				updateLedgePos();
+			
+			if (ledgePos != null) {
+				Vector3d target = Vector3d.copyCenteredHorizontally(ledgePos).add(0, -1.75, 0);
+				if (target.squareDistanceTo(bat.getPositionVec()) < 3) {
+					bat.getNavigator().setPath(null, 0);
+					bat.setPosition(target.x, target.y, target.z);
+					bat.startHanging(target);
+				}
 			}
 		}
 
-		private Vector3d ledgePos() {
+		private BlockPos ledgePos() {
 			World world = bat.world;
 			BlockPos batPos = bat.getPosition();
 			for (int x = -6; x < 7; x++) {
 				for (int y = -6; y < 7; y++) {
 					for (int z = -6; z < 7; z++) {
 						BlockPos pos = batPos.add(x, y, z);
-						if (world.getBlockState(pos).isSolid() && world.isAirBlock(pos.down())
-								&& world.isAirBlock(pos.down(2)) && world.getEntitiesWithinAABBExcludingEntity(bat,
-										new AxisAlignedBB(pos).expand(0, -1, 0)).isEmpty())
-							return Vector3d.copyCenteredHorizontally(pos).add(0, -1.75, 0);
+						if (isValidLedgePos(world, pos))
+							return pos;
 					}
 				}
 			}
 			return null;
+		}
+
+		private void updateLedgePos() {
+			BlockPos pos = ledgePos();
+			if (pos != null) {
+				ledgePos = pos;
+				bat.getNavigator().setPath(bat.getNavigator().getPathToPos(pos.down(2), 1), 1);
+			}
+		}
+
+		private boolean isValidLedgePos(World world, BlockPos pos) {
+			return pos != null && world.getBlockState(pos).isSolid() && world.isAirBlock(pos.down())
+					&& world.isAirBlock(pos.down(2))
+					&& world.getEntitiesWithinAABBExcludingEntity(bat, new AxisAlignedBB(pos).expand(0, -2, 0))
+							.isEmpty();
 		}
 	}
 }
