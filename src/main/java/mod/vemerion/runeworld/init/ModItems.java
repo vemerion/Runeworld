@@ -1,6 +1,7 @@
 package mod.vemerion.runeworld.init;
 
 import mod.vemerion.runeworld.Main;
+import mod.vemerion.runeworld.item.BloodBatToothItem;
 import mod.vemerion.runeworld.item.BloodBucketItem;
 import mod.vemerion.runeworld.item.BloodFlowerItem;
 import mod.vemerion.runeworld.item.BloodPuddingItem;
@@ -31,6 +32,7 @@ public class ModItems {
 	public static final Item BLOOD_MOSS = null;
 	public static final Item BLOOD_CRYSTAL = null;
 	public static final Item MOSQUITO_EGGS = null;
+	public static final Item BLOOD_BAT_TOOTH = null;
 
 	static final ItemGroup ITEM_GROUP = new RuneworldItemGroup();
 
@@ -55,9 +57,10 @@ public class ModItems {
 		Item bloodCrystal = Init.setup(
 				new BlockItem(ModBlocks.BLOOD_CRYSTAL, new Item.Properties().group(ItemGroup.SEARCH)), "blood_crystal");
 		Item mosquitoEggs = Init.setup(new MosquitoEggsItem(), "mosquito_eggs");
+		Item bloodBatTooth = Init.setup(new BloodBatToothItem(), "blood_bat_tooth");
 
 		event.getRegistry().registerAll(bloodBucket, bloodPudding, bloodFlower, bloodPillarLarge, bloodPillarMedium,
-				bloodPillarSmall, bloodRock, bloodMoss, bloodCrystal, mosquitoEggs);
+				bloodPillarSmall, bloodRock, bloodMoss, bloodCrystal, mosquitoEggs, bloodBatTooth);
 	}
 
 	private static class RuneworldItemGroup extends ItemGroup {

@@ -1,0 +1,6 @@
+{
+  "parent": "minecraft:item/generated",
+  "textures": {
+    "layer0": "runeworld:item/blood_bat_tooth"
+  }
+}
