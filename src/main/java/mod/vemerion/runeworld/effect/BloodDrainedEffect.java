@@ -29,7 +29,7 @@ public class BloodDrainedEffect extends Effect {
 
 	@Override
 	public boolean isReady(int duration, int amplifier) {
-		return duration % (20 * 45) == 0;
+		return duration % (20 * 20) == 0;
 	}
 
 	@Override

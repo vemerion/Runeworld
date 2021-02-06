@@ -12,11 +12,8 @@ import net.minecraft.loot.ConstantRange;
 import net.minecraft.loot.ItemLootEntry;
 import net.minecraft.loot.LootPool;
 import net.minecraft.loot.LootTable;
-import net.minecraft.loot.RandomValueRange;
 import net.minecraft.loot.conditions.KilledByPlayer;
 import net.minecraft.loot.conditions.RandomChanceWithLooting;
-import net.minecraft.loot.functions.LootingEnchantBonus;
-import net.minecraft.loot.functions.SetCount;
 import net.minecraftforge.registries.ForgeRegistries;
 
 public class ModEntityLootTables extends EntityLootTables {
@@ -31,9 +28,9 @@ public class ModEntityLootTables extends EntityLootTables {
 		registerLootTable(ModEntities.BLOOD_BAT,
 				LootTable.builder()
 						.addLootPool(LootPool.builder().rolls(ConstantRange.of(1))
-								.addEntry(ItemLootEntry.builder(ModItems.BLOOD_BAT_TOOTH)
-										.acceptFunction(SetCount.builder(RandomValueRange.of(0, 1)))
-										.acceptFunction(LootingEnchantBonus.builder(RandomValueRange.of(0, 1))))));
+								.addEntry(ItemLootEntry.builder(ModItems.BLOOD_BAT_TOOTH))
+								.acceptCondition(KilledByPlayer.builder())
+								.acceptCondition(RandomChanceWithLooting.builder(0.05f, 0.02f))));
 	}
 
 	@Override
