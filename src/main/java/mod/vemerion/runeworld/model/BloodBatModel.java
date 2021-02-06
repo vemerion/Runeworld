@@ -135,7 +135,6 @@ public class BloodBatModel extends EntityModel<BloodBatEntity> {
 	@Override
 	public void setLivingAnimations(BloodBatEntity entityIn, float limbSwing, float limbSwingAmount,
 			float partialTick) {
-		super.setLivingAnimations(entityIn, limbSwing, limbSwingAmount, partialTick);
 		// Wings
 		if (!entityIn.isHanging()) {
 			float animationHeight = entityIn.getAnimationHeight(partialTick);
@@ -177,6 +176,13 @@ public class BloodBatModel extends EntityModel<BloodBatEntity> {
 			// Body
 			body.rotateAngleX = BODY_ROT + limbSwingAmount * (float) Math.toRadians(100);
 		} else {
+			leftLeg1.rotateAngleX = 0;
+			leftLeg2.rotateAngleX = 0;
+			rightLeg1.rotateAngleX = 0;
+			rightLeg2.rotateAngleX = 0;
+			head.rotateAngleX = 0.2f;
+			head.rotateAngleY = 0;
+			head.rotateAngleZ = 0;
 			body.rotateAngleX = (float) Math.toRadians(180);
 		}
 	}
