@@ -33,6 +33,8 @@ public class BloodPlainsBiome extends ModBiome {
 		generation.withFeature(GenerationStage.Decoration.VEGETAL_DECORATION, ModConfiguredFeatures.BLOOD_CRYSTAL);
 		generation.withFeature(GenerationStage.Decoration.TOP_LAYER_MODIFICATION,
 				ModConfiguredFeatures.BLOOD_ROCK_PATCH);
+		generation.withFeature(GenerationStage.Decoration.SURFACE_STRUCTURES,
+				ModConfiguredFeatures.BLOOD_BAT_TREE);
 
 		mobs.withSpawner(EntityClassification.MONSTER, new Spawners(ModEntities.MOSQUITO, 10, 1, 2));
 

@@ -22,6 +22,7 @@ public class ModConfiguredFeatures {
 	public static ConfiguredFeature<?, ?> BLOOD_PILLAR_CLUSTER;
 	public static ConfiguredFeature<?, ?> BLOOD_ROCK_PATCH;
 	public static ConfiguredFeature<?, ?> BLOOD_CRYSTAL;
+	public static ConfiguredFeature<?, ?> BLOOD_BAT_TREE;
 
 	public static void onRegisterConfiguredFeature() {
 
@@ -42,6 +43,9 @@ public class ModConfiguredFeatures {
 						ImmutableList.of(ModBlocks.BLOOD_MOSS.getDefaultState()),
 						ImmutableList.of(Blocks.AIR.getDefaultState()), ImmutableList.of(Blocks.AIR.getDefaultState())))
 				.withPlacement(Features.Placements.HEIGHTMAP_PLACEMENT.func_242731_b(2));
+		
+		BLOOD_BAT_TREE = ModFeatures.BLOOD_BAT_TREE.withConfiguration(IFeatureConfig.NO_FEATURE_CONFIG)
+				.withPlacement(Placement.CHANCE.configure(new ChanceConfig(50)));
 
 		Registry<ConfiguredFeature<?, ?>> registry = WorldGenRegistries.CONFIGURED_FEATURE;
 
@@ -50,5 +54,6 @@ public class ModConfiguredFeatures {
 		Registry.register(registry, new ResourceLocation(Main.MODID, "blood_pillar_cluster"), BLOOD_PILLAR_CLUSTER);
 		Registry.register(registry, new ResourceLocation(Main.MODID, "blood_rock_patch"), BLOOD_ROCK_PATCH);
 		Registry.register(registry, new ResourceLocation(Main.MODID, "blood_crystal"), BLOOD_CRYSTAL);
+		Registry.register(registry, new ResourceLocation(Main.MODID, "blood_bat_tree"), BLOOD_BAT_TREE);
 	}
 }

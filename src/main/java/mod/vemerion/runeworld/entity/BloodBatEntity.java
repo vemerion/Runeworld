@@ -31,6 +31,7 @@ import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.vector.Vector3d;
+import net.minecraft.world.IWorld;
 import net.minecraft.world.World;
 
 public class BloodBatEntity extends CreatureEntity implements IFlyingAnimal {
@@ -83,7 +84,7 @@ public class BloodBatEntity extends CreatureEntity implements IFlyingAnimal {
 
 	@Override
 	protected void registerGoals() {
-		goalSelector.addGoal(1, new MeleeAttackGoal(this, 1.4, true) {
+		goalSelector.addGoal(1, new MeleeAttackGoal(this, 1.65, true) {
 			@Override
 			public boolean shouldExecute() {
 				return super.shouldExecute() && !isHanging();
@@ -114,6 +115,16 @@ public class BloodBatEntity extends CreatureEntity implements IFlyingAnimal {
 				return super.shouldExecute() && !isHanging();
 			}
 		});
+	}
+
+	@Override
+	public boolean canDespawn(double distanceToClosestPlayer) {
+		return false;
+	}
+	
+	@Override
+	protected boolean isDespawnPeaceful() {
+		return true;
 	}
 
 	@Override
@@ -211,6 +222,12 @@ public class BloodBatEntity extends CreatureEntity implements IFlyingAnimal {
 		return false;
 	}
 
+	public static boolean isValidLedgePos(IWorld world, BlockPos pos, BloodBatEntity bat) {
+		return pos != null && world.getBlockState(pos).isSolid() && world.isAirBlock(pos.down())
+				&& world.isAirBlock(pos.down(2))
+				&& world.getEntitiesWithinAABBExcludingEntity(bat, new AxisAlignedBB(pos).expand(0, -2, 0)).isEmpty();
+	}
+
 	private static class FindLedgeGoal extends Goal {
 		private BloodBatEntity bat;
 		private BlockPos ledgePos;
@@ -237,9 +254,9 @@ public class BloodBatEntity extends CreatureEntity implements IFlyingAnimal {
 
 		@Override
 		public void tick() {
-			if (!isValidLedgePos(bat.world, ledgePos))
+			if (!isValidLedgePos(bat.world, ledgePos, bat))
 				updateLedgePos();
-			
+
 			if (ledgePos != null) {
 				Vector3d target = Vector3d.copyCenteredHorizontally(ledgePos).add(0, -1.75, 0);
 				if (target.squareDistanceTo(bat.getPositionVec()) < 3) {
@@ -257,7 +274,7 @@ public class BloodBatEntity extends CreatureEntity implements IFlyingAnimal {
 				for (int y = -6; y < 7; y++) {
 					for (int z = -6; z < 7; z++) {
 						BlockPos pos = batPos.add(x, y, z);
-						if (isValidLedgePos(world, pos))
+						if (isValidLedgePos(world, pos, bat))
 							return pos;
 					}
 				}
@@ -271,13 +288,6 @@ public class BloodBatEntity extends CreatureEntity implements IFlyingAnimal {
 				ledgePos = pos;
 				bat.getNavigator().setPath(bat.getNavigator().getPathToPos(pos.down(2), 1), 1);
 			}
-		}
-
-		private boolean isValidLedgePos(World world, BlockPos pos) {
-			return pos != null && world.getBlockState(pos).isSolid() && world.isAirBlock(pos.down())
-					&& world.isAirBlock(pos.down(2))
-					&& world.getEntitiesWithinAABBExcludingEntity(bat, new AxisAlignedBB(pos).expand(0, -2, 0))
-							.isEmpty();
 		}
 	}
 }
