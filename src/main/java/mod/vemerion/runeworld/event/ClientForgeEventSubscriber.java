@@ -19,7 +19,7 @@ public class ClientForgeEventSubscriber {
 			event.setRed(0.7f);
 		}
 	}
-	
+
 	@SubscribeEvent
 	public static void redBloodFog(EntityViewRenderEvent.FogDensity event) {
 		if (event.getInfo().getFluidState().getFluid().isEquivalentTo(ModFluids.BLOOD)) {
@@ -27,4 +27,25 @@ public class ClientForgeEventSubscriber {
 			event.setCanceled(true);
 		}
 	}
+
+//	@SubscribeEvent
+//	public static void loadDimensionRenderInfo(WorldEvent.Load event) {
+//		if (event.getWorld() instanceof ClientWorld) {
+//			ClientWorld world = (ClientWorld) event.getWorld();
+//			if (world.getDimensionKey().equals(ModDimensions.BLOOD)) {
+//				world.func_239132_a_().setWeatherRenderHandler(new BloodRenderer.WeatherRenderer());
+//			}
+//		}
+//	}
+//
+//	@SubscribeEvent
+//	public static void unloadDimensionRenderInfo(WorldEvent.Unload event) {
+//		if (event.getWorld() instanceof ClientWorld) {
+//			ClientWorld world = (ClientWorld) event.getWorld();
+//
+//			if (world.getDimensionKey().equals(ModDimensions.BLOOD)) {
+//				world.func_239132_a_().setWeatherRenderHandler(null);
+//			}
+//		}
+//	}
 }
