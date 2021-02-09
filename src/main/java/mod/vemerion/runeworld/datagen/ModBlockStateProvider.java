@@ -72,12 +72,12 @@ public class ModBlockStateProvider extends BlockStateProvider {
 		String name = portal.getRegistryName().getPath();
 		BlockModelBuilder ew = models().withExistingParent(name + "_ew", mcLoc("block/block"))
 				.texture("particle", texture).element().from(6, 0, 0).to(10, 16, 16).face(Direction.EAST)
-				.texture("#particle").uvs(0, 0, 16, 16).end().face(Direction.WEST).texture("#particle")
-				.uvs(0, 0, 16, 16).end().end();
+				.texture("#particle").uvs(0, 0, 16, 16).tintindex(0).end().face(Direction.WEST).texture("#particle")
+				.uvs(0, 0, 16, 16).tintindex(0).end().end();
 		BlockModelBuilder ns = models().withExistingParent(name + "_ns", mcLoc("block/block"))
 				.texture("particle", texture).element().from(0, 0, 6).to(16, 16, 10).face(Direction.NORTH)
-				.texture("#particle").uvs(0, 0, 16, 16).end().face(Direction.SOUTH).texture("#particle")
-				.uvs(0, 0, 16, 16).end().end();
+				.texture("#particle").uvs(0, 0, 16, 16).tintindex(0).end().face(Direction.SOUTH).texture("#particle")
+				.uvs(0, 0, 16, 16).tintindex(0).end().end();
 		getVariantBuilder(portal).partialState().with(RunePortalBlock.AXIS, Direction.Axis.X)
 				.addModels(new ConfiguredModel(ns)).partialState().with(RunePortalBlock.AXIS, Direction.Axis.Z)
 				.addModels(new ConfiguredModel(ew));

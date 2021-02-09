@@ -17,10 +17,12 @@
       ],
       "faces": {
         "north": {
-          "texture": "#particle"
+          "texture": "#particle",
+          "tintindex": 0
         },
         "south": {
-          "texture": "#particle"
+          "texture": "#particle",
+          "tintindex": 0
         }
       }
     }
