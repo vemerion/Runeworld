@@ -11,7 +11,6 @@ import mod.vemerion.runeworld.block.BloodCrystalBlock;
 import mod.vemerion.runeworld.block.BloodFlowerBlock;
 import mod.vemerion.runeworld.block.BloodPillarBlock;
 import mod.vemerion.runeworld.block.RunePortalBlock;
-import mod.vemerion.runeworld.helpers.Helper;
 import net.minecraft.block.AbstractBlock;
 import net.minecraft.block.Block;
 import net.minecraft.block.Blocks;
@@ -52,12 +51,12 @@ public class ModBlocks {
 				.register(Init.setup(new Block(AbstractBlock.Properties.from(Blocks.COBBLESTONE)), "blood_moss"));
 		event.getRegistry().register(Init.setup(new BloodCrystalBlock(), "blood_crystal"));
 
-		createRunePortal(ModDimensions.BLOOD, Helper.color(255, 0, 0, 255));
+		createRunePortal(ModDimensions.BLOOD, 170, 0, 0);
 		event.getRegistry().registerAll(getRunePortals().toArray(new RunePortalBlock[0]));
 	}
 
-	private static RunePortalBlock createRunePortal(RegistryKey<World> dimension, int color) {
-		RunePortalBlock portal = Init.setup(new RunePortalBlock(dimension, color),
+	private static RunePortalBlock createRunePortal(RegistryKey<World> dimension, int red, int green, int blue) {
+		RunePortalBlock portal = Init.setup(new RunePortalBlock(dimension, red, green, blue),
 				dimension.getLocation().getPath() + "_rune_portal");
 		RUNE_PORTALS.add(portal);
 		return portal;

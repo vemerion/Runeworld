@@ -6,6 +6,7 @@ import mod.vemerion.runeworld.init.ModBlocks;
 import mod.vemerion.runeworld.init.ModEntities;
 import mod.vemerion.runeworld.init.ModParticleTypes;
 import mod.vemerion.runeworld.particle.DrippingBloodFactory;
+import mod.vemerion.runeworld.particle.RunePortalParticle;
 import mod.vemerion.runeworld.renderer.BloodBatRenderer;
 import mod.vemerion.runeworld.renderer.MosquitoRenderer;
 import net.minecraft.block.Block;
@@ -31,6 +32,7 @@ public class ClientModEventSubscriber {
 		Minecraft mc = Minecraft.getInstance();
 
 		mc.particles.registerFactory(ModParticleTypes.DRIPPING_BLOOD, (s) -> new DrippingBloodFactory(s));
+		mc.particles.registerFactory(ModParticleTypes.RUNE_PORTAL, (s) -> new RunePortalParticle.Factory(s));
 
 	}
 
