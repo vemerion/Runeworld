@@ -35,6 +35,8 @@ public class ModBlocks {
 	public static final Block BLOOD_ROCK = null;
 	public static final Block BLOOD_MOSS = null;
 	public static final Block BLOOD_CRYSTAL = null;
+	
+	public static final Block BLOOD_RUNE_PORTAL = null;
 
 	private static final List<RunePortalBlock> RUNE_PORTALS = new ArrayList<>();
 
