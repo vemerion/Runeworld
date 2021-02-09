@@ -1,12 +1,14 @@
 package mod.vemerion.runeworld.event;
 
 import mod.vemerion.runeworld.Main;
+import mod.vemerion.runeworld.block.RunePortalBlock;
 import mod.vemerion.runeworld.init.ModBlocks;
 import mod.vemerion.runeworld.init.ModEntities;
 import mod.vemerion.runeworld.init.ModParticleTypes;
 import mod.vemerion.runeworld.particle.DrippingBloodFactory;
 import mod.vemerion.runeworld.renderer.BloodBatRenderer;
 import mod.vemerion.runeworld.renderer.MosquitoRenderer;
+import net.minecraft.block.Block;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.RenderTypeLookup;
@@ -37,6 +39,9 @@ public class ClientModEventSubscriber {
 		RenderTypeLookup.setRenderLayer(ModBlocks.BLOOD_FLOWER, RenderType.getCutout());
 		RenderTypeLookup.setRenderLayer(ModBlocks.BLOOD_CRYSTAL, RenderType.getCutout());
 
+		for (Block portal : ModBlocks.getRunePortals())
+			RenderTypeLookup.setRenderLayer(portal, RenderType.getTranslucent());
+
 		Minecraft mc = event.getMinecraftSupplier().get();
 
 		RenderingRegistry.registerEntityRenderingHandler(ModEntities.MOSQUITO, MosquitoRenderer::new);
@@ -46,8 +51,14 @@ public class ClientModEventSubscriber {
 	}
 
 	@SubscribeEvent
-	public static void onRegisterColor(ColorHandlerEvent.Item event) {
+	public static void onRegisterItemColor(ColorHandlerEvent.Item event) {
 		event.getItemColors().register((stack, color) -> ((SpawnEggItem) stack.getItem()).getColor(color),
 				ModEntities.getSpawnEggs().toArray(new SpawnEggItem[0]));
+	}
+
+	@SubscribeEvent
+	public static void onRegisterBlockColor(ColorHandlerEvent.Block event) {
+		event.getBlockColors().register((state, reader, pos, color) -> ((RunePortalBlock) state.getBlock()).getColor(),
+				ModBlocks.getRunePortals().toArray(new RunePortalBlock[0]));
 	}
 }

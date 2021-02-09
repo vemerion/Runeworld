@@ -1,6 +1,7 @@
 package mod.vemerion.runeworld.datagen;
 
 import mod.vemerion.runeworld.Main;
+import mod.vemerion.runeworld.block.RunePortalBlock;
 import mod.vemerion.runeworld.init.ModBlocks;
 import net.minecraft.block.Block;
 import net.minecraft.data.DataGenerator;
@@ -8,6 +9,7 @@ import net.minecraft.util.Direction;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.client.model.generators.BlockModelBuilder;
 import net.minecraftforge.client.model.generators.BlockStateProvider;
+import net.minecraftforge.client.model.generators.ConfiguredModel;
 import net.minecraftforge.client.model.generators.ModelFile;
 import net.minecraftforge.common.data.ExistingFileHelper;
 
@@ -30,6 +32,8 @@ public class ModBlockStateProvider extends BlockStateProvider {
 		pillar(ModBlocks.BLOOD_PILLAR_MEDIUM, 8, bloodPillar, bloodPillar);
 		pillar(ModBlocks.BLOOD_PILLAR_SMALL, 4, bloodPillar, bloodPillar);
 		bloodMoss();
+		for (Block portal : ModBlocks.getRunePortals())
+			runePortal(portal);
 	}
 
 	private BlockModelBuilder empty(String name) {
@@ -61,6 +65,22 @@ public class ModBlockStateProvider extends BlockStateProvider {
 				modLoc("block/blood_moss_top"));
 		simpleBlock(bloodMoss, model);
 		simpleBlockItem(bloodMoss, model);
+	}
+
+	private void runePortal(Block portal) {
+		ResourceLocation texture = modLoc("block/rune_portal");
+		String name = portal.getRegistryName().getPath();
+		BlockModelBuilder ew = models().withExistingParent(name + "_ew", mcLoc("block/block"))
+				.texture("particle", texture).element().from(6, 0, 0).to(10, 16, 16).face(Direction.EAST)
+				.texture("#particle").uvs(0, 0, 16, 16).end().face(Direction.WEST).texture("#particle")
+				.uvs(0, 0, 16, 16).end().end();
+		BlockModelBuilder ns = models().withExistingParent(name + "_ns", mcLoc("block/block"))
+				.texture("particle", texture).element().from(0, 0, 6).to(16, 16, 10).face(Direction.NORTH)
+				.texture("#particle").uvs(0, 0, 16, 16).end().face(Direction.SOUTH).texture("#particle")
+				.uvs(0, 0, 16, 16).end().end();
+		getVariantBuilder(portal).partialState().with(RunePortalBlock.AXIS, Direction.Axis.X)
+				.addModels(new ConfiguredModel(ns)).partialState().with(RunePortalBlock.AXIS, Direction.Axis.Z)
+				.addModels(new ConfiguredModel(ew));
 	}
 
 }

@@ -32,5 +32,8 @@ public class ModBlockLootTables extends BlockLootTables {
 		registerDropSelfLootTable(ModBlocks.BLOOD_ROCK);
 		registerDropSelfLootTable(ModBlocks.BLOOD_MOSS);
 		registerDropSelfLootTable(ModBlocks.BLOOD_CRYSTAL);
+		
+		for (Block portal : ModBlocks.getRunePortals())
+			registerLootTable(portal, blockNoDrop());
 	}
 }
