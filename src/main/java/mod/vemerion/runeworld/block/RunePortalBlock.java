@@ -26,6 +26,7 @@ import net.minecraft.util.math.shapes.ISelectionContext;
 import net.minecraft.util.math.shapes.VoxelShape;
 import net.minecraft.util.math.vector.Vector3d;
 import net.minecraft.world.IBlockReader;
+import net.minecraft.world.IWorld;
 import net.minecraft.world.World;
 import net.minecraftforge.common.Tags;
 
@@ -97,6 +98,44 @@ public class RunePortalBlock extends Block {
 		builder.add(AXIS);
 	}
 
+	@Override
+	public BlockState updatePostPlacement(BlockState stateIn, Direction facing, BlockState facingState, IWorld worldIn,
+			BlockPos currentPos, BlockPos facingPos) {
+		Direction.Axis facingAxis = facing.getAxis();
+		Direction.Axis axis = stateIn.get(AXIS);
+		if (!(axis != facingAxis && facingAxis.isHorizontal()) && !facingState.isIn(this)
+				&& !isPortalBorderIntact(worldIn, currentPos, stateIn.getBlock(), axis))
+			return Blocks.AIR.getDefaultState();
+		return stateIn;
+	}
+
+	private boolean isPortalBorderIntact(IWorld world, BlockPos pos, Block portal, Direction.Axis axis) {
+		Set<BlockPos> checked = new HashSet<>();
+		List<BlockPos> worklist = new ArrayList<>();
+		Direction dir = axis == Direction.Axis.X ? Direction.WEST : Direction.SOUTH;
+		BlockPos offsets[] = offsets(dir);
+		worklist.add(pos);
+		while (!worklist.isEmpty()) {
+			pos = worklist.remove(0);
+			BlockState state = world.getBlockState(pos);
+			if (!(state.isIn(Tags.Blocks.OBSIDIAN) || state.getBlock() == portal)) {
+				return false;
+			}
+			checked.add(pos);
+			for (BlockPos offset : offsets) {
+				pos = pos.add(offset);
+				if (!checked.contains(pos))
+					worklist.add(pos);
+			}
+		}
+		return true;
+	}
+
+	private static BlockPos[] offsets(Direction dir) {
+		return new BlockPos[] { new BlockPos(0, 1, 0), new BlockPos(0, -1, 0), BlockPos.ZERO.offset(dir, 1),
+				BlockPos.ZERO.offset(dir, -1) };
+	}
+
 	public static boolean createPortal(World world, BlockPos pos, Block portal) {
 		if (createPortal(world, pos, portal, Direction.Axis.X))
 			return true;
@@ -108,8 +147,7 @@ public class RunePortalBlock extends Block {
 		List<BlockPos> worklist = new ArrayList<>();
 		BlockState portalState = portal.getDefaultState().with(AXIS, axis);
 		Direction dir = axis == Direction.Axis.X ? Direction.WEST : Direction.SOUTH;
-		BlockPos offsets[] = new BlockPos[] { new BlockPos(0, 1, 0), new BlockPos(0, -1, 0),
-				BlockPos.ZERO.offset(dir, 1), BlockPos.ZERO.offset(dir, -1) };
+		BlockPos offsets[] = offsets(dir);
 		BlockPos start = new BlockPos(pos);
 		for (BlockPos offset : offsets) {
 			pos = start.add(offset);

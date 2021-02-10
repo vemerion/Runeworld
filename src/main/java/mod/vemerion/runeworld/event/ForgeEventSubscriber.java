@@ -28,9 +28,9 @@ public class ForgeEventSubscriber {
 		ItemStack stack = event.getItemStack();
 		BlockState state = event.getWorld().getBlockState(event.getPos());
 		if (stack.getItem() == Runesword.BLOOD_RUNE && state.isIn(Tags.Blocks.OBSIDIAN)) {
-			RunePortalBlock.createPortal(event.getWorld(), event.getPos(), ModBlocks.BLOOD_RUNE_PORTAL);
-			if (!event.getPlayer().isCreative())
-				stack.shrink(1);
+			if (RunePortalBlock.createPortal(event.getWorld(), event.getPos(), ModBlocks.BLOOD_RUNE_PORTAL))
+				if (!event.getPlayer().isCreative())
+					stack.shrink(1);
 		}
 	}
 }
