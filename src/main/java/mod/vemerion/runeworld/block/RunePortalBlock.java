@@ -8,17 +8,15 @@ import java.util.Set;
 import java.util.function.Function;
 
 import mod.vemerion.runeworld.helpers.Helper;
-import mod.vemerion.runeworld.init.Runesword;
 import mod.vemerion.runeworld.particle.RunePortalParticleData;
 import net.minecraft.block.AbstractBlock;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
+import net.minecraft.block.PortalInfo;
 import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
 import net.minecraft.entity.Entity;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.inventory.EquipmentSlotType;
 import net.minecraft.item.ItemStack;
 import net.minecraft.state.EnumProperty;
 import net.minecraft.state.StateContainer;
@@ -33,6 +31,7 @@ import net.minecraft.util.math.vector.Vector3d;
 import net.minecraft.world.IBlockReader;
 import net.minecraft.world.IWorld;
 import net.minecraft.world.World;
+import net.minecraft.world.gen.Heightmap;
 import net.minecraft.world.server.ServerWorld;
 import net.minecraftforge.common.Tags;
 import net.minecraftforge.common.util.ITeleporter;
@@ -204,10 +203,46 @@ public class RunePortalBlock extends Block {
 	}
 
 	private static class RuneTeleporter implements ITeleporter {
+		private static final BlockState AIR = Blocks.AIR.getDefaultState();
+
 		@Override
 		public Entity placeEntity(Entity entity, ServerWorld currentWorld, ServerWorld destWorld, float yaw,
 				Function<Boolean, Entity> repositionEntity) {
 			return repositionEntity.apply(false);
+		}
+
+		@Override
+		public PortalInfo getPortalInfo(Entity entity, ServerWorld destWorld,
+				Function<ServerWorld, PortalInfo> defaultPortalInfo) {
+			BlockPos spawn = locateSpawnPos(destWorld, entity.getPositionVec());
+			if (spawn == null) {
+				spawn = new BlockPos(entity.getPositionVec());
+				destWorld.setBlockState(spawn, AIR);
+				destWorld.setBlockState(spawn.up(), AIR);
+			}
+			if (destWorld.isAirBlock(spawn.down()))
+				destWorld.setBlockState(spawn.down(), Blocks.OBSIDIAN.getDefaultState());
+
+			return new PortalInfo(Vector3d.copyCenteredHorizontally(spawn), Vector3d.ZERO, entity.rotationYaw,
+					entity.rotationPitch);
+		}
+
+		private BlockPos locateSpawnPos(ServerWorld world, Vector3d center) {
+			BlockPos pos = world.getHeight(Heightmap.Type.WORLD_SURFACE, new BlockPos(center));
+			Random rand = new Random(0);
+
+			for (int i = 0; i < 100; i++) {
+				if (isValidPos(world, pos))
+					return pos;
+				pos.add(rand.nextInt(20) - 10, 0, rand.nextInt(20) - 10);
+				pos = world.getHeight(Heightmap.Type.WORLD_SURFACE, pos);
+			}
+
+			return null;
+		}
+
+		private boolean isValidPos(ServerWorld world, BlockPos pos) {
+			return world.isAirBlock(pos) && world.isAirBlock(pos.up());
 		}
 	}
 
