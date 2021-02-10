@@ -5,8 +5,10 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Random;
 import java.util.Set;
+import java.util.function.Function;
 
 import mod.vemerion.runeworld.helpers.Helper;
+import mod.vemerion.runeworld.init.Runesword;
 import mod.vemerion.runeworld.particle.RunePortalParticleData;
 import net.minecraft.block.AbstractBlock;
 import net.minecraft.block.Block;
@@ -14,6 +16,9 @@ import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
 import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
+import net.minecraft.entity.Entity;
+import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.inventory.EquipmentSlotType;
 import net.minecraft.item.ItemStack;
 import net.minecraft.state.EnumProperty;
 import net.minecraft.state.StateContainer;
@@ -28,7 +33,9 @@ import net.minecraft.util.math.vector.Vector3d;
 import net.minecraft.world.IBlockReader;
 import net.minecraft.world.IWorld;
 import net.minecraft.world.World;
+import net.minecraft.world.server.ServerWorld;
 import net.minecraftforge.common.Tags;
+import net.minecraftforge.common.util.ITeleporter;
 
 public class RunePortalBlock extends Block {
 	public static final EnumProperty<Direction.Axis> AXIS = BlockStateProperties.HORIZONTAL_AXIS;
@@ -109,6 +116,15 @@ public class RunePortalBlock extends Block {
 		return stateIn;
 	}
 
+	@Override
+	public void onEntityCollision(BlockState state, World worldIn, BlockPos pos, Entity entityIn) {
+		if (!worldIn.isRemote && !entityIn.isPassenger() && !entityIn.isBeingRidden() && entityIn.isNonBoss()) {
+			RegistryKey<World> other = worldIn.getDimensionKey() == dimension ? World.OVERWORLD : dimension;
+			ServerWorld otherWorld = worldIn.getServer().getWorld(other);
+			entityIn.changeDimension(otherWorld, new RuneTeleporter());
+		}
+	}
+
 	private boolean isPortalBorderIntact(IWorld world, BlockPos pos, Block portal, Direction.Axis axis) {
 		Set<BlockPos> checked = new HashSet<>();
 		List<BlockPos> worklist = new ArrayList<>();
@@ -185,6 +201,14 @@ public class RunePortalBlock extends Block {
 	private static boolean isValidPortalState(World world, BlockPos pos) {
 		Block block = world.getBlockState(pos).getBlock();
 		return world.isAirBlock(pos) || block == Blocks.NETHER_PORTAL || block instanceof RunePortalBlock;
+	}
+
+	private static class RuneTeleporter implements ITeleporter {
+		@Override
+		public Entity placeEntity(Entity entity, ServerWorld currentWorld, ServerWorld destWorld, float yaw,
+				Function<Boolean, Entity> repositionEntity) {
+			return repositionEntity.apply(false);
+		}
 	}
 
 }
