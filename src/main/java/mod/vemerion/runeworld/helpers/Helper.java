@@ -1,5 +1,8 @@
 package mod.vemerion.runeworld.helpers;
 
+import net.minecraft.util.Direction;
+import net.minecraft.util.math.BlockPos;
+
 public class Helper {
 
 	public static int color(int r, int g, int b, int a) {
@@ -9,5 +12,10 @@ public class Helper {
 		b &= 0x000000FF;
 
 		return a | r | g | b;
+	}
+	
+	public static BlockPos[] offsets(Direction dir) {
+		return new BlockPos[] { new BlockPos(0, 1, 0), new BlockPos(0, -1, 0), BlockPos.ZERO.offset(dir, 1),
+				BlockPos.ZERO.offset(dir, -1) };
 	}
 }

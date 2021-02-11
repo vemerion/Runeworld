@@ -128,7 +128,7 @@ public class RunePortalBlock extends Block {
 		Set<BlockPos> checked = new HashSet<>();
 		List<BlockPos> worklist = new ArrayList<>();
 		Direction dir = axis == Direction.Axis.X ? Direction.WEST : Direction.SOUTH;
-		BlockPos offsets[] = offsets(dir);
+		BlockPos offsets[] = Helper.offsets(dir);
 		worklist.add(pos);
 		while (!worklist.isEmpty()) {
 			pos = worklist.remove(0);
@@ -146,23 +146,18 @@ public class RunePortalBlock extends Block {
 		return true;
 	}
 
-	private static BlockPos[] offsets(Direction dir) {
-		return new BlockPos[] { new BlockPos(0, 1, 0), new BlockPos(0, -1, 0), BlockPos.ZERO.offset(dir, 1),
-				BlockPos.ZERO.offset(dir, -1) };
-	}
-
 	public static boolean createPortal(World world, BlockPos pos, Block portal) {
 		if (createPortal(world, pos, portal, Direction.Axis.X))
 			return true;
 		return createPortal(world, pos, portal, Direction.Axis.Z);
 	}
 
-	public static boolean createPortal(World world, BlockPos pos, Block portal, Direction.Axis axis) {
+	public static boolean createPortal(IWorld world, BlockPos pos, Block portal, Direction.Axis axis) {
 		Set<BlockPos> positions = new HashSet<>();
 		List<BlockPos> worklist = new ArrayList<>();
 		BlockState portalState = portal.getDefaultState().with(AXIS, axis);
 		Direction dir = axis == Direction.Axis.X ? Direction.WEST : Direction.SOUTH;
-		BlockPos offsets[] = offsets(dir);
+		BlockPos offsets[] = Helper.offsets(dir);
 		BlockPos start = new BlockPos(pos);
 		for (BlockPos offset : offsets) {
 			pos = start.add(offset);
@@ -188,7 +183,7 @@ public class RunePortalBlock extends Block {
 
 			if (positions.size() < PORTAL_MAX_SIZE && !positions.isEmpty()) {
 				for (BlockPos p : positions) {
-					world.setBlockState(p, portalState);
+					world.setBlockState(p, portalState, 3);
 				}
 				return true;
 			}
@@ -197,7 +192,7 @@ public class RunePortalBlock extends Block {
 		return false;
 	}
 
-	private static boolean isValidPortalState(World world, BlockPos pos) {
+	private static boolean isValidPortalState(IWorld world, BlockPos pos) {
 		Block block = world.getBlockState(pos).getBlock();
 		return world.isAirBlock(pos) || block == Blocks.NETHER_PORTAL || block instanceof RunePortalBlock;
 	}

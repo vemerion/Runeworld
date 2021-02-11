@@ -7,6 +7,7 @@ import net.minecraft.block.Blocks;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.registry.Registry;
 import net.minecraft.util.registry.WorldGenRegistries;
+import net.minecraft.world.gen.feature.BlockStateFeatureConfig;
 import net.minecraft.world.gen.feature.BlockWithContextConfig;
 import net.minecraft.world.gen.feature.ConfiguredFeature;
 import net.minecraft.world.gen.feature.Feature;
@@ -23,6 +24,7 @@ public class ModConfiguredFeatures {
 	public static ConfiguredFeature<?, ?> BLOOD_ROCK_PATCH;
 	public static ConfiguredFeature<?, ?> BLOOD_CRYSTAL;
 	public static ConfiguredFeature<?, ?> BLOOD_BAT_TREE;
+	public static ConfiguredFeature<?, ?> BLOOD_RUNE_PORTAL_FEATURE;
 
 	public static void onRegisterConfiguredFeature() {
 
@@ -46,6 +48,10 @@ public class ModConfiguredFeatures {
 		
 		BLOOD_BAT_TREE = ModFeatures.BLOOD_BAT_TREE.withConfiguration(IFeatureConfig.NO_FEATURE_CONFIG)
 				.withPlacement(Placement.CHANCE.configure(new ChanceConfig(50)));
+		
+		BLOOD_RUNE_PORTAL_FEATURE = ModFeatures.RUNE_PORTAL_FEATURE.withConfiguration(new BlockStateFeatureConfig(ModBlocks.BLOOD_RUNE_PORTAL.getDefaultState()))
+				.withPlacement(Features.Placements.HEIGHTMAP_PLACEMENT).chance(350);
+		
 
 		Registry<ConfiguredFeature<?, ?>> registry = WorldGenRegistries.CONFIGURED_FEATURE;
 
@@ -55,5 +61,6 @@ public class ModConfiguredFeatures {
 		Registry.register(registry, new ResourceLocation(Main.MODID, "blood_rock_patch"), BLOOD_ROCK_PATCH);
 		Registry.register(registry, new ResourceLocation(Main.MODID, "blood_crystal"), BLOOD_CRYSTAL);
 		Registry.register(registry, new ResourceLocation(Main.MODID, "blood_bat_tree"), BLOOD_BAT_TREE);
+		Registry.register(registry, new ResourceLocation(Main.MODID, "blood_rune_portal_feature"), BLOOD_RUNE_PORTAL_FEATURE);
 	}
 }

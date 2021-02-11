@@ -6,6 +6,8 @@ import mod.vemerion.runeworld.feature.BloodPillarClusterFeature;
 import mod.vemerion.runeworld.feature.BloodPillarSingleFeature;
 import mod.vemerion.runeworld.feature.BloodPoolFeature;
 import mod.vemerion.runeworld.feature.BloodRockPatchFeature;
+import mod.vemerion.runeworld.feature.RunePortalFeature;
+import net.minecraft.world.gen.feature.BlockStateFeatureConfig;
 import net.minecraft.world.gen.feature.Feature;
 import net.minecraft.world.gen.feature.NoFeatureConfig;
 import net.minecraftforge.event.RegistryEvent;
@@ -25,6 +27,7 @@ public class ModFeatures {
 	public static Feature<NoFeatureConfig> BLOOD_PILLAR_CLUSTER;
 	public static Feature<NoFeatureConfig> BLOOD_ROCK_PATCH;
 	public static Feature<NoFeatureConfig> BLOOD_BAT_TREE;
+	public static Feature<BlockStateFeatureConfig> RUNE_PORTAL_FEATURE;
 
 	public static void init() {
 		if (init) {
@@ -35,6 +38,7 @@ public class ModFeatures {
 			BLOOD_PILLAR_CLUSTER = new BloodPillarClusterFeature();
 			BLOOD_ROCK_PATCH = new BloodRockPatchFeature();
 			BLOOD_BAT_TREE = new BloodBatTreeFeature();
+			RUNE_PORTAL_FEATURE = new RunePortalFeature();
 			
 			ModConfiguredFeatures.onRegisterConfiguredFeature();
 		}
@@ -49,6 +53,7 @@ public class ModFeatures {
 		event.getRegistry().register(Init.setup(BLOOD_PILLAR_CLUSTER, "blood_pillar_cluster"));
 		event.getRegistry().register(Init.setup(BLOOD_ROCK_PATCH, "blood_rock_patch"));
 		event.getRegistry().register(Init.setup(BLOOD_BAT_TREE, "blood_bat_tree"));
+		event.getRegistry().register(Init.setup(RUNE_PORTAL_FEATURE, "rune_portal_feature"));
 
 	}
 }
