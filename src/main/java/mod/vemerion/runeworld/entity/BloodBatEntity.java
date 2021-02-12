@@ -4,6 +4,7 @@ import java.util.EnumSet;
 
 import mod.vemerion.runeworld.goal.HoverWanderGoal;
 import mod.vemerion.runeworld.init.ModEffects;
+import mod.vemerion.runeworld.init.ModParticleTypes;
 import net.minecraft.block.BlockState;
 import net.minecraft.entity.CreatureEntity;
 import net.minecraft.entity.Entity;
@@ -65,6 +66,20 @@ public class BloodBatEntity extends CreatureEntity implements IFlyingAnimal {
 			if (!world.getBlockState(getPosition().up(2)).isSolid())
 				stopHanging();
 		}
+
+		dripBlood();
+	}
+
+	private void dripBlood() {
+		if (!world.isRemote || !isHanging())
+			return;
+
+		if (getRNG().nextDouble() < 0.02) {
+			Vector3d offset = new Vector3d((getRNG().nextDouble() - 0.5) * 0.2, 0.15,
+					(getRNG().nextDouble() - 0.5) * 0.2);
+			Vector3d pos = getPositionVec().add(Vector3d.fromPitchYaw(0, rotationYaw).scale(0.7)).add(offset);
+			world.addParticle(ModParticleTypes.DRIPPING_BLOOD, pos.x, pos.y, pos.z, 0, 0, 0);
+		}
 	}
 
 	@Override
@@ -121,7 +136,7 @@ public class BloodBatEntity extends CreatureEntity implements IFlyingAnimal {
 	public boolean canDespawn(double distanceToClosestPlayer) {
 		return false;
 	}
-	
+
 	@Override
 	protected boolean isDespawnPeaceful() {
 		return true;

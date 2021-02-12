@@ -175,6 +175,7 @@ public class BloodBatModel extends EntityModel<BloodBatEntity> {
 
 			// Body
 			body.rotateAngleX = BODY_ROT + limbSwingAmount * (float) Math.toRadians(100);
+			body.rotateAngleY = 0;
 		} else {
 			leftLeg1.rotateAngleX = 0;
 			leftLeg2.rotateAngleX = 0;
@@ -184,6 +185,7 @@ public class BloodBatModel extends EntityModel<BloodBatEntity> {
 			head.rotateAngleY = 0;
 			head.rotateAngleZ = 0;
 			body.rotateAngleX = (float) Math.toRadians(180);
+			body.rotateAngleY = (float) Math.toRadians(180);
 		}
 	}
 
