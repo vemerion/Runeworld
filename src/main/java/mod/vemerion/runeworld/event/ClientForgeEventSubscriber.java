@@ -1,9 +1,13 @@
 package mod.vemerion.runeworld.event;
 
 import mod.vemerion.runeworld.Main;
+import mod.vemerion.runeworld.biome.dimensionrenderer.BloodRenderer;
+import mod.vemerion.runeworld.init.ModDimensions;
 import mod.vemerion.runeworld.init.ModFluids;
+import net.minecraft.client.world.ClientWorld;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.client.event.EntityViewRenderEvent;
+import net.minecraftforge.event.world.WorldEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod.EventBusSubscriber;
 import net.minecraftforge.fml.common.Mod.EventBusSubscriber.Bus;
@@ -28,24 +32,24 @@ public class ClientForgeEventSubscriber {
 		}
 	}
 
-//	@SubscribeEvent
-//	public static void loadDimensionRenderInfo(WorldEvent.Load event) {
-//		if (event.getWorld() instanceof ClientWorld) {
-//			ClientWorld world = (ClientWorld) event.getWorld();
-//			if (world.getDimensionKey().equals(ModDimensions.BLOOD)) {
-//				world.func_239132_a_().setWeatherRenderHandler(new BloodRenderer.WeatherRenderer());
-//			}
-//		}
-//	}
-//
-//	@SubscribeEvent
-//	public static void unloadDimensionRenderInfo(WorldEvent.Unload event) {
-//		if (event.getWorld() instanceof ClientWorld) {
-//			ClientWorld world = (ClientWorld) event.getWorld();
-//
-//			if (world.getDimensionKey().equals(ModDimensions.BLOOD)) {
-//				world.func_239132_a_().setWeatherRenderHandler(null);
-//			}
-//		}
-//	}
+	@SubscribeEvent
+	public static void loadDimensionRenderInfo(WorldEvent.Load event) {
+		if (event.getWorld() instanceof ClientWorld) {
+			ClientWorld world = (ClientWorld) event.getWorld();
+			if (world.getDimensionKey().equals(ModDimensions.BLOOD)) {
+				world.func_239132_a_().setSkyRenderHandler(new BloodRenderer.SkyRenderer());
+			}
+		}
+	}
+
+	@SubscribeEvent
+	public static void unloadDimensionRenderInfo(WorldEvent.Unload event) {
+		if (event.getWorld() instanceof ClientWorld) {
+			ClientWorld world = (ClientWorld) event.getWorld();
+
+			if (world.getDimensionKey().equals(ModDimensions.BLOOD)) {
+				world.func_239132_a_().setSkyRenderHandler(null);
+			}
+		}
+	}
 }

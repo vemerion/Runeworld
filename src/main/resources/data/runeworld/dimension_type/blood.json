@@ -4,6 +4,7 @@
   "natural": true,
   "ambient_light": 0.0,
   "has_skylight": true,
+  "fixed_time": 13500,
   "has_ceiling": false,
   "infiniburn": "minecraft:infiniburn_overworld",
   "logical_height" : 256,
