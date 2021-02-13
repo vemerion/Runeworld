@@ -97,7 +97,7 @@ public class RuneTeleport implements INBTSerializable<CompoundNBT> {
 					nbt);
 		}
 
-		public static final ResourceLocation LOCATION = new ResourceLocation(Main.MODID, "wizard");
+		public static final ResourceLocation LOCATION = new ResourceLocation(Main.MODID, "runeteleport");
 
 		@SubscribeEvent
 		public static void attachCapability(AttachCapabilitiesEvent<Entity> event) {
