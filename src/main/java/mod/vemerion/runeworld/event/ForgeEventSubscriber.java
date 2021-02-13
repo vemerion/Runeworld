@@ -2,11 +2,15 @@ package mod.vemerion.runeworld.event;
 
 import mod.vemerion.runeworld.Main;
 import mod.vemerion.runeworld.block.RunePortalBlock;
+import mod.vemerion.runeworld.capability.RuneTeleport;
 import mod.vemerion.runeworld.init.ModBlocks;
 import mod.vemerion.runeworld.init.Runesword;
 import net.minecraft.block.BlockState;
+import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.common.Tags;
+import net.minecraftforge.event.TickEvent.Phase;
+import net.minecraftforge.event.TickEvent.PlayerTickEvent;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod.EventBusSubscriber;
@@ -32,5 +36,13 @@ public class ForgeEventSubscriber {
 				if (!event.getPlayer().isCreative())
 					stack.shrink(1);
 		}
+	}
+	
+	@SubscribeEvent
+	public static void playerTick(PlayerTickEvent event) {
+		PlayerEntity player = event.player;
+		if (player.world.isRemote || event.phase == Phase.END)
+			return;
+		RuneTeleport.getRuneTeleport(player).ifPresent(tp -> tp.tick(player));
 	}
 }

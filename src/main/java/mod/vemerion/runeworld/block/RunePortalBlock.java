@@ -7,6 +7,7 @@ import java.util.Random;
 import java.util.Set;
 import java.util.function.Function;
 
+import mod.vemerion.runeworld.capability.RuneTeleport;
 import mod.vemerion.runeworld.helpers.Helper;
 import mod.vemerion.runeworld.particle.RunePortalParticleData;
 import net.minecraft.block.AbstractBlock;
@@ -17,6 +18,7 @@ import net.minecraft.block.PortalInfo;
 import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
 import net.minecraft.entity.Entity;
+import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.state.EnumProperty;
 import net.minecraft.state.StateContainer;
@@ -35,6 +37,7 @@ import net.minecraft.world.gen.Heightmap;
 import net.minecraft.world.server.ServerWorld;
 import net.minecraftforge.common.Tags;
 import net.minecraftforge.common.util.ITeleporter;
+import net.minecraftforge.common.util.LazyOptional;
 
 public class RunePortalBlock extends Block {
 	public static final EnumProperty<Direction.Axis> AXIS = BlockStateProperties.HORIZONTAL_AXIS;
@@ -45,7 +48,7 @@ public class RunePortalBlock extends Block {
 	protected static final VoxelShape Z_AABB = Block.makeCuboidShape(6.0D, 0.0D, 0.0D, 10.0D, 16.0D, 16.0D);
 
 	private RegistryKey<World> dimension;
-	private int red, green, blue;
+	public final int red, green, blue;
 
 	public RunePortalBlock(RegistryKey<World> dimension, int red, int green, int blue) {
 		super(AbstractBlock.Properties.create(Material.PORTAL).doesNotBlockMovement().hardnessAndResistance(-1.0F)
@@ -118,9 +121,11 @@ public class RunePortalBlock extends Block {
 	@Override
 	public void onEntityCollision(BlockState state, World worldIn, BlockPos pos, Entity entityIn) {
 		if (!worldIn.isRemote && !entityIn.isPassenger() && !entityIn.isBeingRidden() && entityIn.isNonBoss()) {
-			RegistryKey<World> other = worldIn.getDimensionKey() == dimension ? World.OVERWORLD : dimension;
-			ServerWorld otherWorld = worldIn.getServer().getWorld(other);
-			entityIn.changeDimension(otherWorld, new RuneTeleporter());
+			LazyOptional<RuneTeleport> teleport = RuneTeleport.getRuneTeleport(entityIn);
+			if (teleport.isPresent() && entityIn instanceof PlayerEntity)
+				teleport.ifPresent(tp -> tp.setPortal((PlayerEntity) entityIn, worldIn, dimension));
+			else
+				RuneTeleport.teleport(entityIn, worldIn, dimension);
 		}
 	}
 
@@ -197,7 +202,7 @@ public class RunePortalBlock extends Block {
 		return world.isAirBlock(pos) || block == Blocks.NETHER_PORTAL || block instanceof RunePortalBlock;
 	}
 
-	private static class RuneTeleporter implements ITeleporter {
+	public static class RuneTeleporter implements ITeleporter {
 		private static final BlockState AIR = Blocks.AIR.getDefaultState();
 
 		@Override
