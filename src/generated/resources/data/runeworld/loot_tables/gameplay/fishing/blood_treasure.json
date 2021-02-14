@@ -7,6 +7,14 @@
         {
           "type": "minecraft:item",
           "name": "runesword:blood_rune_item"
+        },
+        {
+          "type": "minecraft:item",
+          "name": "runeworld:blood_bat_tooth"
+        },
+        {
+          "type": "minecraft:item",
+          "name": "runeworld:mosquito_eggs"
         }
       ]
     }

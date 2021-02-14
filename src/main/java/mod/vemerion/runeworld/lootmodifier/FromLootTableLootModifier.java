@@ -27,14 +27,6 @@ public class FromLootTableLootModifier extends LootModifier {
 		if (alreadyGenerated)
 			return generatedLoot;
 		alreadyGenerated = true;
-//		if (context.has(LootParameters.TOOL))
-//			System.out.println(context.get(LootParameters.TOOL).toString());
-//		if (context.has(LootParameters.BLOCK_STATE))
-//			System.out.println(context.get(LootParameters.BLOCK_STATE).toString());
-//		if (context.has(LootParameters.field_237457_g_))
-//			System.out.println(context.getWorld()
-//					.getBlockState(new BlockPos(context.get(LootParameters.field_237457_g_))).toString());
-//		System.out.println("THIS" + context.getWorld().getServer().getLootTableManager().getLootTableFromLocation(table));
 		generatedLoot = context.getWorld().getServer().getLootTableManager().getLootTableFromLocation(table)
 				.generate(context);
 		alreadyGenerated = false;

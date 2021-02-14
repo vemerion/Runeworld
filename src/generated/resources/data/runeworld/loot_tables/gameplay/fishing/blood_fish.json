@@ -6,7 +6,7 @@
       "entries": [
         {
           "type": "minecraft:item",
-          "name": "runesword:blood_rune_item"
+          "name": "runeworld:blood_leech"
         }
       ]
     }

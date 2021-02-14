@@ -30,6 +30,7 @@ public class ModLanguageProvider extends LanguageProvider {
 		add(ModItems.BLOOD_PUDDING, "Blood Pudding");
 		add(ModItems.MOSQUITO_EGGS, "Mosquito Eggs");
 		add(ModItems.BLOOD_BAT_TOOTH, "Blood Bat Tooth");
+		add(ModItems.BLOOD_LEECH, "Blood Leech");
 		add(ModEffects.BLOOD_DRAINED, "Blood Drained");
 		add(ModBiomes.BLOOD_PLAINS, "Blood Plains");
 		add(ModEntities.MOSQUITO, "Mosquito");

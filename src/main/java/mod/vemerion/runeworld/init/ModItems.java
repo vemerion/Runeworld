@@ -33,6 +33,7 @@ public class ModItems {
 	public static final Item BLOOD_CRYSTAL = null;
 	public static final Item MOSQUITO_EGGS = null;
 	public static final Item BLOOD_BAT_TOOTH = null;
+	public static final Item BLOOD_LEECH = null;
 
 	static final ItemGroup ITEM_GROUP = new RuneworldItemGroup();
 
@@ -58,9 +59,10 @@ public class ModItems {
 				new BlockItem(ModBlocks.BLOOD_CRYSTAL, new Item.Properties().group(ItemGroup.SEARCH)), "blood_crystal");
 		Item mosquitoEggs = Init.setup(new MosquitoEggsItem(), "mosquito_eggs");
 		Item bloodBatTooth = Init.setup(new BloodBatToothItem(), "blood_bat_tooth");
+		Item bloodLeech = Init.setup(new Item(new Item.Properties().group(ItemGroup.SEARCH)), "blood_leech");
 
 		event.getRegistry().registerAll(bloodBucket, bloodPudding, bloodFlower, bloodPillarLarge, bloodPillarMedium,
-				bloodPillarSmall, bloodRock, bloodMoss, bloodCrystal, mosquitoEggs, bloodBatTooth);
+				bloodPillarSmall, bloodRock, bloodMoss, bloodCrystal, mosquitoEggs, bloodBatTooth, bloodLeech);
 	}
 
 	private static class RuneworldItemGroup extends ItemGroup {

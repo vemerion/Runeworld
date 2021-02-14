@@ -6,7 +6,11 @@
       "entries": [
         {
           "type": "minecraft:item",
-          "name": "runesword:blood_rune_item"
+          "name": "runeworld:blood_crystal"
+        },
+        {
+          "type": "minecraft:item",
+          "name": "runeworld:blood_flower"
         }
       ]
     }
