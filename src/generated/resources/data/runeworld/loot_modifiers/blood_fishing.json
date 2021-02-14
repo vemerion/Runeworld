@@ -1,0 +1,9 @@
+{
+  "conditions": [
+    {
+      "condition": "runeworld:blood_fishing"
+    }
+  ],
+  "table": "runeworld:gameplay/blood_fishing",
+  "type": "runeworld:blood_fishing"
+}

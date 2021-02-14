@@ -40,11 +40,13 @@ public class EventSubscriber {
 		}
 		if (event.includeServer()) {
 			dataGenerator.addProvider(new ModRecipeProvider(dataGenerator));
+			dataGenerator.addProvider(new ModLootModifierProvider(dataGenerator));
 			dataGenerator.addProvider(new LootTableProvider(dataGenerator) {
 				@Override
 				protected List<Pair<Supplier<Consumer<BiConsumer<ResourceLocation, Builder>>>, LootParameterSet>> getTables() {
 					return ImmutableList.of(Pair.of(ModBlockLootTables::new, LootParameterSets.BLOCK),
-							Pair.of(ModEntityLootTables::new, LootParameterSets.ENTITY));
+							Pair.of(ModEntityLootTables::new, LootParameterSets.ENTITY),
+							Pair.of(ModFishingLootTables::new, LootParameterSets.FISHING));
 				};
 
 				@Override
