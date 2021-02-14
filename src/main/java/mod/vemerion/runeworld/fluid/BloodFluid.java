@@ -1,14 +1,24 @@
 package mod.vemerion.runeworld.fluid;
 
+import java.util.Random;
+
 import mod.vemerion.runeworld.Main;
 import mod.vemerion.runeworld.helpers.Helper;
 import mod.vemerion.runeworld.init.ModBlocks;
 import mod.vemerion.runeworld.init.ModFluids;
 import mod.vemerion.runeworld.init.ModItems;
 import mod.vemerion.runeworld.init.ModParticleTypes;
+import net.minecraft.block.Block;
+import net.minecraft.block.BlockState;
+import net.minecraft.block.Blocks;
+import net.minecraft.block.IGrowable;
+import net.minecraft.fluid.FluidState;
 import net.minecraft.particles.IParticleData;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.SoundEvents;
+import net.minecraft.util.math.BlockPos;
+import net.minecraft.world.World;
+import net.minecraft.world.server.ServerWorld;
 import net.minecraftforge.fluids.ForgeFlowingFluid;
 
 public class BloodFluid {
@@ -28,7 +38,7 @@ public class BloodFluid {
 		public Flowing() {
 			super(properties);
 		}
-		
+
 		@Override
 		protected IParticleData getDripParticleData() {
 			return ModParticleTypes.DRIPPING_BLOOD;
@@ -39,10 +49,37 @@ public class BloodFluid {
 		public Source() {
 			super(properties);
 		}
-		
+
 		@Override
 		protected IParticleData getDripParticleData() {
 			return ModParticleTypes.DRIPPING_BLOOD;
+		}
+
+		@Override
+		protected boolean ticksRandomly() {
+			return true;
+		}
+
+		@Override
+		protected void randomTick(World world, BlockPos pos, FluidState state, Random random) {
+			if (world.isRemote || random.nextDouble() < 0.7)
+				return;
+
+			for (int i = -1; i < 2; i++) {
+				for (int j = -1; j < 2; j++) {
+					if (Math.abs(i + j) == 1) {
+						BlockPos adjacent = pos.add(i, 1, j);
+						BlockState adjacentState = world.getBlockState(adjacent);
+						Block adjacentBlock = adjacentState.getBlock();
+						if (adjacentBlock instanceof IGrowable && ((IGrowable) adjacentBlock).canGrow(world, adjacent,
+								adjacentState, world.isRemote)) {
+							adjacentState.randomTick((ServerWorld) world, adjacent, random);
+							if (random.nextDouble() < 0.05)
+								world.setBlockState(pos, Blocks.WATER.getDefaultState());
+						}
+					}
+				}
+			}
 		}
 	}
 }
