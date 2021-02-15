@@ -1,7 +1,9 @@
 package mod.vemerion.runeworld.entity;
 
+import mod.vemerion.runeworld.helpers.Helper;
 import mod.vemerion.runeworld.init.ModEntities;
 import mod.vemerion.runeworld.init.ModItems;
+import mod.vemerion.runeworld.init.ModSounds;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.projectile.ProjectileItemEntity;
@@ -30,6 +32,8 @@ public class MosquitoEggsEntity extends ProjectileItemEntity {
 	@Override
 	protected void onImpact(RayTraceResult result) {
 		super.onImpact(result);
+		
+		playSound(ModSounds.MOSQUITO_SPLASH, 1, Helper.soundPitch(rand));
 
 		if (!world.isRemote && isAlive()) {
 			Vector3d pos = result.getHitVec();

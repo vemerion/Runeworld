@@ -6,6 +6,7 @@ import java.util.Random;
 import mod.vemerion.runeworld.goal.HoverWanderGoal;
 import mod.vemerion.runeworld.init.ModEffects;
 import mod.vemerion.runeworld.init.ModFluids;
+import mod.vemerion.runeworld.init.ModSounds;
 import net.minecraft.block.BlockState;
 import net.minecraft.entity.CreatureEntity;
 import net.minecraft.entity.Entity;
@@ -25,6 +26,7 @@ import net.minecraft.nbt.NBTUtil;
 import net.minecraft.pathfinding.FlyingPathNavigator;
 import net.minecraft.pathfinding.PathNavigator;
 import net.minecraft.potion.EffectInstance;
+import net.minecraft.util.SoundEvent;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.Difficulty;
@@ -59,7 +61,22 @@ public class MosquitoEntity extends CreatureEntity implements IFlyingAnimal {
 
 		return false;
 	}
+	
+	@Override
+	public int getTalkInterval() {
+		return 20;
+	}
 
+	@Override
+	protected SoundEvent getAmbientSound() {
+		return ModSounds.MOSQUITO_FLYING;
+	}
+	
+	@Override
+	protected SoundEvent getDeathSound() {
+		return ModSounds.MOSQUITO_SPLASH;
+	}
+	
 	private static boolean isBlood(IServerWorld world, BlockPos pos) {
 		return world.getBlockState(pos).getFluidState().getFluid().isEquivalentTo(ModFluids.BLOOD);
 	}

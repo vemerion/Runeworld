@@ -5,6 +5,7 @@ import java.util.EnumSet;
 import mod.vemerion.runeworld.goal.HoverWanderGoal;
 import mod.vemerion.runeworld.init.ModEffects;
 import mod.vemerion.runeworld.init.ModParticleTypes;
+import mod.vemerion.runeworld.init.ModSounds;
 import net.minecraft.block.BlockState;
 import net.minecraft.entity.CreatureEntity;
 import net.minecraft.entity.Entity;
@@ -28,6 +29,7 @@ import net.minecraft.pathfinding.FlyingPathNavigator;
 import net.minecraft.pathfinding.PathNavigator;
 import net.minecraft.potion.EffectInstance;
 import net.minecraft.util.DamageSource;
+import net.minecraft.util.SoundEvent;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
@@ -68,6 +70,21 @@ public class BloodBatEntity extends CreatureEntity implements IFlyingAnimal {
 		}
 
 		dripBlood();
+	}
+
+	@Override
+	protected SoundEvent getAmbientSound() {
+		return isHanging() ? ModSounds.BLOOD_BAT_SNORING : ModSounds.BLOOD_BAT_WINGS;
+	}
+
+	@Override
+	protected SoundEvent getDeathSound() {
+		return ModSounds.BLOOD_BAT_DEATH;
+	}
+
+	@Override
+	public int getTalkInterval() {
+		return isHanging() ? 80 : 20;
 	}
 
 	private void dripBlood() {
