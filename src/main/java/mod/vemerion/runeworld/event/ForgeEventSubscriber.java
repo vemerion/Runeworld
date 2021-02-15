@@ -40,7 +40,6 @@ public class ForgeEventSubscriber {
 			if (RunePortalBlock.createPortal(event.getWorld(), pos, ModBlocks.BLOOD_RUNE_PORTAL)) {
 				if (!event.getPlayer().isCreative())
 					stack.shrink(1);
-				System.out.println("SOUND");
 				event.getWorld().playSound(null, pos.getX(), pos.getY(), pos.getZ(), ModSounds.PORTAL,
 						SoundCategory.PLAYERS, 1, Helper.soundPitch(event.getPlayer().getRNG()));
 			}
