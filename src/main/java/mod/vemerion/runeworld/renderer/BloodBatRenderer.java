@@ -9,6 +9,7 @@ import net.minecraft.client.renderer.IRenderTypeBuffer;
 import net.minecraft.client.renderer.entity.EntityRendererManager;
 import net.minecraft.client.renderer.entity.MobRenderer;
 import net.minecraft.util.ResourceLocation;
+import net.minecraft.util.math.vector.Vector3d;
 
 public class BloodBatRenderer extends MobRenderer<BloodBatEntity, BloodBatModel> {
 
@@ -22,8 +23,12 @@ public class BloodBatRenderer extends MobRenderer<BloodBatEntity, BloodBatModel>
 	public void render(BloodBatEntity entityIn, float entityYaw, float partialTicks, MatrixStack matrixStackIn,
 			IRenderTypeBuffer bufferIn, int packedLightIn) {
 		matrixStackIn.push();
-		if (!entityIn.isHanging())
+		if (!entityIn.isHanging()) {
 			matrixStackIn.translate(0, entityIn.getAnimationHeight(partialTicks) * 0.1, 0);
+		} else {
+			Vector3d offset = Vector3d.fromPitchYaw(0, entityIn.rotationYaw).scale(-0.4);
+			matrixStackIn.translate(offset.x, 0.08, offset.z);
+		}
 		super.render(entityIn, entityYaw, partialTicks, matrixStackIn, bufferIn, packedLightIn);
 		matrixStackIn.pop();
 	}
