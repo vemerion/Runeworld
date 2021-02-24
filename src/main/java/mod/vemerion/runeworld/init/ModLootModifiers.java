@@ -17,6 +17,8 @@ public class ModLootModifiers {
 
 	@SubscribeEvent
 	public static void onRegisterLootModifier(RegistryEvent.Register<GlobalLootModifierSerializer<?>> event) {
+		ModLootConditions.register();
+		
 		event.getRegistry().register(Init.setup(new FromLootTableLootModifier.Serializer(), "blood_fishing"));
 	}
 }
