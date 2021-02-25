@@ -5,6 +5,7 @@ import mod.vemerion.runeworld.item.BloodBatToothItem;
 import mod.vemerion.runeworld.item.BloodBucketItem;
 import mod.vemerion.runeworld.item.BloodFlowerItem;
 import mod.vemerion.runeworld.item.BloodPuddingItem;
+import mod.vemerion.runeworld.item.GuideItem;
 import mod.vemerion.runeworld.item.MosquitoEggsItem;
 import net.minecraft.item.BlockItem;
 import net.minecraft.item.Item;
@@ -34,6 +35,7 @@ public class ModItems {
 	public static final Item MOSQUITO_EGGS = null;
 	public static final Item BLOOD_BAT_TOOTH = null;
 	public static final Item BLOOD_LEECH = null;
+	public static final Item GUIDE = null;
 
 	static final ItemGroup ITEM_GROUP = new RuneworldItemGroup();
 
@@ -60,9 +62,10 @@ public class ModItems {
 		Item mosquitoEggs = Init.setup(new MosquitoEggsItem(), "mosquito_eggs");
 		Item bloodBatTooth = Init.setup(new BloodBatToothItem(), "blood_bat_tooth");
 		Item bloodLeech = Init.setup(new Item(new Item.Properties().group(ItemGroup.SEARCH)), "blood_leech");
+		Item guide = Init.setup(new GuideItem(new Item.Properties().group(ItemGroup.SEARCH)), "guide");
 
 		event.getRegistry().registerAll(bloodBucket, bloodPudding, bloodFlower, bloodPillarLarge, bloodPillarMedium,
-				bloodPillarSmall, bloodRock, bloodMoss, bloodCrystal, mosquitoEggs, bloodBatTooth, bloodLeech);
+				bloodPillarSmall, bloodRock, bloodMoss, bloodCrystal, mosquitoEggs, bloodBatTooth, bloodLeech, guide);
 	}
 
 	private static class RuneworldItemGroup extends ItemGroup {

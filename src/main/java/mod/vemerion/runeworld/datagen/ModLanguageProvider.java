@@ -31,6 +31,7 @@ public class ModLanguageProvider extends LanguageProvider {
 		add(ModItems.MOSQUITO_EGGS, "Mosquito Eggs");
 		add(ModItems.BLOOD_BAT_TOOTH, "Blood Bat Tooth");
 		add(ModItems.BLOOD_LEECH, "Blood Leech");
+		add(ModItems.GUIDE, "Runeworld Guide");
 		add(ModEffects.BLOOD_DRAINED, "Blood Drained");
 		add(ModBiomes.BLOOD_PLAINS, "Blood Plains");
 		add(ModEntities.MOSQUITO, "Mosquito");
@@ -39,6 +40,22 @@ public class ModLanguageProvider extends LanguageProvider {
 		add(ModEntities.MOSQUITO_EGGS, "Mosquito Eggs");
 		add(ModEntities.BLOOD_BAT, "Blood Bat");
 		add("itemGroup." + Main.MODID, "Runeworld");
+
+		guide();
+	}
+
+	private void guide() {
+		addGuide("guide", "Runeworld");
+		addGuide("intro",
+				"Welcome to the Runeworld guide, containing all the information you need to begin your dimension travelling! Click on one of the icons above to learn more about a specific subject.");
+	}
+
+	private void addGuide(String suffix, String text) {
+		addText("guide", suffix, text);
+	}
+
+	private void addText(String prefix, String suffix, String text) {
+		add(prefix + "." + Main.MODID + "." + suffix, text);
 	}
 
 	private void add(Biome key, String name) {

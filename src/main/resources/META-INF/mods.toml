@@ -52,6 +52,6 @@ This mod adds dimensions based on the runes from the Runesword mod.
 [[dependencies.runeworld]]
     modId="runesword"
     mandatory=true
-    versionRange="[1.16.4-1.0.0,)"
+    versionRange="[1.16.4-1.2.0,)"
     ordering="NONE"
     side="BOTH"
