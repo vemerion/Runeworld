@@ -48,6 +48,40 @@ public class ModLanguageProvider extends LanguageProvider {
 		addGuide("guide", "Runeworld");
 		addGuide("intro",
 				"Welcome to the Runeworld guide, containing all the information you need to begin your dimension travelling! Click on one of the icons above to learn more about a specific subject.");
+
+		addGuide("portal", "Portal Creation");
+		addGuide("portal.text1",
+				"You travel to the different rune worlds similar to how you travel to the nether. Start by creating an obsidian frame. Then, light the portal by right-clicking the frame with a rune (the rune will be consumed).");
+		addGuide("portal.text2",
+				"The rules for the portal size and shape are less strict than for nether portals. See below images for a couple of examples.");
+
+		addGuide("blood_world", "Blood World");
+		addGuide("blood_world.text1",
+				"The blood world is a grim and hostile world. In a perpetuate dusk, the light is always dim, only the faintest light coming from the dark sun. Giant mosquitoes buzzing around the many blood pools, and Blood Bats hanging upside down from large dead trees. Why would you want to travel there?");
+
+		addGuide("blood_world.blood", "Blood");
+		addGuide("blood_world.blood.text1",
+				"Instead of water, blood is the fluid that can be found on the surface of the blood world. In many ways, it functions similar to water, for example, you can scoop it up in a bucket. On the other hand, blood has a lot of unique mechanics, detailed below:");
+		addGuide("blood_world.blood.text2",
+				"You can drink for the blood bucket, similar to milk. This can be used as a cure to the dangerous blood drained sickness that some enemies inflict.");
+		addGuide("blood_world.blood.text3",
+				"If you throw any type of rune into a large enough blood pool, after a while, some of the blood will be consumed, and the rune will be converted into a blood rune.");
+		addGuide("blood_world.blood.text4",
+				"Blood can be used to speed up the growth of nearby crops, but after a while, the blood will be converted into normal water.");
+		addGuide("blood_world.blood.text5", "Also, fishing in blood could yield interesting catch...");
+
+		addGuide("blood_world.mobs", "Mobs");
+		addGuide("blood_world.mobs.intro", "The Blood World is the home of several hideous monsters.");
+		addGuide("blood_world.mobs.blood_bat", "Blood Bat");
+		addGuide("blood_world.mobs.blood_bat.text1",
+				"The blood bat is a large and dangerous monster. They spend most of their time sleeping upside down in giant dead trees, but if awakened, they will attack! When they bite their long teeth into the flesh of their target, they have a chance to apply the dangerous blood drained disease.");
+		addGuide("blood_world.mobs.blood_bat.text2",
+				"When killed, the blood bat has a chance to drop a tooth, which can be used as a weapon that applies the blood drained disease.");
+		addGuide("blood_world.mobs.mosquito", "Mosquito");
+		addGuide("blood_world.mobs.mosquito.text1",
+				"Giant mosquitoes, filled to the brim with blood, can be found buzzing near blood pools in the blood world. They are fairly weak, but can overwhelm careless adventurers by sheer numbers.");
+		addGuide("blood_world.mobs.mosquito.text2",
+				"When killed, the mosquito has a chance to drop a bundle of mosquito eggs.");
 	}
 
 	private void addGuide(String suffix, String text) {
