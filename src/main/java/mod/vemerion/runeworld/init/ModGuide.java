@@ -29,7 +29,8 @@ public class ModGuide {
 					new TranslationTextComponent(transKey("blood_world.mobs")));
 
 			portal.addText(transKey("portal.text1")).addText(transKey("portal.text2"))
-					.addImage(image("portal1"), 1536, 864).addImage(image("portal2"), 1536, 864);
+					.addImage(image("portal1"), 1536, 864).addImage(image("portal2"), 1536, 864)
+					.addText(transKey("portal.text3"));
 			bloodWorld.addChild(blood).addChild(bloodWorldMobs).addText(transKey("blood_world.text1"));
 			blood.addText(transKey("blood_world.blood.text1")).addText(transKey("blood_world.blood.text2"))
 					.addText(transKey("blood_world.blood.text3")).addText(transKey("blood_world.blood.text4"))

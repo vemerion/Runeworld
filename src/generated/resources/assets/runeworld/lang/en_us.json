@@ -33,6 +33,7 @@
   "guide.runeworld.portal": "Portal Creation",
   "guide.runeworld.portal.text1": "You travel to the different rune worlds similar to how you travel to the nether. Start by creating an obsidian frame. Then, light the portal by right-clicking the frame with a rune (the rune will be consumed).",
   "guide.runeworld.portal.text2": "The rules for the portal size and shape are less strict than for nether portals. See below images for a couple of examples.",
+  "guide.runeworld.portal.text3": "But beware, for unlike the nether portal, no portal is generated on the other side when you enter! Be sure to bring extra obsidian and runes, to make sure that you are not stuck in a rune world forever!",
   "item.runeworld.blood_bat_spawn_egg": "Blood Bat Spawn Egg",
   "item.runeworld.blood_bat_tooth": "Blood Bat Tooth",
   "item.runeworld.blood_bucket": "Blood Bucket",

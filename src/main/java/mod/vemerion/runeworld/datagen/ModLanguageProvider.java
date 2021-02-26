@@ -54,6 +54,8 @@ public class ModLanguageProvider extends LanguageProvider {
 				"You travel to the different rune worlds similar to how you travel to the nether. Start by creating an obsidian frame. Then, light the portal by right-clicking the frame with a rune (the rune will be consumed).");
 		addGuide("portal.text2",
 				"The rules for the portal size and shape are less strict than for nether portals. See below images for a couple of examples.");
+		addGuide("portal.text3",
+				"But beware, for unlike the nether portal, no portal is generated on the other side when you enter! Be sure to bring extra obsidian and runes, to make sure that you are not stuck in a rune world forever!");
 
 		addGuide("blood_world", "Blood World");
 		addGuide("blood_world.text1",
