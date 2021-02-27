@@ -1,6 +1,11 @@
 {
   "structures": {
     "structures": {
+      "runeworld:blood_bat_lair": {
+        "spacing": 32,
+        "separation": 8,
+        "salt": 784593
+      }
     }
   },  
   "bedrock_roof_position": -10,

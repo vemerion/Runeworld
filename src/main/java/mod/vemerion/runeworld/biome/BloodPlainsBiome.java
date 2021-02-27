@@ -3,6 +3,7 @@ package mod.vemerion.runeworld.biome;
 import mod.vemerion.runeworld.helpers.Helper;
 import mod.vemerion.runeworld.init.ModBlocks;
 import mod.vemerion.runeworld.init.ModConfiguredFeatures;
+import mod.vemerion.runeworld.init.ModConfiguredStructures;
 import mod.vemerion.runeworld.init.ModEntities;
 import net.minecraft.entity.EntityClassification;
 import net.minecraft.world.biome.Biome;
@@ -33,10 +34,10 @@ public class BloodPlainsBiome extends ModBiome {
 		generation.withFeature(GenerationStage.Decoration.VEGETAL_DECORATION, ModConfiguredFeatures.BLOOD_CRYSTAL);
 		generation.withFeature(GenerationStage.Decoration.TOP_LAYER_MODIFICATION,
 				ModConfiguredFeatures.BLOOD_ROCK_PATCH);
-		generation.withFeature(GenerationStage.Decoration.SURFACE_STRUCTURES,
-				ModConfiguredFeatures.BLOOD_BAT_TREE);
+		generation.withFeature(GenerationStage.Decoration.SURFACE_STRUCTURES, ModConfiguredFeatures.BLOOD_BAT_TREE);
 		generation.withFeature(GenerationStage.Decoration.SURFACE_STRUCTURES,
 				ModConfiguredFeatures.BLOOD_RUNE_PORTAL_FEATURE);
+		generation.withStructure(ModConfiguredStructures.BLOOD_BAT_LAIR);
 
 		mobs.withSpawner(EntityClassification.MONSTER, new Spawners(ModEntities.MOSQUITO, 10, 1, 2));
 

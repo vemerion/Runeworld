@@ -18,6 +18,7 @@ public class ModBiomes {
 	@SubscribeEvent
 	public static void onRegisterBiome(RegistryEvent.Register<Biome> event) {
 		ModFeatures.init();
+		ModStructures.init();
 		
 		event.getRegistry().register(Init.setup(new BloodPlainsBiome().create(), "blood_plains"));
 	}
