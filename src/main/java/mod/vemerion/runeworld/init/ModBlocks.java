@@ -9,6 +9,7 @@ import mod.vemerion.runeworld.Main;
 import mod.vemerion.runeworld.block.BloodBlock;
 import mod.vemerion.runeworld.block.BloodCrystalBlock;
 import mod.vemerion.runeworld.block.BloodFlowerBlock;
+import mod.vemerion.runeworld.block.BloodLeechBlock;
 import mod.vemerion.runeworld.block.BloodPillarBlock;
 import mod.vemerion.runeworld.block.RunePortalBlock;
 import net.minecraft.block.AbstractBlock;
@@ -35,6 +36,7 @@ public class ModBlocks {
 	public static final Block BLOOD_ROCK = null;
 	public static final Block BLOOD_MOSS = null;
 	public static final Block BLOOD_CRYSTAL = null;
+	public static final Block BLOOD_LEECH = null;
 	
 	public static final Block BLOOD_RUNE_PORTAL = null;
 
@@ -52,6 +54,7 @@ public class ModBlocks {
 		event.getRegistry()
 				.register(Init.setup(new Block(AbstractBlock.Properties.from(Blocks.COBBLESTONE)), "blood_moss"));
 		event.getRegistry().register(Init.setup(new BloodCrystalBlock(), "blood_crystal"));
+		event.getRegistry().register(Init.setup(new BloodLeechBlock(), "blood_leech"));
 
 		createRunePortal(ModDimensions.BLOOD, 170, 0, 0);
 		event.getRegistry().registerAll(getRunePortals().toArray(new RunePortalBlock[0]));

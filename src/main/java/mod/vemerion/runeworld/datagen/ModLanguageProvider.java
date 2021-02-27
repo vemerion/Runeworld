@@ -26,11 +26,11 @@ public class ModLanguageProvider extends LanguageProvider {
 		add(ModBlocks.BLOOD_ROCK, "Blood Rock");
 		add(ModBlocks.BLOOD_MOSS, "Blood Moss");
 		add(ModBlocks.BLOOD_CRYSTAL, "Blood Crystal");
+		add(ModBlocks.BLOOD_LEECH, "Blood Leech");
 		add(ModItems.BLOOD_BUCKET, "Blood Bucket");
 		add(ModItems.BLOOD_PUDDING, "Blood Pudding");
 		add(ModItems.MOSQUITO_EGGS, "Mosquito Eggs");
 		add(ModItems.BLOOD_BAT_TOOTH, "Blood Bat Tooth");
-		add(ModItems.BLOOD_LEECH, "Blood Leech");
 		add(ModItems.GUIDE, "Runeworld Guide");
 		add(ModEffects.BLOOD_DRAINED, "Blood Drained");
 		add(ModBiomes.BLOOD_PLAINS, "Blood Plains");

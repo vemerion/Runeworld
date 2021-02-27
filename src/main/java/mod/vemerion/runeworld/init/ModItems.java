@@ -61,7 +61,8 @@ public class ModItems {
 				new BlockItem(ModBlocks.BLOOD_CRYSTAL, new Item.Properties().group(ItemGroup.SEARCH)), "blood_crystal");
 		Item mosquitoEggs = Init.setup(new MosquitoEggsItem(), "mosquito_eggs");
 		Item bloodBatTooth = Init.setup(new BloodBatToothItem(), "blood_bat_tooth");
-		Item bloodLeech = Init.setup(new Item(new Item.Properties().group(ItemGroup.SEARCH)), "blood_leech");
+		Item bloodLeech = Init.setup(
+				new BlockItem(ModBlocks.BLOOD_LEECH, new Item.Properties().group(ItemGroup.SEARCH)), "blood_leech");
 		Item guide = Init.setup(new GuideItem(new Item.Properties().group(ItemGroup.SEARCH)), "guide");
 
 		event.getRegistry().registerAll(bloodBucket, bloodPudding, bloodFlower, bloodPillarLarge, bloodPillarMedium,
