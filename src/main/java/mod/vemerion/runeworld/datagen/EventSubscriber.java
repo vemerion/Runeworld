@@ -10,6 +10,7 @@ import com.google.common.collect.ImmutableList;
 import com.mojang.datafixers.util.Pair;
 
 import mod.vemerion.runeworld.Main;
+import net.minecraft.data.BlockTagsProvider;
 import net.minecraft.data.DataGenerator;
 import net.minecraft.data.LootTableProvider;
 import net.minecraft.loot.LootParameterSet;
@@ -39,8 +40,12 @@ public class EventSubscriber {
 			dataGenerator.addProvider(new ModItemModelProvider(dataGenerator, existingFileHelper));
 		}
 		if (event.includeServer()) {
+			BlockTagsProvider blockTagsProvider = new BlockTagsProvider(dataGenerator, Main.MODID, existingFileHelper);
+
 			dataGenerator.addProvider(new ModRecipeProvider(dataGenerator));
 			dataGenerator.addProvider(new ModLootModifierProvider(dataGenerator));
+			dataGenerator.addProvider(new ModFluidTagsProvider(dataGenerator, existingFileHelper));
+			dataGenerator.addProvider(new ModItemTagsProvider(dataGenerator, blockTagsProvider, existingFileHelper));
 			dataGenerator.addProvider(new LootTableProvider(dataGenerator) {
 				@Override
 				protected List<Pair<Supplier<Consumer<BiConsumer<ResourceLocation, Builder>>>, LootParameterSet>> getTables() {
