@@ -1,14 +1,20 @@
 package mod.vemerion.runeworld.block;
 
+import mod.vemerion.runeworld.init.ModEffects;
 import mod.vemerion.runeworld.tileentity.BloodLeechTileEntity;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockRenderType;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
+import net.minecraft.entity.Entity;
+import net.minecraft.entity.LivingEntity;
+import net.minecraft.potion.EffectInstance;
 import net.minecraft.tileentity.TileEntity;
+import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.shapes.VoxelShape;
 import net.minecraft.world.IBlockReader;
+import net.minecraft.world.World;
 
 public class BloodLeechBlock extends FacingBlock {
 
@@ -35,5 +41,17 @@ public class BloodLeechBlock extends FacingBlock {
 	@Override
 	public TileEntity createTileEntity(BlockState state, IBlockReader world) {
 		return new BloodLeechTileEntity();
+	}
+
+	@Override
+	public void onEntityCollision(BlockState state, World worldIn, BlockPos pos, Entity entityIn) {
+		if (worldIn.isRemote)
+			return;
+		
+		if (!entityIn.isOnGround() && entityIn.fallDistance > 1) {
+			worldIn.destroyBlock(pos, true, entityIn);
+		} else if (RANDOM.nextDouble() < 0.01 && entityIn instanceof LivingEntity) {
+			((LivingEntity) entityIn).addPotionEffect(new EffectInstance(ModEffects.BLOOD_DRAINED, 20 * 20));
+		}
 	}
 }
