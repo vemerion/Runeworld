@@ -16,6 +16,7 @@ import net.minecraft.util.math.shapes.VoxelShape;
 import net.minecraft.world.IBlockReader;
 import net.minecraft.world.IWorldReader;
 
+// FIXME: Destroy block in supporting block is destroyed
 public class FacingBlock extends DirectionalBlock {
 
 	private VoxelShape[] shapes;
