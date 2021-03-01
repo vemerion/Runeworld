@@ -4,6 +4,7 @@ import java.util.function.Consumer;
 
 import mod.vemerion.runeworld.Main;
 import mod.vemerion.runeworld.init.ModItems;
+import mod.vemerion.runeworld.init.Runesword;
 import net.minecraft.data.DataGenerator;
 import net.minecraft.data.IFinishedRecipe;
 import net.minecraft.data.RecipeProvider;
@@ -11,7 +12,10 @@ import net.minecraft.data.ShapedRecipeBuilder;
 import net.minecraft.data.ShapelessRecipeBuilder;
 import net.minecraft.item.Item;
 import net.minecraft.item.Items;
+import net.minecraft.tags.ITag;
+import net.minecraft.tags.ItemTags;
 import net.minecraft.util.ResourceLocation;
+import net.minecraftforge.common.Tags;
 
 public class ModRecipeProvider extends RecipeProvider {
 
@@ -29,6 +33,11 @@ public class ModRecipeProvider extends RecipeProvider {
 				.build(consumer, new ResourceLocation(Main.MODID, "blood_flower_to_dye"));
 		pillar(ModItems.BLOOD_PILLAR_LARGE, ModItems.BLOOD_PILLAR_MEDIUM, consumer);
 		pillar(ModItems.BLOOD_PILLAR_MEDIUM, ModItems.BLOOD_PILLAR_SMALL, consumer);
+
+		ITag<Item> runes = ItemTags.createOptional(new ResourceLocation(Runesword.MODID, "runes"));
+		ShapelessRecipeBuilder.shapelessRecipe(ModItems.GUIDE).addIngredient(Tags.Items.OBSIDIAN).addIngredient(runes)
+				.addCriterion("has_rune", hasItem(runes)).addCriterion("has_obsidian", hasItem(Tags.Items.OBSIDIAN))
+				.build(consumer);
 	}
 
 	private void pillar(Item large, Item small, Consumer<IFinishedRecipe> consumer) {

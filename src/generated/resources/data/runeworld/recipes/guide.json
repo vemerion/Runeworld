@@ -1,0 +1,14 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "ingredients": [
+    {
+      "tag": "forge:obsidian"
+    },
+    {
+      "tag": "runesword:runes"
+    }
+  ],
+  "result": {
+    "item": "runeworld:guide"
+  }
+}
