@@ -129,8 +129,6 @@ public class BloodBatLairStructure extends Structure<NoFeatureConfig> {
 			tagCompound.putInt("randSeed", randSeed);
 		}
 
-		// TODO: Prevent other world gen features from generating inside lair
-
 		// Note: Be sure to only generate the parts inside the given chunk (box)
 		// The method will be called several times, once for each necessary chunk
 		// This means that we can not used supplied Random to determine structure shape

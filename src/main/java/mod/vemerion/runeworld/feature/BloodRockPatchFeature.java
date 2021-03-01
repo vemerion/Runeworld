@@ -9,7 +9,6 @@ import net.minecraft.block.BlockState;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.ISeedReader;
 import net.minecraft.world.gen.ChunkGenerator;
-import net.minecraft.world.gen.Heightmap;
 import net.minecraft.world.gen.feature.Feature;
 import net.minecraft.world.gen.feature.NoFeatureConfig;
 
@@ -23,8 +22,6 @@ public class BloodRockPatchFeature extends Feature<NoFeatureConfig> {
 	@Override
 	public boolean generate(ISeedReader reader, ChunkGenerator generator, Random rand, BlockPos pos,
 			NoFeatureConfig config) {
-		pos = reader.getHeight(Heightmap.Type.WORLD_SURFACE_WG, pos);
-
 		pos = pos.down();
 		List<BlockPos> positions = new ArrayList<>();
 		positions.add(pos);
@@ -35,9 +32,9 @@ public class BloodRockPatchFeature extends Feature<NoFeatureConfig> {
 				for (int z = -1; z < 2; z++) {
 					if (Math.abs(x + z) == 1 && rand.nextDouble() < 0.5) {
 						BlockPos p = positions.get(i).add(x, 0, z);
-						p = reader.getHeight(Heightmap.Type.WORLD_SURFACE_WG, p).down();
+						p = findGround(reader, p).down();
 						positions.add(p);
-						
+
 						if (rand.nextDouble() < 0.1)
 							positions.add(p.up());
 					}
@@ -53,6 +50,16 @@ public class BloodRockPatchFeature extends Feature<NoFeatureConfig> {
 		}
 
 		return true;
+	}
+
+	private BlockPos findGround(ISeedReader reader, BlockPos p) {
+		for (int i = 0; i < 5; i++) {
+			if (reader.getBlockState(p.down(i)).isSolid())
+				return p.down(i - 1);
+			if (reader.getBlockState(p.up(i)).isSolid())
+				return p.up(i + 1);
+		}
+		return p;
 	}
 
 }

@@ -67,6 +67,12 @@ public class BloodPillarBlock extends Block implements IBloodLoggable {
 		return shape;
 	}
 
+	public static boolean isPillar(IWorld world, BlockPos pos) {
+		Block block = world.getBlockState(pos).getBlock();
+		return !(block == ModBlocks.BLOOD_PILLAR_LARGE || block == ModBlocks.BLOOD_PILLAR_MEDIUM
+				|| block == ModBlocks.BLOOD_PILLAR_SMALL);
+	}
+
 	public static boolean generatePillar(IWorld world, Random rand, BlockPos pos) {
 		int height = 0;
 		for (int i = 0; i < 4; i++) {

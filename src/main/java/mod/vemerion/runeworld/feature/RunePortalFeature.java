@@ -13,7 +13,6 @@ import net.minecraft.util.Direction;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.ISeedReader;
 import net.minecraft.world.gen.ChunkGenerator;
-import net.minecraft.world.gen.Heightmap;
 import net.minecraft.world.gen.feature.BlockStateFeatureConfig;
 import net.minecraft.world.gen.feature.Feature;
 
@@ -26,7 +25,6 @@ public class RunePortalFeature extends Feature<BlockStateFeatureConfig> {
 	@Override
 	public boolean generate(ISeedReader reader, ChunkGenerator generator, Random rand, BlockPos pos,
 			BlockStateFeatureConfig config) {
-		pos = reader.getHeight(Heightmap.Type.WORLD_SURFACE_WG, pos);
 		if (!reader.getBlockState(pos.down()).isSolid() || !reader.isAirBlock(pos))
 			return false;
 

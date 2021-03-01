@@ -8,9 +8,11 @@ import java.util.Set;
 
 import mod.vemerion.runeworld.block.BloodPillarBlock;
 import mod.vemerion.runeworld.init.ModBlocks;
+import mod.vemerion.runeworld.init.ModStructures;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.SectionPos;
 import net.minecraft.world.ISeedReader;
 import net.minecraft.world.gen.ChunkGenerator;
 import net.minecraft.world.gen.Heightmap;
@@ -31,6 +33,9 @@ public class BloodPoolFeature extends Feature<NoFeatureConfig> {
 	public boolean generate(ISeedReader reader, ChunkGenerator generator, Random rand, BlockPos pos,
 			NoFeatureConfig config) {
 		pos = reader.getHeight(Heightmap.Type.WORLD_SURFACE_WG, pos);
+
+		if (reader.func_241827_a(SectionPos.from(pos), ModStructures.BLOOD_BAT_LAIR).findAny().isPresent())
+			return false;
 
 		pos = pos.down();
 		List<BlockPos> positions = new ArrayList<>();
