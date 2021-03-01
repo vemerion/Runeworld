@@ -3,6 +3,7 @@ package mod.vemerion.runeworld.init;
 import mod.vemerion.runeworld.Main;
 import mod.vemerion.runeworld.item.BloodBatToothItem;
 import mod.vemerion.runeworld.item.BloodBucketItem;
+import mod.vemerion.runeworld.item.BloodCrystalliteItem;
 import mod.vemerion.runeworld.item.BloodFlowerItem;
 import mod.vemerion.runeworld.item.BloodPuddingItem;
 import mod.vemerion.runeworld.item.GuideItem;
@@ -65,8 +66,7 @@ public class ModItems {
 		Item bloodLeech = Init.setup(
 				new BlockItem(ModBlocks.BLOOD_LEECH, new Item.Properties().group(ItemGroup.SEARCH)), "blood_leech");
 		Item guide = Init.setup(new GuideItem(new Item.Properties().group(ItemGroup.SEARCH)), "guide");
-		Item bloodCrystallite = Init.setup(new Item(new Item.Properties().group(ItemGroup.SEARCH)),
-				"blood_crystallite");
+		Item bloodCrystallite = Init.setup(new BloodCrystalliteItem(), "blood_crystallite");
 
 		event.getRegistry().registerAll(bloodBucket, bloodPudding, bloodFlower, bloodPillarLarge, bloodPillarMedium,
 				bloodPillarSmall, bloodRock, bloodMoss, bloodCrystal, mosquitoEggs, bloodBatTooth, bloodLeech, guide,
