@@ -32,6 +32,7 @@ public class ModLanguageProvider extends LanguageProvider {
 		add(ModItems.MOSQUITO_EGGS, "Mosquito Eggs");
 		add(ModItems.BLOOD_BAT_TOOTH, "Blood Bat Tooth");
 		add(ModItems.GUIDE, "Runeworld Guide");
+		add(ModItems.BLOOD_CRYSTALLITE, "Blood Crystallite");
 		add(ModEffects.BLOOD_DRAINED, "Blood Drained");
 		add(ModBiomes.BLOOD_PLAINS, "Blood Plains");
 		add(ModEntities.MOSQUITO, "Mosquito");

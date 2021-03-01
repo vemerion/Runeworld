@@ -36,6 +36,7 @@ public class ModItems {
 	public static final Item BLOOD_BAT_TOOTH = null;
 	public static final Item BLOOD_LEECH = null;
 	public static final Item GUIDE = null;
+	public static final Item BLOOD_CRYSTALLITE = null;
 
 	static final ItemGroup ITEM_GROUP = new RuneworldItemGroup();
 
@@ -64,9 +65,12 @@ public class ModItems {
 		Item bloodLeech = Init.setup(
 				new BlockItem(ModBlocks.BLOOD_LEECH, new Item.Properties().group(ItemGroup.SEARCH)), "blood_leech");
 		Item guide = Init.setup(new GuideItem(new Item.Properties().group(ItemGroup.SEARCH)), "guide");
+		Item bloodCrystallite = Init.setup(new Item(new Item.Properties().group(ItemGroup.SEARCH)),
+				"blood_crystallite");
 
 		event.getRegistry().registerAll(bloodBucket, bloodPudding, bloodFlower, bloodPillarLarge, bloodPillarMedium,
-				bloodPillarSmall, bloodRock, bloodMoss, bloodCrystal, mosquitoEggs, bloodBatTooth, bloodLeech, guide);
+				bloodPillarSmall, bloodRock, bloodMoss, bloodCrystal, mosquitoEggs, bloodBatTooth, bloodLeech, guide,
+				bloodCrystallite);
 	}
 
 	private static class RuneworldItemGroup extends ItemGroup {

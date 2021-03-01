@@ -13,6 +13,7 @@ import mod.vemerion.runeworld.block.BloodCrystalBlock;
 import mod.vemerion.runeworld.entity.BloodBatEntity;
 import mod.vemerion.runeworld.init.ModBlocks;
 import mod.vemerion.runeworld.init.ModEntities;
+import mod.vemerion.runeworld.init.ModLootTables;
 import mod.vemerion.runeworld.init.ModStructurePieces;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
@@ -127,8 +128,7 @@ public class BloodBatLairStructure extends Structure<NoFeatureConfig> {
 			tagCompound.putInt("b", b);
 			tagCompound.putInt("randSeed", randSeed);
 		}
-		
-		// TODO: Add chest with loot
+
 		// TODO: Prevent other world gen features from generating inside lair
 
 		// Note: Be sure to only generate the parts inside the given chunk (box)
@@ -189,14 +189,23 @@ public class BloodBatLairStructure extends Structure<NoFeatureConfig> {
 			// Add blood crystals
 			addBloodCrystals(world, rand, inChunk);
 
+			// Chest
+			addChest(world, rand, box);
+
 			return true;
+		}
+
+		private void addChest(ISeedReader world, Random rand, MutableBoundingBox box) {
+			if (box.isVecInside(center))
+				generateChest(world, box, rand, center.getX(), center.getY(), center.getZ(),
+						ModLootTables.CHEST_BLOOD_BAT_LAIR);
 		}
 
 		private void addBloodCrystals(ISeedReader world, Random rand, List<BlockPos> inChunk) {
 			for (int i = 0; i < rand.nextInt(2) + 1; i++) {
 				if (inChunk.isEmpty())
 					return;
-				
+
 				BlockPos p = inChunk.remove(rand.nextInt(inChunk.size()));
 				p = p.offset(Direction.DOWN);
 				if (world.isAirBlock(p))
@@ -208,7 +217,7 @@ public class BloodBatLairStructure extends Structure<NoFeatureConfig> {
 			for (int i = 0; i < 4; i++) {
 				if (inChunk.isEmpty())
 					return;
-				
+
 				BlockPos p = inChunk.remove(rand.nextInt(inChunk.size()));
 				world.setBlockState(p, AIR, 2);
 			}
@@ -218,7 +227,7 @@ public class BloodBatLairStructure extends Structure<NoFeatureConfig> {
 			for (int i = 0; i < rand.nextInt(2) + 2; i++) {
 				if (inChunk.isEmpty())
 					return;
-				
+
 				BlockPos p = inChunk.remove(rand.nextInt(inChunk.size()));
 				int height = rand.nextInt(3) + 2;
 				for (int j = 1; j < height; j++) {
