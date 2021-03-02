@@ -1,8 +1,10 @@
 package mod.vemerion.runeworld.item;
 
+import mod.vemerion.runeworld.entity.BloodBatEntity;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
 import net.minecraft.block.CauldronBlock;
+import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemGroup;
@@ -43,6 +45,17 @@ public class BloodCrystalliteItem extends Item {
 		}
 
 		return super.onItemUse(context);
+	}
+
+	@Override
+	public void inventoryTick(ItemStack stack, World worldIn, Entity entityIn, int itemSlot, boolean isSelected) {
+		if (worldIn.isRemote || !(entityIn instanceof PlayerEntity) || ((PlayerEntity) entityIn).isCreative())
+			return;
+		for (BloodBatEntity bat : worldIn.getEntitiesWithinAABB(BloodBatEntity.class, entityIn.getBoundingBox().grow(5),
+				bat -> bat.isHanging())) {
+			bat.stopHanging();
+			bat.setAttackTarget((PlayerEntity) entityIn);
+		}
 	}
 
 }
