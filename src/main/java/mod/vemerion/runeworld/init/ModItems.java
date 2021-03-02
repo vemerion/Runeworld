@@ -4,6 +4,7 @@ import mod.vemerion.runeworld.Main;
 import mod.vemerion.runeworld.item.BloodBatToothItem;
 import mod.vemerion.runeworld.item.BloodBucketItem;
 import mod.vemerion.runeworld.item.BloodCrystalliteItem;
+import mod.vemerion.runeworld.item.BloodDislocatorItem;
 import mod.vemerion.runeworld.item.BloodFlowerItem;
 import mod.vemerion.runeworld.item.BloodPuddingItem;
 import mod.vemerion.runeworld.item.GuideItem;
@@ -38,6 +39,7 @@ public class ModItems {
 	public static final Item BLOOD_LEECH = null;
 	public static final Item GUIDE = null;
 	public static final Item BLOOD_CRYSTALLITE = null;
+	public static final Item BLOOD_DISLOCATOR = null;
 
 	static final ItemGroup ITEM_GROUP = new RuneworldItemGroup();
 
@@ -67,10 +69,11 @@ public class ModItems {
 				new BlockItem(ModBlocks.BLOOD_LEECH, new Item.Properties().group(ItemGroup.SEARCH)), "blood_leech");
 		Item guide = Init.setup(new GuideItem(new Item.Properties().group(ItemGroup.SEARCH)), "guide");
 		Item bloodCrystallite = Init.setup(new BloodCrystalliteItem(), "blood_crystallite");
+		Item bloodDislocator = Init.setup(new BloodDislocatorItem(), "blood_dislocator");
 
 		event.getRegistry().registerAll(bloodBucket, bloodPudding, bloodFlower, bloodPillarLarge, bloodPillarMedium,
 				bloodPillarSmall, bloodRock, bloodMoss, bloodCrystal, mosquitoEggs, bloodBatTooth, bloodLeech, guide,
-				bloodCrystallite);
+				bloodCrystallite, bloodDislocator);
 	}
 
 	private static class RuneworldItemGroup extends ItemGroup {

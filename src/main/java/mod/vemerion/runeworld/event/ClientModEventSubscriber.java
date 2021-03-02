@@ -3,7 +3,9 @@ package mod.vemerion.runeworld.event;
 import mod.vemerion.runeworld.Main;
 import mod.vemerion.runeworld.block.RunePortalBlock;
 import mod.vemerion.runeworld.init.ModBlocks;
+import mod.vemerion.runeworld.init.ModDimensions;
 import mod.vemerion.runeworld.init.ModEntities;
+import mod.vemerion.runeworld.init.ModItems;
 import mod.vemerion.runeworld.init.ModParticleTypes;
 import mod.vemerion.runeworld.init.ModTileEntities;
 import mod.vemerion.runeworld.particle.DrippingBloodFactory;
@@ -16,7 +18,9 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.RenderTypeLookup;
 import net.minecraft.client.renderer.entity.SpriteRenderer;
+import net.minecraft.item.ItemModelsProperties;
 import net.minecraft.item.SpawnEggItem;
+import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.client.event.ColorHandlerEvent;
 import net.minecraftforge.client.event.ParticleFactoryRegisterEvent;
@@ -43,9 +47,8 @@ public class ClientModEventSubscriber {
 	public static void onClientSetup(FMLClientSetupEvent event) {
 		RenderTypeLookup.setRenderLayer(ModBlocks.BLOOD_FLOWER, RenderType.getCutout());
 		RenderTypeLookup.setRenderLayer(ModBlocks.BLOOD_CRYSTAL, RenderType.getCutout());
-		
-		ClientRegistry.bindTileEntityRenderer(ModTileEntities.BLOOD_LEECH, BloodLeechTileEntityRenderer::new);
 
+		ClientRegistry.bindTileEntityRenderer(ModTileEntities.BLOOD_LEECH, BloodLeechTileEntityRenderer::new);
 
 		for (Block portal : ModBlocks.getRunePortals())
 			RenderTypeLookup.setRenderLayer(portal, RenderType.getTranslucent());
@@ -56,6 +59,22 @@ public class ClientModEventSubscriber {
 		RenderingRegistry.registerEntityRenderingHandler(ModEntities.BLOOD_BAT, BloodBatRenderer::new);
 		RenderingRegistry.registerEntityRenderingHandler(ModEntities.MOSQUITO_EGGS,
 				m -> new SpriteRenderer<>(m, mc.getItemRenderer()));
+
+		event.enqueueWork(() -> registerItemProperties());
+	}
+
+	private static void registerItemProperties() {
+		ItemModelsProperties.registerProperty(ModItems.BLOOD_DISLOCATOR, new ResourceLocation(Main.MODID, "dimension"),
+				(stack, world, entity) -> {
+					float property = 0.5f;
+					if (world != null && world.getDimensionKey() == ModDimensions.BLOOD)
+						property = 1;
+					else if (entity != null && entity.world != null
+							&& entity.world.getDimensionKey() == ModDimensions.BLOOD)
+						property = 1;
+
+					return property;
+				});
 	}
 
 	@SubscribeEvent

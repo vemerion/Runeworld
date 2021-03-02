@@ -38,6 +38,9 @@ public class ModRecipeProvider extends RecipeProvider {
 		ShapelessRecipeBuilder.shapelessRecipe(ModItems.GUIDE).addIngredient(Tags.Items.OBSIDIAN).addIngredient(runes)
 				.addCriterion("has_rune", hasItem(runes)).addCriterion("has_obsidian", hasItem(Tags.Items.OBSIDIAN))
 				.build(consumer);
+		ShapedRecipeBuilder.shapedRecipe(ModItems.BLOOD_DISLOCATOR).patternLine(" # ").patternLine("#B#")
+				.patternLine(" # ").key('#', Tags.Items.OBSIDIAN).key('B', ModItems.BLOOD_CRYSTALLITE)
+				.addCriterion("has_blood_crystallite", hasItem(ModItems.BLOOD_CRYSTALLITE)).build(consumer);
 	}
 
 	private void pillar(Item large, Item small, Consumer<IFinishedRecipe> consumer) {

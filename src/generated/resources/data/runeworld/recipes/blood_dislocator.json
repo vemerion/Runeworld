@@ -1,0 +1,19 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    " # ",
+    "#B#",
+    " # "
+  ],
+  "key": {
+    "#": {
+      "tag": "forge:obsidian"
+    },
+    "B": {
+      "item": "runeworld:blood_crystallite"
+    }
+  },
+  "result": {
+    "item": "runeworld:blood_dislocator"
+  }
+}

@@ -1,0 +1,20 @@
+{
+  "parent": "minecraft:item/generated",
+  "textures": {
+    "layer0": "runeworld:item/blood_dislocator_red"
+  },
+  "overrides": [
+    {
+      "predicate": {
+        "runeworld:dimension": 0.0
+      },
+      "model": "runeworld:item/blood_dislocator_red"
+    },
+    {
+      "predicate": {
+        "runeworld:dimension": 0.75
+      },
+      "model": "runeworld:item/blood_dislocator_blue"
+    }
+  ]
+}
