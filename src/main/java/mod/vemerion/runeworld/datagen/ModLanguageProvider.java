@@ -78,7 +78,7 @@ public class ModLanguageProvider extends LanguageProvider {
 		addGuide("blood_world.mobs.intro", "The Blood World is the home of several hideous monsters.");
 		addGuide("blood_world.mobs.blood_bat", "Blood Bat");
 		addGuide("blood_world.mobs.blood_bat.text1",
-				"The blood bat is a large and dangerous monster. They spend most of their time sleeping upside down in giant dead trees, but if awakened, they will attack! When they bite their long teeth into the flesh of their target, they have a chance to apply the dangerous blood drained disease.");
+				"The blood bat is a large and dangerous monster. They spend most of their time sleeping upside down in giant dead trees or hidden lairs, but if awakened, they will attack! When they bite their long teeth into the flesh of their target, they have a chance to apply the dangerous blood drained disease.");
 		addGuide("blood_world.mobs.blood_bat.text2",
 				"When killed, the blood bat has a chance to drop a tooth, which can be used as a weapon that applies the blood drained disease.");
 		addGuide("blood_world.mobs.mosquito", "Mosquito");
@@ -86,6 +86,18 @@ public class ModLanguageProvider extends LanguageProvider {
 				"Giant mosquitoes, filled to the brim with blood, can be found buzzing near blood pools in the blood world. They are fairly weak, but can overwhelm careless adventurers by sheer numbers.");
 		addGuide("blood_world.mobs.mosquito.text2",
 				"When killed, the mosquito has a chance to drop a bundle of mosquito eggs.");
+
+		addGuide("blood_world.blood_crystallite", "Blood Crystallite");
+		addGuide("blood_world.blood_crystallite.text1",
+				"A Blood Crystallite is a rare and valuable item. It can be found in hidden blood bat lairs, which look like large hills to the untrained eye, but are hollow and the home to flocks of blood bats.");
+		addGuide("blood_world.blood_crystallite.text2",
+				"You might think it safe to snatch the crystallite while the bats are sleeping, but be careful! Blood bats can smell nearby players carrying blood crystallites, and will wake up to attack!");
+		addGuide("blood_world.blood_crystallite.text3",
+				"If you manage to escape a blood bat lair with a crystallite, you should consider yourself lucky, for the crystallite has several uses.");
+		addGuide("blood_world.blood_crystallite.text4",
+				"The blood can be washed of the crystallite in a cauldron, revealing a diamond underneath.");
+		addGuide("blood_world.blood_crystallite.text5",
+				"It can be used to craft a blood translocator item, which functions like a portable rune portal to and from the blood world. Unfortunately, it is consumed after it is used once.");
 	}
 
 	private void addGuide(String suffix, String text) {
