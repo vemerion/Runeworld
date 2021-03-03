@@ -12,7 +12,6 @@ import net.minecraft.util.ActionResult;
 import net.minecraft.util.Hand;
 import net.minecraft.world.World;
 
-// TODO: Add First-person use animation
 public class BloodDislocatorItem extends Item {
 
 	public BloodDislocatorItem() {
@@ -21,7 +20,7 @@ public class BloodDislocatorItem extends Item {
 
 	@Override
 	public int getUseDuration(ItemStack stack) {
-		return 30;
+		return 40;
 	}
 
 	@Override
