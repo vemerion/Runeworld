@@ -12,6 +12,7 @@ import mod.vemerion.runeworld.particle.DrippingBloodFactory;
 import mod.vemerion.runeworld.particle.RunePortalParticle;
 import mod.vemerion.runeworld.renderer.BloodBatRenderer;
 import mod.vemerion.runeworld.renderer.BloodLeechTileEntityRenderer;
+import mod.vemerion.runeworld.renderer.BloodMonkeyRenderer;
 import mod.vemerion.runeworld.renderer.MosquitoRenderer;
 import net.minecraft.block.Block;
 import net.minecraft.client.Minecraft;
@@ -55,12 +56,17 @@ public class ClientModEventSubscriber {
 
 		Minecraft mc = event.getMinecraftSupplier().get();
 
-		RenderingRegistry.registerEntityRenderingHandler(ModEntities.MOSQUITO, MosquitoRenderer::new);
-		RenderingRegistry.registerEntityRenderingHandler(ModEntities.BLOOD_BAT, BloodBatRenderer::new);
-		RenderingRegistry.registerEntityRenderingHandler(ModEntities.MOSQUITO_EGGS,
-				m -> new SpriteRenderer<>(m, mc.getItemRenderer()));
+		registerEntityRenderers(mc);
 
 		event.enqueueWork(() -> registerItemProperties());
+	}
+
+	private static void registerEntityRenderers(Minecraft mc) {
+		RenderingRegistry.registerEntityRenderingHandler(ModEntities.MOSQUITO, MosquitoRenderer::new);
+		RenderingRegistry.registerEntityRenderingHandler(ModEntities.BLOOD_BAT, BloodBatRenderer::new);
+		RenderingRegistry.registerEntityRenderingHandler(ModEntities.BLOOD_MONKEY, BloodMonkeyRenderer::new);
+		RenderingRegistry.registerEntityRenderingHandler(ModEntities.MOSQUITO_EGGS,
+				m -> new SpriteRenderer<>(m, mc.getItemRenderer()));
 	}
 
 	private static void registerItemProperties() {

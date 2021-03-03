@@ -31,6 +31,7 @@ public class ModEntityLootTables extends EntityLootTables {
 								.addEntry(ItemLootEntry.builder(ModItems.BLOOD_BAT_TOOTH))
 								.acceptCondition(KilledByPlayer.builder())
 								.acceptCondition(RandomChanceWithLooting.builder(0.05f, 0.02f))));
+		registerLootTable(ModEntities.BLOOD_MONKEY, LootTable.builder());
 	}
 
 	@Override

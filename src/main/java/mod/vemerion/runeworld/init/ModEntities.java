@@ -7,6 +7,7 @@ import com.google.common.collect.ImmutableList;
 
 import mod.vemerion.runeworld.Main;
 import mod.vemerion.runeworld.entity.BloodBatEntity;
+import mod.vemerion.runeworld.entity.BloodMonkeyEntity;
 import mod.vemerion.runeworld.entity.MosquitoEggsEntity;
 import mod.vemerion.runeworld.entity.MosquitoEntity;
 import mod.vemerion.runeworld.helpers.Helper;
@@ -33,12 +34,15 @@ public class ModEntities {
 	public static final EntityType<MosquitoEntity> MOSQUITO = null;
 	public static final EntityType<MosquitoEggsEntity> MOSQUITO_EGGS = null;
 	public static final EntityType<BloodBatEntity> BLOOD_BAT = null;
+	public static final EntityType<BloodMonkeyEntity> BLOOD_MONKEY = null;
 
 	public static final Item MOSQUITO_SPAWN_EGG = null;
 	public static final Item BLOOD_BAT_SPAWN_EGG = null;
+	public static final Item BLOOD_MONKEY_SPAWN_EGG = null;
 
 	private static EntityType<?> mosquito;
 	private static EntityType<?> bloodBat;
+	private static EntityType<?> bloodMonkey;
 
 	private static final List<SpawnEggItem> SPAWN_EGGS = new ArrayList<>();
 
@@ -46,6 +50,7 @@ public class ModEntities {
 	public static void onRegisterEntity(RegistryEvent.Register<EntityType<?>> event) {
 		event.getRegistry().register(mosquito);
 		event.getRegistry().register(bloodBat);
+		event.getRegistry().register(bloodMonkey);
 
 		EntityType<MosquitoEggsEntity> mosquitoEggs = EntityType.Builder
 				.<MosquitoEggsEntity>create(MosquitoEggsEntity::new, EntityClassification.MISC).size(0.25F, 0.25F)
@@ -57,15 +62,23 @@ public class ModEntities {
 
 	@SubscribeEvent
 	public static void onRegisterSpawnEggs(RegistryEvent.Register<Item> event) {
-		mosquito = Init.setup(EntityType.Builder.<MosquitoEntity>create(MosquitoEntity::new, EntityClassification.MONSTER)
-				.size(1, 1).build(new ResourceLocation(Main.MODID, "mosquito").toString()), "mosquito");
-		bloodBat = Init.setup(EntityType.Builder.<BloodBatEntity>create(BloodBatEntity::new, EntityClassification.MONSTER)
-				.size(1f, 1.6f).build(new ResourceLocation(Main.MODID, "blood_bat").toString()), "blood_bat");
+		mosquito = Init
+				.setup(EntityType.Builder.<MosquitoEntity>create(MosquitoEntity::new, EntityClassification.MONSTER)
+						.size(1, 1).build(new ResourceLocation(Main.MODID, "mosquito").toString()), "mosquito");
+		bloodBat = Init
+				.setup(EntityType.Builder.<BloodBatEntity>create(BloodBatEntity::new, EntityClassification.MONSTER)
+						.size(1f, 1.6f).build(new ResourceLocation(Main.MODID, "blood_bat").toString()), "blood_bat");
+		bloodMonkey = Init.setup(
+				EntityType.Builder.<BloodMonkeyEntity>create(BloodMonkeyEntity::new, EntityClassification.MONSTER)
+						.size(1f, 1.6f).build(new ResourceLocation(Main.MODID, "blood_monkey").toString()),
+				"blood_monkey");
 
 		Item mosquitoSpawnEgg = createSpawnEgg(mosquito, Helper.color(100, 50, 0, 255), Helper.color(255, 0, 0, 255));
 		Item bloodBatSpawnEgg = createSpawnEgg(bloodBat, Helper.color(40, 40, 40, 255), Helper.color(255, 0, 0, 255));
+		Item bloodMonkeySpawnEgg = createSpawnEgg(bloodMonkey, Helper.color(255, 255, 255, 255),
+				Helper.color(255, 0, 0, 255));
 
-		event.getRegistry().registerAll(mosquitoSpawnEgg, bloodBatSpawnEgg);
+		event.getRegistry().registerAll(mosquitoSpawnEgg, bloodBatSpawnEgg, bloodMonkeySpawnEgg);
 	}
 
 	@SubscribeEvent
@@ -77,6 +90,7 @@ public class ModEntities {
 	private static void setEntityAttributes() {
 		GlobalEntityTypeAttributes.put(MOSQUITO, MosquitoEntity.attributes().create());
 		GlobalEntityTypeAttributes.put(BLOOD_BAT, BloodBatEntity.attributes().create());
+		GlobalEntityTypeAttributes.put(BLOOD_MONKEY, BloodMonkeyEntity.attributes().create());
 	}
 
 	private static void setEntitySpawns() {
