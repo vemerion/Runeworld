@@ -67,6 +67,8 @@ public class ClientModEventSubscriber {
 		RenderingRegistry.registerEntityRenderingHandler(ModEntities.BLOOD_MONKEY, BloodMonkeyRenderer::new);
 		RenderingRegistry.registerEntityRenderingHandler(ModEntities.MOSQUITO_EGGS,
 				m -> new SpriteRenderer<>(m, mc.getItemRenderer()));
+		RenderingRegistry.registerEntityRenderingHandler(ModEntities.BLOOD_PEBBLE,
+				m -> new SpriteRenderer<>(m, mc.getItemRenderer()));
 	}
 
 	private static void registerItemProperties() {

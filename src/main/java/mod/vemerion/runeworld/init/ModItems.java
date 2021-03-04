@@ -8,7 +8,7 @@ import mod.vemerion.runeworld.item.BloodDislocatorItem;
 import mod.vemerion.runeworld.item.BloodFlowerItem;
 import mod.vemerion.runeworld.item.BloodPuddingItem;
 import mod.vemerion.runeworld.item.GuideItem;
-import mod.vemerion.runeworld.item.MosquitoEggsItem;
+import mod.vemerion.runeworld.item.ThrowableItem;
 import net.minecraft.item.BlockItem;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemGroup;
@@ -64,14 +64,14 @@ public class ModItems {
 				"blood_moss");
 		Item bloodCrystal = Init.setup(
 				new BlockItem(ModBlocks.BLOOD_CRYSTAL, new Item.Properties().group(ItemGroup.SEARCH)), "blood_crystal");
-		Item mosquitoEggs = Init.setup(new MosquitoEggsItem(), "mosquito_eggs");
+		Item mosquitoEggs = Init.setup(new ThrowableItem(() -> ModEntities.MOSQUITO_EGGS, 0.5), "mosquito_eggs");
 		Item bloodBatTooth = Init.setup(new BloodBatToothItem(), "blood_bat_tooth");
 		Item bloodLeech = Init.setup(
 				new BlockItem(ModBlocks.BLOOD_LEECH, new Item.Properties().group(ItemGroup.SEARCH)), "blood_leech");
 		Item guide = Init.setup(new GuideItem(new Item.Properties().group(ItemGroup.SEARCH)), "guide");
 		Item bloodCrystallite = Init.setup(new BloodCrystalliteItem(), "blood_crystallite");
 		Item bloodDislocator = Init.setup(new BloodDislocatorItem(), "blood_dislocator");
-		Item bloodPebble = Init.setup(new Item(new Item.Properties().group(ItemGroup.SEARCH)), "blood_pebble");
+		Item bloodPebble = Init.setup(new ThrowableItem(() -> ModEntities.BLOOD_PEBBLE, 0.75), "blood_pebble");
 
 		event.getRegistry().registerAll(bloodBucket, bloodPudding, bloodFlower, bloodPillarLarge, bloodPillarMedium,
 				bloodPillarSmall, bloodRock, bloodMoss, bloodCrystal, mosquitoEggs, bloodBatTooth, bloodLeech, guide,

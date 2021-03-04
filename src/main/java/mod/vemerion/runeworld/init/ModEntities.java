@@ -8,6 +8,7 @@ import com.google.common.collect.ImmutableList;
 import mod.vemerion.runeworld.Main;
 import mod.vemerion.runeworld.entity.BloodBatEntity;
 import mod.vemerion.runeworld.entity.BloodMonkeyEntity;
+import mod.vemerion.runeworld.entity.BloodPebbleEntity;
 import mod.vemerion.runeworld.entity.MosquitoEggsEntity;
 import mod.vemerion.runeworld.entity.MosquitoEntity;
 import mod.vemerion.runeworld.helpers.Helper;
@@ -35,6 +36,7 @@ public class ModEntities {
 	public static final EntityType<MosquitoEggsEntity> MOSQUITO_EGGS = null;
 	public static final EntityType<BloodBatEntity> BLOOD_BAT = null;
 	public static final EntityType<BloodMonkeyEntity> BLOOD_MONKEY = null;
+	public static final EntityType<BloodPebbleEntity> BLOOD_PEBBLE = null;
 
 	public static final Item MOSQUITO_SPAWN_EGG = null;
 	public static final Item BLOOD_BAT_SPAWN_EGG = null;
@@ -57,7 +59,12 @@ public class ModEntities {
 				.trackingRange(4).func_233608_b_(10)
 				.build(new ResourceLocation(Main.MODID, "mosquito_eggs").toString());
 
-		event.getRegistry().register(Init.setup(mosquitoEggs, "mosquito_eggs"));
+		EntityType<BloodPebbleEntity> bloodPebble = EntityType.Builder
+				.<BloodPebbleEntity>create(BloodPebbleEntity::new, EntityClassification.MISC).size(0.25F, 0.25F)
+				.trackingRange(4).func_233608_b_(10).build(new ResourceLocation(Main.MODID, "blood_pebble").toString());
+
+		event.getRegistry().registerAll(Init.setup(mosquitoEggs, "mosquito_eggs"),
+				Init.setup(bloodPebble, "blood_pebble"));
 	}
 
 	@SubscribeEvent
