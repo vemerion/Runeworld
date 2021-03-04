@@ -1,7 +1,6 @@
 package mod.vemerion.runeworld.entity;
 
 import mod.vemerion.runeworld.block.BloodPillarBlock;
-import mod.vemerion.runeworld.init.ModItems;
 import net.minecraft.entity.CreatureEntity;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.IRangedAttackMob;
@@ -12,6 +11,7 @@ import net.minecraft.entity.ai.attributes.Attributes;
 import net.minecraft.entity.ai.goal.NearestAttackableTargetGoal;
 import net.minecraft.entity.ai.goal.RangedAttackGoal;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.entity.projectile.ProjectileItemEntity;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.World;
 
@@ -36,7 +36,7 @@ public class BloodMonkeyEntity extends CreatureEntity implements IRangedAttackMo
 
 	@Override
 	protected void registerGoals() {
-		goalSelector.addGoal(0, new RangedAttackGoal(this, 0, 60, 10) {
+		goalSelector.addGoal(0, new RangedAttackGoal(this, 0, 45, 10) {
 			@Override
 			public boolean shouldExecute() {
 				return super.shouldExecute() && isStandingOnPillar();
@@ -47,14 +47,14 @@ public class BloodMonkeyEntity extends CreatureEntity implements IRangedAttackMo
 
 	@Override
 	public void attackEntityWithRangedAttack(LivingEntity target, float distanceFactor) {
-		MosquitoEggsEntity eggs = new MosquitoEggsEntity(this, world);
-		eggs.setItem(ModItems.MOSQUITO_EGGS.getDefaultInstance());
+		ProjectileItemEntity projectile = rand.nextDouble() < 0.1 ? new MosquitoEggsEntity(this, world)
+				: new BloodPebbleEntity(this, world);
 		double x = target.getPosX() - getPosX();
-		double y = target.getPosYEye() - 1.1f - eggs.getPosY();
+		double y = target.getPosYEye() - 1.1f - projectile.getPosY();
 		double z = target.getPosZ() - getPosZ();
 		double height = MathHelper.sqrt(x * x + z * z) * 0.2;
-		eggs.shoot(x, y + height, z, 1f, 1f);
-		world.addEntity(eggs);
+		projectile.shoot(x, y + height, z, 1f, 1f);
+		world.addEntity(projectile);
 	}
 
 	private boolean isStandingOnPillar() {

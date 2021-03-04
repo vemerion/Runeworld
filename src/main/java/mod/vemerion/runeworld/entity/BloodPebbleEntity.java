@@ -76,7 +76,10 @@ public class BloodPebbleEntity extends ProjectileItemEntity {
 	protected void onEntityHit(EntityRayTraceResult result) {
 		Entity target = result.getEntity();
 		if (!world.isRemote) {
-			target.attackEntityFrom(DamageSource.causeThrownDamage(this, func_234616_v_()), 1);
+			int damage = 4;
+			if (func_234616_v_() instanceof PlayerEntity)
+				damage = 1;
+			target.attackEntityFrom(DamageSource.causeThrownDamage(this, func_234616_v_()), damage);
 		}
 	}
 
