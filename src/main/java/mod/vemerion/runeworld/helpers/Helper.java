@@ -33,4 +33,8 @@ public class Helper {
 		return entity.getPositionVec().add((rand.nextDouble() - 0.5) * width, rand.nextDouble() * height,
 				(rand.nextDouble() - 0.5) * width);
 	}
+	
+	public static float toRad(double deg) {
+		return (float) Math.toRadians(deg);
+	}
 }

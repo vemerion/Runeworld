@@ -1,6 +1,7 @@
 package mod.vemerion.runeworld.entity;
 
 import mod.vemerion.runeworld.block.BloodPillarBlock;
+import mod.vemerion.runeworld.helpers.Helper;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.IRangedAttackMob;
 import net.minecraft.entity.LivingEntity;
@@ -18,6 +19,7 @@ import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.projectile.ProjectileItemEntity;
 import net.minecraft.pathfinding.ClimberPathNavigator;
 import net.minecraft.pathfinding.PathNavigator;
+import net.minecraft.util.Hand;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
@@ -25,6 +27,8 @@ import net.minecraft.world.IWorldReader;
 import net.minecraft.world.World;
 
 public class BloodMonkeyEntity extends MonsterEntity implements IRangedAttackMob {
+
+	private float bodyRot, prevBodyRot;
 
 	public BloodMonkeyEntity(EntityType<? extends BloodMonkeyEntity> type, World worldIn) {
 		super(type, worldIn);
@@ -36,6 +40,21 @@ public class BloodMonkeyEntity extends MonsterEntity implements IRangedAttackMob
 				.createMutableAttribute(Attributes.MOVEMENT_SPEED, 0.2D)
 				.createMutableAttribute(Attributes.FOLLOW_RANGE, 16.0D)
 				.createMutableAttribute(Attributes.ATTACK_DAMAGE, 1.0D);
+	}
+
+	@Override
+	public void tick() {
+		super.tick();
+
+		prevBodyRot = bodyRot;
+		if (isStandingOnPillar())
+			bodyRot = MathHelper.lerp(0.1f, bodyRot, Helper.toRad(15));
+		else
+			bodyRot = MathHelper.lerp(0.1f, bodyRot, Helper.toRad(70));
+	}
+	
+	public float getBodyRot(float partialTicks) {
+		return MathHelper.lerp(partialTicks, prevBodyRot, bodyRot);
 	}
 
 	protected PathNavigator createNavigator(World worldIn) {
@@ -79,17 +98,18 @@ public class BloodMonkeyEntity extends MonsterEntity implements IRangedAttackMob
 
 	@Override
 	public void attackEntityWithRangedAttack(LivingEntity target, float distanceFactor) {
+		swingArm(Hand.MAIN_HAND);
 		ProjectileItemEntity projectile = rand.nextDouble() < 0.1 ? new MosquitoEggsEntity(this, world)
 				: new BloodPebbleEntity(this, world);
 		double x = target.getPosX() - getPosX();
-		double y = target.getPosYEye() - 1.1f - projectile.getPosY();
+		double y = target.getPosYEye() - projectile.getPosY();
 		double z = target.getPosZ() - getPosZ();
 		double height = MathHelper.sqrt(x * x + z * z) * 0.2;
 		projectile.shoot(x, y + height, z, 1f, 1f);
 		world.addEntity(projectile);
 	}
 
-	private boolean isStandingOnPillar() {
+	public boolean isStandingOnPillar() {
 		float halfWidth = getWidth() * 0.51f;
 		return BlockPos
 				.getAllInBox(new AxisAlignedBB(getPositionVec().subtract(halfWidth, 0.5, halfWidth),
