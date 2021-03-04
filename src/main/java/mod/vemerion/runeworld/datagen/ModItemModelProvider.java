@@ -25,6 +25,7 @@ public class ModItemModelProvider extends ItemModelProvider {
 		simpleItem(ModItems.BLOOD_LEECH);
 		simpleItem(ModItems.GUIDE);
 		simpleItem(ModItems.BLOOD_CRYSTALLITE);
+		simpleItem(ModItems.BLOOD_PEBBLE);
 		simpleItem(ModItems.BLOOD_FLOWER, BLOCK_FOLDER);
 		simpleItem(ModItems.BLOOD_CRYSTAL, BLOCK_FOLDER);
 		ModEntities.getSpawnEggs().forEach(egg -> spawnEgg(egg));

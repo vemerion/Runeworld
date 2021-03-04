@@ -40,6 +40,7 @@ public class ModItems {
 	public static final Item GUIDE = null;
 	public static final Item BLOOD_CRYSTALLITE = null;
 	public static final Item BLOOD_DISLOCATOR = null;
+	public static final Item BLOOD_PEBBLE = null;
 
 	static final ItemGroup ITEM_GROUP = new RuneworldItemGroup();
 
@@ -70,10 +71,11 @@ public class ModItems {
 		Item guide = Init.setup(new GuideItem(new Item.Properties().group(ItemGroup.SEARCH)), "guide");
 		Item bloodCrystallite = Init.setup(new BloodCrystalliteItem(), "blood_crystallite");
 		Item bloodDislocator = Init.setup(new BloodDislocatorItem(), "blood_dislocator");
+		Item bloodPebble = Init.setup(new Item(new Item.Properties().group(ItemGroup.SEARCH)), "blood_pebble");
 
 		event.getRegistry().registerAll(bloodBucket, bloodPudding, bloodFlower, bloodPillarLarge, bloodPillarMedium,
 				bloodPillarSmall, bloodRock, bloodMoss, bloodCrystal, mosquitoEggs, bloodBatTooth, bloodLeech, guide,
-				bloodCrystallite, bloodDislocator);
+				bloodCrystallite, bloodDislocator, bloodPebble);
 	}
 
 	private static class RuneworldItemGroup extends ItemGroup {
