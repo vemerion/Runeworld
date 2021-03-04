@@ -19,6 +19,7 @@ import net.minecraft.util.math.shapes.ISelectionContext;
 import net.minecraft.util.math.shapes.VoxelShape;
 import net.minecraft.world.IBlockReader;
 import net.minecraft.world.IWorld;
+import net.minecraft.world.IWorldReader;
 
 public class BloodPillarBlock extends Block implements IBloodLoggable {
 	private static final BooleanProperty WATERLOGGED = BlockStateProperties.WATERLOGGED;
@@ -67,10 +68,14 @@ public class BloodPillarBlock extends Block implements IBloodLoggable {
 		return shape;
 	}
 
-	public static boolean isPillar(IWorld world, BlockPos pos) {
-		Block block = world.getBlockState(pos).getBlock();
+	public static boolean isPillar(Block block) {
 		return block == ModBlocks.BLOOD_PILLAR_LARGE || block == ModBlocks.BLOOD_PILLAR_MEDIUM
 				|| block == ModBlocks.BLOOD_PILLAR_SMALL;
+	}
+
+	public static boolean isPillar(IWorldReader world, BlockPos pos) {
+		Block block = world.getBlockState(pos).getBlock();
+		return isPillar(block);
 	}
 
 	public static boolean generatePillar(IWorld world, Random rand, BlockPos pos) {

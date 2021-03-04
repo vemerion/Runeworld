@@ -9,13 +9,19 @@ import net.minecraft.entity.ai.attributes.AttributeModifierMap;
 import net.minecraft.entity.ai.attributes.Attributes;
 import net.minecraft.entity.ai.goal.LookRandomlyGoal;
 import net.minecraft.entity.ai.goal.MeleeAttackGoal;
+import net.minecraft.entity.ai.goal.MoveToBlockGoal;
 import net.minecraft.entity.ai.goal.NearestAttackableTargetGoal;
 import net.minecraft.entity.ai.goal.RangedAttackGoal;
 import net.minecraft.entity.ai.goal.WaterAvoidingRandomWalkingGoal;
 import net.minecraft.entity.monster.MonsterEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.projectile.ProjectileItemEntity;
+import net.minecraft.pathfinding.ClimberPathNavigator;
+import net.minecraft.pathfinding.PathNavigator;
+import net.minecraft.util.math.AxisAlignedBB;
+import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
+import net.minecraft.world.IWorldReader;
 import net.minecraft.world.World;
 
 public class BloodMonkeyEntity extends MonsterEntity implements IRangedAttackMob {
@@ -30,6 +36,10 @@ public class BloodMonkeyEntity extends MonsterEntity implements IRangedAttackMob
 				.createMutableAttribute(Attributes.MOVEMENT_SPEED, 0.2D)
 				.createMutableAttribute(Attributes.FOLLOW_RANGE, 16.0D)
 				.createMutableAttribute(Attributes.ATTACK_DAMAGE, 1.0D);
+	}
+
+	protected PathNavigator createNavigator(World worldIn) {
+		return new ClimberPathNavigator(this, worldIn);
 	}
 
 	@Override
@@ -51,14 +61,20 @@ public class BloodMonkeyEntity extends MonsterEntity implements IRangedAttackMob
 				return super.shouldExecute() && !isStandingOnPillar();
 			}
 		});
-		goalSelector.addGoal(2, new WaterAvoidingRandomWalkingGoal(this, 0.8) {
+		goalSelector.addGoal(2, new ClimbPillarGoal(this, 1, 10));
+		goalSelector.addGoal(3, new WaterAvoidingRandomWalkingGoal(this, 0.8) {
 			@Override
 			public boolean shouldExecute() {
 				return super.shouldExecute() && !isStandingOnPillar();
 			}
 		});
-		goalSelector.addGoal(3, new LookRandomlyGoal(this));
+		goalSelector.addGoal(4, new LookRandomlyGoal(this));
 		targetSelector.addGoal(1, new NearestAttackableTargetGoal<>(this, PlayerEntity.class, true));
+	}
+
+	@Override
+	public boolean isOnLadder() {
+		return super.isOnLadder() || collidedHorizontally;
 	}
 
 	@Override
@@ -74,7 +90,32 @@ public class BloodMonkeyEntity extends MonsterEntity implements IRangedAttackMob
 	}
 
 	private boolean isStandingOnPillar() {
-		return BloodPillarBlock.isPillar(world, getPosition().down());
+		float halfWidth = getWidth() * 0.51f;
+		return BlockPos
+				.getAllInBox(new AxisAlignedBB(getPositionVec().subtract(halfWidth, 0.5, halfWidth),
+						getPositionVec().add(halfWidth, -0.1, halfWidth)))
+				.anyMatch(p -> BloodPillarBlock.isPillar(world, p) && !BloodPillarBlock.isPillar(world, p.up()));
+	}
+
+	private static class ClimbPillarGoal extends MoveToBlockGoal {
+
+		private BloodMonkeyEntity monkey;
+
+		private ClimbPillarGoal(BloodMonkeyEntity monkey, double speedIn, int length) {
+			super(monkey, speedIn, length);
+			this.monkey = monkey;
+		}
+
+		@Override
+		protected boolean shouldMoveTo(IWorldReader worldIn, BlockPos pos) {
+			return BloodPillarBlock.isPillar(worldIn, pos);
+		}
+
+		@Override
+		public boolean shouldExecute() {
+			return super.shouldExecute() && !monkey.isStandingOnPillar();
+		}
+
 	}
 
 //	private static class PillarJumpGoal extends Goal {
