@@ -1,21 +1,24 @@
 package mod.vemerion.runeworld.entity;
 
 import mod.vemerion.runeworld.block.BloodPillarBlock;
-import net.minecraft.entity.CreatureEntity;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.IRangedAttackMob;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.MobEntity;
 import net.minecraft.entity.ai.attributes.AttributeModifierMap;
 import net.minecraft.entity.ai.attributes.Attributes;
+import net.minecraft.entity.ai.goal.LookRandomlyGoal;
+import net.minecraft.entity.ai.goal.MeleeAttackGoal;
 import net.minecraft.entity.ai.goal.NearestAttackableTargetGoal;
 import net.minecraft.entity.ai.goal.RangedAttackGoal;
+import net.minecraft.entity.ai.goal.WaterAvoidingRandomWalkingGoal;
+import net.minecraft.entity.monster.MonsterEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.projectile.ProjectileItemEntity;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.World;
 
-public class BloodMonkeyEntity extends CreatureEntity implements IRangedAttackMob {
+public class BloodMonkeyEntity extends MonsterEntity implements IRangedAttackMob {
 
 	public BloodMonkeyEntity(EntityType<? extends BloodMonkeyEntity> type, World worldIn) {
 		super(type, worldIn);
@@ -42,6 +45,19 @@ public class BloodMonkeyEntity extends CreatureEntity implements IRangedAttackMo
 				return super.shouldExecute() && isStandingOnPillar();
 			}
 		});
+		goalSelector.addGoal(1, new MeleeAttackGoal(this, 1.5, true) {
+			@Override
+			public boolean shouldExecute() {
+				return super.shouldExecute() && !isStandingOnPillar();
+			}
+		});
+		goalSelector.addGoal(2, new WaterAvoidingRandomWalkingGoal(this, 0.8) {
+			@Override
+			public boolean shouldExecute() {
+				return super.shouldExecute() && !isStandingOnPillar();
+			}
+		});
+		goalSelector.addGoal(3, new LookRandomlyGoal(this));
 		targetSelector.addGoal(1, new NearestAttackableTargetGoal<>(this, PlayerEntity.class, true));
 	}
 
