@@ -2,6 +2,7 @@ package mod.vemerion.runeworld.entity;
 
 import mod.vemerion.runeworld.block.BloodPillarBlock;
 import mod.vemerion.runeworld.helpers.Helper;
+import mod.vemerion.runeworld.init.ModSounds;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.IRangedAttackMob;
 import net.minecraft.entity.LivingEntity;
@@ -19,7 +20,9 @@ import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.projectile.ProjectileItemEntity;
 import net.minecraft.pathfinding.ClimberPathNavigator;
 import net.minecraft.pathfinding.PathNavigator;
+import net.minecraft.util.DamageSource;
 import net.minecraft.util.Hand;
+import net.minecraft.util.SoundEvent;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
@@ -41,10 +44,25 @@ public class BloodMonkeyEntity extends MonsterEntity implements IRangedAttackMob
 				.createMutableAttribute(Attributes.FOLLOW_RANGE, 16)
 				.createMutableAttribute(Attributes.ATTACK_DAMAGE, 3);
 	}
-	
+
 	@Override
 	public boolean canDespawn(double distanceToClosestPlayer) {
 		return false;
+	}
+
+	@Override
+	protected SoundEvent getAmbientSound() {
+		return ModSounds.MONKEY_AMBIENT;
+	}
+
+	@Override
+	protected SoundEvent getHurtSound(DamageSource damageSourceIn) {
+		return ModSounds.MONKEY_AMBIENT;
+	}
+
+	@Override
+	protected SoundEvent getDeathSound() {
+		return ModSounds.MONKEY_DEATH;
 	}
 
 	@Override
@@ -112,6 +130,7 @@ public class BloodMonkeyEntity extends MonsterEntity implements IRangedAttackMob
 		double height = MathHelper.sqrt(x * x + z * z) * 0.2;
 		projectile.shoot(x, y + height, z, 1f, 1f);
 		world.addEntity(projectile);
+		playSound(ModSounds.THROWING, 1, Helper.soundPitch(rand));
 	}
 
 	public boolean isStandingOnPillar() {

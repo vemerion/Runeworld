@@ -19,6 +19,10 @@ public class ModSounds {
 	public static final SoundEvent MOSQUITO_FLYING = null;
 	public static final SoundEvent MOSQUITO_SPLASH = null;
 	public static final SoundEvent PORTAL = null;
+	public static final SoundEvent MONKEY_AMBIENT = null;
+	public static final SoundEvent MONKEY_DEATH = null;
+	public static final SoundEvent THROWING = null;
+                                                
 
 	@SubscribeEvent
 	public static void onRegisterSound(RegistryEvent.Register<SoundEvent> event) {
@@ -34,5 +38,11 @@ public class ModSounds {
 		event.getRegistry().register(Init.setup(mosquito_splash, "mosquito_splash"));
 		SoundEvent portal = new SoundEvent(new ResourceLocation(Main.MODID, "portal"));
 		event.getRegistry().register(Init.setup(portal, "portal"));  
+		SoundEvent monkey_ambient = new SoundEvent(new ResourceLocation(Main.MODID, "monkey_ambient"));
+		event.getRegistry().register(Init.setup(monkey_ambient, "monkey_ambient"));
+		SoundEvent monkey_death = new SoundEvent(new ResourceLocation(Main.MODID, "monkey_death"));
+		event.getRegistry().register(Init.setup(monkey_death, "monkey_death"));
+		SoundEvent throwing = new SoundEvent(new ResourceLocation(Main.MODID, "throwing"));
+		event.getRegistry().register(Init.setup(throwing, "throwing")); 
 	}
 }

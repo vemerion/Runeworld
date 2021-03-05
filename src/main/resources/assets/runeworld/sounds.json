@@ -46,5 +46,29 @@
         "stream": false
       }
     ]
+  },
+  "monkey_ambient": {
+    "sounds": [
+      {
+        "name": "runeworld:monkey_ambient",
+        "stream": false
+      }
+    ]
+  },
+  "monkey_death": {
+    "sounds": [
+      {
+        "name": "runeworld:monkey_death",
+        "stream": false
+      }
+    ]
+  },
+  "throwing": {
+    "sounds": [
+      {
+        "name": "runeworld:throwing",
+        "stream": false
+      }
+    ]
   }
 }
