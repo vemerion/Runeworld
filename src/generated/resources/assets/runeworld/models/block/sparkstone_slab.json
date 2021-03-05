@@ -1,0 +1,8 @@
+{
+  "parent": "minecraft:block/slab",
+  "textures": {
+    "side": "runeworld:block/sparkstone",
+    "bottom": "runeworld:block/sparkstone",
+    "top": "runeworld:block/sparkstone"
+  }
+}

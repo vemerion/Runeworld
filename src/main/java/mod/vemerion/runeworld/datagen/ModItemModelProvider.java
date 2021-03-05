@@ -1,6 +1,8 @@
 package mod.vemerion.runeworld.datagen;
 
 import mod.vemerion.runeworld.Main;
+import mod.vemerion.runeworld.block.complex.StoneMaterial;
+import mod.vemerion.runeworld.init.ModBlocks;
 import mod.vemerion.runeworld.init.ModEntities;
 import mod.vemerion.runeworld.init.ModItems;
 import net.minecraft.data.DataGenerator;
@@ -8,6 +10,7 @@ import net.minecraft.item.Item;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.client.model.generators.ItemModelProvider;
 import net.minecraftforge.client.model.generators.ModelFile;
+import net.minecraftforge.client.model.generators.ModelProvider;
 import net.minecraftforge.common.data.ExistingFileHelper;
 
 public class ModItemModelProvider extends ItemModelProvider {
@@ -30,6 +33,9 @@ public class ModItemModelProvider extends ItemModelProvider {
 		simpleItem(ModItems.BLOOD_CRYSTAL, BLOCK_FOLDER);
 		ModEntities.getSpawnEggs().forEach(egg -> spawnEgg(egg));
 		bloodDislocator();
+		
+		// Complex
+		stoneMaterial(ModBlocks.SPARKSTONE);
 	}
 
 	private void spawnEgg(Item item) {
@@ -55,5 +61,9 @@ public class ModItemModelProvider extends ItemModelProvider {
 		singleTexture(name, mcLoc(ITEM_FOLDER + "/generated"), "layer0", modLoc(ITEM_FOLDER + "/" + name + "_red"))
 				.override().model(red).predicate(property, 0).end().override().model(blue).predicate(property, 0.75f)
 				.end();
+	}
+	
+	private void stoneMaterial(StoneMaterial material) {
+		wallInventory(material.WALL.getRegistryName().getPath(), modLoc(ModelProvider.BLOCK_FOLDER + "/" + material.NAME));
 	}
 }

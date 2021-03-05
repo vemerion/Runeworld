@@ -1,6 +1,7 @@
 package mod.vemerion.runeworld.datagen;
 
 import mod.vemerion.runeworld.Main;
+import mod.vemerion.runeworld.block.complex.StoneMaterial;
 import mod.vemerion.runeworld.init.ModBiomes;
 import mod.vemerion.runeworld.init.ModBlocks;
 import mod.vemerion.runeworld.init.ModEffects;
@@ -47,7 +48,20 @@ public class ModLanguageProvider extends LanguageProvider {
 		add(ModEntities.BLOOD_PEBBLE, "Blood Pebble");
 		add("itemGroup." + Main.MODID, "Runeworld");
 
+		// Complex
+
+		stoneMaterial(ModBlocks.SPARKSTONE, "Sparkstone");
+
+		// Guide
+
 		guide();
+	}
+
+	private void stoneMaterial(StoneMaterial material, String name) {
+		add(material.BLOCK, name);
+		add(material.STAIRS, name + " Stairs");
+		add(material.SLAB, name + " Slab");
+		add(material.WALL, name + " Wall");
 	}
 
 	private void guide() {

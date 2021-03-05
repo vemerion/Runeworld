@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import mod.vemerion.runeworld.Main;
+import mod.vemerion.runeworld.block.complex.StoneMaterial;
 import mod.vemerion.runeworld.init.ModBlocks;
 import net.minecraft.block.Block;
 import net.minecraft.data.loot.BlockLootTables;
@@ -36,5 +37,13 @@ public class ModBlockLootTables extends BlockLootTables {
 		
 		for (Block portal : ModBlocks.getRunePortals())
 			registerLootTable(portal, blockNoDrop());
+		
+		stoneMaterial(ModBlocks.SPARKSTONE);
+	}
+	
+	private void stoneMaterial(StoneMaterial material) {
+		for (Block b : material.getBlocks()) {
+			registerDropSelfLootTable(b);
+		}
 	}
 }

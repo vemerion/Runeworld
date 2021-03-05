@@ -1,6 +1,7 @@
 package mod.vemerion.runeworld.init;
 
 import mod.vemerion.runeworld.Main;
+import mod.vemerion.runeworld.block.complex.StoneMaterial;
 import mod.vemerion.runeworld.item.BloodBatToothItem;
 import mod.vemerion.runeworld.item.BloodBucketItem;
 import mod.vemerion.runeworld.item.BloodCrystalliteItem;
@@ -9,6 +10,7 @@ import mod.vemerion.runeworld.item.BloodFlowerItem;
 import mod.vemerion.runeworld.item.BloodPuddingItem;
 import mod.vemerion.runeworld.item.GuideItem;
 import mod.vemerion.runeworld.item.ThrowableItem;
+import net.minecraft.block.Block;
 import net.minecraft.item.BlockItem;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemGroup;
@@ -19,6 +21,7 @@ import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod.EventBusSubscriber;
 import net.minecraftforge.fml.common.Mod.EventBusSubscriber.Bus;
 import net.minecraftforge.registries.ForgeRegistries;
+import net.minecraftforge.registries.IForgeRegistry;
 import net.minecraftforge.registries.ObjectHolder;
 
 @ObjectHolder(value = Main.MODID)
@@ -76,6 +79,16 @@ public class ModItems {
 		event.getRegistry().registerAll(bloodBucket, bloodPudding, bloodFlower, bloodPillarLarge, bloodPillarMedium,
 				bloodPillarSmall, bloodRock, bloodMoss, bloodCrystal, mosquitoEggs, bloodBatTooth, bloodLeech, guide,
 				bloodCrystallite, bloodDislocator, bloodPebble);
+
+		// Complex
+		registerStoneMaterial(event.getRegistry(), ModBlocks.SPARKSTONE);
+	}
+
+	private static void registerStoneMaterial(IForgeRegistry<Item> registry, StoneMaterial material) {
+		for (Block b : material.getBlocks()) {
+			registry.register(
+					Init.setup(new BlockItem(b, new Item.Properties().group(ItemGroup.SEARCH)), b.getRegistryName()));
+		}
 	}
 
 	private static class RuneworldItemGroup extends ItemGroup {

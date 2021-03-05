@@ -1,0 +1,32 @@
+{
+  "parent": "minecraft:recipes/root",
+  "rewards": {
+    "recipes": [
+      "minecraft:sparkstone_slab_from_sparkstone_stonecutting"
+    ]
+  },
+  "criteria": {
+    "has_sparkstone": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "item": "runeworld:sparkstone"
+          }
+        ]
+      }
+    },
+    "has_the_recipe": {
+      "trigger": "minecraft:recipe_unlocked",
+      "conditions": {
+        "recipe": "minecraft:sparkstone_slab_from_sparkstone_stonecutting"
+      }
+    }
+  },
+  "requirements": [
+    [
+      "has_sparkstone",
+      "has_the_recipe"
+    ]
+  ]
+}

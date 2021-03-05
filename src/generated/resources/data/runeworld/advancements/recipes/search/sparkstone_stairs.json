@@ -1,0 +1,32 @@
+{
+  "parent": "minecraft:recipes/root",
+  "rewards": {
+    "recipes": [
+      "runeworld:sparkstone_stairs"
+    ]
+  },
+  "criteria": {
+    "has_sparkstone": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "item": "runeworld:sparkstone"
+          }
+        ]
+      }
+    },
+    "has_the_recipe": {
+      "trigger": "minecraft:recipe_unlocked",
+      "conditions": {
+        "recipe": "runeworld:sparkstone_stairs"
+      }
+    }
+  },
+  "requirements": [
+    [
+      "has_sparkstone",
+      "has_the_recipe"
+    ]
+  ]
+}

@@ -40,11 +40,12 @@ public class EventSubscriber {
 			dataGenerator.addProvider(new ModItemModelProvider(dataGenerator, existingFileHelper));
 		}
 		if (event.includeServer()) {
-			BlockTagsProvider blockTagsProvider = new BlockTagsProvider(dataGenerator, Main.MODID, existingFileHelper);
+			BlockTagsProvider blockTagsProvider = new ModBlockTagsProvider(dataGenerator, existingFileHelper);
 
 			dataGenerator.addProvider(new ModRecipeProvider(dataGenerator));
 			dataGenerator.addProvider(new ModLootModifierProvider(dataGenerator));
 			dataGenerator.addProvider(new ModFluidTagsProvider(dataGenerator, existingFileHelper));
+			dataGenerator.addProvider(blockTagsProvider);
 			dataGenerator.addProvider(new ModItemTagsProvider(dataGenerator, blockTagsProvider, existingFileHelper));
 			dataGenerator.addProvider(new LootTableProvider(dataGenerator) {
 				@Override

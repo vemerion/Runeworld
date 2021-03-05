@@ -1,0 +1,8 @@
+{
+  "type": "minecraft:stonecutting",
+  "ingredient": {
+    "item": "runeworld:sparkstone"
+  },
+  "result": "runeworld:sparkstone_stairs",
+  "count": 1
+}

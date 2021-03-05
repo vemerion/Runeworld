@@ -12,6 +12,7 @@ import mod.vemerion.runeworld.block.BloodFlowerBlock;
 import mod.vemerion.runeworld.block.BloodLeechBlock;
 import mod.vemerion.runeworld.block.BloodPillarBlock;
 import mod.vemerion.runeworld.block.RunePortalBlock;
+import mod.vemerion.runeworld.block.complex.StoneMaterial;
 import net.minecraft.block.AbstractBlock;
 import net.minecraft.block.Block;
 import net.minecraft.block.Blocks;
@@ -38,6 +39,10 @@ public class ModBlocks {
 	public static final Block BLOOD_CRYSTAL = null;
 	public static final Block BLOOD_LEECH = null;
 	
+	// Complex
+	public static StoneMaterial SPARKSTONE;
+
+	
 	public static final Block BLOOD_RUNE_PORTAL = null;
 
 	private static final List<RunePortalBlock> RUNE_PORTALS = new ArrayList<>();
@@ -58,6 +63,10 @@ public class ModBlocks {
 
 		createRunePortal(ModDimensions.BLOOD, 170, 0, 0);
 		event.getRegistry().registerAll(getRunePortals().toArray(new RunePortalBlock[0]));
+		
+		// Complex
+		SPARKSTONE = new StoneMaterial("sparkstone");
+		event.getRegistry().registerAll(SPARKSTONE.getBlocks());
 	}
 
 	private static RunePortalBlock createRunePortal(RegistryKey<World> dimension, int red, int green, int blue) {

@@ -2,6 +2,7 @@ package mod.vemerion.runeworld.datagen;
 
 import mod.vemerion.runeworld.Main;
 import mod.vemerion.runeworld.block.RunePortalBlock;
+import mod.vemerion.runeworld.block.complex.StoneMaterial;
 import mod.vemerion.runeworld.init.ModBlocks;
 import net.minecraft.block.Block;
 import net.minecraft.data.DataGenerator;
@@ -11,6 +12,7 @@ import net.minecraftforge.client.model.generators.BlockModelBuilder;
 import net.minecraftforge.client.model.generators.BlockStateProvider;
 import net.minecraftforge.client.model.generators.ConfiguredModel;
 import net.minecraftforge.client.model.generators.ModelFile;
+import net.minecraftforge.client.model.generators.ModelProvider;
 import net.minecraftforge.common.data.ExistingFileHelper;
 
 public class ModBlockStateProvider extends BlockStateProvider {
@@ -35,6 +37,9 @@ public class ModBlockStateProvider extends BlockStateProvider {
 		bloodMoss();
 		for (Block portal : ModBlocks.getRunePortals())
 			runePortal(portal);
+
+		// Complex
+		stoneMaterial(ModBlocks.SPARKSTONE);
 	}
 
 	private BlockModelBuilder empty(String name) {
@@ -82,6 +87,22 @@ public class ModBlockStateProvider extends BlockStateProvider {
 		getVariantBuilder(portal).partialState().with(RunePortalBlock.AXIS, Direction.Axis.X)
 				.addModels(new ConfiguredModel(ns)).partialState().with(RunePortalBlock.AXIS, Direction.Axis.Z)
 				.addModels(new ConfiguredModel(ew));
+	}
+
+	private void stoneMaterial(StoneMaterial material) {
+		ResourceLocation texture = modLoc(ModelProvider.BLOCK_FOLDER + "/" + material.NAME);
+		simpleBlock(material.BLOCK);
+		itemModelFromBlock(material.BLOCK);
+		stairsBlock(material.STAIRS, texture);
+		itemModelFromBlock(material.STAIRS);
+		slabBlock(material.SLAB, texture, texture);
+		itemModelFromBlock(material.SLAB);
+		wallBlock(material.WALL, texture);
+	}
+
+	private void itemModelFromBlock(Block block) {
+		ModelFile model = models().getExistingFile(block.getRegistryName());
+		simpleBlockItem(block, model);
 	}
 
 }
