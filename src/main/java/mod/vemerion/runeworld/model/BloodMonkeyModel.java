@@ -161,9 +161,9 @@ public class BloodMonkeyModel extends EntityModel<BloodMonkeyEntity> {
 
 			if (!entityIn.isSwingInProgress) {
 				rightArm1.rotateAngleX = rightArm1.startRotX
-						+ MathHelper.cos(limbSwing * 0.7f + (float) Math.PI) * 2f * limbSwingAmount * 0.35f;
-				leftArm1.rotateAngleX = leftArm1.startRotX
 						+ MathHelper.cos(limbSwing * 0.7f) * 2f * limbSwingAmount * 0.35f;
+				leftArm1.rotateAngleX = leftArm1.startRotX
+						+ MathHelper.cos(limbSwing * 0.7f + (float) Math.PI) * 2f * limbSwingAmount * 0.35f;
 			} else {
 				rightArm1.rotateAngleX = rightArm1.startRotX
 						- MathHelper.sin(swingProgress * (float) Math.PI * 2f) * Helper.toRad(50) - Helper.toRad(50);

@@ -36,10 +36,10 @@ public class BloodMonkeyEntity extends MonsterEntity implements IRangedAttackMob
 	}
 
 	public static AttributeModifierMap.MutableAttribute attributes() {
-		return MobEntity.func_233666_p_().createMutableAttribute(Attributes.MAX_HEALTH, 5.0D)
-				.createMutableAttribute(Attributes.MOVEMENT_SPEED, 0.2D)
-				.createMutableAttribute(Attributes.FOLLOW_RANGE, 16.0D)
-				.createMutableAttribute(Attributes.ATTACK_DAMAGE, 1.0D);
+		return MobEntity.func_233666_p_().createMutableAttribute(Attributes.MAX_HEALTH, 20)
+				.createMutableAttribute(Attributes.MOVEMENT_SPEED, 0.25)
+				.createMutableAttribute(Attributes.FOLLOW_RANGE, 16)
+				.createMutableAttribute(Attributes.ATTACK_DAMAGE, 3);
 	}
 
 	@Override
@@ -52,7 +52,7 @@ public class BloodMonkeyEntity extends MonsterEntity implements IRangedAttackMob
 		else
 			bodyRot = MathHelper.lerp(0.1f, bodyRot, Helper.toRad(70));
 	}
-	
+
 	public float getBodyRot(float partialTicks) {
 		return MathHelper.lerp(partialTicks, prevBodyRot, bodyRot);
 	}
