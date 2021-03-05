@@ -82,8 +82,8 @@ public class ModEntities {
 
 		Item mosquitoSpawnEgg = createSpawnEgg(mosquito, Helper.color(100, 50, 0, 255), Helper.color(255, 0, 0, 255));
 		Item bloodBatSpawnEgg = createSpawnEgg(bloodBat, Helper.color(40, 40, 40, 255), Helper.color(255, 0, 0, 255));
-		Item bloodMonkeySpawnEgg = createSpawnEgg(bloodMonkey, Helper.color(255, 255, 255, 255),
-				Helper.color(255, 0, 0, 255));
+		Item bloodMonkeySpawnEgg = createSpawnEgg(bloodMonkey, Helper.color(70, 30, 10, 255),
+				Helper.color(215, 70, 70, 255));
 
 		event.getRegistry().registerAll(mosquitoSpawnEgg, bloodBatSpawnEgg, bloodMonkeySpawnEgg);
 	}
