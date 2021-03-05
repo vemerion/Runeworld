@@ -41,6 +41,11 @@ public class BloodMonkeyEntity extends MonsterEntity implements IRangedAttackMob
 				.createMutableAttribute(Attributes.FOLLOW_RANGE, 16)
 				.createMutableAttribute(Attributes.ATTACK_DAMAGE, 3);
 	}
+	
+	@Override
+	public boolean canDespawn(double distanceToClosestPlayer) {
+		return false;
+	}
 
 	@Override
 	public void tick() {
@@ -102,7 +107,7 @@ public class BloodMonkeyEntity extends MonsterEntity implements IRangedAttackMob
 		ProjectileItemEntity projectile = rand.nextDouble() < 0.1 ? new MosquitoEggsEntity(this, world)
 				: new BloodPebbleEntity(this, world);
 		double x = target.getPosX() - getPosX();
-		double y = target.getPosYEye() - projectile.getPosY();
+		double y = target.getPosYEye() - 1.1f - projectile.getPosY();
 		double z = target.getPosZ() - getPosZ();
 		double height = MathHelper.sqrt(x * x + z * z) * 0.2;
 		projectile.shoot(x, y + height, z, 1f, 1f);
