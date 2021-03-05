@@ -90,6 +90,11 @@ public class ModLanguageProvider extends LanguageProvider {
 				"Giant mosquitoes, filled to the brim with blood, can be found buzzing near blood pools in the blood world. They are fairly weak, but can overwhelm careless adventurers by sheer numbers.");
 		addGuide("blood_world.mobs.mosquito.text2",
 				"When killed, the mosquito has a chance to drop a bundle of mosquito eggs.");
+		addGuide("blood_world.mobs.blood_monkey", "Blood Monkey");
+		addGuide("blood_world.mobs.blood_monkey.text1",
+				"The blood monkey is an annoying creature. They balance on top of large blood pillars, out of reach, and throw pebbles at you! And if you knock them down, they will come running at you!");
+		addGuide("blood_world.mobs.blood_monkey.text2",
+				"When killed, they drop their pesky blood pebbles. They can be used to skip stones. Fun!");
 
 		addGuide("blood_world.blood_crystallite", "Blood Crystallite");
 		addGuide("blood_world.blood_crystallite.text1",

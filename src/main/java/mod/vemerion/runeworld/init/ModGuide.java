@@ -44,7 +44,10 @@ public class ModGuide {
 					.addText(transKey("blood_world.mobs.blood_bat.text2"))
 					.addHeader(transKey("blood_world.mobs.mosquito"))
 					.addText(transKey("blood_world.mobs.mosquito.text1"))
-					.addText(transKey("blood_world.mobs.mosquito.text2"));
+					.addText(transKey("blood_world.mobs.mosquito.text2"))
+					.addHeader(transKey("blood_world.mobs.blood_monkey"))
+					.addText(transKey("blood_world.mobs.blood_monkey.text1"))
+					.addText(transKey("blood_world.mobs.blood_monkey.text2"));
 			bloodCrystallite.addText(transKey("blood_world.blood_crystallite.text1"))
 					.addText(transKey("blood_world.blood_crystallite.text2"))
 					.addText(transKey("blood_world.blood_crystallite.text3"))
