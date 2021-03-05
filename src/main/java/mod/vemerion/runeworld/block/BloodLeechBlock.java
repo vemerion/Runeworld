@@ -25,7 +25,7 @@ import net.minecraft.world.IWorld;
 import net.minecraft.world.World;
 
 public class BloodLeechBlock extends FacingBlock implements IBloodLoggable {
-	private static final BooleanProperty WATERLOGGED = BlockStateProperties.WATERLOGGED;
+	public static final BooleanProperty WATERLOGGED = BlockStateProperties.WATERLOGGED;
 
 	private static VoxelShape[] SHAPES = { Block.makeCuboidShape(0, 12, 0, 16, 16, 16),
 			Block.makeCuboidShape(0, 0, 0, 16, 4, 16), Block.makeCuboidShape(0, 0, 12, 16, 16, 16),

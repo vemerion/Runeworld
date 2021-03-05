@@ -6,11 +6,13 @@ import java.util.List;
 import java.util.Random;
 import java.util.Set;
 
+import mod.vemerion.runeworld.block.BloodLeechBlock;
 import mod.vemerion.runeworld.block.BloodPillarBlock;
 import mod.vemerion.runeworld.init.ModBlocks;
 import mod.vemerion.runeworld.init.ModStructures;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
+import net.minecraft.util.Direction;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.SectionPos;
 import net.minecraft.world.ISeedReader;
@@ -24,6 +26,8 @@ public class BloodPoolFeature extends Feature<NoFeatureConfig> {
 	private static final BlockState AIR = Blocks.AIR.getDefaultState();
 	private static final BlockState FLOWER = ModBlocks.BLOOD_FLOWER.getDefaultState();
 	private static final BlockState ROCK = ModBlocks.BLOOD_ROCK.getDefaultState();
+	private static final BlockState LEECH = ModBlocks.BLOOD_LEECH.getDefaultState().with(BloodLeechBlock.WATERLOGGED,
+			true);
 
 	public BloodPoolFeature() {
 		super(NoFeatureConfig.field_236558_a_);
@@ -85,7 +89,31 @@ public class BloodPoolFeature extends Feature<NoFeatureConfig> {
 		if (rand.nextDouble() < 0.3)
 			generateBloodPillars(bloods, reader, rand);
 
+		generateLeeches(bloods, reader, rand);
+
 		return true;
+	}
+
+	private void generateLeeches(Set<BlockPos> bloods, ISeedReader reader, Random rand) {
+		int count = rand.nextInt(3);
+		if (count == 0)
+			return;
+
+		for (BlockPos pos : bloods) {
+			if (count == 0)
+				return;
+
+			if (rand.nextDouble() < 0.01 && reader.getBlockState(pos).getBlock() == ModBlocks.BLOOD) {
+				for (Direction d : Direction.values()) {
+					BlockState leech = LEECH.with(BloodLeechBlock.FACING, d);
+					if (leech.isValidPosition(reader, pos)) {
+						reader.setBlockState(pos, leech, 2);
+						count--;
+						break;
+					}
+				}
+			}
+		}
 	}
 
 	private void generateBloodPillars(Set<BlockPos> bloods, ISeedReader reader, Random rand) {
