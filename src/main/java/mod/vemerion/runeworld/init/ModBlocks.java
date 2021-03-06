@@ -11,6 +11,7 @@ import mod.vemerion.runeworld.block.BloodCrystalBlock;
 import mod.vemerion.runeworld.block.BloodFlowerBlock;
 import mod.vemerion.runeworld.block.BloodLeechBlock;
 import mod.vemerion.runeworld.block.BloodPillarBlock;
+import mod.vemerion.runeworld.block.CharredDirtBlock;
 import mod.vemerion.runeworld.block.RunePortalBlock;
 import mod.vemerion.runeworld.block.complex.StoneMaterial;
 import net.minecraft.block.AbstractBlock;
@@ -68,9 +69,7 @@ public class ModBlocks {
 				withItem(Init.setup(new Block(AbstractBlock.Properties.from(Blocks.COBBLESTONE)), "blood_moss")));
 		registry.register(withItem(Init.setup(new BloodCrystalBlock(), "blood_crystal")));
 		registry.register(withItem(Init.setup(new BloodLeechBlock(), "blood_leech")));
-		registry.register(
-				withItem(Init.setup(new Block(AbstractBlock.Properties.create(Material.EARTH, MaterialColor.BLACK)
-						.hardnessAndResistance(0.5f).sound(SoundType.GROUND)), "charred_dirt")));
+		registry.register(withItem(Init.setup(new CharredDirtBlock(), "charred_dirt")));
 		registry.register(
 				withItem(Init.setup(new Block(AbstractBlock.Properties.create(Material.ORGANIC, MaterialColor.ADOBE)
 						.hardnessAndResistance(0.6F).sound(SoundType.PLANT)), "burnt_dirt")));
