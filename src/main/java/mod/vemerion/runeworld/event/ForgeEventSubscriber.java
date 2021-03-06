@@ -36,7 +36,8 @@ public class ForgeEventSubscriber {
 		BlockState state = event.getWorld().getBlockState(event.getPos());
 		BlockPos pos = event.getPos();
 		if (Runesword.isRune(stack.getItem()) && state.isIn(Tags.Blocks.OBSIDIAN)) {
-			if (RunePortalBlock.createPortal(event.getWorld(), pos, RunePortalBlock.getPortalFromRune(stack.getItem()))) {
+			if (RunePortalBlock.createPortal(event.getWorld(), pos,
+					RunePortalBlock.getPortalFromRune(stack.getItem()))) {
 				if (!event.getPlayer().isCreative())
 					stack.shrink(1);
 				event.getWorld().playSound(null, pos.getX(), pos.getY(), pos.getZ(), ModSounds.PORTAL,

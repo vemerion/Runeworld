@@ -168,6 +168,9 @@ public class RunePortalBlock extends Block {
 	}
 
 	public static boolean createPortal(World world, BlockPos pos, Block portal) {
+		if (portal == null)
+			return false;
+		
 		if (createPortal(world, pos, portal, Direction.Axis.X))
 			return true;
 		return createPortal(world, pos, portal, Direction.Axis.Z);
