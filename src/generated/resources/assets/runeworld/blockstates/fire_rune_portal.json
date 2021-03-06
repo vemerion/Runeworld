@@ -1,0 +1,10 @@
+{
+  "variants": {
+    "axis=x": {
+      "model": "runeworld:block/fire_rune_portal_ns"
+    },
+    "axis=z": {
+      "model": "runeworld:block/fire_rune_portal_ew"
+    }
+  }
+}

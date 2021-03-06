@@ -4,7 +4,6 @@ import mod.vemerion.runeworld.Main;
 import mod.vemerion.runeworld.block.RunePortalBlock;
 import mod.vemerion.runeworld.capability.RuneTeleport;
 import mod.vemerion.runeworld.helpers.Helper;
-import mod.vemerion.runeworld.init.ModBlocks;
 import mod.vemerion.runeworld.init.ModSounds;
 import mod.vemerion.runeworld.init.Runesword;
 import net.minecraft.block.BlockState;
@@ -36,8 +35,8 @@ public class ForgeEventSubscriber {
 		ItemStack stack = event.getItemStack();
 		BlockState state = event.getWorld().getBlockState(event.getPos());
 		BlockPos pos = event.getPos();
-		if (stack.getItem() == Runesword.BLOOD_RUNE && state.isIn(Tags.Blocks.OBSIDIAN)) {
-			if (RunePortalBlock.createPortal(event.getWorld(), pos, ModBlocks.BLOOD_RUNE_PORTAL)) {
+		if (Runesword.isRune(stack.getItem()) && state.isIn(Tags.Blocks.OBSIDIAN)) {
+			if (RunePortalBlock.createPortal(event.getWorld(), pos, RunePortalBlock.getPortalFromRune(stack.getItem()))) {
 				if (!event.getPlayer().isCreative())
 					stack.shrink(1);
 				event.getWorld().playSound(null, pos.getX(), pos.getY(), pos.getZ(), ModSounds.PORTAL,

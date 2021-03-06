@@ -1,14 +1,18 @@
 package mod.vemerion.runeworld.block;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
 import java.util.Random;
 import java.util.Set;
 import java.util.function.Function;
+import java.util.function.Supplier;
 
 import mod.vemerion.runeworld.capability.RuneTeleport;
 import mod.vemerion.runeworld.helpers.Helper;
+import mod.vemerion.runeworld.init.ModBlocks;
 import mod.vemerion.runeworld.particle.RunePortalParticleData;
 import net.minecraft.block.AbstractBlock;
 import net.minecraft.block.Block;
@@ -19,6 +23,7 @@ import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.state.EnumProperty;
 import net.minecraft.state.StateContainer;
@@ -43,23 +48,34 @@ public class RunePortalBlock extends Block {
 	public static final EnumProperty<Direction.Axis> AXIS = BlockStateProperties.HORIZONTAL_AXIS;
 
 	private static final int PORTAL_MAX_SIZE = 100;
+	private static Map<Item, RunePortalBlock> portalFromRune;
 
 	protected static final VoxelShape X_AABB = Block.makeCuboidShape(0.0D, 0.0D, 6.0D, 16.0D, 16.0D, 10.0D);
 	protected static final VoxelShape Z_AABB = Block.makeCuboidShape(6.0D, 0.0D, 0.0D, 10.0D, 16.0D, 16.0D);
 
 	private RegistryKey<World> dimension;
+	private Supplier<Item> rune;
 	public final int red, green, blue;
 
-	public RunePortalBlock(RegistryKey<World> dimension, int red, int green, int blue) {
+	public RunePortalBlock(RegistryKey<World> dimension, Supplier<Item> rune, int red, int green, int blue) {
 		super(AbstractBlock.Properties.create(Material.PORTAL).doesNotBlockMovement().hardnessAndResistance(-1.0F)
 				.sound(SoundType.GLASS).setLightLevel((state) -> {
 					return 11;
 				}));
 		this.dimension = dimension;
+		this.rune = rune;
 		this.red = red;
 		this.green = green;
 		this.blue = blue;
 		this.setDefaultState(this.stateContainer.getBaseState().with(AXIS, Direction.Axis.X));
+	}
+
+	public static Block getPortalFromRune(Item item) {
+		if (portalFromRune == null) {
+			portalFromRune = new HashMap<>();
+			ModBlocks.getRunePortals().forEach(portal -> portalFromRune.put(portal.rune.get(), portal));
+		}
+		return portalFromRune.get(item);
 	}
 
 	public int getColor() {
@@ -175,7 +191,7 @@ public class RunePortalBlock extends Block {
 
 				if (world.getBlockState(pos).isIn(Tags.Blocks.OBSIDIAN) || positions.contains(pos))
 					continue;
-				if (isValidPortalState(world, pos)) {
+				if (isValidPortalState(world, portal, pos)) {
 					positions.add(pos);
 				} else {
 					positions = new HashSet<>();
@@ -197,9 +213,9 @@ public class RunePortalBlock extends Block {
 		return false;
 	}
 
-	private static boolean isValidPortalState(IWorld world, BlockPos pos) {
+	private static boolean isValidPortalState(IWorld world, Block portal, BlockPos pos) {
 		Block block = world.getBlockState(pos).getBlock();
-		return world.isAirBlock(pos) || block == Blocks.NETHER_PORTAL || block instanceof RunePortalBlock;
+		return world.isAirBlock(pos) || block == portal;
 	}
 
 	public static class RuneTeleporter implements ITeleporter {
@@ -245,5 +261,4 @@ public class RunePortalBlock extends Block {
 			return world.isAirBlock(pos) && world.isAirBlock(pos.up());
 		}
 	}
-
 }

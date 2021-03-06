@@ -2,6 +2,7 @@ package mod.vemerion.runeworld.init;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.function.Supplier;
 
 import com.google.common.collect.ImmutableList;
 
@@ -21,6 +22,7 @@ import net.minecraft.block.FlowingFluidBlock;
 import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.material.MaterialColor;
+import net.minecraft.item.Item;
 import net.minecraft.util.RegistryKey;
 import net.minecraft.world.World;
 import net.minecraftforge.event.RegistryEvent;
@@ -51,6 +53,7 @@ public class ModBlocks {
 	public static StoneMaterial CHARRED_STONE;
 
 	public static final Block BLOOD_RUNE_PORTAL = null;
+	public static final Block FIRE_RUNE_PORTAL = null;
 
 	private static final List<RunePortalBlock> RUNE_PORTALS = new ArrayList<>();
 
@@ -74,7 +77,8 @@ public class ModBlocks {
 				withItem(Init.setup(new Block(AbstractBlock.Properties.create(Material.ORGANIC, MaterialColor.ADOBE)
 						.hardnessAndResistance(0.6F).sound(SoundType.PLANT)), "burnt_dirt")));
 
-		createRunePortal(ModDimensions.BLOOD, 170, 0, 0);
+		createRunePortal(ModDimensions.BLOOD, () -> Runesword.BLOOD_RUNE, 170, 0, 0);
+		createRunePortal(ModDimensions.FIRE, () -> Runesword.FIRE_RUNE, 255, 100, 0);
 		registry.registerAll(getRunePortals().toArray(new RunePortalBlock[0]));
 
 		// Complex
@@ -94,8 +98,9 @@ public class ModBlocks {
 		return block;
 	}
 
-	private static RunePortalBlock createRunePortal(RegistryKey<World> dimension, int red, int green, int blue) {
-		RunePortalBlock portal = Init.setup(new RunePortalBlock(dimension, red, green, blue),
+	private static RunePortalBlock createRunePortal(RegistryKey<World> dimension, Supplier<Item> rune, int red,
+			int green, int blue) {
+		RunePortalBlock portal = Init.setup(new RunePortalBlock(dimension, rune, red, green, blue),
 				dimension.getLocation().getPath() + "_rune_portal");
 		RUNE_PORTALS.add(portal);
 		return portal;
