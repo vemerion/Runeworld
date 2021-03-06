@@ -13,6 +13,7 @@ import mod.vemerion.runeworld.block.BloodFlowerBlock;
 import mod.vemerion.runeworld.block.BloodLeechBlock;
 import mod.vemerion.runeworld.block.BloodPillarBlock;
 import mod.vemerion.runeworld.block.CharredDirtBlock;
+import mod.vemerion.runeworld.block.FireRitualStoneBlock;
 import mod.vemerion.runeworld.block.RunePortalBlock;
 import mod.vemerion.runeworld.block.complex.StoneMaterial;
 import net.minecraft.block.AbstractBlock;
@@ -47,6 +48,7 @@ public class ModBlocks {
 	public static final Block BLOOD_LEECH = null;
 	public static final Block CHARRED_DIRT = null;
 	public static final Block BURNT_DIRT = null;
+	public static final Block FIRE_RITUAL_STONE = null;
 
 	// Complex
 	public static StoneMaterial SPARKSTONE;
@@ -76,6 +78,7 @@ public class ModBlocks {
 		registry.register(
 				withItem(Init.setup(new Block(AbstractBlock.Properties.create(Material.ORGANIC, MaterialColor.ADOBE)
 						.hardnessAndResistance(0.6F).sound(SoundType.PLANT)), "burnt_dirt")));
+		registry.register(withItem(Init.setup(new FireRitualStoneBlock(), "fire_ritual_stone")));
 
 		createRunePortal(ModDimensions.BLOOD, () -> Runesword.BLOOD_RUNE, 170, 0, 0);
 		createRunePortal(ModDimensions.FIRE, () -> Runesword.FIRE_RUNE, 255, 100, 0);

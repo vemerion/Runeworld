@@ -35,6 +35,7 @@ public class ModBlockLootTables extends BlockLootTables {
 		registerDropSelfLootTable(ModBlocks.BLOOD_CRYSTAL);
 		registerDropSelfLootTable(ModBlocks.BLOOD_LEECH);
 		registerDropSelfLootTable(ModBlocks.CHARRED_DIRT);
+		registerDropSelfLootTable(ModBlocks.FIRE_RITUAL_STONE);
 		registerLootTable(ModBlocks.BURNT_DIRT, block -> {
 			return droppingWithSilkTouch(block, ModBlocks.CHARRED_DIRT);
 		});

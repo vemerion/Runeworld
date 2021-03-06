@@ -1,0 +1,7 @@
+{
+  "parent": "minecraft:block/cube_column",
+  "textures": {
+    "side": "runeworld:block/fire_ritual_stone",
+    "end": "runeworld:block/sparkstone"
+  }
+}

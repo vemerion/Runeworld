@@ -39,6 +39,8 @@ public class ModBlockStateProvider extends BlockStateProvider {
 				modLoc("block/blood_moss_top"));
 		grassBlock(ModBlocks.BURNT_DIRT, modLoc("block/burnt_dirt_side"), modLoc("block/charred_dirt"),
 				modLoc("block/burnt_dirt_top"));
+		fireRitualStone();
+		
 		for (Block portal : ModBlocks.getRunePortals())
 			runePortal(portal);
 
@@ -72,6 +74,14 @@ public class ModBlockStateProvider extends BlockStateProvider {
 	private void grassBlock(Block block, ResourceLocation side, ResourceLocation bottom, ResourceLocation top) {
 		String name = block.getRegistryName().getPath();
 		ModelFile model = models().cubeBottomTop(name, side, bottom, top);
+		simpleBlock(block, model);
+		simpleBlockItem(block, model);
+	}
+
+	private void fireRitualStone() {
+		Block block = ModBlocks.FIRE_RITUAL_STONE;
+		String name = block.getRegistryName().getPath();
+		ModelFile model = models().cubeColumn(name, modLoc("block/fire_ritual_stone"), modLoc("block/sparkstone"));
 		simpleBlock(block, model);
 		simpleBlockItem(block, model);
 	}
