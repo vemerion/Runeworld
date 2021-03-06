@@ -11,7 +11,7 @@ import net.minecraft.data.loot.BlockLootTables;
 import net.minecraftforge.registries.ForgeRegistries;
 
 public class ModBlockLootTables extends BlockLootTables {
-	
+
 	@Override
 	protected Iterable<Block> getKnownBlocks() {
 		List<Block> blocks = new ArrayList<>();
@@ -34,13 +34,18 @@ public class ModBlockLootTables extends BlockLootTables {
 		registerDropSelfLootTable(ModBlocks.BLOOD_MOSS);
 		registerDropSelfLootTable(ModBlocks.BLOOD_CRYSTAL);
 		registerDropSelfLootTable(ModBlocks.BLOOD_LEECH);
-		
+		registerDropSelfLootTable(ModBlocks.CHARRED_DIRT);
+		registerLootTable(ModBlocks.BURNT_DIRT, block -> {
+			return droppingWithSilkTouch(block, ModBlocks.CHARRED_DIRT);
+		});
+
 		for (Block portal : ModBlocks.getRunePortals())
 			registerLootTable(portal, blockNoDrop());
-		
+
 		stoneMaterial(ModBlocks.SPARKSTONE);
+		stoneMaterial(ModBlocks.CHARRED_STONE);
 	}
-	
+
 	private void stoneMaterial(StoneMaterial material) {
 		for (Block b : material.getBlocks()) {
 			registerDropSelfLootTable(b);

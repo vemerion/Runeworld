@@ -1,0 +1,13 @@
+{
+  "variants": {
+    "type=top": {
+      "model": "runeworld:block/charred_stone_slab_top"
+    },
+    "type=bottom": {
+      "model": "runeworld:block/charred_stone_slab"
+    },
+    "type=double": {
+      "model": "runeworld:block/charred_stone"
+    }
+  }
+}

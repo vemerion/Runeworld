@@ -1,0 +1,17 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "#  ",
+    "## ",
+    "###"
+  ],
+  "key": {
+    "#": {
+      "item": "runeworld:charred_stone"
+    }
+  },
+  "result": {
+    "item": "runeworld:charred_stone_stairs",
+    "count": 4
+  }
+}

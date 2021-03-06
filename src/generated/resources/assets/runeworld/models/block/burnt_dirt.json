@@ -1,0 +1,8 @@
+{
+  "parent": "minecraft:block/cube_bottom_top",
+  "textures": {
+    "side": "runeworld:block/burnt_dirt_side",
+    "bottom": "runeworld:block/charred_dirt",
+    "top": "runeworld:block/burnt_dirt_top"
+  }
+}

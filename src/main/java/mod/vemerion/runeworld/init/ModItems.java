@@ -1,7 +1,9 @@
 package mod.vemerion.runeworld.init;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import mod.vemerion.runeworld.Main;
-import mod.vemerion.runeworld.block.complex.StoneMaterial;
 import mod.vemerion.runeworld.item.BloodBatToothItem;
 import mod.vemerion.runeworld.item.BloodBucketItem;
 import mod.vemerion.runeworld.item.BloodCrystalliteItem;
@@ -47,48 +49,35 @@ public class ModItems {
 
 	static final ItemGroup ITEM_GROUP = new RuneworldItemGroup();
 
+	private static List<Block> withItem = new ArrayList<>();
+
 	@SubscribeEvent
 	public static void onRegisterItem(RegistryEvent.Register<Item> event) {
+		IForgeRegistry<Item> registry = event.getRegistry();
 		Item bloodBucket = Init.setup(new BloodBucketItem(), "blood_bucket");
 		Item bloodPudding = Init.setup(new BloodPuddingItem(), "blood_pudding");
 		Item bloodFlower = Init.setup(new BloodFlowerItem(), "blood_flower");
-		Item bloodPillarLarge = Init.setup(
-				new BlockItem(ModBlocks.BLOOD_PILLAR_LARGE, new Item.Properties().group(ItemGroup.SEARCH)),
-				"blood_pillar_large");
-		Item bloodPillarMedium = Init.setup(
-				new BlockItem(ModBlocks.BLOOD_PILLAR_MEDIUM, new Item.Properties().group(ItemGroup.SEARCH)),
-				"blood_pillar_medium");
-		Item bloodPillarSmall = Init.setup(
-				new BlockItem(ModBlocks.BLOOD_PILLAR_SMALL, new Item.Properties().group(ItemGroup.SEARCH)),
-				"blood_pillar_small");
-		Item bloodRock = Init.setup(new BlockItem(ModBlocks.BLOOD_ROCK, new Item.Properties().group(ItemGroup.SEARCH)),
-				"blood_rock");
-		Item bloodMoss = Init.setup(new BlockItem(ModBlocks.BLOOD_MOSS, new Item.Properties().group(ItemGroup.SEARCH)),
-				"blood_moss");
-		Item bloodCrystal = Init.setup(
-				new BlockItem(ModBlocks.BLOOD_CRYSTAL, new Item.Properties().group(ItemGroup.SEARCH)), "blood_crystal");
 		Item mosquitoEggs = Init.setup(new ThrowableItem(() -> ModEntities.MOSQUITO_EGGS, 0.5), "mosquito_eggs");
 		Item bloodBatTooth = Init.setup(new BloodBatToothItem(), "blood_bat_tooth");
-		Item bloodLeech = Init.setup(
-				new BlockItem(ModBlocks.BLOOD_LEECH, new Item.Properties().group(ItemGroup.SEARCH)), "blood_leech");
 		Item guide = Init.setup(new GuideItem(new Item.Properties().group(ItemGroup.SEARCH)), "guide");
 		Item bloodCrystallite = Init.setup(new BloodCrystalliteItem(), "blood_crystallite");
 		Item bloodDislocator = Init.setup(new BloodDislocatorItem(), "blood_dislocator");
 		Item bloodPebble = Init.setup(new ThrowableItem(() -> ModEntities.BLOOD_PEBBLE, 0.75), "blood_pebble");
 
-		event.getRegistry().registerAll(bloodBucket, bloodPudding, bloodFlower, bloodPillarLarge, bloodPillarMedium,
-				bloodPillarSmall, bloodRock, bloodMoss, bloodCrystal, mosquitoEggs, bloodBatTooth, bloodLeech, guide,
+		registry.registerAll(bloodBucket, bloodPudding, bloodFlower, mosquitoEggs, bloodBatTooth, guide,
 				bloodCrystallite, bloodDislocator, bloodPebble);
 
-		// Complex
-		registerStoneMaterial(event.getRegistry(), ModBlocks.SPARKSTONE);
+		registerBlockItems(registry);
 	}
 
-	private static void registerStoneMaterial(IForgeRegistry<Item> registry, StoneMaterial material) {
-		for (Block b : material.getBlocks()) {
-			registry.register(
-					Init.setup(new BlockItem(b, new Item.Properties().group(ItemGroup.SEARCH)), b.getRegistryName()));
-		}
+	private static void registerBlockItems(IForgeRegistry<Item> registry) {
+		Item.Properties properties = new Item.Properties().group(ItemGroup.SEARCH);
+		for (Block b : withItem)
+			registry.register(Init.setup(new BlockItem(b, properties), b.getRegistryName()));
+	}
+
+	public static void addBlockWithItem(Block block) {
+		withItem.add(block);
 	}
 
 	private static class RuneworldItemGroup extends ItemGroup {

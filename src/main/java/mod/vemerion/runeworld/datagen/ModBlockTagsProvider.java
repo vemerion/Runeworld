@@ -17,6 +17,7 @@ public class ModBlockTagsProvider extends BlockTagsProvider {
 	@Override
 	protected void registerTags() {
 		getOrCreateBuilder(BlockTags.WALLS).add(ModBlocks.SPARKSTONE.WALL);
+		getOrCreateBuilder(BlockTags.WALLS).add(ModBlocks.CHARRED_STONE.WALL);
 	}
 
 }

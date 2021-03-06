@@ -1,6 +1,7 @@
 {
   "replace": false,
   "values": [
-    "runeworld:blood_rock"
+    "runeworld:blood_rock",
+    "runeworld:charred_stone"
   ]
 }

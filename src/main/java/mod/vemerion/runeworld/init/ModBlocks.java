@@ -17,12 +17,16 @@ import net.minecraft.block.AbstractBlock;
 import net.minecraft.block.Block;
 import net.minecraft.block.Blocks;
 import net.minecraft.block.FlowingFluidBlock;
+import net.minecraft.block.SoundType;
+import net.minecraft.block.material.Material;
+import net.minecraft.block.material.MaterialColor;
 import net.minecraft.util.RegistryKey;
 import net.minecraft.world.World;
 import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod.EventBusSubscriber;
 import net.minecraftforge.fml.common.Mod.EventBusSubscriber.Bus;
+import net.minecraftforge.registries.IForgeRegistry;
 import net.minecraftforge.registries.ObjectHolder;
 
 @ObjectHolder(value = Main.MODID)
@@ -38,35 +42,57 @@ public class ModBlocks {
 	public static final Block BLOOD_MOSS = null;
 	public static final Block BLOOD_CRYSTAL = null;
 	public static final Block BLOOD_LEECH = null;
-	
+	public static final Block CHARRED_DIRT = null;
+	public static final Block BURNT_DIRT = null;
+
 	// Complex
 	public static StoneMaterial SPARKSTONE;
+	public static StoneMaterial CHARRED_STONE;
 
-	
 	public static final Block BLOOD_RUNE_PORTAL = null;
 
 	private static final List<RunePortalBlock> RUNE_PORTALS = new ArrayList<>();
 
 	@SubscribeEvent
 	public static void onRegisterBlock(RegistryEvent.Register<Block> event) {
-		event.getRegistry().register(Init.setup(new BloodBlock(), "blood"));
-		event.getRegistry().register(Init.setup(new BloodFlowerBlock(), "blood_flower"));
-		event.getRegistry().register(Init.setup(new BloodPillarBlock(BloodPillarBlock.LARGE), "blood_pillar_large"));
-		event.getRegistry().register(Init.setup(new BloodPillarBlock(BloodPillarBlock.MEDIUM), "blood_pillar_medium"));
-		event.getRegistry().register(Init.setup(new BloodPillarBlock(BloodPillarBlock.SMALL), "blood_pillar_small"));
-		event.getRegistry()
-				.register(Init.setup(new Block(AbstractBlock.Properties.from(Blocks.COBBLESTONE)), "blood_rock"));
-		event.getRegistry()
-				.register(Init.setup(new Block(AbstractBlock.Properties.from(Blocks.COBBLESTONE)), "blood_moss"));
-		event.getRegistry().register(Init.setup(new BloodCrystalBlock(), "blood_crystal"));
-		event.getRegistry().register(Init.setup(new BloodLeechBlock(), "blood_leech"));
+		IForgeRegistry<Block> registry = event.getRegistry();
+
+		registry.register(Init.setup(new BloodBlock(), "blood"));
+		registry.register(Init.setup(new BloodFlowerBlock(), "blood_flower"));
+		registry.register(withItem(Init.setup(new BloodPillarBlock(BloodPillarBlock.LARGE), "blood_pillar_large")));
+		registry.register(withItem(Init.setup(new BloodPillarBlock(BloodPillarBlock.MEDIUM), "blood_pillar_medium")));
+		registry.register(withItem(Init.setup(new BloodPillarBlock(BloodPillarBlock.SMALL), "blood_pillar_small")));
+		registry.register(
+				withItem(Init.setup(new Block(AbstractBlock.Properties.from(Blocks.COBBLESTONE)), "blood_rock")));
+		registry.register(
+				withItem(Init.setup(new Block(AbstractBlock.Properties.from(Blocks.COBBLESTONE)), "blood_moss")));
+		registry.register(withItem(Init.setup(new BloodCrystalBlock(), "blood_crystal")));
+		registry.register(withItem(Init.setup(new BloodLeechBlock(), "blood_leech")));
+		registry.register(
+				withItem(Init.setup(new Block(AbstractBlock.Properties.create(Material.EARTH, MaterialColor.BLACK)
+						.hardnessAndResistance(0.5f).sound(SoundType.GROUND)), "charred_dirt")));
+		registry.register(
+				withItem(Init.setup(new Block(AbstractBlock.Properties.create(Material.ORGANIC, MaterialColor.ADOBE)
+						.hardnessAndResistance(0.6F).sound(SoundType.PLANT)), "burnt_dirt")));
 
 		createRunePortal(ModDimensions.BLOOD, 170, 0, 0);
-		event.getRegistry().registerAll(getRunePortals().toArray(new RunePortalBlock[0]));
-		
+		registry.registerAll(getRunePortals().toArray(new RunePortalBlock[0]));
+
 		// Complex
-		SPARKSTONE = new StoneMaterial("sparkstone");
-		event.getRegistry().registerAll(SPARKSTONE.getBlocks());
+		SPARKSTONE = new StoneMaterial("sparkstone", MaterialColor.STONE);
+		CHARRED_STONE = new StoneMaterial("charred_stone", MaterialColor.BLACK);
+		stoneMaterial(SPARKSTONE, registry);
+		stoneMaterial(CHARRED_STONE, registry);
+	}
+
+	private static void stoneMaterial(StoneMaterial material, IForgeRegistry<Block> registry) {
+		for (Block b : material.getBlocks())
+			registry.register(withItem(b));
+	}
+
+	private static Block withItem(Block block) {
+		ModItems.addBlockWithItem(block);
+		return block;
 	}
 
 	private static RunePortalBlock createRunePortal(RegistryKey<World> dimension, int red, int green, int blue) {

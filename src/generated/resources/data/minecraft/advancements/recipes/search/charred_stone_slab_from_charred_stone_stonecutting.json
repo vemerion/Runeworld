@@ -1,0 +1,32 @@
+{
+  "parent": "minecraft:recipes/root",
+  "rewards": {
+    "recipes": [
+      "minecraft:charred_stone_slab_from_charred_stone_stonecutting"
+    ]
+  },
+  "criteria": {
+    "has_charred_stone": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "item": "runeworld:charred_stone"
+          }
+        ]
+      }
+    },
+    "has_the_recipe": {
+      "trigger": "minecraft:recipe_unlocked",
+      "conditions": {
+        "recipe": "minecraft:charred_stone_slab_from_charred_stone_stonecutting"
+      }
+    }
+  },
+  "requirements": [
+    [
+      "has_charred_stone",
+      "has_the_recipe"
+    ]
+  ]
+}

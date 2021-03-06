@@ -30,16 +30,21 @@ public class ModBlockStateProvider extends BlockStateProvider {
 		directionalBlock(ModBlocks.BLOOD_CRYSTAL,
 				models().singleTexture("blood_crystal", mcLoc("block/cross"), "cross", modLoc("block/blood_crystal")));
 		simpleBlockWithItem(ModBlocks.BLOOD_ROCK);
+		simpleBlockWithItem(ModBlocks.CHARRED_DIRT);
 		ResourceLocation bloodPillar = modLoc("block/blood_pillar");
 		pillar(ModBlocks.BLOOD_PILLAR_LARGE, 12, bloodPillar, bloodPillar);
 		pillar(ModBlocks.BLOOD_PILLAR_MEDIUM, 8, bloodPillar, bloodPillar);
 		pillar(ModBlocks.BLOOD_PILLAR_SMALL, 4, bloodPillar, bloodPillar);
-		bloodMoss();
+		grassBlock(ModBlocks.BLOOD_MOSS, modLoc("block/blood_moss_side"), modLoc("block/blood_rock"),
+				modLoc("block/blood_moss_top"));
+		grassBlock(ModBlocks.BURNT_DIRT, modLoc("block/burnt_dirt_side"), modLoc("block/charred_dirt"),
+				modLoc("block/burnt_dirt_top"));
 		for (Block portal : ModBlocks.getRunePortals())
 			runePortal(portal);
 
 		// Complex
 		stoneMaterial(ModBlocks.SPARKSTONE);
+		stoneMaterial(ModBlocks.CHARRED_STONE);
 	}
 
 	private BlockModelBuilder empty(String name) {
@@ -64,13 +69,11 @@ public class ModBlockStateProvider extends BlockStateProvider {
 		simpleBlockItem(block, model);
 	}
 
-	private void bloodMoss() {
-		Block bloodMoss = ModBlocks.BLOOD_MOSS;
-		String name = bloodMoss.getRegistryName().getPath();
-		ModelFile model = models().cubeBottomTop(name, modLoc("block/blood_moss_side"), modLoc("block/blood_rock"),
-				modLoc("block/blood_moss_top"));
-		simpleBlock(bloodMoss, model);
-		simpleBlockItem(bloodMoss, model);
+	private void grassBlock(Block block, ResourceLocation side, ResourceLocation bottom, ResourceLocation top) {
+		String name = block.getRegistryName().getPath();
+		ModelFile model = models().cubeBottomTop(name, side, bottom, top);
+		simpleBlock(block, model);
+		simpleBlockItem(block, model);
 	}
 
 	private void runePortal(Block portal) {

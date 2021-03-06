@@ -49,6 +49,7 @@ public class ModRecipeProvider extends RecipeProvider {
 		
 		// Complex
 		stoneMaterial(ModBlocks.SPARKSTONE, consumer);
+		stoneMaterial(ModBlocks.CHARRED_STONE, consumer);
 	}
 
 	private void pillar(Item large, Item small, Consumer<IFinishedRecipe> consumer) {
