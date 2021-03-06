@@ -70,5 +70,13 @@
         "stream": false
       }
     ]
+  },
+  "sizzle": {
+    "sounds": [
+      {
+        "name": "runeworld:sizzle",
+        "stream": false
+      }
+    ]
   }
 }

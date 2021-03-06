@@ -10,6 +10,7 @@ import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.LivingEntity;
+import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.fluid.FluidState;
 import net.minecraft.item.BlockItemUseContext;
 import net.minecraft.potion.EffectInstance;
@@ -90,7 +91,7 @@ public class BloodLeechBlock extends FacingBlock implements IBloodLoggable {
 		if (worldIn.isRemote)
 			return;
 
-		if (!entityIn.isOnGround() && entityIn.fallDistance > 1) {
+		if (!entityIn.isOnGround() && entityIn.fallDistance > 1 && entityIn instanceof PlayerEntity) {
 			worldIn.destroyBlock(pos, true, entityIn);
 		} else if (RANDOM.nextDouble() < 0.01 && entityIn instanceof LivingEntity) {
 			((LivingEntity) entityIn).addPotionEffect(new EffectInstance(ModEffects.BLOOD_DRAINED, 20 * 20));

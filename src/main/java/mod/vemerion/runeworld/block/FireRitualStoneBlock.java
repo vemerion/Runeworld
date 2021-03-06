@@ -19,5 +19,6 @@ public class FireRitualStoneBlock extends Block {
 
 	@Override
 	public void randomTick(BlockState state, ServerWorld worldIn, BlockPos pos, Random random) {
+		FireRitual.createRitual(worldIn, pos).ifPresent(ritual -> ritual.performRitual(worldIn, pos));
 	}
 }

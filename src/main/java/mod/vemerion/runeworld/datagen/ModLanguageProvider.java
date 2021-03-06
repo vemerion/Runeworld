@@ -39,6 +39,7 @@ public class ModLanguageProvider extends LanguageProvider {
 		add(ModItems.BLOOD_CRYSTALLITE, "Blood Crystallite");
 		add(ModItems.BLOOD_DISLOCATOR, "Blood Dislocator");
 		add(ModItems.BLOOD_PEBBLE, "Blood Pebble");
+		add(ModItems.GRILLED_BLOOD_LEECH, "Grilled Blood Leech");
 		add(ModEffects.BLOOD_DRAINED, "Blood Drained");
 		add(ModBiomes.BLOOD_PLAINS, "Blood Plains");
 		add(ModBiomes.FIRE_PLAINS, "Fire Plains");

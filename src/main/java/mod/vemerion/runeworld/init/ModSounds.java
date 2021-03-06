@@ -22,6 +22,7 @@ public class ModSounds {
 	public static final SoundEvent MONKEY_AMBIENT = null;
 	public static final SoundEvent MONKEY_DEATH = null;
 	public static final SoundEvent THROWING = null;
+	public static final SoundEvent SIZZLE = null;
                                                 
 
 	@SubscribeEvent
@@ -44,5 +45,7 @@ public class ModSounds {
 		event.getRegistry().register(Init.setup(monkey_death, "monkey_death"));
 		SoundEvent throwing = new SoundEvent(new ResourceLocation(Main.MODID, "throwing"));
 		event.getRegistry().register(Init.setup(throwing, "throwing")); 
+		SoundEvent sizzle = new SoundEvent(new ResourceLocation(Main.MODID, "sizzle"));
+		event.getRegistry().register(Init.setup(sizzle, "sizzle"));
 	}
 }

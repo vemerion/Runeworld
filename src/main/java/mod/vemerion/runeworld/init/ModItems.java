@@ -14,6 +14,7 @@ import mod.vemerion.runeworld.item.GuideItem;
 import mod.vemerion.runeworld.item.ThrowableItem;
 import net.minecraft.block.Block;
 import net.minecraft.item.BlockItem;
+import net.minecraft.item.Food;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemGroup;
 import net.minecraft.item.ItemStack;
@@ -46,6 +47,7 @@ public class ModItems {
 	public static final Item BLOOD_CRYSTALLITE = null;
 	public static final Item BLOOD_DISLOCATOR = null;
 	public static final Item BLOOD_PEBBLE = null;
+	public static final Item GRILLED_BLOOD_LEECH = null;
 
 	static final ItemGroup ITEM_GROUP = new RuneworldItemGroup();
 
@@ -63,9 +65,11 @@ public class ModItems {
 		Item bloodCrystallite = Init.setup(new BloodCrystalliteItem(), "blood_crystallite");
 		Item bloodDislocator = Init.setup(new BloodDislocatorItem(), "blood_dislocator");
 		Item bloodPebble = Init.setup(new ThrowableItem(() -> ModEntities.BLOOD_PEBBLE, 0.75), "blood_pebble");
+		Item grilledBloodLeech = Init.setup(new Item(new Item.Properties().group(ItemGroup.SEARCH)
+				.food(new Food.Builder().hunger(4).saturation(0.4f).meat().build())), "grilled_blood_leech");
 
 		registry.registerAll(bloodBucket, bloodPudding, bloodFlower, mosquitoEggs, bloodBatTooth, guide,
-				bloodCrystallite, bloodDislocator, bloodPebble);
+				bloodCrystallite, bloodDislocator, bloodPebble, grilledBloodLeech);
 
 		registerBlockItems(registry);
 	}
