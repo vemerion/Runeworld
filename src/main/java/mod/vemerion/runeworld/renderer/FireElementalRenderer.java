@@ -17,8 +17,9 @@ import net.minecraft.client.renderer.entity.EntityRendererManager;
 import net.minecraft.client.renderer.texture.OverlayTexture;
 import net.minecraft.util.Direction;
 import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
+import net.minecraft.util.math.vector.Vector3d;
+import net.minecraft.util.math.vector.Vector3i;
 import net.minecraftforge.client.model.data.EmptyModelData;
 
 public class FireElementalRenderer extends EntityRenderer<FireElementalEntity> {
@@ -46,14 +47,52 @@ public class FireElementalRenderer extends EntityRenderer<FireElementalEntity> {
 		matrixStackIn.push();
 		matrixStackIn.translate(0.5, 1, -0.5);
 
-		// body
+		// Body
 		for (int i = 0; i < 4; i++) {
 			for (int j = 0; j < 4; j++) {
+				Vector3i offset = Direction.byHorizontalIndex(j).getDirectionVec();
+				matrixStackIn.translate(offset.getX(), 0, offset.getZ());
 				renderPart(matrixStackIn, bufferIn, packedLightIn, ageInTicks, rand, blockRenderer);
-				BlockPos direction = BlockPos.ZERO.offset(Direction.byHorizontalIndex(j));
-				matrixStackIn.translate(direction.getX(), 0, direction.getZ());
 			}
 			matrixStackIn.translate(0, 1, 0);
+		}
+
+		matrixStackIn.translate(0, 0.5, 0);
+
+		// Head
+		int headX = 1;
+		int headY = 0;
+		int headZ = -1;
+		for (int i = 0; i < 2; i++) {
+			headY = i == 0 ? -1 : 1;
+			for (int j = 0; j < 4; j++) {
+				Direction direction = Direction.byHorizontalIndex(j);
+				Vector3i offset = direction.getDirectionVec();
+				matrixStackIn.translate(offset.getX(), 0, offset.getZ());
+				matrixStackIn.push();
+				headX = offset.getX() != 0 ? offset.getX() : headX;
+				headZ = offset.getZ() != 0 ? offset.getZ() : headZ;
+				double length = MathHelper.abs(MathHelper.cos(ageInTicks / 20)) * 0.2 + 0.1;
+				matrixStackIn.translate(length * headX, length * headY, length * headZ);
+				renderPart(matrixStackIn, bufferIn, packedLightIn, ageInTicks, rand, blockRenderer);
+				matrixStackIn.pop();
+			}
+			matrixStackIn.translate(0, 1, 0);
+		}
+
+		// Arms
+		for (int i = 0; i < 2; i++) {
+			for (int j = 0; j < 5; j++) {
+				matrixStackIn.push();
+				Vector3d offset = Vector3d.fromPitchYaw(0, entityYaw).rotateYaw(Helper.toRad(i == 0 ? -90 : 90))
+						.scale(3);
+				Vector3d position = offset.add((rand.nextDouble() - 0.5) * 2.5, -j * 1.5 - rand.nextDouble() * 0.5,
+						(rand.nextDouble() - 0.5) * 2.5);
+				matrixStackIn.translate(position.x, position.y, position.z);
+				renderPart(matrixStackIn, bufferIn, packedLightIn, ageInTicks, rand, blockRenderer);
+				matrixStackIn.pop();
+
+			}
 		}
 
 		matrixStackIn.pop();
