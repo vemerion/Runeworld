@@ -49,9 +49,10 @@ public class FireElementalEntity extends MonsterEntity {
 
 	@Override
 	protected void registerGoals() {
-		goalSelector.addGoal(0, new ScorchedGround(this));
-		goalSelector.addGoal(1, new WaterAvoidingRandomWalkingGoal(this, 1));
-		goalSelector.addGoal(2, new LookRandomlyGoal(this));
+		goalSelector.addGoal(0, new ShootProjectileGoal(this));
+		goalSelector.addGoal(1, new ScorchedGroundGoal(this));
+		goalSelector.addGoal(2, new WaterAvoidingRandomWalkingGoal(this, 1));
+		goalSelector.addGoal(3, new LookRandomlyGoal(this));
 		targetSelector.addGoal(1, new HurtByTargetGoal(this));
 		targetSelector.addGoal(2, new NearestAttackableTargetGoal<>(this, MobEntity.class, 0, false, false, null));
 	}
@@ -111,11 +112,20 @@ public class FireElementalEntity extends MonsterEntity {
 		return false;
 	}
 
+	@Override
+	public boolean isImmuneToExplosions() {
+		return true;
+	}
+
+	@Override
+	public void applyKnockback(float strength, double ratioX, double ratioZ) {
+	}
+
 	public float getArmHeight(float partialTicks) {
 		return MathHelper.lerp(partialTicks, prevArmHeight, armHeight);
 	}
 
-	private static class ScorchedGround extends Goal {
+	private static class ScorchedGroundGoal extends Goal {
 
 		private static final int DURATION = 20 * 3;
 		private static final int COOLDOWN = 20 * 20;
@@ -123,7 +133,7 @@ public class FireElementalEntity extends MonsterEntity {
 		private FireElementalEntity elemental;
 		private int cooldown, duration;
 
-		private ScorchedGround(FireElementalEntity elemental) {
+		private ScorchedGroundGoal(FireElementalEntity elemental) {
 			this.elemental = elemental;
 			this.setMutexFlags(EnumSet.of(Goal.Flag.MOVE, Goal.Flag.JUMP, Goal.Flag.LOOK));
 		}
@@ -163,5 +173,40 @@ public class FireElementalEntity extends MonsterEntity {
 				cooldown = COOLDOWN;
 			}
 		}
+	}
+
+	private static class ShootProjectileGoal extends Goal {
+
+		private static final int MAX_COOLDOWN = 20 * 1;
+
+		private FireElementalEntity elemental;
+		private int cooldown;
+
+		public ShootProjectileGoal(FireElementalEntity elemental) {
+			this.elemental = elemental;
+		}
+
+		@Override
+		public boolean shouldExecute() {
+			return cooldown-- < 0;
+		}
+
+		@Override
+		public void startExecuting() {
+			cooldown = MAX_COOLDOWN;
+			Random rand = elemental.getRNG();
+			World world = elemental.world;
+			int side = rand.nextBoolean() ? 1 : -1;
+			Vector3d offset = Vector3d.fromPitchYaw(0, elemental.rotationYaw + 90)
+					.scale(side * (rand.nextDouble() * 3 + 1.5));
+			Vector3d position = elemental.getPositionVec().add(offset.x, 3 + rand.nextDouble() * 3, offset.z);
+			Vector3d target = Vector3d.fromPitchYaw(rand.nextFloat() * (-180 - 60) + 30, rand.nextFloat() * 360);
+			FireElementalProjectileEntity projectile = new FireElementalProjectileEntity(world);
+			projectile.setShooter(elemental);
+			projectile.setPosition(position.x, position.y, position.z);
+			projectile.shoot(target.x, target.y, target.z, 0.5f, 1);
+			world.addEntity(projectile);
+		}
+
 	}
 }

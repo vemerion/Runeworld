@@ -10,6 +10,7 @@ import mod.vemerion.runeworld.entity.BloodBatEntity;
 import mod.vemerion.runeworld.entity.BloodMonkeyEntity;
 import mod.vemerion.runeworld.entity.BloodPebbleEntity;
 import mod.vemerion.runeworld.entity.FireElementalEntity;
+import mod.vemerion.runeworld.entity.FireElementalProjectileEntity;
 import mod.vemerion.runeworld.entity.MosquitoEggsEntity;
 import mod.vemerion.runeworld.entity.MosquitoEntity;
 import mod.vemerion.runeworld.helpers.Helper;
@@ -39,6 +40,7 @@ public class ModEntities {
 	public static final EntityType<BloodMonkeyEntity> BLOOD_MONKEY = null;
 	public static final EntityType<BloodPebbleEntity> BLOOD_PEBBLE = null;
 	public static final EntityType<FireElementalEntity> FIRE_ELEMENTAL = null;
+	public static final EntityType<FireElementalProjectileEntity> FIRE_ELEMENTAL_PROJECTILE = null;
 
 	public static final Item MOSQUITO_SPAWN_EGG = null;
 	public static final Item BLOOD_BAT_SPAWN_EGG = null;
@@ -69,8 +71,14 @@ public class ModEntities {
 				.<FireElementalEntity>create(FireElementalEntity::new, EntityClassification.MONSTER).immuneToFire()
 				.size(2, 7).trackingRange(10).build(new ResourceLocation(Main.MODID, "fire_elemental").toString());
 
+		EntityType<FireElementalProjectileEntity> fireElementalProjectile = EntityType.Builder
+				.<FireElementalProjectileEntity>create(FireElementalProjectileEntity::new, EntityClassification.MISC)
+				.size(1, 1).trackingRange(4).func_233608_b_(10)
+				.build(new ResourceLocation(Main.MODID, "fire_elemental_projectile").toString());
+
 		event.getRegistry().registerAll(Init.setup(mosquitoEggs, "mosquito_eggs"),
-				Init.setup(bloodPebble, "blood_pebble"), Init.setup(fireElemental, "fire_elemental"));
+				Init.setup(bloodPebble, "blood_pebble"), Init.setup(fireElemental, "fire_elemental"),
+				Init.setup(fireElementalProjectile, "fire_elemental_projectile"));
 	}
 
 	@SubscribeEvent

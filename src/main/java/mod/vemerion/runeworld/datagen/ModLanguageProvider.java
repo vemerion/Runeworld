@@ -52,6 +52,7 @@ public class ModLanguageProvider extends LanguageProvider {
 		add(ModEntities.BLOOD_MONKEY, "Blood Monkey");
 		add(ModEntities.BLOOD_PEBBLE, "Blood Pebble");
 		add(ModEntities.FIRE_ELEMENTAL, "Fire Elemental");
+		add(ModEntities.FIRE_ELEMENTAL_PROJECTILE, "Fire Elemental Projectile");
 		add("itemGroup." + Main.MODID, "Runeworld");
 
 		// Complex
