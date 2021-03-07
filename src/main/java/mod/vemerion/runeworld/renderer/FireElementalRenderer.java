@@ -88,13 +88,14 @@ public class FireElementalRenderer extends EntityRenderer<FireElementalEntity> {
 		}
 
 		// Arms
+		float armHeight = entityIn.getArmHeight(partialTicks);
 		for (int i = 0; i < 2; i++) {
 			for (int j = 0; j < 5; j++) {
 				matrixStackIn.push();
 				Vector3d offset = Vector3d.fromPitchYaw(0, entityYaw).rotateYaw(Helper.toRad(i == 0 ? -90 : 90))
-						.scale(3);
-				Vector3d position = offset.add((rand.nextDouble() - 0.5) * 2.5, -j * 1.5 - rand.nextDouble() * 0.5,
-						(rand.nextDouble() - 0.5) * 2.5);
+						.scale(4);
+				Vector3d position = offset.add((rand.nextDouble() - 0.5) * 2.5,
+						-j * 1.5 - rand.nextDouble() * 0.5 + armHeight, (rand.nextDouble() - 0.5) * 2.5);
 				matrixStackIn.translate(position.x, position.y, position.z);
 				renderPart(renderTypeBuffers, entityIn, matrixStackIn, bufferIn, packedLightIn, ageInTicks, rand,
 						blockRenderer);
@@ -112,7 +113,7 @@ public class FireElementalRenderer extends EntityRenderer<FireElementalEntity> {
 		matrixStackIn.push();
 		matrixStackIn.translate(-0.5, -0.5, -0.5);
 		shake(matrixStackIn, rand, ageInTicks);
-		
+
 		// Render block damage
 		MatrixStack.Entry matrixEntry = matrixStackIn.getLast();
 		int damage = Math.round(MathHelper.lerp(entity.getHealthPercent(), 9, -1));
@@ -124,7 +125,7 @@ public class FireElementalRenderer extends EntityRenderer<FireElementalEntity> {
 			blockRenderer.renderBlockDamage(BODY, entity.getPosition(), entity.world, matrixStackIn, builder,
 					EmptyModelData.INSTANCE);
 		}
-		
+
 		// Render block
 		blockRenderer.renderBlock(BODY, matrixStackIn, bufferIn, packedLightIn, OverlayTexture.NO_OVERLAY,
 				EmptyModelData.INSTANCE);
