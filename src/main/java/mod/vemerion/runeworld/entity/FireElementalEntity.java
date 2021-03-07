@@ -34,7 +34,7 @@ public class FireElementalEntity extends MonsterEntity {
 		bossInfo.setPercent(getHealthPercent());
 	}
 	
-	private float getHealthPercent() {
+	public float getHealthPercent() {
 		return getHealth() / getMaxHealth();
 	}
 	

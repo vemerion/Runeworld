@@ -67,7 +67,7 @@ public class ModEntities {
 
 		EntityType<FireElementalEntity> fireElemental = EntityType.Builder
 				.<FireElementalEntity>create(FireElementalEntity::new, EntityClassification.MONSTER).immuneToFire()
-				.size(2, 4).trackingRange(10).build(new ResourceLocation(Main.MODID, "fire_elemental").toString());
+				.size(2, 7).trackingRange(10).build(new ResourceLocation(Main.MODID, "fire_elemental").toString());
 
 		event.getRegistry().registerAll(Init.setup(mosquitoEggs, "mosquito_eggs"),
 				Init.setup(bloodPebble, "blood_pebble"), Init.setup(fireElemental, "fire_elemental"));

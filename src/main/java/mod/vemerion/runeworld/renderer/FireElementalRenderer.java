@@ -3,6 +3,8 @@ package mod.vemerion.runeworld.renderer;
 import java.util.Random;
 
 import com.mojang.blaze3d.matrix.MatrixStack;
+import com.mojang.blaze3d.vertex.IVertexBuilder;
+import com.mojang.blaze3d.vertex.MatrixApplyingVertexBuilder;
 
 import mod.vemerion.runeworld.Main;
 import mod.vemerion.runeworld.entity.FireElementalEntity;
@@ -12,8 +14,10 @@ import net.minecraft.block.BlockState;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.BlockRendererDispatcher;
 import net.minecraft.client.renderer.IRenderTypeBuffer;
+import net.minecraft.client.renderer.RenderTypeBuffers;
 import net.minecraft.client.renderer.entity.EntityRenderer;
 import net.minecraft.client.renderer.entity.EntityRendererManager;
+import net.minecraft.client.renderer.model.ModelBakery;
 import net.minecraft.client.renderer.texture.OverlayTexture;
 import net.minecraft.util.Direction;
 import net.minecraft.util.ResourceLocation;
@@ -42,6 +46,7 @@ public class FireElementalRenderer extends EntityRenderer<FireElementalEntity> {
 		Random rand = new Random(2);
 
 		Minecraft mc = Minecraft.getInstance();
+		RenderTypeBuffers renderTypeBuffers = mc.getRenderTypeBuffers();
 		BlockRendererDispatcher blockRenderer = mc.getBlockRendererDispatcher();
 
 		matrixStackIn.push();
@@ -52,7 +57,8 @@ public class FireElementalRenderer extends EntityRenderer<FireElementalEntity> {
 			for (int j = 0; j < 4; j++) {
 				Vector3i offset = Direction.byHorizontalIndex(j).getDirectionVec();
 				matrixStackIn.translate(offset.getX(), 0, offset.getZ());
-				renderPart(matrixStackIn, bufferIn, packedLightIn, ageInTicks, rand, blockRenderer);
+				renderPart(renderTypeBuffers, entityIn, matrixStackIn, bufferIn, packedLightIn, ageInTicks, rand,
+						blockRenderer);
 			}
 			matrixStackIn.translate(0, 1, 0);
 		}
@@ -74,7 +80,8 @@ public class FireElementalRenderer extends EntityRenderer<FireElementalEntity> {
 				headZ = offset.getZ() != 0 ? offset.getZ() : headZ;
 				double length = MathHelper.abs(MathHelper.cos(ageInTicks / 20)) * 0.2 + 0.1;
 				matrixStackIn.translate(length * headX, length * headY, length * headZ);
-				renderPart(matrixStackIn, bufferIn, packedLightIn, ageInTicks, rand, blockRenderer);
+				renderPart(renderTypeBuffers, entityIn, matrixStackIn, bufferIn, packedLightIn, ageInTicks, rand,
+						blockRenderer);
 				matrixStackIn.pop();
 			}
 			matrixStackIn.translate(0, 1, 0);
@@ -89,7 +96,8 @@ public class FireElementalRenderer extends EntityRenderer<FireElementalEntity> {
 				Vector3d position = offset.add((rand.nextDouble() - 0.5) * 2.5, -j * 1.5 - rand.nextDouble() * 0.5,
 						(rand.nextDouble() - 0.5) * 2.5);
 				matrixStackIn.translate(position.x, position.y, position.z);
-				renderPart(matrixStackIn, bufferIn, packedLightIn, ageInTicks, rand, blockRenderer);
+				renderPart(renderTypeBuffers, entityIn, matrixStackIn, bufferIn, packedLightIn, ageInTicks, rand,
+						blockRenderer);
 				matrixStackIn.pop();
 
 			}
@@ -98,11 +106,26 @@ public class FireElementalRenderer extends EntityRenderer<FireElementalEntity> {
 		matrixStackIn.pop();
 	}
 
-	private void renderPart(MatrixStack matrixStackIn, IRenderTypeBuffer bufferIn, int packedLightIn, float ageInTicks,
-			Random rand, BlockRendererDispatcher blockRenderer) {
+	private void renderPart(RenderTypeBuffers renderTypeBuffers, FireElementalEntity entity, MatrixStack matrixStackIn,
+			IRenderTypeBuffer bufferIn, int packedLightIn, float ageInTicks, Random rand,
+			BlockRendererDispatcher blockRenderer) {
 		matrixStackIn.push();
 		matrixStackIn.translate(-0.5, -0.5, -0.5);
 		shake(matrixStackIn, rand, ageInTicks);
+		
+		// Render block damage
+		MatrixStack.Entry matrixEntry = matrixStackIn.getLast();
+		int damage = Math.round(MathHelper.lerp(entity.getHealthPercent(), 9, -1));
+		if (damage != -1) {
+			IVertexBuilder builder = new MatrixApplyingVertexBuilder(
+					renderTypeBuffers.getCrumblingBufferSource()
+							.getBuffer(ModelBakery.DESTROY_RENDER_TYPES.get(damage)),
+					matrixEntry.getMatrix(), matrixEntry.getNormal());
+			blockRenderer.renderBlockDamage(BODY, entity.getPosition(), entity.world, matrixStackIn, builder,
+					EmptyModelData.INSTANCE);
+		}
+		
+		// Render block
 		blockRenderer.renderBlock(BODY, matrixStackIn, bufferIn, packedLightIn, OverlayTexture.NO_OVERLAY,
 				EmptyModelData.INSTANCE);
 		matrixStackIn.pop();
