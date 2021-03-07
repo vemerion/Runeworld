@@ -44,6 +44,8 @@ public class ModEntityLootTables extends EntityLootTables {
 								.addEntry(ItemLootEntry.builder(ModItems.MOSQUITO_EGGS))
 								.acceptCondition(KilledByPlayer.builder())
 								.acceptCondition(RandomChanceWithLooting.builder(0.04f, 0.01f))));
+
+		registerLootTable(ModEntities.FIRE_ELEMENTAL, LootTable.builder());
 	}
 
 	@Override

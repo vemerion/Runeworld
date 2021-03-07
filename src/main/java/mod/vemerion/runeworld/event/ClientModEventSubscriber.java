@@ -13,6 +13,7 @@ import mod.vemerion.runeworld.particle.RunePortalParticle;
 import mod.vemerion.runeworld.renderer.BloodBatRenderer;
 import mod.vemerion.runeworld.renderer.BloodLeechTileEntityRenderer;
 import mod.vemerion.runeworld.renderer.BloodMonkeyRenderer;
+import mod.vemerion.runeworld.renderer.FireElementalRenderer;
 import mod.vemerion.runeworld.renderer.MosquitoRenderer;
 import net.minecraft.block.Block;
 import net.minecraft.client.Minecraft;
@@ -69,6 +70,8 @@ public class ClientModEventSubscriber {
 				m -> new SpriteRenderer<>(m, mc.getItemRenderer()));
 		RenderingRegistry.registerEntityRenderingHandler(ModEntities.BLOOD_PEBBLE,
 				m -> new SpriteRenderer<>(m, mc.getItemRenderer()));
+		RenderingRegistry.registerEntityRenderingHandler(ModEntities.FIRE_ELEMENTAL, FireElementalRenderer::new);
+
 	}
 
 	private static void registerItemProperties() {
