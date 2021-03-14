@@ -5,6 +5,7 @@ import java.util.Random;
 
 import net.minecraft.block.Blocks;
 import net.minecraft.entity.EntityType;
+import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.MobEntity;
 import net.minecraft.entity.ai.attributes.AttributeModifierMap;
 import net.minecraft.entity.ai.attributes.Attributes;
@@ -18,6 +19,7 @@ import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.network.datasync.DataParameter;
 import net.minecraft.network.datasync.DataSerializers;
 import net.minecraft.network.datasync.EntityDataManager;
+import net.minecraft.util.DamageSource;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.vector.Vector3d;
@@ -29,11 +31,14 @@ public class FireElementalEntity extends MonsterEntity {
 
 	private static final DataParameter<Boolean> RAISING_ARMS = EntityDataManager.createKey(FireElementalEntity.class,
 			DataSerializers.BOOLEAN);
+	private static final DataParameter<Boolean> SPINNING_ARMS = EntityDataManager.createKey(FireElementalEntity.class,
+			DataSerializers.BOOLEAN);
 
 	private final ServerBossInfo bossInfo = new ServerBossInfo(getDisplayName(), BossInfo.Color.YELLOW,
 			BossInfo.Overlay.PROGRESS);
 
 	private float armHeight, prevArmHeight;
+	private float armRotation, prevArmRotation;
 
 	public FireElementalEntity(EntityType<? extends FireElementalEntity> type, World worldIn) {
 		super(type, worldIn);
@@ -51,8 +56,9 @@ public class FireElementalEntity extends MonsterEntity {
 	protected void registerGoals() {
 		goalSelector.addGoal(0, new ShootProjectileGoal(this));
 		goalSelector.addGoal(1, new ScorchedGroundGoal(this));
-		goalSelector.addGoal(2, new WaterAvoidingRandomWalkingGoal(this, 1));
-		goalSelector.addGoal(3, new LookRandomlyGoal(this));
+		goalSelector.addGoal(2, new AoEGoal(this));
+		goalSelector.addGoal(3, new WaterAvoidingRandomWalkingGoal(this, 1));
+		goalSelector.addGoal(4, new LookRandomlyGoal(this));
 		targetSelector.addGoal(1, new HurtByTargetGoal(this));
 		targetSelector.addGoal(2, new NearestAttackableTargetGoal<>(this, MobEntity.class, 0, false, false, null));
 	}
@@ -61,6 +67,7 @@ public class FireElementalEntity extends MonsterEntity {
 	protected void registerData() {
 		super.registerData();
 		dataManager.register(RAISING_ARMS, false);
+		dataManager.register(SPINNING_ARMS, false);
 	}
 
 	private boolean isRaisingArms() {
@@ -69,6 +76,14 @@ public class FireElementalEntity extends MonsterEntity {
 
 	private void setRaisingArms(boolean b) {
 		dataManager.set(RAISING_ARMS, b);
+	}
+
+	private boolean isSpinningArms() {
+		return dataManager.get(SPINNING_ARMS);
+	}
+
+	private void setSpinningArms(boolean b) {
+		dataManager.set(SPINNING_ARMS, b);
 	}
 
 	@Override
@@ -83,6 +98,10 @@ public class FireElementalEntity extends MonsterEntity {
 				armHeight = Math.min(armHeight + 0.2f, 2.5f);
 			else
 				armHeight = Math.max(armHeight - 0.2f, 0);
+			
+			prevArmRotation = armRotation;
+			if (isSpinningArms())
+				armRotation += 15;
 		}
 	}
 
@@ -124,53 +143,42 @@ public class FireElementalEntity extends MonsterEntity {
 	public float getArmHeight(float partialTicks) {
 		return MathHelper.lerp(partialTicks, prevArmHeight, armHeight);
 	}
+	
+	public float getArmRotation(float partialTicks) {
+		return MathHelper.lerp(partialTicks, prevArmRotation, armRotation);
+	}
 
-	private static class ScorchedGroundGoal extends Goal {
+	private static class ScorchedGroundGoal extends DurationGoal {
 
 		private static final int DURATION = 20 * 3;
 		private static final int COOLDOWN = 20 * 20;
 
-		private FireElementalEntity elemental;
-		private int cooldown, duration;
-
 		private ScorchedGroundGoal(FireElementalEntity elemental) {
-			this.elemental = elemental;
-			this.setMutexFlags(EnumSet.of(Goal.Flag.MOVE, Goal.Flag.JUMP, Goal.Flag.LOOK));
+			super(elemental, COOLDOWN, DURATION);
 		}
 
 		@Override
-		public boolean shouldExecute() {
-			return cooldown-- < 0;
+		protected void finishAttack(FireElementalEntity elemental) {
+			elemental.setRaisingArms(false);
 		}
 
 		@Override
-		public void startExecuting() {
-			duration = DURATION;
-		}
+		protected void performAttack(FireElementalEntity elemental) {
+			elemental.setRaisingArms(true);
+			Random rand = elemental.getRNG();
+			World world = elemental.world;
 
-		@Override
-		public void tick() {
-			if (duration-- > 0) {
-				elemental.setRaisingArms(true);
-				Random rand = elemental.getRNG();
-				World world = elemental.world;
+			BlockPos pos = elemental.getPosition().add(
+					new BlockPos(Vector3d.fromPitchYaw(0, rand.nextFloat() * 360).scale(1 + rand.nextDouble() * 5)));
 
-				BlockPos pos = elemental.getPosition().add(new BlockPos(
-						Vector3d.fromPitchYaw(0, rand.nextFloat() * 360).scale(1 + rand.nextDouble() * 5)));
-
-				for (int i = 0; i < 10; i++) {
-					for (int j = -1; j < 2; j += 2) {
-						BlockPos p = pos.down(i * j);
-						if (world.isAirBlock(p) && world.getBlockState(p.down()).isSolid()) {
-							world.setBlockState(p, Blocks.FIRE.getDefaultState());
-							return;
-						}
+			for (int i = 0; i < 10; i++) {
+				for (int j = -1; j < 2; j += 2) {
+					BlockPos p = pos.down(i * j);
+					if (world.isAirBlock(p) && world.getBlockState(p.down()).isSolid()) {
+						world.setBlockState(p, Blocks.FIRE.getDefaultState());
+						return;
 					}
 				}
-
-			} else {
-				elemental.setRaisingArms(false);
-				cooldown = COOLDOWN;
 			}
 		}
 	}
@@ -208,5 +216,67 @@ public class FireElementalEntity extends MonsterEntity {
 			world.addEntity(projectile);
 		}
 
+	}
+
+	private static class AoEGoal extends DurationGoal {
+
+		private static final int DURATION = 20 * 2;
+		private static final int COOLDOWN = 20 * 5;
+
+		private AoEGoal(FireElementalEntity elemental) {
+			super(elemental, COOLDOWN, DURATION);
+		}
+
+		@Override
+		protected void finishAttack(FireElementalEntity elemental) {
+			elemental.setSpinningArms(false);
+		}
+
+		@Override
+		protected void performAttack(FireElementalEntity elemental) {
+			elemental.setSpinningArms(true);
+
+			for (LivingEntity e : elemental.world.getEntitiesWithinAABB(LivingEntity.class,
+					elemental.getBoundingBox().grow(1).grow(4, 0, 4), e -> e != elemental)) {
+				e.attackEntityFrom(DamageSource.causeMobDamage(elemental), 6);
+			}
+		}
+	}
+
+	private static abstract class DurationGoal extends Goal {
+
+		private FireElementalEntity elemental;
+		private int cooldown, duration, maxCooldown, maxDuration;
+
+		private DurationGoal(FireElementalEntity elemental, int maxCooldown, int maxDuration) {
+			this.elemental = elemental;
+			this.maxDuration = maxDuration;
+			this.maxCooldown = maxCooldown;
+			this.setMutexFlags(EnumSet.of(Goal.Flag.MOVE, Goal.Flag.JUMP, Goal.Flag.LOOK));
+		}
+
+		@Override
+		public boolean shouldExecute() {
+			return cooldown-- < 0;
+		}
+
+		@Override
+		public void startExecuting() {
+			duration = maxDuration;
+		}
+
+		@Override
+		public void tick() {
+			if (duration-- > 0) {
+				performAttack(elemental);
+			} else {
+				finishAttack(elemental);
+				cooldown = maxCooldown;
+			}
+		}
+
+		protected abstract void finishAttack(FireElementalEntity elemental);
+
+		protected abstract void performAttack(FireElementalEntity elemental);
 	}
 }

@@ -92,8 +92,8 @@ public class FireElementalRenderer extends EntityRenderer<FireElementalEntity> {
 		for (int i = 0; i < 2; i++) {
 			for (int j = 0; j < 5; j++) {
 				matrixStackIn.push();
-				Vector3d offset = Vector3d.fromPitchYaw(0, entityYaw).rotateYaw(Helper.toRad(i == 0 ? -90 : 90))
-						.scale(4);
+				Vector3d offset = Vector3d.fromPitchYaw(0, entityIn.getArmRotation(partialTicks))
+						.rotateYaw(Helper.toRad(i == 0 ? -90 : 90)).scale(4);
 				Vector3d position = offset.add((rand.nextDouble() - 0.5) * 2.5,
 						-j * 1.5 - rand.nextDouble() * 0.5 + armHeight, (rand.nextDouble() - 0.5) * 2.5);
 				matrixStackIn.translate(position.x, position.y, position.z);
