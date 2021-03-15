@@ -31,6 +31,7 @@ public class ModItemModelProvider extends ItemModelProvider {
 		simpleItem(ModItems.BLOOD_PEBBLE);
 		simpleItem(ModItems.GRILLED_BLOOD_LEECH);
 		simpleItem(ModItems.FIRE_HEART);
+		simpleItem(ModItems.FIRE_DISLOCATOR); // TODO: Add different texture depending on dimension
 		simpleItem(ModItems.BLOOD_FLOWER, BLOCK_FOLDER);
 		simpleItem(ModItems.BLOOD_CRYSTAL, BLOCK_FOLDER);
 		ModEntities.getSpawnEggs().forEach(egg -> spawnEgg(egg));

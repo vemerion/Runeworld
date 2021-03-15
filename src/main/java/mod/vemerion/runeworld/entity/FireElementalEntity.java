@@ -183,6 +183,7 @@ public class FireElementalEntity extends MonsterEntity {
 		}
 	}
 
+	// TODO: Shoot at target (if it exists)
 	private static class ShootProjectileGoal extends Goal {
 
 		private static final int MAX_COOLDOWN = 20 * 1;

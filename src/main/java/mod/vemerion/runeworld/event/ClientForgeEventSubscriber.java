@@ -10,7 +10,7 @@ import mod.vemerion.runeworld.biome.dimensionrenderer.BloodRenderer;
 import mod.vemerion.runeworld.block.RunePortalBlock;
 import mod.vemerion.runeworld.init.ModDimensions;
 import mod.vemerion.runeworld.init.ModFluids;
-import mod.vemerion.runeworld.init.ModItems;
+import mod.vemerion.runeworld.item.DislocatorItem;
 import net.minecraft.block.BlockState;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.entity.player.AbstractClientPlayerEntity;
@@ -131,11 +131,11 @@ public class ClientForgeEventSubscriber {
 	}
 
 	@SubscribeEvent
-	public static void bloodDislocatorAnimation(RenderHandEvent event) {
+	public static void dislocatorAnimation(RenderHandEvent event) {
 		AbstractClientPlayerEntity player = Minecraft.getInstance().player;
 		ItemStack stack = event.getItemStack();
 		Item item = stack.getItem();
-		if (item == ModItems.BLOOD_DISLOCATOR && player.getActiveItemStack().equals(stack)) {
+		if (item instanceof DislocatorItem && player.getActiveItemStack().equals(stack)) {
 			event.setCanceled(true);
 			MatrixStack matrix = event.getMatrixStack();
 			float partialTicks = event.getPartialTicks();
@@ -149,8 +149,9 @@ public class ClientForgeEventSubscriber {
 			matrix.push();
 			matrix.translate(side == HandSide.RIGHT ? 0.7 : -0.7, -0.4, -0.7);
 			matrix.rotate(new Quaternion(0, time * 360 * progress * 2 / 20, 0, true));
-			Minecraft.getInstance().getItemRenderer().renderItem(stack, transform, event.getLight(),
-					OverlayTexture.NO_OVERLAY, event.getMatrixStack(), event.getBuffers());
+			Minecraft.getInstance().getItemRenderer().renderItem(player, stack, transform, false,
+					event.getMatrixStack(), event.getBuffers(), player.world, event.getLight(),
+					OverlayTexture.NO_OVERLAY);
 			matrix.pop();
 		}
 	}

@@ -7,7 +7,7 @@ import mod.vemerion.runeworld.Main;
 import mod.vemerion.runeworld.item.BloodBatToothItem;
 import mod.vemerion.runeworld.item.BloodBucketItem;
 import mod.vemerion.runeworld.item.BloodCrystalliteItem;
-import mod.vemerion.runeworld.item.BloodDislocatorItem;
+import mod.vemerion.runeworld.item.DislocatorItem;
 import mod.vemerion.runeworld.item.BloodFlowerItem;
 import mod.vemerion.runeworld.item.BloodPuddingItem;
 import mod.vemerion.runeworld.item.GuideItem;
@@ -50,6 +50,7 @@ public class ModItems {
 	public static final Item BLOOD_PEBBLE = null;
 	public static final Item GRILLED_BLOOD_LEECH = null;
 	public static final Item FIRE_HEART = null;
+	public static final Item FIRE_DISLOCATOR = null;
 
 	static final ItemGroup ITEM_GROUP = new RuneworldItemGroup();
 
@@ -65,16 +66,21 @@ public class ModItems {
 		Item bloodBatTooth = Init.setup(new BloodBatToothItem(), "blood_bat_tooth");
 		Item guide = Init.setup(new GuideItem(new Item.Properties().group(ItemGroup.SEARCH)), "guide");
 		Item bloodCrystallite = Init.setup(new BloodCrystalliteItem(), "blood_crystallite");
-		Item bloodDislocator = Init.setup(new BloodDislocatorItem(), "blood_dislocator");
+		Item bloodDislocator = Init.setup(
+				new DislocatorItem(new Item.Properties().group(ItemGroup.SEARCH), ModDimensions.BLOOD),
+				"blood_dislocator");
 		Item bloodPebble = Init.setup(new ThrowableItem(() -> ModEntities.BLOOD_PEBBLE, 0.75), "blood_pebble");
 		Item grilledBloodLeech = Init.setup(new Item(new Item.Properties().group(ItemGroup.SEARCH)
 				.food(new Food.Builder().hunger(4).saturation(0.4f).meat().build())), "grilled_blood_leech");
 		Item fireHeart = Init.setup(
 				new Item(new Item.Properties().group(ItemGroup.SEARCH).rarity(Rarity.UNCOMMON).isImmuneToFire()),
 				"fire_heart");
+		Item fireDislocator = Init
+				.setup(new DislocatorItem(new Item.Properties().group(ItemGroup.SEARCH).maxDamage(16).isImmuneToFire(),
+						ModDimensions.FIRE), "fire_dislocator");
 
 		registry.registerAll(bloodBucket, bloodPudding, bloodFlower, mosquitoEggs, bloodBatTooth, guide,
-				bloodCrystallite, bloodDislocator, bloodPebble, grilledBloodLeech, fireHeart);
+				bloodCrystallite, bloodDislocator, bloodPebble, grilledBloodLeech, fireHeart, fireDislocator);
 
 		registerBlockItems(registry);
 	}

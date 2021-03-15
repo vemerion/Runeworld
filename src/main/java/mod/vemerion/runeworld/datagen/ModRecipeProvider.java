@@ -43,13 +43,18 @@ public class ModRecipeProvider extends RecipeProvider {
 		ShapelessRecipeBuilder.shapelessRecipe(ModItems.GUIDE).addIngredient(Tags.Items.OBSIDIAN).addIngredient(runes)
 				.addCriterion("has_rune", hasItem(runes)).addCriterion("has_obsidian", hasItem(Tags.Items.OBSIDIAN))
 				.build(consumer);
-		ShapedRecipeBuilder.shapedRecipe(ModItems.BLOOD_DISLOCATOR).patternLine(" # ").patternLine("#B#")
-				.patternLine(" # ").key('#', Tags.Items.OBSIDIAN).key('B', ModItems.BLOOD_CRYSTALLITE)
-				.addCriterion("has_blood_crystallite", hasItem(ModItems.BLOOD_CRYSTALLITE)).build(consumer);
-		
+		dislocator(ModItems.BLOOD_DISLOCATOR, ModItems.BLOOD_CRYSTALLITE).build(consumer);
+		dislocator(ModItems.FIRE_DISLOCATOR, ModItems.FIRE_HEART).build(consumer);
+
 		// Complex
 		stoneMaterial(ModBlocks.SPARKSTONE, consumer);
 		stoneMaterial(ModBlocks.CHARRED_STONE, consumer);
+	}
+
+	private ShapedRecipeBuilder dislocator(Item dislocator, Item component) {
+		return ShapedRecipeBuilder.shapedRecipe(dislocator).patternLine(" # ").patternLine("#B#").patternLine(" # ")
+				.key('#', Tags.Items.OBSIDIAN).key('B', component)
+				.addCriterion("has_" + component.getRegistryName().getPath(), hasItem(component));
 	}
 
 	private void pillar(Item large, Item small, Consumer<IFinishedRecipe> consumer) {

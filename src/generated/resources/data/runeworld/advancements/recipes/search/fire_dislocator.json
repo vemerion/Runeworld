@@ -1,0 +1,32 @@
+{
+  "parent": "minecraft:recipes/root",
+  "rewards": {
+    "recipes": [
+      "runeworld:fire_dislocator"
+    ]
+  },
+  "criteria": {
+    "has_fire_heart": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "item": "runeworld:fire_heart"
+          }
+        ]
+      }
+    },
+    "has_the_recipe": {
+      "trigger": "minecraft:recipe_unlocked",
+      "conditions": {
+        "recipe": "runeworld:fire_dislocator"
+      }
+    }
+  },
+  "requirements": [
+    [
+      "has_fire_heart",
+      "has_the_recipe"
+    ]
+  ]
+}

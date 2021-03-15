@@ -1,0 +1,19 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    " # ",
+    "#B#",
+    " # "
+  ],
+  "key": {
+    "#": {
+      "tag": "forge:obsidian"
+    },
+    "B": {
+      "item": "runeworld:fire_heart"
+    }
+  },
+  "result": {
+    "item": "runeworld:fire_dislocator"
+  }
+}
