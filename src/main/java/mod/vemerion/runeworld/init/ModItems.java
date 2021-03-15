@@ -18,6 +18,7 @@ import net.minecraft.item.Food;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemGroup;
 import net.minecraft.item.ItemStack;
+import net.minecraft.item.Rarity;
 import net.minecraft.util.NonNullList;
 import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
@@ -48,6 +49,7 @@ public class ModItems {
 	public static final Item BLOOD_DISLOCATOR = null;
 	public static final Item BLOOD_PEBBLE = null;
 	public static final Item GRILLED_BLOOD_LEECH = null;
+	public static final Item FIRE_HEART = null;
 
 	static final ItemGroup ITEM_GROUP = new RuneworldItemGroup();
 
@@ -67,9 +69,12 @@ public class ModItems {
 		Item bloodPebble = Init.setup(new ThrowableItem(() -> ModEntities.BLOOD_PEBBLE, 0.75), "blood_pebble");
 		Item grilledBloodLeech = Init.setup(new Item(new Item.Properties().group(ItemGroup.SEARCH)
 				.food(new Food.Builder().hunger(4).saturation(0.4f).meat().build())), "grilled_blood_leech");
+		Item fireHeart = Init.setup(
+				new Item(new Item.Properties().group(ItemGroup.SEARCH).rarity(Rarity.UNCOMMON).isImmuneToFire()),
+				"fire_heart");
 
 		registry.registerAll(bloodBucket, bloodPudding, bloodFlower, mosquitoEggs, bloodBatTooth, guide,
-				bloodCrystallite, bloodDislocator, bloodPebble, grilledBloodLeech);
+				bloodCrystallite, bloodDislocator, bloodPebble, grilledBloodLeech, fireHeart);
 
 		registerBlockItems(registry);
 	}

@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import mod.vemerion.runeworld.Main;
+import mod.vemerion.runeworld.init.ModBlocks;
 import mod.vemerion.runeworld.init.ModEntities;
 import mod.vemerion.runeworld.init.ModItems;
 import net.minecraft.data.loot.EntityLootTables;
@@ -45,7 +46,14 @@ public class ModEntityLootTables extends EntityLootTables {
 								.acceptCondition(KilledByPlayer.builder())
 								.acceptCondition(RandomChanceWithLooting.builder(0.04f, 0.01f))));
 
-		registerLootTable(ModEntities.FIRE_ELEMENTAL, LootTable.builder());
+		registerLootTable(ModEntities.FIRE_ELEMENTAL,
+				LootTable.builder()
+						.addLootPool(LootPool.builder().rolls(ConstantRange.of(1))
+								.addEntry(ItemLootEntry.builder(ModItems.FIRE_HEART)))
+						.addLootPool(LootPool.builder().rolls(ConstantRange.of(1))
+								.addEntry(ItemLootEntry.builder(ModBlocks.FIRE_RITUAL_STONE)
+										.acceptFunction(SetCount.builder(RandomValueRange.of(0, 2)))
+										.acceptFunction(LootingEnchantBonus.builder(RandomValueRange.of(0, 1))))));
 	}
 
 	@Override
