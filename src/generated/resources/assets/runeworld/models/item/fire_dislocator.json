@@ -1,6 +1,20 @@
 {
   "parent": "minecraft:item/generated",
   "textures": {
-    "layer0": "runeworld:item/fire_dislocator"
-  }
+    "layer0": "runeworld:item/fire_dislocator_dimension"
+  },
+  "overrides": [
+    {
+      "predicate": {
+        "runeworld:dimension": 0.0
+      },
+      "model": "runeworld:item/fire_dislocator_dimension"
+    },
+    {
+      "predicate": {
+        "runeworld:dimension": 0.75
+      },
+      "model": "runeworld:item/fire_dislocator_overworld"
+    }
+  ]
 }

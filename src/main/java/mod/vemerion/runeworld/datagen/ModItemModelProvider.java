@@ -31,11 +31,11 @@ public class ModItemModelProvider extends ItemModelProvider {
 		simpleItem(ModItems.BLOOD_PEBBLE);
 		simpleItem(ModItems.GRILLED_BLOOD_LEECH);
 		simpleItem(ModItems.FIRE_HEART);
-		simpleItem(ModItems.FIRE_DISLOCATOR); // TODO: Add different texture depending on dimension
 		simpleItem(ModItems.BLOOD_FLOWER, BLOCK_FOLDER);
 		simpleItem(ModItems.BLOOD_CRYSTAL, BLOCK_FOLDER);
 		ModEntities.getSpawnEggs().forEach(egg -> spawnEgg(egg));
-		bloodDislocator();
+		dislocator(ModItems.BLOOD_DISLOCATOR);
+		dislocator(ModItems.FIRE_DISLOCATOR);
 		
 		// Complex
 		stoneMaterial(ModBlocks.SPARKSTONE);
@@ -55,15 +55,15 @@ public class ModItemModelProvider extends ItemModelProvider {
 		singleTexture(name, mcLoc(ITEM_FOLDER + "/generated"), "layer0", modLoc(folder + "/" + name));
 	}
 
-	private void bloodDislocator() {
-		String name = ModItems.BLOOD_DISLOCATOR.getRegistryName().getPath();
+	private void dislocator(Item dislocator) {
+		String name = dislocator.getRegistryName().getPath();
 		ResourceLocation property = new ResourceLocation(Main.MODID, "dimension");
-		ModelFile red = singleTexture(name + "_red", mcLoc(ITEM_FOLDER + "/generated"), "layer0",
-				modLoc(ITEM_FOLDER + "/" + name + "_red"));
-		ModelFile blue = singleTexture(name + "_blue", mcLoc(ITEM_FOLDER + "/generated"), "layer0",
-				modLoc(ITEM_FOLDER + "/" + name + "_blue"));
-		singleTexture(name, mcLoc(ITEM_FOLDER + "/generated"), "layer0", modLoc(ITEM_FOLDER + "/" + name + "_red"))
-				.override().model(red).predicate(property, 0).end().override().model(blue).predicate(property, 0.75f)
+		ModelFile dim = singleTexture(name + "_dimension", mcLoc(ITEM_FOLDER + "/generated"), "layer0",
+				modLoc(ITEM_FOLDER + "/" + name + "_dimension"));
+		ModelFile overworld = singleTexture(name + "_overworld", mcLoc(ITEM_FOLDER + "/generated"), "layer0",
+				modLoc(ITEM_FOLDER + "/" + name + "_overworld"));
+		singleTexture(name, mcLoc(ITEM_FOLDER + "/generated"), "layer0", modLoc(ITEM_FOLDER + "/" + name + "_dimension"))
+				.override().model(dim).predicate(property, 0).end().override().model(overworld).predicate(property, 0.75f)
 				.end();
 	}
 	

@@ -19,6 +19,10 @@ public class DislocatorItem extends Item {
 		super(properties);
 		this.dimension = dimension;
 	}
+	
+	public RegistryKey<World> getDimension() {
+		return dimension;
+	}
 
 	@Override
 	public int getUseDuration(ItemStack stack) {

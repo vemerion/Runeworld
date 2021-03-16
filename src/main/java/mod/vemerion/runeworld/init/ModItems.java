@@ -46,11 +46,11 @@ public class ModItems {
 	public static final Item BLOOD_LEECH = null;
 	public static final Item GUIDE = null;
 	public static final Item BLOOD_CRYSTALLITE = null;
-	public static final Item BLOOD_DISLOCATOR = null;
+	public static final DislocatorItem BLOOD_DISLOCATOR = null;
 	public static final Item BLOOD_PEBBLE = null;
 	public static final Item GRILLED_BLOOD_LEECH = null;
 	public static final Item FIRE_HEART = null;
-	public static final Item FIRE_DISLOCATOR = null;
+	public static final DislocatorItem FIRE_DISLOCATOR = null;
 
 	static final ItemGroup ITEM_GROUP = new RuneworldItemGroup();
 

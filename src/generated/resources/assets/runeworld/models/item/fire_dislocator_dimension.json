@@ -1,6 +1,6 @@
 {
   "parent": "minecraft:item/generated",
   "textures": {
-    "layer0": "runeworld:item/blood_dislocator_red"
+    "layer0": "runeworld:item/fire_dislocator_dimension"
   }
 }

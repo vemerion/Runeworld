@@ -3,11 +3,11 @@ package mod.vemerion.runeworld.event;
 import mod.vemerion.runeworld.Main;
 import mod.vemerion.runeworld.block.RunePortalBlock;
 import mod.vemerion.runeworld.init.ModBlocks;
-import mod.vemerion.runeworld.init.ModDimensions;
 import mod.vemerion.runeworld.init.ModEntities;
 import mod.vemerion.runeworld.init.ModItems;
 import mod.vemerion.runeworld.init.ModParticleTypes;
 import mod.vemerion.runeworld.init.ModTileEntities;
+import mod.vemerion.runeworld.item.DislocatorItem;
 import mod.vemerion.runeworld.particle.DrippingBloodFactory;
 import mod.vemerion.runeworld.particle.RunePortalParticle;
 import mod.vemerion.runeworld.renderer.BloodBatRenderer;
@@ -78,13 +78,18 @@ public class ClientModEventSubscriber {
 	}
 
 	private static void registerItemProperties() {
-		ItemModelsProperties.registerProperty(ModItems.BLOOD_DISLOCATOR, new ResourceLocation(Main.MODID, "dimension"),
+		registerDislocator(ModItems.BLOOD_DISLOCATOR);
+		registerDislocator(ModItems.FIRE_DISLOCATOR);
+	}
+
+	private static void registerDislocator(DislocatorItem dislocator) {
+		ItemModelsProperties.registerProperty(dislocator, new ResourceLocation(Main.MODID, "dimension"),
 				(stack, world, entity) -> {
 					float property = 0.5f;
-					if (world != null && world.getDimensionKey() == ModDimensions.BLOOD)
+					if (world != null && world.getDimensionKey() == dislocator.getDimension())
 						property = 1;
 					else if (entity != null && entity.world != null
-							&& entity.world.getDimensionKey() == ModDimensions.BLOOD)
+							&& entity.world.getDimensionKey() == dislocator.getDimension())
 						property = 1;
 
 					return property;
