@@ -46,9 +46,9 @@ public class FireElementalEntity extends MonsterEntity {
 	}
 
 	public static AttributeModifierMap.MutableAttribute attributes() {
-		return MobEntity.func_233666_p_().createMutableAttribute(Attributes.MAX_HEALTH, 20)
+		return MobEntity.func_233666_p_().createMutableAttribute(Attributes.MAX_HEALTH, 250)
 				.createMutableAttribute(Attributes.MOVEMENT_SPEED, 0.25)
-				.createMutableAttribute(Attributes.FOLLOW_RANGE, 16)
+				.createMutableAttribute(Attributes.FOLLOW_RANGE, 30)
 				.createMutableAttribute(Attributes.ATTACK_DAMAGE, 6);
 	}
 
