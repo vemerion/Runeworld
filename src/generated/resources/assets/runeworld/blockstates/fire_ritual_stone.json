@@ -1,7 +1,10 @@
 {
   "variants": {
-    "": {
+    "bloodied=false": {
       "model": "runeworld:block/fire_ritual_stone"
+    },
+    "bloodied=true": {
+      "model": "runeworld:block/fire_ritual_stone_bloodied"
     }
   }
 }

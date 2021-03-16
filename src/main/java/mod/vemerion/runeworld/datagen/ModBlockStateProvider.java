@@ -1,6 +1,7 @@
 package mod.vemerion.runeworld.datagen;
 
 import mod.vemerion.runeworld.Main;
+import mod.vemerion.runeworld.block.FireRitualStoneBlock;
 import mod.vemerion.runeworld.block.RunePortalBlock;
 import mod.vemerion.runeworld.block.complex.StoneMaterial;
 import mod.vemerion.runeworld.init.ModBlocks;
@@ -40,7 +41,7 @@ public class ModBlockStateProvider extends BlockStateProvider {
 		grassBlock(ModBlocks.BURNT_DIRT, modLoc("block/burnt_dirt_side"), modLoc("block/charred_dirt"),
 				modLoc("block/burnt_dirt_top"));
 		fireRitualStone();
-		
+
 		for (Block portal : ModBlocks.getRunePortals())
 			runePortal(portal);
 
@@ -82,7 +83,10 @@ public class ModBlockStateProvider extends BlockStateProvider {
 		Block block = ModBlocks.FIRE_RITUAL_STONE;
 		String name = block.getRegistryName().getPath();
 		ModelFile model = models().cubeColumn(name, modLoc("block/fire_ritual_stone"), modLoc("block/sparkstone"));
-		simpleBlock(block, model);
+		ModelFile bloodied = models().cubeColumn(name + "_bloodied", modLoc("block/fire_ritual_stone_bloodied"),
+				modLoc("block/sparkstone"));
+		getVariantBuilder(block).forAllStates(state -> ConfiguredModel.builder()
+				.modelFile(state.get(FireRitualStoneBlock.BLOODIED) ? bloodied : model).build());
 		simpleBlockItem(block, model);
 	}
 
