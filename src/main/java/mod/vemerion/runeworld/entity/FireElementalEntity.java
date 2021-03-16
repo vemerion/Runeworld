@@ -49,7 +49,7 @@ public class FireElementalEntity extends MonsterEntity {
 		return MobEntity.func_233666_p_().createMutableAttribute(Attributes.MAX_HEALTH, 20)
 				.createMutableAttribute(Attributes.MOVEMENT_SPEED, 0.25)
 				.createMutableAttribute(Attributes.FOLLOW_RANGE, 16)
-				.createMutableAttribute(Attributes.ATTACK_DAMAGE, 3);
+				.createMutableAttribute(Attributes.ATTACK_DAMAGE, 6);
 	}
 
 	@Override
@@ -60,7 +60,7 @@ public class FireElementalEntity extends MonsterEntity {
 		goalSelector.addGoal(3, new WaterAvoidingRandomWalkingGoal(this, 1));
 		goalSelector.addGoal(4, new LookRandomlyGoal(this));
 		targetSelector.addGoal(1, new HurtByTargetGoal(this));
-		targetSelector.addGoal(2, new NearestAttackableTargetGoal<>(this, MobEntity.class, 0, false, false, null));
+		targetSelector.addGoal(2, new NearestAttackableTargetGoal<>(this, LivingEntity.class, 0, false, false, null));
 	}
 
 	@Override
@@ -98,7 +98,7 @@ public class FireElementalEntity extends MonsterEntity {
 				armHeight = Math.min(armHeight + 0.2f, 2.5f);
 			else
 				armHeight = Math.max(armHeight - 0.2f, 0);
-			
+
 			prevArmRotation = armRotation;
 			if (isSpinningArms())
 				armRotation += 15;
@@ -143,7 +143,7 @@ public class FireElementalEntity extends MonsterEntity {
 	public float getArmHeight(float partialTicks) {
 		return MathHelper.lerp(partialTicks, prevArmHeight, armHeight);
 	}
-	
+
 	public float getArmRotation(float partialTicks) {
 		return MathHelper.lerp(partialTicks, prevArmRotation, armRotation);
 	}
@@ -183,7 +183,6 @@ public class FireElementalEntity extends MonsterEntity {
 		}
 	}
 
-	// TODO: Shoot at target (if it exists)
 	private static class ShootProjectileGoal extends Goal {
 
 		private static final int MAX_COOLDOWN = 20 * 1;
@@ -205,18 +204,22 @@ public class FireElementalEntity extends MonsterEntity {
 			cooldown = MAX_COOLDOWN;
 			Random rand = elemental.getRNG();
 			World world = elemental.world;
+			LivingEntity attackTarget = elemental.getAttackTarget();
 			int side = rand.nextBoolean() ? 1 : -1;
+
 			Vector3d offset = Vector3d.fromPitchYaw(0, elemental.rotationYaw + 90)
 					.scale(side * (rand.nextDouble() * 3 + 1.5));
 			Vector3d position = elemental.getPositionVec().add(offset.x, 3 + rand.nextDouble() * 3, offset.z);
 			Vector3d target = Vector3d.fromPitchYaw(rand.nextFloat() * (-180 - 60) + 30, rand.nextFloat() * 360);
+			if (attackTarget != null)
+				target = attackTarget.getEyePosition(0).subtract(position);
+
 			FireElementalProjectileEntity projectile = new FireElementalProjectileEntity(world);
 			projectile.setShooter(elemental);
 			projectile.setPosition(position.x, position.y, position.z);
 			projectile.shoot(target.x, target.y, target.z, 0.5f, 1);
 			world.addEntity(projectile);
 		}
-
 	}
 
 	private static class AoEGoal extends DurationGoal {
@@ -239,7 +242,8 @@ public class FireElementalEntity extends MonsterEntity {
 
 			for (LivingEntity e : elemental.world.getEntitiesWithinAABB(LivingEntity.class,
 					elemental.getBoundingBox().grow(1).grow(4, 0, 4), e -> e != elemental)) {
-				e.attackEntityFrom(DamageSource.causeMobDamage(elemental), 6);
+				e.attackEntityFrom(DamageSource.causeMobDamage(elemental),
+						(float) elemental.getAttributeValue(Attributes.ATTACK_DAMAGE));
 			}
 		}
 	}
