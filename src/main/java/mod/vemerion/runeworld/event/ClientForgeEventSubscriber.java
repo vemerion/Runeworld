@@ -7,6 +7,7 @@ import com.mojang.blaze3d.systems.RenderSystem;
 
 import mod.vemerion.runeworld.Main;
 import mod.vemerion.runeworld.biome.dimensionrenderer.BloodRenderer;
+import mod.vemerion.runeworld.biome.dimensionrenderer.FireRenderer;
 import mod.vemerion.runeworld.block.RunePortalBlock;
 import mod.vemerion.runeworld.init.ModDimensions;
 import mod.vemerion.runeworld.init.ModFluids;
@@ -113,8 +114,10 @@ public class ClientForgeEventSubscriber {
 	public static void loadDimensionRenderInfo(WorldEvent.Load event) {
 		if (event.getWorld() instanceof ClientWorld) {
 			ClientWorld world = (ClientWorld) event.getWorld();
-			if (world.getDimensionKey().equals(ModDimensions.BLOOD)) {
+			if (world.getDimensionKey() == ModDimensions.BLOOD) {
 				world.func_239132_a_().setSkyRenderHandler(new BloodRenderer.SkyRenderer());
+			} else if (world.getDimensionKey() == ModDimensions.FIRE) {
+				world.func_239132_a_().setCloudRenderHandler(new FireRenderer.CloudRenderer());
 			}
 		}
 	}
@@ -124,8 +127,9 @@ public class ClientForgeEventSubscriber {
 		if (event.getWorld() instanceof ClientWorld) {
 			ClientWorld world = (ClientWorld) event.getWorld();
 
-			if (world.getDimensionKey().equals(ModDimensions.BLOOD)) {
+			if (world.getDimensionKey() == ModDimensions.BLOOD || world.getDimensionKey() == ModDimensions.FIRE) {
 				world.func_239132_a_().setSkyRenderHandler(null);
+				world.func_239132_a_().setCloudRenderHandler(null);
 			}
 		}
 	}
