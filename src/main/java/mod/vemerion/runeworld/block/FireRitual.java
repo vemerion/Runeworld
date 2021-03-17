@@ -6,8 +6,10 @@ import java.util.List;
 import java.util.Optional;
 import java.util.Set;
 
+import mod.vemerion.runeworld.entity.FireElementalEntity;
 import mod.vemerion.runeworld.helpers.Helper;
 import mod.vemerion.runeworld.init.ModBlocks;
+import mod.vemerion.runeworld.init.ModEntities;
 import mod.vemerion.runeworld.init.ModItems;
 import mod.vemerion.runeworld.init.ModSounds;
 import net.minecraft.block.Block;
@@ -17,6 +19,7 @@ import net.minecraft.util.Direction;
 import net.minecraft.util.SoundCategory;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.vector.Vector3d;
+import net.minecraft.world.Explosion.Mode;
 import net.minecraft.world.World;
 
 public class FireRitual {
@@ -34,6 +37,7 @@ public class FireRitual {
 		if (!positions.contains(pos))
 			return;
 
+		// Blood Leech
 		for (int i = 0; i < 4; i++) {
 			Direction d = Direction.byHorizontalIndex(i);
 			BlockPos p = pos.offset(d);
@@ -45,6 +49,28 @@ public class FireRitual {
 				world.addEntity(grilledLeech);
 				world.playSound(null, p, ModSounds.SIZZLE, SoundCategory.BLOCKS, 1, Helper.soundPitch(world.rand));
 			}
+		}
+
+		summonFireElemental(world, pos);
+	}
+
+	private void summonFireElemental(World world, BlockPos pos) {
+		if (!world.hasBlockState(pos, s -> s.get(FireRitualStoneBlock.BLOODIED)))
+			return;
+
+		int bloodied = 0;
+		for (BlockPos p : positions)
+			if (world.hasBlockState(p, s -> s.get(FireRitualStoneBlock.BLOODIED)))
+				bloodied++;
+
+		if (bloodied > 3) {
+			for (BlockPos p : positions)
+				world.destroyBlock(p, false);
+			world.createExplosion(null, pos.getX(), pos.getY(), pos.getZ(), 5, Mode.DESTROY);
+
+			FireElementalEntity elemental = new FireElementalEntity(ModEntities.FIRE_ELEMENTAL, world);
+			elemental.setPosition(pos.getX(), pos.getY(), pos.getZ());
+			world.addEntity(elemental);
 		}
 	}
 
