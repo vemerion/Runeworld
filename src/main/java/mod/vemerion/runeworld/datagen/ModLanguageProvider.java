@@ -31,6 +31,7 @@ public class ModLanguageProvider extends LanguageProvider {
 		add(ModBlocks.BURNT_DIRT, "Burnt Dirt");
 		add(ModBlocks.CHARRED_DIRT, "Charred Dirt");
 		add(ModBlocks.FIRE_RITUAL_STONE, "Fire Ritual Stone");
+		add(ModBlocks.FIRE_ROOT, "Fire Root");
 		add(ModItems.BLOOD_BUCKET, "Blood Bucket");
 		add(ModItems.BLOOD_PUDDING, "Blood Pudding");
 		add(ModItems.MOSQUITO_EGGS, "Mosquito Eggs");

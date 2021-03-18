@@ -4,10 +4,20 @@ import java.util.ArrayList;
 import java.util.List;
 
 import mod.vemerion.runeworld.Main;
+import mod.vemerion.runeworld.block.FireRootBlock;
 import mod.vemerion.runeworld.block.complex.StoneMaterial;
 import mod.vemerion.runeworld.init.ModBlocks;
+import mod.vemerion.runeworld.init.ModItems;
+import net.minecraft.advancements.criterion.StatePropertiesPredicate;
 import net.minecraft.block.Block;
 import net.minecraft.data.loot.BlockLootTables;
+import net.minecraft.enchantment.Enchantments;
+import net.minecraft.loot.ItemLootEntry;
+import net.minecraft.loot.LootPool;
+import net.minecraft.loot.LootTable;
+import net.minecraft.loot.conditions.BlockStateProperty;
+import net.minecraft.loot.conditions.ILootCondition;
+import net.minecraft.loot.functions.ApplyBonus;
 import net.minecraftforge.registries.ForgeRegistries;
 
 public class ModBlockLootTables extends BlockLootTables {
@@ -45,6 +55,18 @@ public class ModBlockLootTables extends BlockLootTables {
 
 		stoneMaterial(ModBlocks.SPARKSTONE);
 		stoneMaterial(ModBlocks.CHARRED_STONE);
+
+		fireRoot();
+	}
+
+	private void fireRoot() {
+		ILootCondition.IBuilder condition = BlockStateProperty.builder(ModBlocks.FIRE_ROOT)
+				.fromProperties(StatePropertiesPredicate.Builder.newBuilder().withIntProp(FireRootBlock.AGE, 7));
+		registerLootTable(ModBlocks.FIRE_ROOT, withExplosionDecay(ModBlocks.FIRE_ROOT,
+				LootTable.builder().addLootPool(LootPool.builder().addEntry(ItemLootEntry.builder(ModItems.FIRE_ROOT)))
+						.addLootPool(LootPool.builder().acceptCondition(condition)
+								.addEntry(ItemLootEntry.builder(ModItems.FIRE_ROOT).acceptFunction(
+										ApplyBonus.binomialWithBonusCount(Enchantments.FORTUNE, 0.6f, 4))))));
 	}
 
 	private void stoneMaterial(StoneMaterial material) {

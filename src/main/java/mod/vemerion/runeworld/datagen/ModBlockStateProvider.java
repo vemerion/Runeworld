@@ -2,6 +2,7 @@ package mod.vemerion.runeworld.datagen;
 
 import mod.vemerion.runeworld.Main;
 import mod.vemerion.runeworld.block.FireRitualStoneBlock;
+import mod.vemerion.runeworld.block.FireRootBlock;
 import mod.vemerion.runeworld.block.RunePortalBlock;
 import mod.vemerion.runeworld.block.complex.StoneMaterial;
 import mod.vemerion.runeworld.init.ModBlocks;
@@ -41,6 +42,7 @@ public class ModBlockStateProvider extends BlockStateProvider {
 		grassBlock(ModBlocks.BURNT_DIRT, modLoc("block/burnt_dirt_side"), modLoc("block/charred_dirt"),
 				modLoc("block/burnt_dirt_top"));
 		fireRitualStone();
+		fireRoot();
 
 		for (Block portal : ModBlocks.getRunePortals())
 			runePortal(portal);
@@ -48,6 +50,28 @@ public class ModBlockStateProvider extends BlockStateProvider {
 		// Complex
 		stoneMaterial(ModBlocks.SPARKSTONE);
 		stoneMaterial(ModBlocks.CHARRED_STONE);
+	}
+
+	private void fireRoot() {
+		Block fireRoot = ModBlocks.FIRE_ROOT;
+		String name = fireRoot.getRegistryName().getPath();
+		ModelFile[] stages = new ModelFile[4];
+		for (int i = 0; i < stages.length; i++) {
+			stages[i] = models().withExistingParent(name + "_stage" + i, mcLoc("block/crop")).texture("crop",
+					modLoc("block/fire_root_stage" + i));
+		}
+
+		getVariantBuilder(fireRoot).forAllStates(state -> {
+			int age = state.get(FireRootBlock.AGE);
+			ModelFile model = stages[0];
+			if (age == 2 || age == 3)
+				model = stages[1];
+			else if (age == 4 || age == 5 || age == 6)
+				model = stages[2];
+			else if (age == 7)
+				model = stages[3];
+			return ConfiguredModel.builder().modelFile(model).build();
+		});
 	}
 
 	private BlockModelBuilder empty(String name) {

@@ -50,6 +50,7 @@ public class ClientModEventSubscriber {
 	public static void onClientSetup(FMLClientSetupEvent event) {
 		RenderTypeLookup.setRenderLayer(ModBlocks.BLOOD_FLOWER, RenderType.getCutout());
 		RenderTypeLookup.setRenderLayer(ModBlocks.BLOOD_CRYSTAL, RenderType.getCutout());
+		RenderTypeLookup.setRenderLayer(ModBlocks.FIRE_ROOT, RenderType.getCutout());
 
 		ClientRegistry.bindTileEntityRenderer(ModTileEntities.BLOOD_LEECH, BloodLeechTileEntityRenderer::new);
 

@@ -7,9 +7,10 @@ import mod.vemerion.runeworld.Main;
 import mod.vemerion.runeworld.item.BloodBatToothItem;
 import mod.vemerion.runeworld.item.BloodBucketItem;
 import mod.vemerion.runeworld.item.BloodCrystalliteItem;
-import mod.vemerion.runeworld.item.DislocatorItem;
 import mod.vemerion.runeworld.item.BloodFlowerItem;
 import mod.vemerion.runeworld.item.BloodPuddingItem;
+import mod.vemerion.runeworld.item.DislocatorItem;
+import mod.vemerion.runeworld.item.FireRootItem;
 import mod.vemerion.runeworld.item.GuideItem;
 import mod.vemerion.runeworld.item.ThrowableItem;
 import net.minecraft.block.Block;
@@ -51,6 +52,7 @@ public class ModItems {
 	public static final Item GRILLED_BLOOD_LEECH = null;
 	public static final Item FIRE_HEART = null;
 	public static final DislocatorItem FIRE_DISLOCATOR = null;
+	public static final Item FIRE_ROOT = null;
 
 	static final ItemGroup ITEM_GROUP = new RuneworldItemGroup();
 
@@ -78,9 +80,10 @@ public class ModItems {
 		Item fireDislocator = Init
 				.setup(new DislocatorItem(new Item.Properties().group(ItemGroup.SEARCH).maxDamage(16).isImmuneToFire(),
 						ModDimensions.FIRE), "fire_dislocator");
+		Item fireRoot = Init.setup(new FireRootItem(), "fire_root");
 
 		registry.registerAll(bloodBucket, bloodPudding, bloodFlower, mosquitoEggs, bloodBatTooth, guide,
-				bloodCrystallite, bloodDislocator, bloodPebble, grilledBloodLeech, fireHeart, fireDislocator);
+				bloodCrystallite, bloodDislocator, bloodPebble, grilledBloodLeech, fireHeart, fireDislocator, fireRoot);
 
 		registerBlockItems(registry);
 	}
