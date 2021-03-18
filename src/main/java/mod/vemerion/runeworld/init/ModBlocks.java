@@ -78,10 +78,10 @@ public class ModBlocks {
 		registry.register(withItem(Init.setup(new BloodCrystalBlock(), "blood_crystal")));
 		registry.register(withItem(Init.setup(new BloodLeechBlock(), "blood_leech")));
 		registry.register(withItem(Init.setup(new CharredDirtBlock(), "charred_dirt")));
-		registry.register(
-				withItem(Init.setup(new FireGroundBlock(AbstractBlock.Properties.create(Material.ORGANIC, MaterialColor.ADOBE)
+		registry.register(withItem(
+				Init.setup(new FireGroundBlock(AbstractBlock.Properties.create(Material.ORGANIC, MaterialColor.ADOBE)
 						.hardnessAndResistance(0.6F).sound(SoundType.PLANT)), "burnt_dirt")));
-		registry.register(withItem(Init.setup(new FireRitualStoneBlock(), "fire_ritual_stone")));
+		registry.register(withItem(Init.setup(new FireRitualStoneBlock(), "fire_ritual_stone"), noFire()));
 		registry.register(Init.setup(new FireRootBlock(), "fire_root"));
 
 		createRunePortal(ModDimensions.BLOOD, () -> Runesword.BLOOD_RUNE, 170, 0, 0);
@@ -103,6 +103,15 @@ public class ModBlocks {
 	private static Block withItem(Block block) {
 		ModItems.addBlockWithItem(block);
 		return block;
+	}
+
+	private static Block withItem(Block block, Item.Properties properties) {
+		ModItems.addBlockWithItem(block, properties);
+		return block;
+	}
+
+	private static Item.Properties noFire() {
+		return new Item.Properties().isImmuneToFire();
 	}
 
 	private static RunePortalBlock createRunePortal(RegistryKey<World> dimension, Supplier<Item> rune, int red,

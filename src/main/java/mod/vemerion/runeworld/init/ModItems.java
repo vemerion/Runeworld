@@ -3,6 +3,8 @@ package mod.vemerion.runeworld.init;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.apache.commons.lang3.tuple.Pair;
+
 import mod.vemerion.runeworld.Main;
 import mod.vemerion.runeworld.item.BloodBatToothItem;
 import mod.vemerion.runeworld.item.BloodBucketItem;
@@ -56,7 +58,7 @@ public class ModItems {
 
 	static final ItemGroup ITEM_GROUP = new RuneworldItemGroup();
 
-	private static List<Block> withItem = new ArrayList<>();
+	private static List<Pair<Block, Item.Properties>> withItem = new ArrayList<>();
 
 	@SubscribeEvent
 	public static void onRegisterItem(RegistryEvent.Register<Item> event) {
@@ -89,13 +91,19 @@ public class ModItems {
 	}
 
 	private static void registerBlockItems(IForgeRegistry<Item> registry) {
-		Item.Properties properties = new Item.Properties().group(ItemGroup.SEARCH);
-		for (Block b : withItem)
+		for (Pair<Block, Item.Properties> p : withItem) {
+			Block b = p.getLeft();
+			Item.Properties properties = p.getRight().group(ItemGroup.SEARCH);
 			registry.register(Init.setup(new BlockItem(b, properties), b.getRegistryName()));
+		}
 	}
 
 	public static void addBlockWithItem(Block block) {
-		withItem.add(block);
+		withItem.add(Pair.of(block, new Item.Properties()));
+	}
+
+	public static void addBlockWithItem(Block block, Item.Properties properties) {
+		withItem.add(Pair.of(block, properties));
 	}
 
 	private static class RuneworldItemGroup extends ItemGroup {
