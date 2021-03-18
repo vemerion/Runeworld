@@ -2,6 +2,7 @@ package mod.vemerion.runeworld.biome;
 
 import mod.vemerion.runeworld.helpers.Helper;
 import mod.vemerion.runeworld.init.ModBlocks;
+import mod.vemerion.runeworld.init.ModConfiguredFeatures;
 import mod.vemerion.runeworld.init.ModConfiguredStructures;
 import net.minecraft.world.biome.Biome;
 import net.minecraft.world.biome.BiomeAmbience;
@@ -24,7 +25,9 @@ public class FirePlainsBiome extends ModBiome {
 								ModBlocks.CHARRED_DIRT.getDefaultState(), ModBlocks.CHARRED_DIRT.getDefaultState())));
 
 		generation.withFeature(GenerationStage.Decoration.LAKES, Features.LAKE_LAVA);
-		
+		generation.withFeature(GenerationStage.Decoration.VEGETAL_DECORATION, ModConfiguredFeatures.FIRE_ROOT_PATCH);
+		generation.withFeature(GenerationStage.Decoration.VEGETAL_DECORATION, ModConfiguredFeatures.FIRE_PATCH);
+
 		generation.withStructure(ModConfiguredStructures.FIRE_RITUAL);
 
 		int waterColor = Helper.color(200, 100, 0, 100);

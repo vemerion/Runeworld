@@ -1,12 +1,18 @@
 package mod.vemerion.runeworld.init;
 
 import com.google.common.collect.ImmutableList;
+import com.google.common.collect.ImmutableSet;
 
 import mod.vemerion.runeworld.Main;
+import mod.vemerion.runeworld.block.FireRootBlock;
 import net.minecraft.block.Blocks;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.registry.Registry;
 import net.minecraft.util.registry.WorldGenRegistries;
+import net.minecraft.world.gen.blockplacer.SimpleBlockPlacer;
+import net.minecraft.world.gen.blockstateprovider.SimpleBlockStateProvider;
+import net.minecraft.world.gen.blockstateprovider.WeightedBlockStateProvider;
+import net.minecraft.world.gen.feature.BlockClusterFeatureConfig;
 import net.minecraft.world.gen.feature.BlockStateFeatureConfig;
 import net.minecraft.world.gen.feature.BlockWithContextConfig;
 import net.minecraft.world.gen.feature.ConfiguredFeature;
@@ -26,6 +32,8 @@ public class ModConfiguredFeatures {
 	public static ConfiguredFeature<?, ?> BLOOD_CRYSTAL;
 	public static ConfiguredFeature<?, ?> BLOOD_BAT_TREE;
 	public static ConfiguredFeature<?, ?> BLOOD_RUNE_PORTAL_FEATURE;
+	public static ConfiguredFeature<?, ?> FIRE_ROOT_PATCH;
+	public static ConfiguredFeature<?, ?> FIRE_PATCH;
 
 	public static void onRegisterConfiguredFeature() {
 
@@ -58,6 +66,24 @@ public class ModConfiguredFeatures {
 				.withPlacement(Placement.HEIGHTMAP_WORLD_SURFACE.configure(IPlacementConfig.NO_PLACEMENT_CONFIG)
 						.square().chance(350));
 
+		FIRE_ROOT_PATCH = Feature.RANDOM_PATCH
+				.withConfiguration((new BlockClusterFeatureConfig.Builder(
+						new WeightedBlockStateProvider()
+								.addWeightedBlockstate(ModBlocks.FIRE_ROOT.getDefaultState().with(FireRootBlock.AGE, 0),
+										50)
+								.addWeightedBlockstate(ModBlocks.FIRE_ROOT.getDefaultState().with(FireRootBlock.AGE, 2),
+										25)
+								.addWeightedBlockstate(ModBlocks.FIRE_ROOT.getDefaultState().with(FireRootBlock.AGE, 4),
+										25),
+						SimpleBlockPlacer.PLACER)).tries(1).whitelist(ImmutableSet.of(ModBlocks.BURNT_DIRT)).build())
+				.withPlacement(Features.Placements.PATCH_PLACEMENT);
+
+		FIRE_PATCH = Feature.RANDOM_PATCH
+				.withConfiguration((new BlockClusterFeatureConfig.Builder(
+						new SimpleBlockStateProvider(Blocks.FIRE.getDefaultState()), SimpleBlockPlacer.PLACER))
+								.tries(2).whitelist(ImmutableSet.of(ModBlocks.BURNT_DIRT)).build())
+				.withPlacement(Features.Placements.FIRE_PLACEMENT);
+
 		Registry<ConfiguredFeature<?, ?>> registry = WorldGenRegistries.CONFIGURED_FEATURE;
 
 		Registry.register(registry, new ResourceLocation(Main.MODID, "blood_pool"), BLOOD_POOL);
@@ -68,5 +94,7 @@ public class ModConfiguredFeatures {
 		Registry.register(registry, new ResourceLocation(Main.MODID, "blood_bat_tree"), BLOOD_BAT_TREE);
 		Registry.register(registry, new ResourceLocation(Main.MODID, "blood_rune_portal_feature"),
 				BLOOD_RUNE_PORTAL_FEATURE);
+		Registry.register(registry, new ResourceLocation(Main.MODID, "fire_root_patch"), FIRE_ROOT_PATCH);
+		Registry.register(registry, new ResourceLocation(Main.MODID, "fire_patch"), FIRE_PATCH);
 	}
 }
