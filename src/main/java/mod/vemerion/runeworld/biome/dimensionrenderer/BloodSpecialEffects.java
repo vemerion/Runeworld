@@ -2,25 +2,33 @@ package mod.vemerion.runeworld.biome.dimensionrenderer;
 
 import java.util.Random;
 
-import com.mojang.blaze3d.matrix.MatrixStack;
 import com.mojang.blaze3d.systems.RenderSystem;
+import com.mojang.blaze3d.vertex.BufferBuilder;
+import com.mojang.blaze3d.vertex.BufferUploader;
+import com.mojang.blaze3d.vertex.DefaultVertexFormat;
+import com.mojang.blaze3d.vertex.PoseStack;
+import com.mojang.blaze3d.vertex.Tesselator;
+import com.mojang.blaze3d.vertex.VertexFormat.Mode;
+import com.mojang.math.Matrix4f;
+import com.mojang.math.Vector3f;
 
 import mod.vemerion.runeworld.Main;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.renderer.BufferBuilder;
+import net.minecraft.client.multiplayer.ClientLevel;
+import net.minecraft.client.renderer.DimensionSpecialEffects.OverworldEffects;
+import net.minecraft.client.renderer.GameRenderer;
 import net.minecraft.client.renderer.LightTexture;
-import net.minecraft.client.renderer.Tessellator;
-import net.minecraft.client.renderer.WorldVertexBufferUploader;
-import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
-import net.minecraft.client.world.ClientWorld;
-import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.math.MathHelper;
-import net.minecraft.util.math.vector.Matrix4f;
-import net.minecraft.util.math.vector.Vector3f;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.util.Mth;
 import net.minecraftforge.client.ISkyRenderHandler;
 import net.minecraftforge.client.IWeatherRenderHandler;
 
-public class BloodRenderer {
+public class BloodSpecialEffects extends OverworldEffects {
+	
+	public BloodSpecialEffects() {
+		super();
+		this.setSkyRenderHandler(new SkyRenderer());
+	}
 
 	public static class SkyRenderer implements ISkyRenderHandler {
 
@@ -28,32 +36,33 @@ public class BloodRenderer {
 				"textures/environment/blood/sun.png");
 
 		@Override
-		public void render(int ticks, float partialTicks, MatrixStack matrixStack, ClientWorld world, Minecraft mc) {
-			BufferBuilder bufferbuilder = Tessellator.getInstance().getBuffer();
-			matrixStack.push();
+		public void render(int ticks, float partialTicks, PoseStack matrixStack, ClientLevel world, Minecraft mc) {
+			BufferBuilder bufferbuilder = Tesselator.getInstance().getBuilder();
+			matrixStack.pushPose();
 			RenderSystem.defaultBlendFunc();
 			RenderSystem.enableBlend();
-			RenderSystem.color4f(1, 1, 1, 0.8f);
+			RenderSystem.setShader(GameRenderer::getPositionTexShader);
+			RenderSystem.setShaderColor(1, 1, 1, 0.8f);
+			RenderSystem.setShaderTexture(0, SUN);
 			matrixStack.translate(0, -25, 0);
 
-			matrixStack.rotate(Vector3f.YP.rotationDegrees(75));
-			matrixStack.rotate(Vector3f.XP.rotationDegrees(-60));
-			matrixStack.rotate(Vector3f.YP.rotationDegrees(180));
-			Matrix4f matrix4f1 = matrixStack.getLast().getMatrix();
-			mc.textureManager.bindTexture(SUN);
-			bufferbuilder.begin(7, DefaultVertexFormats.POSITION_TEX);
+			matrixStack.mulPose(Vector3f.YP.rotationDegrees(75));
+			matrixStack.mulPose(Vector3f.XP.rotationDegrees(-60));
+			matrixStack.mulPose(Vector3f.YP.rotationDegrees(180));
+			Matrix4f matrix4f1 = matrixStack.last().pose();
+			bufferbuilder.begin(Mode.QUADS, DefaultVertexFormat.POSITION_TEX);
 			float sizeX = 20;
 			float sizeY = sizeX * 4;
-			bufferbuilder.pos(matrix4f1, -sizeX, 100.0F, -sizeY).tex(0.0F, 0.0F).endVertex();
-			bufferbuilder.pos(matrix4f1, sizeX, 100.0F, -sizeY).tex(1.0F, 0.0F).endVertex();
-			bufferbuilder.pos(matrix4f1, sizeX, 100.0F, sizeY).tex(1.0F, 1.0F).endVertex();
-			bufferbuilder.pos(matrix4f1, -sizeX, 100.0F, sizeY).tex(0.0F, 1.0F).endVertex();
-			bufferbuilder.finishDrawing();
-			WorldVertexBufferUploader.draw(bufferbuilder);
+			bufferbuilder.vertex(matrix4f1, -sizeX, 100.0F, -sizeY).uv(0.0F, 0.0F).endVertex();
+			bufferbuilder.vertex(matrix4f1, sizeX, 100.0F, -sizeY).uv(1.0F, 0.0F).endVertex();
+			bufferbuilder.vertex(matrix4f1, sizeX, 100.0F, sizeY).uv(1.0F, 1.0F).endVertex();
+			bufferbuilder.vertex(matrix4f1, -sizeX, 100.0F, sizeY).uv(0.0F, 1.0F).endVertex();
+			bufferbuilder.end();
+			BufferUploader.end(bufferbuilder);
 
 			renderParticles(ticks, partialTicks, bufferbuilder, matrix4f1);
 
-			matrixStack.pop();
+			matrixStack.popPose();
 		}
 
 		private static final int PARTICLE_PERIOD = 200;
@@ -67,19 +76,20 @@ public class BloodRenderer {
 						/ (float) PARTICLE_PERIOD;
 				float radius = 30 * progress;
 				float direction = (float) Math.toRadians(360) * random.nextFloat();
-				float x = MathHelper.cos(direction) * radius;
-				float y = MathHelper.sin(direction) * radius - 65;
+				float x = Mth.cos(direction) * radius;
+				float y = Mth.sin(direction) * radius - 65;
 				float z = random.nextFloat() * 10 * progress;
-				RenderSystem.color4f(0, 0, 0, (1 - progress) * 0.8f);
-				bufferbuilder.begin(7, DefaultVertexFormats.POSITION_TEX);
-				bufferbuilder.pos(matrix4f1, -size + x, 100.0F - z, -size + y).tex(0.0F, 0.0F).endVertex();
-				bufferbuilder.pos(matrix4f1, size + x, 100.0F - z, -size + y).tex(1.0F, 0.0F).endVertex();
-				bufferbuilder.pos(matrix4f1, size + x, 100.0F - z, size + y).tex(1.0F, 1.0F).endVertex();
-				bufferbuilder.pos(matrix4f1, -size + x, 100.0F - z, size + y).tex(0.0F, 1.0F).endVertex();
-				bufferbuilder.finishDrawing();
-				WorldVertexBufferUploader.draw(bufferbuilder);
+				RenderSystem.setShader(GameRenderer::getPositionShader);
+				RenderSystem.setShaderColor(0, 0, 0, (1 - progress) * 0.8f);
+				bufferbuilder.begin(Mode.QUADS, DefaultVertexFormat.POSITION);
+				bufferbuilder.vertex(matrix4f1, -size + x, 100.0F - z, -size + y).endVertex();
+				bufferbuilder.vertex(matrix4f1, size + x, 100.0F - z, -size + y).endVertex();
+				bufferbuilder.vertex(matrix4f1, size + x, 100.0F - z, size + y).endVertex();
+				bufferbuilder.vertex(matrix4f1, -size + x, 100.0F - z, size + y).endVertex();
+				bufferbuilder.end();
+				BufferUploader.end(bufferbuilder);
 			}
-			RenderSystem.color4f(1, 1, 1, 1);
+			RenderSystem.setShaderColor(1, 1, 1, 1);
 			RenderSystem.enableTexture();
 		}
 
@@ -88,7 +98,7 @@ public class BloodRenderer {
 	public static class WeatherRenderer implements IWeatherRenderHandler {
 
 		@Override
-		public void render(int ticks, float partialTicks, ClientWorld world, Minecraft mc, LightTexture lightmapIn,
+		public void render(int ticks, float partialTicks, ClientLevel world, Minecraft mc, LightTexture lightmapIn,
 				double xIn, double yIn, double zIn) {
 //			if (!world.isRaining())
 //				return;

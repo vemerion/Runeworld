@@ -1,31 +1,31 @@
 package mod.vemerion.runeworld.block;
 
 import mod.vemerion.runeworld.init.ModFluids;
-import net.minecraft.block.Block;
-import net.minecraft.block.BlockState;
-import net.minecraft.block.BushBlock;
-import net.minecraft.block.SoundType;
-import net.minecraft.block.material.Material;
-import net.minecraft.fluid.Fluids;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.shapes.ISelectionContext;
-import net.minecraft.util.math.shapes.VoxelShape;
-import net.minecraft.util.math.vector.Vector3d;
-import net.minecraft.world.IBlockReader;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.block.BushBlock;
+import net.minecraft.world.level.block.SoundType;
+import net.minecraft.world.level.material.Material;
+import net.minecraft.world.level.material.Fluids;
+import net.minecraft.core.BlockPos;
+import net.minecraft.world.phys.shapes.CollisionContext;
+import net.minecraft.world.phys.shapes.VoxelShape;
+import net.minecraft.world.phys.Vec3;
+import net.minecraft.world.level.BlockGetter;
 import net.minecraftforge.common.PlantType;
 
 public class BloodFlowerBlock extends BushBlock {
-	private static final VoxelShape SHAPE = Block.makeCuboidShape(5.0D, 0.0D, 5.0D, 11.0D, 15.0D, 11.0D);
+	private static final VoxelShape SHAPE = Block.box(5.0D, 0.0D, 5.0D, 11.0D, 15.0D, 11.0D);
 
 	public BloodFlowerBlock() {
-		super(Block.Properties.create(Material.PLANTS).doesNotBlockMovement().zeroHardnessAndResistance()
-				.sound(SoundType.PLANT));
+		super(Block.Properties.of(Material.PLANT).noCollission().instabreak()
+				.sound(SoundType.GRASS));
 	}
 
 	@Override
-	public VoxelShape getShape(BlockState state, IBlockReader worldIn, BlockPos pos, ISelectionContext context) {
-		Vector3d vec3d = state.getOffset(worldIn, pos);
-		return SHAPE.withOffset(vec3d.x, vec3d.y, vec3d.z);
+	public VoxelShape getShape(BlockState state, BlockGetter worldIn, BlockPos pos, CollisionContext context) {
+		Vec3 vec3d = state.getOffset(worldIn, pos);
+		return SHAPE.move(vec3d.x, vec3d.y, vec3d.z);
 	}
 
 	@Override
@@ -34,13 +34,13 @@ public class BloodFlowerBlock extends BushBlock {
 	}
 
 	@Override
-	protected boolean isValidGround(BlockState state, IBlockReader worldIn, BlockPos pos) {
-		return worldIn.getFluidState(pos).getFluid() == ModFluids.BLOOD
-				&& worldIn.getFluidState(pos.up()).getFluid() == Fluids.EMPTY;
+	protected boolean mayPlaceOn(BlockState state, BlockGetter worldIn, BlockPos pos) {
+		return worldIn.getFluidState(pos).getType() == ModFluids.BLOOD.get()
+				&& worldIn.getFluidState(pos.above()).getType() == Fluids.EMPTY;
 	}
 	
 	@Override
-	public PlantType getPlantType(IBlockReader world, BlockPos pos) {
+	public PlantType getPlantType(BlockGetter world, BlockPos pos) {
 		return PlantType.get("blood");
 	}
 }

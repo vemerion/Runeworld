@@ -3,233 +3,146 @@ package mod.vemerion.runeworld.model;
 import java.util.List;
 
 import com.google.common.collect.ImmutableList;
-import com.mojang.blaze3d.matrix.MatrixStack;
-import com.mojang.blaze3d.vertex.IVertexBuilder;
+import com.mojang.blaze3d.vertex.PoseStack;
+import com.mojang.blaze3d.vertex.VertexConsumer;
 
 import mod.vemerion.runeworld.entity.MosquitoEntity;
+import net.minecraft.client.model.EntityModel;
+import net.minecraft.client.model.geom.ModelPart;
+import net.minecraft.client.model.geom.PartPose;
+import net.minecraft.client.model.geom.builders.CubeListBuilder;
+import net.minecraft.client.model.geom.builders.LayerDefinition;
+import net.minecraft.client.model.geom.builders.MeshDefinition;
+import net.minecraft.client.model.geom.builders.PartDefinition;
 import net.minecraft.client.renderer.RenderType;
-import net.minecraft.client.renderer.entity.model.EntityModel;
-import net.minecraft.client.renderer.model.ModelRenderer;
-import net.minecraft.util.math.MathHelper;
+import net.minecraft.util.Mth;
 
 /**
  * Created using Tabula 8.0.0
  */
 public class MosquitoModel extends EntityModel<MosquitoEntity> {
-	public ModelRenderer bodyLower;
-	public ModelRenderer bodyUpper;
-	public ModelRenderer head;
-	public ModelRenderer tail1;
-	public ModelRenderer leg21;
-	public ModelRenderer leg31;
-	public ModelRenderer leg11;
-	public ModelRenderer leg41;
-	public ModelRenderer leg51;
-	public ModelRenderer leg61;
-	public ModelRenderer leftWing;
-	public ModelRenderer rightWing;
-	public ModelRenderer straw;
-	public ModelRenderer leftTooth;
-	public ModelRenderer rightTooth;
-	public ModelRenderer tail2;
-	public ModelRenderer tail3;
-	public ModelRenderer tail4;
-	public ModelRenderer tail5;
-	public ModelRenderer tail6;
-	public ModelRenderer leg22;
-	public ModelRenderer leg23;
-	public ModelRenderer leg32;
-	public ModelRenderer leg33;
-	public ModelRenderer leg12;
-	public ModelRenderer leg13;
-	public ModelRenderer leg42;
-	public ModelRenderer leg43;
-	public ModelRenderer leg52;
-	public ModelRenderer leg53;
-	public ModelRenderer leg62;
-	public ModelRenderer leg63;
+	public ModelPart bodyLower;
+	public ModelPart bodyUpper;
+	public ModelPart head;
+	public ModelPart tail1;
+	public ModelPart leg21;
+	public ModelPart leg31;
+	public ModelPart leg11;
+	public ModelPart leg41;
+	public ModelPart leg51;
+	public ModelPart leg61;
+	public ModelPart leftWing;
+	public ModelPart rightWing;
+	public ModelPart straw;
+	public ModelPart leftTooth;
+	public ModelPart rightTooth;
+	public ModelPart tail2;
+	public ModelPart tail3;
+	public ModelPart tail4;
+	public ModelPart tail5;
+	public ModelPart tail6;
+	public ModelPart leg22;
+	public ModelPart leg23;
+	public ModelPart leg32;
+	public ModelPart leg33;
+	public ModelPart leg12;
+	public ModelPart leg13;
+	public ModelPart leg42;
+	public ModelPart leg43;
+	public ModelPart leg52;
+	public ModelPart leg53;
+	public ModelPart leg62;
+	public ModelPart leg63;
 
-	public MosquitoModel() {
-		super(RenderType::getEntityTranslucent);
-		this.textureWidth = 64;
-		this.textureHeight = 64;
-		this.leg53 = new ModelRenderer(this, 53, 8);
-		this.leg53.setRotationPoint(0.0F, 8.0F, 0.0F);
-		this.leg53.addBox(-0.5F, 0.0F, -0.5F, 1.0F, 5.0F, 1.0F, 0.0F, 0.0F, 0.0F);
-		this.setRotateAngle(leg53, 0.0F, 0.0F, -0.7428121536172364F);
-		this.leftTooth = new ModelRenderer(this, 34, 0);
-		this.leftTooth.setRotationPoint(1.2F, 1.0F, -1.0F);
-		this.leftTooth.addBox(-0.5F, 0.0F, -0.5F, 1.0F, 2.0F, 1.0F, 0.0F, 0.0F, 0.0F);
-		this.setRotateAngle(leftTooth, -0.5082398928281348F, 0.0F, 0.0F);
-		this.leg12 = new ModelRenderer(this, 38, 17);
-		this.leg12.setRotationPoint(0.0F, 8.0F, 0.0F);
-		this.leg12.addBox(-0.5F, 0.0F, -0.5F, 1.0F, 8.0F, 1.0F, 0.0F, 0.0F, 0.0F);
-		this.setRotateAngle(leg12, 0.0F, 0.0F, 2.242398948393804F);
-		this.head = new ModelRenderer(this, 24, 0);
-		this.head.setRotationPoint(0.0F, 1.0F, -4.0F);
-		this.head.addBox(-1.5F, -1.0F, -1.0F, 3.0F, 2.0F, 2.0F, 0.0F, 0.0F, 0.0F);
-		this.setRotateAngle(head, 0.19547687289441354F, 0.0F, 0.0F);
-		this.leg22 = new ModelRenderer(this, 38, 17);
-		this.leg22.setRotationPoint(0.0F, 8.0F, 0.0F);
-		this.leg22.addBox(-0.5F, 0.0F, -0.5F, 1.0F, 8.0F, 1.0F, 0.0F, 0.0F, 0.0F);
-		this.setRotateAngle(leg22, 0.0F, 0.0F, 2.242398948393804F);
-		this.leg42 = new ModelRenderer(this, 38, 17);
-		this.leg42.setRotationPoint(0.0F, 8.0F, 0.0F);
-		this.leg42.addBox(-0.5F, 0.0F, -0.5F, 1.0F, 8.0F, 1.0F, 0.0F, 0.0F, 0.0F);
-		this.setRotateAngle(leg42, 0.0F, 0.0F, 2.242398948393804F);
-		this.leg23 = new ModelRenderer(this, 53, 8);
-		this.leg23.setRotationPoint(0.0F, 8.0F, 0.0F);
-		this.leg23.addBox(-0.5F, 0.0F, -0.5F, 1.0F, 5.0F, 1.0F, 0.0F, 0.0F, 0.0F);
-		this.setRotateAngle(leg23, 0.0F, 0.0F, -0.7428121536172364F);
-		this.leg61 = new ModelRenderer(this, 59, 3);
-		this.leg61.setRotationPoint(-2.0F, 1.0F, 1.0F);
-		this.leg61.addBox(-0.5F, 0.0F, -0.5F, 1.0F, 8.0F, 1.0F, 0.0F, 0.0F, 0.0F);
-		this.setRotateAngle(leg61, 2.3460715485728447F, 0.7819074915776542F, -1.13376586611655F);
-		this.rightTooth = new ModelRenderer(this, 34, 0);
-		this.rightTooth.setRotationPoint(-1.2F, 1.0F, -1.0F);
-		this.rightTooth.addBox(-0.5F, 0.0F, -0.5F, 1.0F, 2.0F, 1.0F, 0.0F, 0.0F, 0.0F);
-		this.setRotateAngle(rightTooth, -0.5082398928281348F, 0.0F, 0.0F);
-		this.leg21 = new ModelRenderer(this, 59, 3);
-		this.leg21.setRotationPoint(2.0F, 1.0F, 0.0F);
-		this.leg21.addBox(-0.5F, 0.0F, -0.5F, 1.0F, 8.0F, 1.0F, 0.0F, 0.0F, 0.0F);
-		this.setRotateAngle(leg21, 0.35185837453889574F, -0.19547687289441354F, -2.3458971115214444F);
-		this.tail3 = new ModelRenderer(this, 0, 10);
-		this.tail3.setRotationPoint(0.0F, 0.0F, 3.0F);
-		this.tail3.addBox(-3.5F, -3.5F, -1.5F, 7.0F, 7.0F, 3.0F, 0.0F, 0.0F, 0.0F);
-		this.leg52 = new ModelRenderer(this, 38, 17);
-		this.leg52.setRotationPoint(0.0F, 8.0F, 0.0F);
-		this.leg52.addBox(-0.5F, 0.0F, -0.5F, 1.0F, 8.0F, 1.0F, 0.0F, 0.0F, 0.0F);
-		this.setRotateAngle(leg52, 0.0F, 0.0F, 2.242398948393804F);
-		this.leg33 = new ModelRenderer(this, 53, 8);
-		this.leg33.setRotationPoint(0.0F, 8.0F, 0.0F);
-		this.leg33.addBox(-0.5F, 0.0F, -0.5F, 1.0F, 5.0F, 1.0F, 0.0F, 0.0F, 0.0F);
-		this.setRotateAngle(leg33, 0.0F, 0.0F, -0.7428121536172364F);
-		this.tail1 = new ModelRenderer(this, 38, 0);
-		this.tail1.setRotationPoint(0.0F, -3.0F, 1.0F);
-		this.tail1.addBox(-2.5F, -2.5F, -1.5F, 5.0F, 5.0F, 3.0F, 0.0F, 0.0F, 0.0F);
-		this.setRotateAngle(tail1, -0.19547687289441354F, 0.0F, 0.0F);
-		this.tail5 = new ModelRenderer(this, 51, 15);
-		this.tail5.setRotationPoint(0.0F, 0.0F, 2.5F);
-		this.tail5.addBox(-2.0F, -2.0F, -1.0F, 4.0F, 4.0F, 2.0F, 0.0F, 0.0F, 0.0F);
-		this.leg41 = new ModelRenderer(this, 59, 3);
-		this.leg41.setRotationPoint(-2.0F, 1.0F, -1.0F);
-		this.leg41.addBox(-0.5F, 0.0F, -0.5F, 1.0F, 8.0F, 1.0F, 0.0F, 0.0F, 0.0F);
-		this.setRotateAngle(leg41, 3.0634019776689576F, -0.3504621124688808F, -0.5473352640780661F);
-		this.leg43 = new ModelRenderer(this, 53, 8);
-		this.leg43.setRotationPoint(0.0F, 8.0F, 0.0F);
-		this.leg43.addBox(-0.5F, 0.0F, -0.5F, 1.0F, 5.0F, 1.0F, 0.0F, 0.0F, 0.0F);
-		this.setRotateAngle(leg43, 0.0F, 0.0F, -0.7330382858376184F);
-		this.tail2 = new ModelRenderer(this, 35, 8);
-		this.tail2.setRotationPoint(0.0F, 0.0F, 3.0F);
-		this.tail2.addBox(-3.0F, -3.0F, -1.5F, 6.0F, 6.0F, 3.0F, 0.0F, 0.0F, 0.0F);
-		this.tail4 = new ModelRenderer(this, 20, 14);
-		this.tail4.setRotationPoint(0.0F, 0.0F, 3.0F);
-		this.tail4.addBox(-3.0F, -3.0F, -1.5F, 6.0F, 6.0F, 3.0F, 0.0F, 0.0F, 0.0F);
-		this.leftWing = new ModelRenderer(this, -16, 20);
-		this.leftWing.setRotationPoint(2.0F, -1.0F, 4.0F);
-		this.leftWing.addBox(-2.5F, 0.0F, 0.0F, 5.0F, 0.0F, 16.0F, 0.0F, 0.0F, 0.0F);
-		this.setRotateAngle(leftWing, -0.3909537457888271F, 0.2F, 0.0F);
-		this.leg13 = new ModelRenderer(this, 53, 8);
-		this.leg13.setRotationPoint(0.0F, 8.0F, 0.0F);
-		this.leg13.addBox(-0.5F, 0.0F, -0.5F, 1.0F, 5.0F, 1.0F, 0.0F, 0.0F, 0.0F);
-		this.setRotateAngle(leg13, 0.0F, 0.0F, -0.7330382858376184F);
-		this.leg51 = new ModelRenderer(this, 59, 3);
-		this.leg51.setRotationPoint(-2.0F, 1.0F, 0.0F);
-		this.leg51.addBox(-0.5F, 0.0F, -0.5F, 1.0F, 8.0F, 1.0F, 0.0F, 0.0F, 0.0F);
-		this.setRotateAngle(leg51, 2.907020359511178F, 0.12077678556958815F, -0.8210028961170991F);
-		this.tail6 = new ModelRenderer(this, 56, 0);
-		this.tail6.setRotationPoint(0.0F, 0.0F, 1.5F);
-		this.tail6.addBox(-1.0F, -1.0F, -0.5F, 2.0F, 2.0F, 1.0F, 0.0F, 0.0F, 0.0F);
-		this.rightWing = new ModelRenderer(this, -6, 20);
-		this.rightWing.setRotationPoint(-2.0F, -1.0F, 4.0F);
-		this.rightWing.addBox(-2.5F, 0.0F, 0.0F, 5.0F, 0.0F, 16.0F, 0.0F, 0.0F, 0.0F);
-		this.setRotateAngle(rightWing, -0.3909537457888271F, -0.2F, 0.0F);
-		this.bodyUpper = new ModelRenderer(this, 7, 0);
-		this.bodyUpper.setRotationPoint(0.0F, -3.0F, -2.0F);
-		this.bodyUpper.addBox(-2.5F, -1.5F, -2.5F, 5.0F, 3.0F, 7.0F, 0.0F, 0.0F, 0.0F);
-		this.setRotateAngle(bodyUpper, 0.5473352640780661F, 0.0F, 0.0F);
-		this.leg31 = new ModelRenderer(this, 59, 3);
-		this.leg31.setRotationPoint(2.0F, 1.0F, 1.0F);
-		this.leg31.addBox(-0.5F, 0.0F, -0.5F, 1.0F, 8.0F, 1.0F, 0.0F, 0.0F, 0.0F);
-		this.setRotateAngle(leg31, 0.8991936386169619F, 0.6255260065779288F, -1.9940386704035213F);
-		this.leg62 = new ModelRenderer(this, 38, 17);
-		this.leg62.setRotationPoint(0.0F, 8.0F, 0.0F);
-		this.leg62.addBox(-0.5F, 0.0F, -0.5F, 1.0F, 8.0F, 1.0F, 0.0F, 0.0F, 0.0F);
-		this.setRotateAngle(leg62, 0.0F, 0.0F, 2.242398948393804F);
-		this.straw = new ModelRenderer(this, 34, 0);
-		this.straw.setRotationPoint(0.0F, 1.0F, -1.0F);
-		this.straw.addBox(-0.5F, 0.0F, -0.5F, 1.0F, 10.0F, 1.0F, 0.0F, 0.0F, 0.0F);
-		this.bodyLower = new ModelRenderer(this, 0, 0);
-		this.bodyLower.setRotationPoint(0.0F, 0.0F, -2.0F);
-		this.bodyLower.addBox(-2.0F, -2.0F, -1.5F, 4.0F, 4.0F, 3.0F, 0.0F, 0.0F, 0.0F);
-		this.leg32 = new ModelRenderer(this, 38, 17);
-		this.leg32.setRotationPoint(0.0F, 8.0F, 0.0F);
-		this.leg32.addBox(-0.5F, 0.0F, -0.5F, 1.0F, 8.0F, 1.0F, 0.0F, 0.0F, 0.0F);
-		this.setRotateAngle(leg32, 0.0F, 0.0F, 2.242398948393804F);
-		this.leg63 = new ModelRenderer(this, 53, 8);
-		this.leg63.setRotationPoint(0.0F, 8.0F, 0.0F);
-		this.leg63.addBox(-0.5F, 0.0F, -0.5F, 1.0F, 5.0F, 1.0F, 0.0F, 0.0F, 0.0F);
-		this.setRotateAngle(leg63, 0.0F, 0.0F, -0.7428121536172364F);
-		this.leg11 = new ModelRenderer(this, 59, 3);
-		this.leg11.setRotationPoint(2.0F, 1.0F, -1.0F);
-		this.leg11.addBox(-0.5F, 0.0F, -0.5F, 1.0F, 8.0F, 1.0F, 0.0F, 0.0F, 0.0F);
-		this.setRotateAngle(leg11, -0.3127630032889644F, -0.6646214111173737F, -2.3068016404029725F);
-		this.leg52.addChild(this.leg53);
-		this.head.addChild(this.leftTooth);
-		this.leg11.addChild(this.leg12);
-		this.bodyLower.addChild(this.head);
-		this.leg21.addChild(this.leg22);
-		this.leg41.addChild(this.leg42);
-		this.leg22.addChild(this.leg23);
-		this.bodyLower.addChild(this.leg61);
-		this.head.addChild(this.rightTooth);
-		this.bodyLower.addChild(this.leg21);
-		this.leg51.addChild(this.leg52);
-		this.leg32.addChild(this.leg33);
-		this.bodyLower.addChild(this.leg41);
-		this.leg42.addChild(this.leg43);
-		this.bodyUpper.addChild(this.leftWing);
-		this.leg12.addChild(this.leg13);
-		this.bodyLower.addChild(this.leg51);
-		this.bodyUpper.addChild(this.rightWing);
-		this.bodyLower.addChild(this.bodyUpper);
-		this.bodyLower.addChild(this.leg31);
-		this.leg61.addChild(this.leg62);
-		this.head.addChild(this.straw);
-		this.leg31.addChild(this.leg32);
-		this.leg62.addChild(this.leg63);
-		this.bodyLower.addChild(this.leg11);
-		this.tail1.addChild(tail2);
-		this.tail2.addChild(tail3);
-		this.tail3.addChild(tail4);
-		this.tail4.addChild(tail5);
-		this.tail5.addChild(tail6);
+	public MosquitoModel(ModelPart parts) {
+		super(RenderType::entityTranslucent);
+		this.bodyLower = parts.getChild("bodyLower");
+		this.bodyUpper = bodyLower.getChild("bodyUpper");
+		this.head = bodyLower.getChild("head");
+		this.tail1 = parts.getChild("tail1");
+		this.leg21 = bodyLower.getChild("leg21");
+		this.leg31 = bodyLower.getChild("leg31");
+		this.leg11 = bodyLower.getChild("leg11");
+		this.leg41 = bodyLower.getChild("leg41");
+		this.leg51 = bodyLower.getChild("leg51");
+		this.leg61 = bodyLower.getChild("leg61");
+		this.leftWing = bodyUpper.getChild("leftWing");
+		this.rightWing = bodyUpper.getChild("rightWing");
+		this.straw = head.getChild("straw");
+		this.leftTooth = head.getChild("leftTooth");
+		this.rightTooth = head.getChild("rightTooth");
+		this.tail2 = parts.getChild("tail2");
+		this.tail3 = parts.getChild("tail3");
+		this.tail4 = parts.getChild("tail4");
+		this.tail5 = parts.getChild("tail5");
+		this.tail6 = parts.getChild("tail6");
+		this.leg22 = leg21.getChild("leg22");
+		this.leg23 = leg22.getChild("leg23");
+		this.leg32 = leg31.getChild("leg32");
+		this.leg33 = leg32.getChild("leg33");
+		this.leg12 = leg11.getChild("leg12");
+		this.leg13 = leg12.getChild("leg13");
+		this.leg42 = leg41.getChild("leg42");
+		this.leg43 = leg42.getChild("leg43");
+		this.leg52 = leg51.getChild("leg52");
+		this.leg53 = leg52.getChild("leg53");
+		this.leg62 = leg61.getChild("leg62");
+		this.leg63 = leg62.getChild("leg63");
 	}
-
-	/**
-	 * This is a helper function from Tabula to set the rotation of model parts
-	 */
-	public void setRotateAngle(ModelRenderer modelRenderer, float x, float y, float z) {
-		modelRenderer.rotateAngleX = x;
-		modelRenderer.rotateAngleY = y;
-		modelRenderer.rotateAngleZ = z;
+	
+	public static LayerDefinition createLayer() {
+	    MeshDefinition mesh = new MeshDefinition();
+	    PartDefinition parts = mesh.getRoot();
+	    PartDefinition bodyLower = parts.addOrReplaceChild("bodyLower", CubeListBuilder.create().texOffs(0, 0).addBox(-2.0F, -2.0F, -1.5F, 4.0F, 4.0F, 3.0F), PartPose.offsetAndRotation(0.0F, 0.0F, -2.0F, 0, 0, 0));
+	    PartDefinition bodyUpper = bodyLower.addOrReplaceChild("bodyUpper", CubeListBuilder.create().texOffs(7, 0).addBox(-2.5F, -1.5F, -2.5F, 5.0F, 3.0F, 7.0F), PartPose.offsetAndRotation(0.0F, -3.0F, -2.0F, 0.5473352640780661F, 0.0F, 0.0F));
+	    PartDefinition head = bodyLower.addOrReplaceChild("head", CubeListBuilder.create().texOffs(24, 0).addBox(-1.5F, -1.0F, -1.0F, 3.0F, 2.0F, 2.0F), PartPose.offsetAndRotation(0.0F, 1.0F, -4.0F, 0.19547687289441354F, 0.0F, 0.0F));
+	    parts.addOrReplaceChild("tail1", CubeListBuilder.create().texOffs(38, 0).addBox(-2.5F, -2.5F, -1.5F, 5.0F, 5.0F, 3.0F), PartPose.offsetAndRotation(0.0F, -3.0F, 1.0F, -0.19547687289441354F, 0.0F, 0.0F));
+	    PartDefinition leg21 = bodyLower.addOrReplaceChild("leg21", CubeListBuilder.create().texOffs(59, 3).addBox(-0.5F, 0.0F, -0.5F, 1.0F, 8.0F, 1.0F), PartPose.offsetAndRotation(2.0F, 1.0F, 0.0F, 0.35185837453889574F, -0.19547687289441354F, -2.3458971115214444F));
+	    PartDefinition leg31 = bodyLower.addOrReplaceChild("leg31", CubeListBuilder.create().texOffs(59, 3).addBox(-0.5F, 0.0F, -0.5F, 1.0F, 8.0F, 1.0F), PartPose.offsetAndRotation(2.0F, 1.0F, 1.0F, 0.8991936386169619F, 0.6255260065779288F, -1.9940386704035213F));
+	    PartDefinition leg11 = bodyLower.addOrReplaceChild("leg11", CubeListBuilder.create().texOffs(59, 3).addBox(-0.5F, 0.0F, -0.5F, 1.0F, 8.0F, 1.0F), PartPose.offsetAndRotation(2.0F, 1.0F, -1.0F, -0.3127630032889644F, -0.6646214111173737F, -2.3068016404029725F));
+	    PartDefinition leg41 = bodyLower.addOrReplaceChild("leg41", CubeListBuilder.create().texOffs(59, 3).addBox(-0.5F, 0.0F, -0.5F, 1.0F, 8.0F, 1.0F), PartPose.offsetAndRotation(-2.0F, 1.0F, -1.0F, 3.0634019776689576F, -0.3504621124688808F, -0.5473352640780661F));
+	    PartDefinition leg51 = bodyLower.addOrReplaceChild("leg51", CubeListBuilder.create().texOffs(59, 3).addBox(-0.5F, 0.0F, -0.5F, 1.0F, 8.0F, 1.0F), PartPose.offsetAndRotation(-2.0F, 1.0F, 0.0F, 2.907020359511178F, 0.12077678556958815F, -0.8210028961170991F));
+	    PartDefinition leg61 = bodyLower.addOrReplaceChild("leg61", CubeListBuilder.create().texOffs(59, 3).addBox(-0.5F, 0.0F, -0.5F, 1.0F, 8.0F, 1.0F), PartPose.offsetAndRotation(-2.0F, 1.0F, 1.0F, 2.3460715485728447F, 0.7819074915776542F, -1.13376586611655F));
+	    bodyUpper.addOrReplaceChild("leftWing", CubeListBuilder.create().texOffs(-16, 20).addBox(-2.5F, 0.0F, 0.0F, 5.0F, 0.0F, 16.0F), PartPose.offsetAndRotation(2.0F, -1.0F, 4.0F, -0.3909537457888271F, 0.2F, 0.0F));
+	    bodyUpper.addOrReplaceChild("rightWing", CubeListBuilder.create().texOffs(-6, 20).addBox(-2.5F, 0.0F, 0.0F, 5.0F, 0.0F, 16.0F), PartPose.offsetAndRotation(-2.0F, -1.0F, 4.0F, -0.3909537457888271F, -0.2F, 0.0F));
+	    head.addOrReplaceChild("straw", CubeListBuilder.create().texOffs(34, 0).addBox(-0.5F, 0.0F, -0.5F, 1.0F, 10.0F, 1.0F), PartPose.offsetAndRotation(0.0F, 1.0F, -1.0F, 0, 0, 0));
+	    head.addOrReplaceChild("leftTooth", CubeListBuilder.create().texOffs(34, 0).addBox(-0.5F, 0.0F, -0.5F, 1.0F, 2.0F, 1.0F), PartPose.offsetAndRotation(1.2F, 1.0F, -1.0F, -0.5082398928281348F, 0.0F, 0.0F));
+	    head.addOrReplaceChild("rightTooth", CubeListBuilder.create().texOffs(34, 0).addBox(-0.5F, 0.0F, -0.5F, 1.0F, 2.0F, 1.0F), PartPose.offsetAndRotation(-1.2F, 1.0F, -1.0F, -0.5082398928281348F, 0.0F, 0.0F));
+	    parts.addOrReplaceChild("tail2", CubeListBuilder.create().texOffs(35, 8).addBox(-3.0F, -3.0F, -1.5F, 6.0F, 6.0F, 3.0F), PartPose.offsetAndRotation(0.0F, 0.0F, 3.0F, 0, 0, 0));
+	    parts.addOrReplaceChild("tail3", CubeListBuilder.create().texOffs(0, 10).addBox(-3.5F, -3.5F, -1.5F, 7.0F, 7.0F, 3.0F), PartPose.offsetAndRotation(0.0F, 0.0F, 3.0F, 0, 0, 0));
+	    parts.addOrReplaceChild("tail4", CubeListBuilder.create().texOffs(20, 14).addBox(-3.0F, -3.0F, -1.5F, 6.0F, 6.0F, 3.0F), PartPose.offsetAndRotation(0.0F, 0.0F, 3.0F, 0, 0, 0));
+	    parts.addOrReplaceChild("tail5", CubeListBuilder.create().texOffs(51, 15).addBox(-2.0F, -2.0F, -1.0F, 4.0F, 4.0F, 2.0F), PartPose.offsetAndRotation(0.0F, 0.0F, 2.5F, 0, 0, 0));
+	    parts.addOrReplaceChild("tail6", CubeListBuilder.create().texOffs(56, 0).addBox(-1.0F, -1.0F, -0.5F, 2.0F, 2.0F, 1.0F), PartPose.offsetAndRotation(0.0F, 0.0F, 1.5F, 0, 0, 0));
+	    PartDefinition leg22 = leg21.addOrReplaceChild("leg22", CubeListBuilder.create().texOffs(38, 17).addBox(-0.5F, 0.0F, -0.5F, 1.0F, 8.0F, 1.0F), PartPose.offsetAndRotation(0.0F, 8.0F, 0.0F, 0.0F, 0.0F, 2.242398948393804F));
+	    leg22.addOrReplaceChild("leg23", CubeListBuilder.create().texOffs(53, 8).addBox(-0.5F, 0.0F, -0.5F, 1.0F, 5.0F, 1.0F), PartPose.offsetAndRotation(0.0F, 8.0F, 0.0F, 0.0F, 0.0F, -0.7428121536172364F));
+	    PartDefinition leg32 = leg31.addOrReplaceChild("leg32", CubeListBuilder.create().texOffs(38, 17).addBox(-0.5F, 0.0F, -0.5F, 1.0F, 8.0F, 1.0F), PartPose.offsetAndRotation(0.0F, 8.0F, 0.0F, 0.0F, 0.0F, 2.242398948393804F));
+	    leg32.addOrReplaceChild("leg33", CubeListBuilder.create().texOffs(53, 8).addBox(-0.5F, 0.0F, -0.5F, 1.0F, 5.0F, 1.0F), PartPose.offsetAndRotation(0.0F, 8.0F, 0.0F, 0.0F, 0.0F, -0.7428121536172364F));
+	    PartDefinition leg12 = leg11.addOrReplaceChild("leg12", CubeListBuilder.create().texOffs(38, 17).addBox(-0.5F, 0.0F, -0.5F, 1.0F, 8.0F, 1.0F), PartPose.offsetAndRotation(0.0F, 8.0F, 0.0F, 0.0F, 0.0F, 2.242398948393804F));
+	    leg12.addOrReplaceChild("leg13", CubeListBuilder.create().texOffs(53, 8).addBox(-0.5F, 0.0F, -0.5F, 1.0F, 5.0F, 1.0F), PartPose.offsetAndRotation(0.0F, 8.0F, 0.0F, 0.0F, 0.0F, -0.7330382858376184F));
+	    PartDefinition leg42 = leg41.addOrReplaceChild("leg42", CubeListBuilder.create().texOffs(38, 17).addBox(-0.5F, 0.0F, -0.5F, 1.0F, 8.0F, 1.0F), PartPose.offsetAndRotation(0.0F, 8.0F, 0.0F, 0.0F, 0.0F, 2.242398948393804F));
+	    leg42.addOrReplaceChild("leg43", CubeListBuilder.create().texOffs(53, 8).addBox(-0.5F, 0.0F, -0.5F, 1.0F, 5.0F, 1.0F), PartPose.offsetAndRotation(0.0F, 8.0F, 0.0F, 0.0F, 0.0F, -0.7330382858376184F));
+	    PartDefinition leg52 = leg51.addOrReplaceChild("leg52", CubeListBuilder.create().texOffs(38, 17).addBox(-0.5F, 0.0F, -0.5F, 1.0F, 8.0F, 1.0F), PartPose.offsetAndRotation(0.0F, 8.0F, 0.0F, 0.0F, 0.0F, 2.242398948393804F));
+	    leg52.addOrReplaceChild("leg53", CubeListBuilder.create().texOffs(53, 8).addBox(-0.5F, 0.0F, -0.5F, 1.0F, 5.0F, 1.0F), PartPose.offsetAndRotation(0.0F, 8.0F, 0.0F, 0.0F, 0.0F, -0.7428121536172364F));
+	    PartDefinition leg62 = leg61.addOrReplaceChild("leg62", CubeListBuilder.create().texOffs(38, 17).addBox(-0.5F, 0.0F, -0.5F, 1.0F, 8.0F, 1.0F), PartPose.offsetAndRotation(0.0F, 8.0F, 0.0F, 0.0F, 0.0F, 2.242398948393804F));
+	    leg62.addOrReplaceChild("leg63", CubeListBuilder.create().texOffs(53, 8).addBox(-0.5F, 0.0F, -0.5F, 1.0F, 5.0F, 1.0F), PartPose.offsetAndRotation(0.0F, 8.0F, 0.0F, 0.0F, 0.0F, -0.7428121536172364F));
+	    return LayerDefinition.create(mesh, 64, 64);
 	}
 
 	@Override
-	public void setRotationAngles(MosquitoEntity entityIn, float limbSwing, float limbSwingAmount, float ageInTicks,
+	public void setupAnim(MosquitoEntity entityIn, float limbSwing, float limbSwingAmount, float ageInTicks,
 			float netHeadYaw, float headPitch) {
 		// Tail
-		tail1.rotateAngleX = (float) (MathHelper.cos((ageInTicks / 60) * (float) Math.PI * 2) * Math.toRadians(4)
+		tail1.xRot = (float) (Mth.cos((ageInTicks / 60) * (float) Math.PI * 2) * Math.toRadians(4)
 				+ Math.toRadians(-20));
 
 		// Teeth
-		leftTooth.rotateAngleZ = (float) (MathHelper.cos((ageInTicks / 35) * (float) Math.PI * 2) * Math.toRadians(10));
-		rightTooth.rotateAngleZ = (float) -(MathHelper.cos((ageInTicks / 35) * (float) Math.PI * 2)
+		leftTooth.zRot = (float) (Mth.cos((ageInTicks / 35) * (float) Math.PI * 2) * Math.toRadians(10));
+		rightTooth.zRot = (float) -(Mth.cos((ageInTicks / 35) * (float) Math.PI * 2)
 				* Math.toRadians(10));
 
 		// Wings
-		leftWing.rotateAngleX = (float) (MathHelper.cos((ageInTicks / 5) * (float) Math.PI * 2) * Math.toRadians(15));
-		rightWing.rotateAngleX = (float) (MathHelper.cos(((ageInTicks + 0.2f) / 5) * (float) Math.PI * 2)
+		leftWing.xRot = (float) (Mth.cos((ageInTicks / 5) * (float) Math.PI * 2) * Math.toRadians(15));
+		rightWing.xRot = (float) (Mth.cos(((ageInTicks + 0.2f) / 5) * (float) Math.PI * 2)
 				* Math.toRadians(15));
 
 		// Legs
@@ -237,45 +150,45 @@ public class MosquitoModel extends EntityModel<MosquitoEntity> {
 		
 		// Hit
 		limbSwingAmount = (float) Math.max(0, limbSwingAmount - 0.4);
-		bodyLower.rotateAngleZ = MathHelper.cos(limbSwing * 0.6662f) * 2f * limbSwingAmount * 0.2f;
-		tail1.rotateAngleZ = MathHelper.cos(limbSwing * 0.6662f) * 2f * limbSwingAmount * 0.2f;
+		bodyLower.zRot = Mth.cos(limbSwing * 0.6662f) * 2f * limbSwingAmount * 0.2f;
+		tail1.zRot = Mth.cos(limbSwing * 0.6662f) * 2f * limbSwingAmount * 0.2f;
 		
 		// Look
-		head.rotateAngleY = (float) Math.toRadians(netHeadYaw) * 0.25f;
-		head.rotateAngleZ = (float) Math.toRadians(netHeadYaw) * 0.25f;
+		head.yRot = (float) Math.toRadians(netHeadYaw) * 0.25f;
+		head.zRot = (float) Math.toRadians(netHeadYaw) * 0.25f;
 	}
 
 	private void animateLegs(MosquitoEntity entityIn, float limbSwing, float limbSwingAmount, float ageInTicks,
 			float netHeadYaw, float headPitch) {
 
-		List<ModelRenderer> rightLegsInner = ImmutableList.of(leg41, leg51, leg61);
-		List<ModelRenderer> rightLegsMiddle = ImmutableList.of(leg42, leg52, leg62);
-		List<ModelRenderer> rightLegsOuter = ImmutableList.of(leg43, leg53, leg63);
-		List<ModelRenderer> leftLegsInner = ImmutableList.of(leg11, leg21, leg31);
-		List<ModelRenderer> leftLegsMiddle = ImmutableList.of(leg12, leg22, leg32);
-		List<ModelRenderer> leftLegsOuter = ImmutableList.of(leg13, leg23, leg33);
+		List<ModelPart> rightLegsInner = ImmutableList.of(leg41, leg51, leg61);
+		List<ModelPart> rightLegsMiddle = ImmutableList.of(leg42, leg52, leg62);
+		List<ModelPart> rightLegsOuter = ImmutableList.of(leg43, leg53, leg63);
+		List<ModelPart> leftLegsInner = ImmutableList.of(leg11, leg21, leg31);
+		List<ModelPart> leftLegsMiddle = ImmutableList.of(leg12, leg22, leg32);
+		List<ModelPart> leftLegsOuter = ImmutableList.of(leg13, leg23, leg33);
 
 		for (int i = 0; i < rightLegsInner.size(); i++) {
-			rightLegsInner.get(i).rotateAngleZ = (float) Math.toRadians(-70 + (3 - i) * 10) + (float) (MathHelper
+			rightLegsInner.get(i).zRot = (float) Math.toRadians(-70 + (3 - i) * 10) + (float) (Mth
 					.cos(((ageInTicks + 0.2f) / 30 + (float) Math.toRadians(10) * i) * (float) Math.PI * 2)
 					* Math.toRadians(5));
-			leftLegsInner.get(i).rotateAngleZ = (float) Math.toRadians(-110 - (3 - i) * 10) - (float) (MathHelper
+			leftLegsInner.get(i).zRot = (float) Math.toRadians(-110 - (3 - i) * 10) - (float) (Mth
 					.cos(((ageInTicks + 0.2f) / 30 + (float) Math.toRadians(10) * i) * (float) Math.PI * 2)
 					* Math.toRadians(5));
 		}
 
-		leftLegsMiddle.forEach(l -> l.rotateAngleZ = (float) Math.toRadians(120)
-				+ (float) (MathHelper.cos(((ageInTicks + 0.2f) / 30) * (float) Math.PI * 2) * Math.toRadians(5)));
-		leftLegsOuter.forEach(l -> l.rotateAngleZ = (float) Math.toRadians(50)
-				+ (float) (MathHelper.cos(((ageInTicks + 0.2f) / 30) * (float) Math.PI * 2) * Math.toRadians(5)));
-		rightLegsMiddle.forEach(l -> l.rotateAngleZ = (float) Math.toRadians(120)
-				+ (float) (MathHelper.cos(((ageInTicks + 0.2f) / 30) * (float) Math.PI * 2) * Math.toRadians(5)));
-		rightLegsOuter.forEach(l -> l.rotateAngleZ = (float) Math.toRadians(50)
-				+ (float) (MathHelper.cos(((ageInTicks + 0.2f) / 30) * (float) Math.PI * 2) * Math.toRadians(5)));
+		leftLegsMiddle.forEach(l -> l.zRot = (float) Math.toRadians(120)
+				+ (float) (Mth.cos(((ageInTicks + 0.2f) / 30) * (float) Math.PI * 2) * Math.toRadians(5)));
+		leftLegsOuter.forEach(l -> l.zRot = (float) Math.toRadians(50)
+				+ (float) (Mth.cos(((ageInTicks + 0.2f) / 30) * (float) Math.PI * 2) * Math.toRadians(5)));
+		rightLegsMiddle.forEach(l -> l.zRot = (float) Math.toRadians(120)
+				+ (float) (Mth.cos(((ageInTicks + 0.2f) / 30) * (float) Math.PI * 2) * Math.toRadians(5)));
+		rightLegsOuter.forEach(l -> l.zRot = (float) Math.toRadians(50)
+				+ (float) (Mth.cos(((ageInTicks + 0.2f) / 30) * (float) Math.PI * 2) * Math.toRadians(5)));
 	}
 
 	@Override
-	public void render(MatrixStack matrix, IVertexBuilder bufferIn, int packedLightIn, int packedOverlayIn, float red,
+	public void renderToBuffer(PoseStack matrix, VertexConsumer bufferIn, int packedLightIn, int packedOverlayIn, float red,
 			float green, float blue, float alpha) {
 		ImmutableList.of(bodyLower, tail1).forEach(r -> r.render(matrix, bufferIn, packedLightIn, packedOverlayIn));
 

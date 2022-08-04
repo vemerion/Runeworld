@@ -4,9 +4,9 @@ import com.google.common.collect.ImmutableList;
 
 import mod.vemerion.runeworld.Main;
 import mod.vemerion.runeworld.init.ModBlocks;
-import net.minecraft.data.BlockTagsProvider;
+import net.minecraft.data.tags.BlockTagsProvider;
 import net.minecraft.data.DataGenerator;
-import net.minecraft.data.ItemTagsProvider;
+import net.minecraft.data.tags.ItemTagsProvider;
 import net.minecraft.tags.ItemTags;
 import net.minecraftforge.common.data.ExistingFileHelper;
 
@@ -18,14 +18,14 @@ public class ModItemTagsProvider extends ItemTagsProvider {
 	}
 
 	@Override
-	protected void registerTags() {
+	protected void addTags() {
 		stoneCraftingTools();
 	}
 
 	private void stoneCraftingTools() {
 		ImmutableList.of(ModBlocks.BLOOD_ROCK.asItem(), ModBlocks.CHARRED_STONE.BLOCK.asItem()).forEach(stone -> {
-			getOrCreateBuilder(ItemTags.STONE_CRAFTING_MATERIALS).add(stone);
-			getOrCreateBuilder(ItemTags.STONE_TOOL_MATERIALS).add(stone);
+			tag(ItemTags.STONE_CRAFTING_MATERIALS).add(stone);
+			tag(ItemTags.STONE_TOOL_MATERIALS).add(stone);
 		});
 	}
 

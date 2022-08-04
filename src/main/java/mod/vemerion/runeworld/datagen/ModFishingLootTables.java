@@ -5,44 +5,44 @@ import java.util.function.BiConsumer;
 import mod.vemerion.runeworld.init.ModItems;
 import mod.vemerion.runeworld.init.ModLootTables;
 import mod.vemerion.runeworld.init.Runesword;
-import net.minecraft.advancements.criterion.EntityPredicate;
-import net.minecraft.data.loot.FishingLootTables;
-import net.minecraft.loot.ConstantRange;
-import net.minecraft.loot.FishingPredicate;
-import net.minecraft.loot.ItemLootEntry;
-import net.minecraft.loot.LootContext;
-import net.minecraft.loot.LootPool;
-import net.minecraft.loot.LootTable;
-import net.minecraft.loot.LootTable.Builder;
-import net.minecraft.loot.TableLootEntry;
-import net.minecraft.loot.conditions.EntityHasProperty;
-import net.minecraft.util.ResourceLocation;
+import net.minecraft.advancements.critereon.EntityPredicate;
+import net.minecraft.advancements.critereon.FishingHookPredicate;
+import net.minecraft.data.loot.FishingLoot;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.level.storage.loot.LootContext;
+import net.minecraft.world.level.storage.loot.LootPool;
+import net.minecraft.world.level.storage.loot.LootTable;
+import net.minecraft.world.level.storage.loot.LootTable.Builder;
+import net.minecraft.world.level.storage.loot.entries.LootItem;
+import net.minecraft.world.level.storage.loot.entries.LootTableReference;
+import net.minecraft.world.level.storage.loot.predicates.LootItemEntityPropertyCondition;
+import net.minecraft.world.level.storage.loot.providers.number.ConstantValue;
 
-public class ModFishingLootTables extends FishingLootTables {
+public class ModFishingLootTables extends FishingLoot {
 
 	@Override
 	public void accept(BiConsumer<ResourceLocation, Builder> p_accept_1_) {
-		p_accept_1_.accept(ModLootTables.BLOOD_FISHING, LootTable.builder().addLootPool(LootPool.builder()
-				.rolls(ConstantRange.of(1))
-				.addEntry(TableLootEntry.builder(ModLootTables.BLOOD_FISHING_JUNK).weight(10).quality(-2))
-				.addEntry(TableLootEntry.builder(ModLootTables.BLOOD_FISHING_TREASURE).weight(5).quality(2)
-						.acceptCondition(EntityHasProperty.builder(LootContext.EntityTarget.THIS,
-								EntityPredicate.Builder.create().fishing(FishingPredicate.func_234640_a_(true)))))
-				.addEntry(TableLootEntry.builder(ModLootTables.BLOOD_FISHING_FISH).weight(85).quality(-1))));
+		p_accept_1_.accept(ModLootTables.BLOOD_FISHING, LootTable.lootTable().withPool(LootPool.lootPool()
+				.setRolls(ConstantValue.exactly(1))
+				.add(LootTableReference.lootTableReference(ModLootTables.BLOOD_FISHING_JUNK).setWeight(10).setQuality(-2))
+				.add(LootTableReference.lootTableReference(ModLootTables.BLOOD_FISHING_TREASURE).setWeight(5).setQuality(2)
+						.when(LootItemEntityPropertyCondition.hasProperties(LootContext.EntityTarget.THIS,
+								EntityPredicate.Builder.entity().fishingHook(FishingHookPredicate.inOpenWater(true)))))
+				.add(LootTableReference.lootTableReference(ModLootTables.BLOOD_FISHING_FISH).setWeight(85).setQuality(-1))));
 
-		p_accept_1_.accept(ModLootTables.BLOOD_FISHING_FISH, LootTable.builder()
-				.addLootPool(LootPool.builder().addEntry(ItemLootEntry.builder(ModItems.BLOOD_LEECH))));
+		p_accept_1_.accept(ModLootTables.BLOOD_FISHING_FISH, LootTable.lootTable()
+				.withPool(LootPool.lootPool().add(LootItem.lootTableItem(ModItems.BLOOD_LEECH))));
 
 		p_accept_1_.accept(ModLootTables.BLOOD_FISHING_JUNK,
-				LootTable.builder()
-						.addLootPool(LootPool.builder().addEntry(ItemLootEntry.builder(ModItems.BLOOD_CRYSTAL))
-								.addEntry(ItemLootEntry.builder(ModItems.BLOOD_FLOWER))));
+				LootTable.lootTable()
+						.withPool(LootPool.lootPool().add(LootItem.lootTableItem(ModItems.BLOOD_CRYSTAL))
+								.add(LootItem.lootTableItem(ModItems.BLOOD_FLOWER))));
 
 		p_accept_1_.accept(ModLootTables.BLOOD_FISHING_TREASURE,
-				LootTable.builder()
-						.addLootPool(LootPool.builder().addEntry(ItemLootEntry.builder(Runesword.BLOOD_RUNE))
-								.addEntry(ItemLootEntry.builder(ModItems.BLOOD_BAT_TOOTH))
-								.addEntry(ItemLootEntry.builder(ModItems.MOSQUITO_EGGS))));
+				LootTable.lootTable()
+						.withPool(LootPool.lootPool().add(LootItem.lootTableItem(Runesword.BLOOD_RUNE))
+								.add(LootItem.lootTableItem(ModItems.BLOOD_BAT_TOOTH))
+								.add(LootItem.lootTableItem(ModItems.MOSQUITO_EGGS))));
 
 	}
 }

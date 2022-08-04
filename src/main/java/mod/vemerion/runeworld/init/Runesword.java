@@ -4,22 +4,22 @@ import java.util.Set;
 
 import com.google.common.collect.ImmutableSet;
 
-import net.minecraft.item.Item;
+import net.minecraft.world.item.Item;
 import net.minecraftforge.fml.ModList;
 import net.minecraftforge.registries.ObjectHolder;
 
 public class Runesword {
 	public static final String MODID = "runesword";
 	
-	@ObjectHolder(Runesword.MODID + ":fire_rune_item")
+	@ObjectHolder(Runesword.MODID + ":fire_rune")
 	public static final Item FIRE_RUNE = null;
-	@ObjectHolder(Runesword.MODID + ":water_rune_item")
+	@ObjectHolder(Runesword.MODID + ":water_rune")
 	public static final Item WATER_RUNE = null;
-	@ObjectHolder(Runesword.MODID + ":earth_rune_item")
+	@ObjectHolder(Runesword.MODID + ":earth_rune")
 	public static final Item EARTH_RUNE = null;
-	@ObjectHolder(Runesword.MODID + ":air_rune_item")
+	@ObjectHolder(Runesword.MODID + ":air_rune")
 	public static final Item AIR_RUNE = null;
-	@ObjectHolder(Runesword.MODID + ":blood_rune_item")
+	@ObjectHolder(Runesword.MODID + ":blood_rune")
 	public static final Item BLOOD_RUNE = null;
 	
 	private static ImmutableSet<Item> runes;

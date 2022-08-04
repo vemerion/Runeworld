@@ -3,10 +3,9 @@ package mod.vemerion.runeworld.init;
 import mod.vemerion.runeworld.Main;
 import mod.vemerion.runeworld.structure.BloodBatLairStructure;
 import mod.vemerion.runeworld.structure.FireRitualStructure;
-import net.minecraft.util.ResourceLocation;
-import net.minecraft.world.gen.feature.IFeatureConfig;
-import net.minecraft.world.gen.feature.NoFeatureConfig;
-import net.minecraft.world.gen.feature.structure.Structure;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.level.levelgen.feature.StructureFeature;
+import net.minecraft.world.level.levelgen.feature.configurations.NoneFeatureConfiguration;
 import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod.EventBusSubscriber;
@@ -20,33 +19,30 @@ public class ModStructures {
 
 	private static boolean init = true;
 
-	public static Structure<NoFeatureConfig> BLOOD_BAT_LAIR;
-	public static Structure<NoFeatureConfig> FIRE_RITUAL;
+	public static StructureFeature<NoneFeatureConfiguration> BLOOD_BAT_LAIR;
+	public static StructureFeature<NoneFeatureConfiguration> FIRE_RITUAL;
 
 	public static void init() {
 		if (init) {
 			init = false;
 
-			BLOOD_BAT_LAIR = setupStructure(new BloodBatLairStructure(NoFeatureConfig.field_236558_a_));
-			FIRE_RITUAL = setupStructure(new FireRitualStructure(NoFeatureConfig.field_236558_a_));
+			BLOOD_BAT_LAIR = new BloodBatLairStructure(NoneFeatureConfiguration.CODEC);
+			FIRE_RITUAL = new FireRitualStructure(NoneFeatureConfiguration.CODEC);
 
 			ModConfiguredStructures.register();
+			
+			ModStructureSets.register();
 		}
 	}
 
-	private static <C extends IFeatureConfig, T extends Structure<C>> T setupStructure(T structure) {
-		Structure.NAME_STRUCTURE_BIMAP.put(structure.getStructureName(), structure);
-		return structure;
-	}
-
 	@SubscribeEvent
-	public static void onRegisterStructure(RegistryEvent.Register<Structure<?>> event) {
+	public static void onRegisterStructure(RegistryEvent.Register<StructureFeature<?>> event) {
 		init();
 
-		IForgeRegistry<Structure<?>> reg = event.getRegistry();
+		IForgeRegistry<StructureFeature<?>> reg = event.getRegistry();
 
-		reg.register(Init.setup(BLOOD_BAT_LAIR, new ResourceLocation(BLOOD_BAT_LAIR.getStructureName())));
-		reg.register(Init.setup(FIRE_RITUAL, new ResourceLocation(FIRE_RITUAL.getStructureName())));
+		reg.register(Init.setup(BLOOD_BAT_LAIR, new ResourceLocation(Main.MODID, "blood_bat_lair")));
+		reg.register(Init.setup(FIRE_RITUAL, new ResourceLocation(Main.MODID, "fire_ritual")));
 
 		ModStructurePieces.register();
 	}

@@ -7,53 +7,53 @@ import mod.vemerion.runeworld.Main;
 import mod.vemerion.runeworld.init.ModBlocks;
 import mod.vemerion.runeworld.init.ModEntities;
 import mod.vemerion.runeworld.init.ModItems;
-import net.minecraft.data.loot.EntityLootTables;
-import net.minecraft.entity.EntityType;
-import net.minecraft.loot.ConstantRange;
-import net.minecraft.loot.ItemLootEntry;
-import net.minecraft.loot.LootPool;
-import net.minecraft.loot.LootTable;
-import net.minecraft.loot.RandomValueRange;
-import net.minecraft.loot.conditions.KilledByPlayer;
-import net.minecraft.loot.conditions.RandomChanceWithLooting;
-import net.minecraft.loot.functions.LootingEnchantBonus;
-import net.minecraft.loot.functions.SetCount;
+import net.minecraft.data.loot.EntityLoot;
+import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.level.storage.loot.LootPool;
+import net.minecraft.world.level.storage.loot.LootTable;
+import net.minecraft.world.level.storage.loot.entries.LootItem;
+import net.minecraft.world.level.storage.loot.functions.LootingEnchantFunction;
+import net.minecraft.world.level.storage.loot.functions.SetItemCountFunction;
+import net.minecraft.world.level.storage.loot.predicates.LootItemKilledByPlayerCondition;
+import net.minecraft.world.level.storage.loot.predicates.LootItemRandomChanceWithLootingCondition;
+import net.minecraft.world.level.storage.loot.providers.number.ConstantValue;
+import net.minecraft.world.level.storage.loot.providers.number.UniformGenerator;
 import net.minecraftforge.registries.ForgeRegistries;
 
-public class ModEntityLootTables extends EntityLootTables {
+public class ModEntityLootTables extends EntityLoot {
 	@Override
 	protected void addTables() {
-		registerLootTable(ModEntities.MOSQUITO,
-				LootTable.builder()
-						.addLootPool(LootPool.builder().rolls(ConstantRange.of(1))
-								.addEntry(ItemLootEntry.builder(ModItems.MOSQUITO_EGGS))
-								.acceptCondition(KilledByPlayer.builder())
-								.acceptCondition(RandomChanceWithLooting.builder(0.05f, 0.02f))));
-		registerLootTable(ModEntities.BLOOD_BAT,
-				LootTable.builder()
-						.addLootPool(LootPool.builder().rolls(ConstantRange.of(1))
-								.addEntry(ItemLootEntry.builder(ModItems.BLOOD_BAT_TOOTH))
-								.acceptCondition(KilledByPlayer.builder())
-								.acceptCondition(RandomChanceWithLooting.builder(0.05f, 0.02f))));
-		registerLootTable(ModEntities.BLOOD_MONKEY,
-				LootTable.builder()
-						.addLootPool(LootPool.builder().rolls(ConstantRange.of(1))
-								.addEntry(ItemLootEntry.builder(ModItems.BLOOD_PEBBLE)
-										.acceptFunction(SetCount.builder(RandomValueRange.of(0, 1)))
-										.acceptFunction(LootingEnchantBonus.builder(RandomValueRange.of(0, 1)))))
-						.addLootPool(LootPool.builder().rolls(ConstantRange.of(1))
-								.addEntry(ItemLootEntry.builder(ModItems.MOSQUITO_EGGS))
-								.acceptCondition(KilledByPlayer.builder())
-								.acceptCondition(RandomChanceWithLooting.builder(0.04f, 0.01f))));
+		add(ModEntities.MOSQUITO,
+				LootTable.lootTable()
+						.withPool(LootPool.lootPool().setRolls(ConstantValue.exactly(1))
+								.add(LootItem.lootTableItem(ModItems.MOSQUITO_EGGS))
+								.when(LootItemKilledByPlayerCondition.killedByPlayer())
+								.when(LootItemRandomChanceWithLootingCondition.randomChanceAndLootingBoost(0.05f, 0.02f))));
+		add(ModEntities.BLOOD_BAT,
+				LootTable.lootTable()
+						.withPool(LootPool.lootPool().setRolls(ConstantValue.exactly(1))
+								.add(LootItem.lootTableItem(ModItems.BLOOD_BAT_TOOTH))
+								.when(LootItemKilledByPlayerCondition.killedByPlayer())
+								.when(LootItemRandomChanceWithLootingCondition.randomChanceAndLootingBoost(0.05f, 0.02f))));
+		add(ModEntities.BLOOD_MONKEY,
+				LootTable.lootTable()
+						.withPool(LootPool.lootPool().setRolls(ConstantValue.exactly(1))
+								.add(LootItem.lootTableItem(ModItems.BLOOD_PEBBLE)
+										.apply(SetItemCountFunction.setCount(UniformGenerator.between(0, 1)))
+										.apply(LootingEnchantFunction.lootingMultiplier(UniformGenerator.between(0, 1)))))
+						.withPool(LootPool.lootPool().setRolls(ConstantValue.exactly(1))
+								.add(LootItem.lootTableItem(ModItems.MOSQUITO_EGGS))
+								.when(LootItemKilledByPlayerCondition.killedByPlayer())
+								.when(LootItemRandomChanceWithLootingCondition.randomChanceAndLootingBoost(0.04f, 0.01f))));
 
-		registerLootTable(ModEntities.FIRE_ELEMENTAL,
-				LootTable.builder()
-						.addLootPool(LootPool.builder().rolls(ConstantRange.of(1))
-								.addEntry(ItemLootEntry.builder(ModItems.FIRE_HEART)))
-						.addLootPool(LootPool.builder().rolls(ConstantRange.of(1))
-								.addEntry(ItemLootEntry.builder(ModBlocks.FIRE_RITUAL_STONE)
-										.acceptFunction(SetCount.builder(RandomValueRange.of(0, 2)))
-										.acceptFunction(LootingEnchantBonus.builder(RandomValueRange.of(0, 1))))));
+		add(ModEntities.FIRE_ELEMENTAL,
+				LootTable.lootTable()
+						.withPool(LootPool.lootPool().setRolls(ConstantValue.exactly(1))
+								.add(LootItem.lootTableItem(ModItems.FIRE_HEART)))
+						.withPool(LootPool.lootPool().setRolls(ConstantValue.exactly(1))
+								.add(LootItem.lootTableItem(ModBlocks.FIRE_RITUAL_STONE)
+										.apply(SetItemCountFunction.setCount(UniformGenerator.between(0, 2)))
+										.apply(LootingEnchantFunction.lootingMultiplier(UniformGenerator.between(0, 1))))));
 	}
 
 	@Override

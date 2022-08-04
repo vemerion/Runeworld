@@ -3,53 +3,53 @@ package mod.vemerion.runeworld.entity;
 import java.util.EnumSet;
 import java.util.Random;
 
-import net.minecraft.block.Blocks;
-import net.minecraft.entity.EntityType;
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.MobEntity;
-import net.minecraft.entity.ai.attributes.AttributeModifierMap;
-import net.minecraft.entity.ai.attributes.Attributes;
-import net.minecraft.entity.ai.goal.Goal;
-import net.minecraft.entity.ai.goal.HurtByTargetGoal;
-import net.minecraft.entity.ai.goal.LookRandomlyGoal;
-import net.minecraft.entity.ai.goal.NearestAttackableTargetGoal;
-import net.minecraft.entity.ai.goal.WaterAvoidingRandomWalkingGoal;
-import net.minecraft.entity.monster.MonsterEntity;
-import net.minecraft.entity.player.ServerPlayerEntity;
-import net.minecraft.network.datasync.DataParameter;
-import net.minecraft.network.datasync.DataSerializers;
-import net.minecraft.network.datasync.EntityDataManager;
-import net.minecraft.util.DamageSource;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.MathHelper;
-import net.minecraft.util.math.vector.Vector3d;
-import net.minecraft.world.BossInfo;
-import net.minecraft.world.World;
-import net.minecraft.world.server.ServerBossInfo;
+import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.Mob;
+import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
+import net.minecraft.world.entity.ai.attributes.Attributes;
+import net.minecraft.world.entity.ai.goal.Goal;
+import net.minecraft.world.entity.ai.goal.target.HurtByTargetGoal;
+import net.minecraft.world.entity.ai.goal.RandomLookAroundGoal;
+import net.minecraft.world.entity.ai.goal.target.NearestAttackableTargetGoal;
+import net.minecraft.world.entity.ai.goal.WaterAvoidingRandomStrollGoal;
+import net.minecraft.world.entity.monster.Monster;
+import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.network.syncher.EntityDataAccessor;
+import net.minecraft.network.syncher.EntityDataSerializers;
+import net.minecraft.network.syncher.SynchedEntityData;
+import net.minecraft.world.damagesource.DamageSource;
+import net.minecraft.core.BlockPos;
+import net.minecraft.util.Mth;
+import net.minecraft.world.phys.Vec3;
+import net.minecraft.world.BossEvent;
+import net.minecraft.world.level.Level;
+import net.minecraft.server.level.ServerBossEvent;
 
-public class FireElementalEntity extends MonsterEntity {
+public class FireElementalEntity extends Monster {
 
-	private static final DataParameter<Boolean> RAISING_ARMS = EntityDataManager.createKey(FireElementalEntity.class,
-			DataSerializers.BOOLEAN);
-	private static final DataParameter<Boolean> SPINNING_ARMS = EntityDataManager.createKey(FireElementalEntity.class,
-			DataSerializers.BOOLEAN);
+	private static final EntityDataAccessor<Boolean> RAISING_ARMS = SynchedEntityData.defineId(FireElementalEntity.class,
+			EntityDataSerializers.BOOLEAN);
+	private static final EntityDataAccessor<Boolean> SPINNING_ARMS = SynchedEntityData.defineId(FireElementalEntity.class,
+			EntityDataSerializers.BOOLEAN);
 
-	private final ServerBossInfo bossInfo = new ServerBossInfo(getDisplayName(), BossInfo.Color.YELLOW,
-			BossInfo.Overlay.PROGRESS);
+	private final ServerBossEvent bossInfo = new ServerBossEvent(getDisplayName(), BossEvent.BossBarColor.YELLOW,
+			BossEvent.BossBarOverlay.PROGRESS);
 
 	private float armHeight, prevArmHeight;
 	private float armRotation, prevArmRotation;
 
-	public FireElementalEntity(EntityType<? extends FireElementalEntity> type, World worldIn) {
+	public FireElementalEntity(EntityType<? extends FireElementalEntity> type, Level worldIn) {
 		super(type, worldIn);
-		this.experienceValue = 20;
+		this.xpReward = 20;
 	}
 
-	public static AttributeModifierMap.MutableAttribute attributes() {
-		return MobEntity.func_233666_p_().createMutableAttribute(Attributes.MAX_HEALTH, 250)
-				.createMutableAttribute(Attributes.MOVEMENT_SPEED, 0.25)
-				.createMutableAttribute(Attributes.FOLLOW_RANGE, 30)
-				.createMutableAttribute(Attributes.ATTACK_DAMAGE, 6);
+	public static AttributeSupplier.Builder attributes() {
+		return Mob.createMobAttributes().add(Attributes.MAX_HEALTH, 250)
+				.add(Attributes.MOVEMENT_SPEED, 0.25)
+				.add(Attributes.FOLLOW_RANGE, 30)
+				.add(Attributes.ATTACK_DAMAGE, 6);
 	}
 
 	@Override
@@ -57,42 +57,42 @@ public class FireElementalEntity extends MonsterEntity {
 		goalSelector.addGoal(0, new ShootProjectileGoal(this));
 		goalSelector.addGoal(1, new ScorchedGroundGoal(this));
 		goalSelector.addGoal(2, new AoEGoal(this));
-		goalSelector.addGoal(3, new WaterAvoidingRandomWalkingGoal(this, 1));
-		goalSelector.addGoal(4, new LookRandomlyGoal(this));
+		goalSelector.addGoal(3, new WaterAvoidingRandomStrollGoal(this, 1));
+		goalSelector.addGoal(4, new RandomLookAroundGoal(this));
 		targetSelector.addGoal(1, new HurtByTargetGoal(this));
 		targetSelector.addGoal(2, new NearestAttackableTargetGoal<>(this, LivingEntity.class, 0, false, false, null));
 	}
 
 	@Override
-	protected void registerData() {
-		super.registerData();
-		dataManager.register(RAISING_ARMS, false);
-		dataManager.register(SPINNING_ARMS, false);
+	protected void defineSynchedData() {
+		super.defineSynchedData();
+		entityData.define(RAISING_ARMS, false);
+		entityData.define(SPINNING_ARMS, false);
 	}
 
 	private boolean isRaisingArms() {
-		return dataManager.get(RAISING_ARMS);
+		return entityData.get(RAISING_ARMS);
 	}
 
 	private void setRaisingArms(boolean b) {
-		dataManager.set(RAISING_ARMS, b);
+		entityData.set(RAISING_ARMS, b);
 	}
 
 	private boolean isSpinningArms() {
-		return dataManager.get(SPINNING_ARMS);
+		return entityData.get(SPINNING_ARMS);
 	}
 
 	private void setSpinningArms(boolean b) {
-		dataManager.set(SPINNING_ARMS, b);
+		entityData.set(SPINNING_ARMS, b);
 	}
 
 	@Override
 	public void tick() {
 		super.tick();
 
-		bossInfo.setPercent(getHealthPercent());
+		bossInfo.setProgress(getHealthPercent());
 
-		if (world.isRemote) {
+		if (level.isClientSide) {
 			prevArmHeight = armHeight;
 			if (isRaisingArms())
 				armHeight = Math.min(armHeight + 0.2f, 2.5f);
@@ -110,42 +110,42 @@ public class FireElementalEntity extends MonsterEntity {
 	}
 
 	@Override
-	public void addTrackingPlayer(ServerPlayerEntity player) {
-		super.addTrackingPlayer(player);
+	public void startSeenByPlayer(ServerPlayer player) {
+		super.startSeenByPlayer(player);
 		bossInfo.addPlayer(player);
 	}
 
 	@Override
-	public void removeTrackingPlayer(ServerPlayerEntity player) {
-		super.removeTrackingPlayer(player);
+	public void stopSeenByPlayer(ServerPlayer player) {
+		super.stopSeenByPlayer(player);
 		bossInfo.removePlayer(player);
 	}
 
 	@Override
-	public boolean onLivingFall(float fallDistance, float damageMultiplier) {
+	public boolean causeFallDamage(float fallDistance, float damageMultiplier, DamageSource source) {
 		return false;
 	}
 
 	@Override
-	public boolean isNonBoss() {
+	public boolean canChangeDimensions() {
 		return false;
 	}
 
 	@Override
-	public boolean isImmuneToExplosions() {
+	public boolean ignoreExplosion() {
 		return true;
 	}
 
 	@Override
-	public void applyKnockback(float strength, double ratioX, double ratioZ) {
+	public void knockback(double strength, double ratioX, double ratioZ) {
 	}
 
 	public float getArmHeight(float partialTicks) {
-		return MathHelper.lerp(partialTicks, prevArmHeight, armHeight);
+		return Mth.lerp(partialTicks, prevArmHeight, armHeight);
 	}
 
 	public float getArmRotation(float partialTicks) {
-		return MathHelper.lerp(partialTicks, prevArmRotation, armRotation);
+		return Mth.lerp(partialTicks, prevArmRotation, armRotation);
 	}
 
 	private static class ScorchedGroundGoal extends DurationGoal {
@@ -165,17 +165,17 @@ public class FireElementalEntity extends MonsterEntity {
 		@Override
 		protected void performAttack(FireElementalEntity elemental) {
 			elemental.setRaisingArms(true);
-			Random rand = elemental.getRNG();
-			World world = elemental.world;
+			Random rand = elemental.getRandom();
+			Level world = elemental.level;
 
-			BlockPos pos = elemental.getPosition().add(
-					new BlockPos(Vector3d.fromPitchYaw(0, rand.nextFloat() * 360).scale(1 + rand.nextDouble() * 5)));
+			BlockPos pos = elemental.blockPosition().offset(
+					new BlockPos(Vec3.directionFromRotation(0, rand.nextFloat() * 360).scale(1 + rand.nextDouble() * 5)));
 
 			for (int i = 0; i < 10; i++) {
 				for (int j = -1; j < 2; j += 2) {
-					BlockPos p = pos.down(i * j);
-					if (world.isAirBlock(p) && world.getBlockState(p.down()).isSolid()) {
-						world.setBlockState(p, Blocks.FIRE.getDefaultState());
+					BlockPos p = pos.below(i * j);
+					if (world.isEmptyBlock(p) && world.getBlockState(p.below()).canOcclude()) {
+						world.setBlockAndUpdate(p, Blocks.FIRE.defaultBlockState());
 						return;
 					}
 				}
@@ -195,30 +195,30 @@ public class FireElementalEntity extends MonsterEntity {
 		}
 
 		@Override
-		public boolean shouldExecute() {
+		public boolean canUse() {
 			return cooldown-- < 0;
 		}
 
 		@Override
-		public void startExecuting() {
+		public void start() {
 			cooldown = MAX_COOLDOWN;
-			Random rand = elemental.getRNG();
-			World world = elemental.world;
-			LivingEntity attackTarget = elemental.getAttackTarget();
+			Random rand = elemental.getRandom();
+			Level world = elemental.level;
+			LivingEntity attackTarget = elemental.getTarget();
 			int side = rand.nextBoolean() ? 1 : -1;
 
-			Vector3d offset = Vector3d.fromPitchYaw(0, elemental.rotationYaw + 90)
+			Vec3 offset = Vec3.directionFromRotation(0, elemental.getYRot() + 90)
 					.scale(side * (rand.nextDouble() * 3 + 1.5));
-			Vector3d position = elemental.getPositionVec().add(offset.x, 3 + rand.nextDouble() * 3, offset.z);
-			Vector3d target = Vector3d.fromPitchYaw(rand.nextFloat() * (-180 - 60) + 30, rand.nextFloat() * 360);
+			Vec3 position = elemental.position().add(offset.x, 3 + rand.nextDouble() * 3, offset.z);
+			Vec3 target = Vec3.directionFromRotation(rand.nextFloat() * (-180 - 60) + 30, rand.nextFloat() * 360);
 			if (attackTarget != null)
 				target = attackTarget.getEyePosition(0).subtract(position);
 
 			FireElementalProjectileEntity projectile = new FireElementalProjectileEntity(world);
-			projectile.setShooter(elemental);
-			projectile.setPosition(position.x, position.y, position.z);
+			projectile.setOwner(elemental);
+			projectile.setPos(position.x, position.y, position.z);
 			projectile.shoot(target.x, target.y, target.z, 0.5f, 1);
-			world.addEntity(projectile);
+			world.addFreshEntity(projectile);
 		}
 	}
 
@@ -240,9 +240,9 @@ public class FireElementalEntity extends MonsterEntity {
 		protected void performAttack(FireElementalEntity elemental) {
 			elemental.setSpinningArms(true);
 
-			for (LivingEntity e : elemental.world.getEntitiesWithinAABB(LivingEntity.class,
-					elemental.getBoundingBox().grow(1).grow(4, 0, 4), e -> e != elemental)) {
-				e.attackEntityFrom(DamageSource.causeMobDamage(elemental),
+			for (LivingEntity e : elemental.level.getEntitiesOfClass(LivingEntity.class,
+					elemental.getBoundingBox().inflate(1).inflate(4, 0, 4), e -> e != elemental)) {
+				e.hurt(DamageSource.mobAttack(elemental),
 						(float) elemental.getAttributeValue(Attributes.ATTACK_DAMAGE));
 			}
 		}
@@ -257,16 +257,16 @@ public class FireElementalEntity extends MonsterEntity {
 			this.elemental = elemental;
 			this.maxDuration = maxDuration;
 			this.maxCooldown = maxCooldown;
-			this.setMutexFlags(EnumSet.of(Goal.Flag.MOVE, Goal.Flag.JUMP, Goal.Flag.LOOK));
+			this.setFlags(EnumSet.of(Goal.Flag.MOVE, Goal.Flag.JUMP, Goal.Flag.LOOK));
 		}
 
 		@Override
-		public boolean shouldExecute() {
+		public boolean canUse() {
 			return cooldown-- < 0;
 		}
 
 		@Override
-		public void startExecuting() {
+		public void start() {
 			duration = maxDuration;
 		}
 

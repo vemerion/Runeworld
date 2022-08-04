@@ -4,23 +4,23 @@ import mod.vemerion.runeworld.helpers.Helper;
 import mod.vemerion.runeworld.init.ModEntities;
 import mod.vemerion.runeworld.init.ModItems;
 import mod.vemerion.runeworld.init.ModSounds;
-import net.minecraft.entity.EntityType;
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.projectile.ProjectileItemEntity;
-import net.minecraft.item.Item;
-import net.minecraft.network.IPacket;
-import net.minecraft.util.math.RayTraceResult;
-import net.minecraft.util.math.vector.Vector3d;
-import net.minecraft.world.World;
-import net.minecraftforge.fml.network.NetworkHooks;
+import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.projectile.ThrowableItemProjectile;
+import net.minecraft.world.item.Item;
+import net.minecraft.network.protocol.Packet;
+import net.minecraft.world.phys.HitResult;
+import net.minecraft.world.phys.Vec3;
+import net.minecraftforge.network.NetworkHooks;
+import net.minecraft.world.level.Level;
 
-public class MosquitoEggsEntity extends ProjectileItemEntity {
+public class MosquitoEggsEntity extends ThrowableItemProjectile {
 
-	public MosquitoEggsEntity(LivingEntity livingEntityIn, World worldIn) {
+	public MosquitoEggsEntity(LivingEntity livingEntityIn, Level worldIn) {
 		super(ModEntities.MOSQUITO_EGGS, livingEntityIn, worldIn);
 	}
 
-	public MosquitoEggsEntity(EntityType<? extends MosquitoEggsEntity> type, World world) {
+	public MosquitoEggsEntity(EntityType<? extends MosquitoEggsEntity> type, Level world) {
 		super(type, world);
 	}
 
@@ -30,30 +30,30 @@ public class MosquitoEggsEntity extends ProjectileItemEntity {
 	}
 
 	@Override
-	protected void onImpact(RayTraceResult result) {
-		super.onImpact(result);
+	protected void onHit(HitResult result) {
+		super.onHit(result);
 		
-		playSound(ModSounds.MOSQUITO_SPLASH, 1, Helper.soundPitch(rand));
+		playSound(ModSounds.MOSQUITO_SPLASH, 1, Helper.soundPitch(random));
 
-		if (!world.isRemote && isAlive()) {
-			Vector3d pos = result.getHitVec();
-			for (int i = 0; i < rand.nextInt(2) + 2; i++) {
-				MosquitoEntity mosquito = new MosquitoEntity(ModEntities.MOSQUITO, world);
-				mosquito.setPositionAndRotation(pos.x + (rand.nextDouble() - 0.5) * 2, pos.y,
-						pos.z + (rand.nextDouble() - 0.5) * 2, rand.nextInt(360), 0);
-				world.addEntity(mosquito);
+		if (!level.isClientSide && isAlive()) {
+			Vec3 pos = result.getLocation();
+			for (int i = 0; i < random.nextInt(2) + 2; i++) {
+				MosquitoEntity mosquito = new MosquitoEntity(ModEntities.MOSQUITO, level);
+				mosquito.absMoveTo(pos.x + (random.nextDouble() - 0.5) * 2, pos.y,
+						pos.z + (random.nextDouble() - 0.5) * 2, random.nextInt(360), 0);
+				level.addFreshEntity(mosquito);
 			}
-			remove();
+			discard();
 		}
 	}
 
 	@Override
-	public IPacket<?> createSpawnPacket() {
+	public Packet<?> getAddEntityPacket() {
 		return NetworkHooks.getEntitySpawningPacket(this);
 	}
 
 	@Override
-	protected float getGravityVelocity() {
+	protected float getGravity() {
 		return 0.05f;
 	}
 

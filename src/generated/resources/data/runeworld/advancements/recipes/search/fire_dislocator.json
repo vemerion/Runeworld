@@ -11,7 +11,9 @@
       "conditions": {
         "items": [
           {
-            "item": "runeworld:fire_heart"
+            "items": [
+              "runeworld:fire_heart"
+            ]
           }
         ]
       }

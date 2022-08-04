@@ -2,33 +2,33 @@ package mod.vemerion.runeworld.entity;
 
 import mod.vemerion.runeworld.init.ModBlocks;
 import mod.vemerion.runeworld.init.ModEntities;
-import net.minecraft.entity.EntityType;
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.projectile.ProjectileItemEntity;
-import net.minecraft.item.Item;
-import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.network.IPacket;
-import net.minecraft.util.math.BlockRayTraceResult;
-import net.minecraft.util.math.EntityRayTraceResult;
-import net.minecraft.world.Explosion.Mode;
-import net.minecraft.world.World;
-import net.minecraftforge.fml.network.NetworkHooks;
+import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.projectile.ThrowableItemProjectile;
+import net.minecraft.world.item.Item;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.network.protocol.Packet;
+import net.minecraft.world.phys.BlockHitResult;
+import net.minecraft.world.phys.EntityHitResult;
+import net.minecraftforge.network.NetworkHooks;
+import net.minecraft.world.level.Explosion.BlockInteraction;
+import net.minecraft.world.level.Level;
 
-public class FireElementalProjectileEntity extends ProjectileItemEntity {
+public class FireElementalProjectileEntity extends ThrowableItemProjectile {
 
 	private int duration = 20 * 5;
 
-	public FireElementalProjectileEntity(LivingEntity livingEntityIn, World worldIn) {
+	public FireElementalProjectileEntity(LivingEntity livingEntityIn, Level worldIn) {
 		super(ModEntities.FIRE_ELEMENTAL_PROJECTILE, livingEntityIn, worldIn);
 		this.setNoGravity(true);
 	}
 
-	public FireElementalProjectileEntity(EntityType<? extends FireElementalProjectileEntity> type, World world) {
+	public FireElementalProjectileEntity(EntityType<? extends FireElementalProjectileEntity> type, Level world) {
 		super(type, world);
 		this.setNoGravity(true);
 	}
 
-	public FireElementalProjectileEntity(World world) {
+	public FireElementalProjectileEntity(Level world) {
 		this(ModEntities.FIRE_ELEMENTAL_PROJECTILE, world);
 	}
 
@@ -41,7 +41,7 @@ public class FireElementalProjectileEntity extends ProjectileItemEntity {
 	public void tick() {
 		super.tick();
 
-		if (!world.isRemote && isAlive()) {
+		if (!level.isClientSide && isAlive()) {
 			if (duration-- < 0) {
 				explode();
 			}
@@ -49,40 +49,40 @@ public class FireElementalProjectileEntity extends ProjectileItemEntity {
 	}
 
 	@Override
-	public void readAdditional(CompoundNBT compound) {
-		super.readAdditional(compound);
+	public void readAdditionalSaveData(CompoundTag compound) {
+		super.readAdditionalSaveData(compound);
 		if (compound.contains("duration"))
 			duration = compound.getInt("duration");
 	}
 
 	@Override
-	public void writeAdditional(CompoundNBT compound) {
-		super.writeAdditional(compound);
+	public void addAdditionalSaveData(CompoundTag compound) {
+		super.addAdditionalSaveData(compound);
 		compound.putInt("duration", duration);
 	}
 	
 	private void explode() {
-		if (!world.isRemote && isAlive()) {
-			world.createExplosion(this, getPosX(), getPosY(), getPosZ(), 2, true, Mode.BREAK);
-			remove();
+		if (!level.isClientSide && isAlive()) {
+			level.explode(this, getX(), getY(), getZ(), 2, true, BlockInteraction.BREAK);
+			discard();
 		}
 	}
 
 	@Override
-	protected void func_230299_a_(BlockRayTraceResult p_230299_1_) {
-		super.func_230299_a_(p_230299_1_);
+	protected void onHitBlock(BlockHitResult p_230299_1_) {
+		super.onHitBlock(p_230299_1_);
 		explode();
 	}
 	
 	@Override
-	protected void onEntityHit(EntityRayTraceResult result) {
+	protected void onHitEntity(EntityHitResult result) {
 		if (result.getEntity() instanceof FireElementalEntity)
 			return;
 		explode();
 	}
 
 	@Override
-	public IPacket<?> createSpawnPacket() {
+	public Packet<?> getAddEntityPacket() {
 		return NetworkHooks.getEntitySpawningPacket(this);
 	}
 

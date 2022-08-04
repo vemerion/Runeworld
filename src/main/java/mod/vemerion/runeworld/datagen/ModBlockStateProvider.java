@@ -6,10 +6,10 @@ import mod.vemerion.runeworld.block.FireRootBlock;
 import mod.vemerion.runeworld.block.RunePortalBlock;
 import mod.vemerion.runeworld.block.complex.StoneMaterial;
 import mod.vemerion.runeworld.init.ModBlocks;
-import net.minecraft.block.Block;
+import net.minecraft.world.level.block.Block;
 import net.minecraft.data.DataGenerator;
-import net.minecraft.util.Direction;
-import net.minecraft.util.ResourceLocation;
+import net.minecraft.core.Direction;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraftforge.client.model.generators.BlockModelBuilder;
 import net.minecraftforge.client.model.generators.BlockStateProvider;
 import net.minecraftforge.client.model.generators.ConfiguredModel;
@@ -62,7 +62,7 @@ public class ModBlockStateProvider extends BlockStateProvider {
 		}
 
 		getVariantBuilder(fireRoot).forAllStates(state -> {
-			int age = state.get(FireRootBlock.AGE);
+			int age = state.getValue(FireRootBlock.AGE);
 			ModelFile model = stages[0];
 			if (age == 2 || age == 3)
 				model = stages[1];
@@ -110,7 +110,7 @@ public class ModBlockStateProvider extends BlockStateProvider {
 		ModelFile bloodied = models().cubeColumn(name + "_bloodied", modLoc("block/fire_ritual_stone_bloodied"),
 				modLoc("block/sparkstone"));
 		getVariantBuilder(block).forAllStates(state -> ConfiguredModel.builder()
-				.modelFile(state.get(FireRitualStoneBlock.BLOODIED) ? bloodied : model).build());
+				.modelFile(state.getValue(FireRitualStoneBlock.BLOODIED) ? bloodied : model).build());
 		simpleBlockItem(block, model);
 	}
 

@@ -1,26 +1,26 @@
 package mod.vemerion.runeworld.item;
 
 import mod.vemerion.runeworld.capability.RuneTeleport;
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.UseAction;
-import net.minecraft.util.ActionResult;
-import net.minecraft.util.Hand;
-import net.minecraft.util.RegistryKey;
-import net.minecraft.world.World;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.UseAnim;
+import net.minecraft.world.InteractionResultHolder;
+import net.minecraft.world.InteractionHand;
+import net.minecraft.resources.ResourceKey;
+import net.minecraft.world.level.Level;
 
 public class DislocatorItem extends Item {
 
-	private RegistryKey<World> dimension;
+	private ResourceKey<Level> dimension;
 
-	public DislocatorItem(Item.Properties properties, RegistryKey<World> dimension) {
+	public DislocatorItem(Item.Properties properties, ResourceKey<Level> dimension) {
 		super(properties);
 		this.dimension = dimension;
 	}
 	
-	public RegistryKey<World> getDimension() {
+	public ResourceKey<Level> getDimension() {
 		return dimension;
 	}
 
@@ -30,26 +30,26 @@ public class DislocatorItem extends Item {
 	}
 
 	@Override
-	public UseAction getUseAction(ItemStack stack) {
-		return UseAction.BOW;
+	public UseAnim getUseAnimation(ItemStack stack) {
+		return UseAnim.BOW;
 	}
 
 	@Override
-	public ActionResult<ItemStack> onItemRightClick(World worldIn, PlayerEntity playerIn, Hand handIn) {
-		ItemStack stack = playerIn.getHeldItem(handIn);
-		playerIn.setActiveHand(handIn);
-		return ActionResult.resultConsume(stack);
+	public InteractionResultHolder<ItemStack> use(Level worldIn, Player playerIn, InteractionHand handIn) {
+		ItemStack stack = playerIn.getItemInHand(handIn);
+		playerIn.startUsingItem(handIn);
+		return InteractionResultHolder.consume(stack);
 	}
 
 	@Override
-	public ItemStack onItemUseFinish(ItemStack stack, World worldIn, LivingEntity entityLiving) {
-		if (entityLiving instanceof PlayerEntity && !((PlayerEntity) entityLiving).isCreative())
-			if (stack.isDamageable())
-				stack.damageItem(1, entityLiving, e -> e.sendBreakAnimation(entityLiving.getActiveHand()));
+	public ItemStack finishUsingItem(ItemStack stack, Level worldIn, LivingEntity entityLiving) {
+		if (entityLiving instanceof Player && !((Player) entityLiving).isCreative())
+			if (stack.isDamageableItem())
+				stack.hurtAndBreak(1, entityLiving, e -> e.broadcastBreakEvent(entityLiving.getUsedItemHand()));
 			else
 				stack.shrink(1);
 
-		if (!worldIn.isRemote)
+		if (!worldIn.isClientSide)
 			RuneTeleport.teleport(entityLiving, worldIn, dimension);
 
 		return stack;

@@ -1,24 +1,23 @@
 package mod.vemerion.runeworld.feature;
 
-import java.util.Random;
-
 import mod.vemerion.runeworld.block.BloodPillarBlock;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.ISeedReader;
-import net.minecraft.world.gen.ChunkGenerator;
-import net.minecraft.world.gen.feature.Feature;
-import net.minecraft.world.gen.feature.NoFeatureConfig;
+import net.minecraft.world.level.levelgen.feature.Feature;
+import net.minecraft.world.level.levelgen.feature.FeaturePlaceContext;
+import net.minecraft.world.level.levelgen.feature.configurations.NoneFeatureConfiguration;
 
-public class BloodPillarSingleFeature extends Feature<NoFeatureConfig> {
+public class BloodPillarSingleFeature extends Feature<NoneFeatureConfiguration> {
 
 	public BloodPillarSingleFeature() {
-		super(NoFeatureConfig.field_236558_a_);
+		super(NoneFeatureConfiguration.CODEC);
 	}
 
 	@Override
-	public boolean generate(ISeedReader reader, ChunkGenerator generator, Random rand, BlockPos pos,
-			NoFeatureConfig config) {
-		if (!reader.getBlockState(pos.down()).isSolid())
+	public boolean place(FeaturePlaceContext<NoneFeatureConfiguration> context) {
+		var reader = context.level();
+		var pos = context.origin();
+		var rand = context.random();
+		
+		if (!reader.getBlockState(pos.below()).canOcclude())
 			return false;
 		return BloodPillarBlock.generatePillar(reader, rand, pos);
 	}

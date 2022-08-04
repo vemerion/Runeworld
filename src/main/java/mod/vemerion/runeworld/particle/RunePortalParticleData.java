@@ -8,11 +8,11 @@ import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 
 import mod.vemerion.runeworld.init.ModParticleTypes;
-import net.minecraft.network.PacketBuffer;
-import net.minecraft.particles.IParticleData;
-import net.minecraft.particles.ParticleType;
+import net.minecraft.network.FriendlyByteBuf;
+import net.minecraft.core.particles.ParticleOptions;
+import net.minecraft.core.particles.ParticleType;
 
-public class RunePortalParticleData implements IParticleData {
+public class RunePortalParticleData implements ParticleOptions {
 
 	public static final Codec<RunePortalParticleData> CODEC = RecordCodecBuilder.create((instance) -> {
 		return instance.group(Codec.FLOAT.fieldOf("r").forGetter((data) -> {
@@ -38,14 +38,14 @@ public class RunePortalParticleData implements IParticleData {
 	}
 
 	@Override
-	public void write(PacketBuffer buffer) {
+	public void writeToNetwork(FriendlyByteBuf buffer) {
 		buffer.writeFloat(getRed());
 		buffer.writeFloat(getGreen());
 		buffer.writeFloat(getBlue());
 	}
 
 	@Override
-	public String getParameters() {
+	public String writeToString() {
 		return String.format(Locale.ROOT, "%s %.2f %.2f %.2f", getType().getRegistryName().toString(), getRed(),
 				getGreen(), getBlue());
 	}
@@ -62,10 +62,10 @@ public class RunePortalParticleData implements IParticleData {
 		return blue;
 	}
 
-	public static class Deserializer implements IParticleData.IDeserializer<RunePortalParticleData> {
+	public static class Deserializer implements ParticleOptions.Deserializer<RunePortalParticleData> {
 
 		@Override
-		public RunePortalParticleData deserialize(ParticleType<RunePortalParticleData> particleTypeIn,
+		public RunePortalParticleData fromCommand(ParticleType<RunePortalParticleData> particleTypeIn,
 				StringReader reader) throws CommandSyntaxException {
 			float colors[] = new float[3];
 			for (int i = 0; i < 3; i++) {
@@ -76,7 +76,7 @@ public class RunePortalParticleData implements IParticleData {
 		}
 
 		@Override
-		public RunePortalParticleData read(ParticleType<RunePortalParticleData> particleTypeIn, PacketBuffer buffer) {
+		public RunePortalParticleData fromNetwork(ParticleType<RunePortalParticleData> particleTypeIn, FriendlyByteBuf buffer) {
 			return new RunePortalParticleData(buffer.readFloat(), buffer.readFloat(), buffer.readFloat());
 		}
 

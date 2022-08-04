@@ -15,14 +15,14 @@ import mod.vemerion.runeworld.item.DislocatorItem;
 import mod.vemerion.runeworld.item.FireRootItem;
 import mod.vemerion.runeworld.item.GuideItem;
 import mod.vemerion.runeworld.item.ThrowableItem;
-import net.minecraft.block.Block;
-import net.minecraft.item.BlockItem;
-import net.minecraft.item.Food;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemGroup;
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.Rarity;
-import net.minecraft.util.NonNullList;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.item.BlockItem;
+import net.minecraft.world.food.FoodProperties;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.CreativeModeTab;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Rarity;
+import net.minecraft.core.NonNullList;
 import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod.EventBusSubscriber;
@@ -56,7 +56,7 @@ public class ModItems {
 	public static final DislocatorItem FIRE_DISLOCATOR = null;
 	public static final Item FIRE_ROOT = null;
 
-	static final ItemGroup ITEM_GROUP = new RuneworldItemGroup();
+	static final CreativeModeTab ITEM_GROUP = new RuneworldItemGroup();
 
 	private static List<Pair<Block, Item.Properties>> withItem = new ArrayList<>();
 
@@ -68,19 +68,19 @@ public class ModItems {
 		Item bloodFlower = Init.setup(new BloodFlowerItem(), "blood_flower");
 		Item mosquitoEggs = Init.setup(new ThrowableItem(() -> ModEntities.MOSQUITO_EGGS, 0.5), "mosquito_eggs");
 		Item bloodBatTooth = Init.setup(new BloodBatToothItem(), "blood_bat_tooth");
-		Item guide = Init.setup(new GuideItem(new Item.Properties().group(ItemGroup.SEARCH)), "guide");
+		Item guide = Init.setup(new GuideItem(new Item.Properties().tab(CreativeModeTab.TAB_SEARCH)), "guide");
 		Item bloodCrystallite = Init.setup(new BloodCrystalliteItem(), "blood_crystallite");
 		Item bloodDislocator = Init.setup(
-				new DislocatorItem(new Item.Properties().group(ItemGroup.SEARCH), ModDimensions.BLOOD),
+				new DislocatorItem(new Item.Properties().tab(CreativeModeTab.TAB_SEARCH), ModDimensions.BLOOD),
 				"blood_dislocator");
 		Item bloodPebble = Init.setup(new ThrowableItem(() -> ModEntities.BLOOD_PEBBLE, 0.75), "blood_pebble");
-		Item grilledBloodLeech = Init.setup(new Item(new Item.Properties().group(ItemGroup.SEARCH)
-				.food(new Food.Builder().hunger(4).saturation(0.4f).meat().build())), "grilled_blood_leech");
+		Item grilledBloodLeech = Init.setup(new Item(new Item.Properties().tab(CreativeModeTab.TAB_SEARCH)
+				.food(new FoodProperties.Builder().nutrition(4).saturationMod(0.4f).meat().build())), "grilled_blood_leech");
 		Item fireHeart = Init.setup(
-				new Item(new Item.Properties().group(ItemGroup.SEARCH).rarity(Rarity.UNCOMMON).isImmuneToFire()),
+				new Item(new Item.Properties().tab(CreativeModeTab.TAB_SEARCH).rarity(Rarity.UNCOMMON).fireResistant()),
 				"fire_heart");
 		Item fireDislocator = Init
-				.setup(new DislocatorItem(new Item.Properties().group(ItemGroup.SEARCH).maxDamage(16).isImmuneToFire(),
+				.setup(new DislocatorItem(new Item.Properties().tab(CreativeModeTab.TAB_SEARCH).durability(16).fireResistant(),
 						ModDimensions.FIRE), "fire_dislocator");
 		Item fireRoot = Init.setup(new FireRootItem(), "fire_root");
 
@@ -93,7 +93,7 @@ public class ModItems {
 	private static void registerBlockItems(IForgeRegistry<Item> registry) {
 		for (Pair<Block, Item.Properties> p : withItem) {
 			Block b = p.getLeft();
-			Item.Properties properties = p.getRight().group(ItemGroup.SEARCH);
+			Item.Properties properties = p.getRight().tab(CreativeModeTab.TAB_SEARCH);
 			registry.register(Init.setup(new BlockItem(b, properties), b.getRegistryName()));
 		}
 	}
@@ -106,23 +106,23 @@ public class ModItems {
 		withItem.add(Pair.of(block, properties));
 	}
 
-	private static class RuneworldItemGroup extends ItemGroup {
+	private static class RuneworldItemGroup extends CreativeModeTab {
 
 		public RuneworldItemGroup() {
 			super(Main.MODID);
 		}
 
 		@Override
-		public ItemStack createIcon() {
+		public ItemStack makeIcon() {
 			return new ItemStack(BLOOD_CRYSTAL);
 		}
 
 		@Override
-		public void fill(NonNullList<ItemStack> items) {
+		public void fillItemList(NonNullList<ItemStack> items) {
 			for (Item item : ForgeRegistries.ITEMS) {
 				if (item != null)
 					if (item.getRegistryName().getNamespace().equals(Main.MODID)) {
-						item.fillItemGroup(ItemGroup.SEARCH, items);
+						item.fillItemCategory(CreativeModeTab.TAB_SEARCH, items);
 					}
 			}
 		}

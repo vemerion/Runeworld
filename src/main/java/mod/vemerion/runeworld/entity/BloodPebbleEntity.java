@@ -2,32 +2,32 @@ package mod.vemerion.runeworld.entity;
 
 import mod.vemerion.runeworld.init.ModEntities;
 import mod.vemerion.runeworld.init.ModItems;
-import net.minecraft.entity.Entity;
-import net.minecraft.entity.EntityType;
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.entity.projectile.ProjectileItemEntity;
-import net.minecraft.item.Item;
-import net.minecraft.network.IPacket;
-import net.minecraft.particles.ItemParticleData;
-import net.minecraft.particles.ParticleTypes;
-import net.minecraft.util.DamageSource;
-import net.minecraft.util.math.BlockRayTraceResult;
-import net.minecraft.util.math.EntityRayTraceResult;
-import net.minecraft.util.math.RayTraceResult;
-import net.minecraft.util.math.vector.Vector3d;
-import net.minecraft.world.World;
-import net.minecraftforge.fml.network.NetworkHooks;
+import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.entity.projectile.ThrowableItemProjectile;
+import net.minecraft.world.item.Item;
+import net.minecraft.network.protocol.Packet;
+import net.minecraft.core.particles.ItemParticleOption;
+import net.minecraft.core.particles.ParticleTypes;
+import net.minecraft.world.damagesource.DamageSource;
+import net.minecraft.world.phys.BlockHitResult;
+import net.minecraft.world.phys.EntityHitResult;
+import net.minecraft.world.phys.HitResult;
+import net.minecraft.world.phys.Vec3;
+import net.minecraftforge.network.NetworkHooks;
+import net.minecraft.world.level.Level;
 
-public class BloodPebbleEntity extends ProjectileItemEntity {
+public class BloodPebbleEntity extends ThrowableItemProjectile {
 
 	private boolean prevInWater;
 
-	public BloodPebbleEntity(LivingEntity livingEntityIn, World worldIn) {
+	public BloodPebbleEntity(LivingEntity livingEntityIn, Level worldIn) {
 		super(ModEntities.BLOOD_PEBBLE, livingEntityIn, worldIn);
 	}
 
-	public BloodPebbleEntity(EntityType<? extends BloodPebbleEntity> type, World world) {
+	public BloodPebbleEntity(EntityType<? extends BloodPebbleEntity> type, Level world) {
 		super(type, world);
 	}
 
@@ -41,59 +41,59 @@ public class BloodPebbleEntity extends ProjectileItemEntity {
 		super.tick();
 
 		if (isInWater() && !prevInWater) {
-			Vector3d motion = getMotion();
-			setMotion(new Vector3d(motion.x, -motion.y + 0.1, motion.z));
-			if (!world.isRemote && rand.nextBoolean())
+			Vec3 motion = getDeltaMovement();
+			setDeltaMovement(new Vec3(motion.x, -motion.y + 0.1, motion.z));
+			if (!level.isClientSide && random.nextBoolean())
 				drop();
 		}
 		prevInWater = isInWater();
 	}
 
 	@Override
-	protected void onImpact(RayTraceResult result) {
-		super.onImpact(result);
+	protected void onHit(HitResult result) {
+		super.onHit(result);
 		drop();
 	}
 
 	@Override
-	protected void func_230299_a_(BlockRayTraceResult result) {
-		super.func_230299_a_(result);
+	protected void onHitBlock(BlockHitResult result) {
+		super.onHitBlock(result);
 
-		if (world.isRemote) {
+		if (level.isClientSide) {
 			for (int i = 0; i < 10; i++) {
-				Vector3d particlePos = result.getHitVec().add(randCoord(), randCoord(), randCoord());
-				world.addParticle(new ItemParticleData(ParticleTypes.ITEM, getItem()), particlePos.x, particlePos.y,
+				Vec3 particlePos = result.getLocation().add(randCoord(), randCoord(), randCoord());
+				level.addParticle(new ItemParticleOption(ParticleTypes.ITEM, getItem()), particlePos.x, particlePos.y,
 						particlePos.z, 0, 0, 0);
 			}
 		}
 	}
 
 	private double randCoord() {
-		return (rand.nextDouble() - 0.5) * 0.5;
+		return (random.nextDouble() - 0.5) * 0.5;
 	}
 
 	@Override
-	protected void onEntityHit(EntityRayTraceResult result) {
+	protected void onHitEntity(EntityHitResult result) {
 		Entity target = result.getEntity();
-		if (!world.isRemote) {
+		if (!level.isClientSide) {
 			int damage = 4;
-			if (func_234616_v_() instanceof PlayerEntity)
+			if (getOwner() instanceof Player)
 				damage = 1;
-			target.attackEntityFrom(DamageSource.causeThrownDamage(this, func_234616_v_()), damage);
+			target.hurt(DamageSource.thrown(this, getOwner()), damage);
 		}
 	}
 
 	private void drop() {
-		if (!world.isRemote) {
-			remove();
-			if (rand.nextDouble() < 0.9 && func_234616_v_() instanceof PlayerEntity) {
-				entityDropItem(getItem());
+		if (!level.isClientSide) {
+			discard();
+			if (random.nextDouble() < 0.9 && getOwner() instanceof Player) {
+				spawnAtLocation(getItem());
 			}
 		}
 	}
 
 	@Override
-	public IPacket<?> createSpawnPacket() {
+	public Packet<?> getAddEntityPacket() {
 		return NetworkHooks.getEntitySpawningPacket(this);
 	}
 }

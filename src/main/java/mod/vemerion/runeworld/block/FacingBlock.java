@@ -2,21 +2,21 @@ package mod.vemerion.runeworld.block;
 
 import com.google.common.base.Preconditions;
 
-import net.minecraft.block.Block;
-import net.minecraft.block.BlockState;
-import net.minecraft.block.Blocks;
-import net.minecraft.block.DirectionalBlock;
-import net.minecraft.item.BlockItemUseContext;
-import net.minecraft.state.StateContainer;
-import net.minecraft.util.Direction;
-import net.minecraft.util.Mirror;
-import net.minecraft.util.Rotation;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.shapes.ISelectionContext;
-import net.minecraft.util.math.shapes.VoxelShape;
-import net.minecraft.world.IBlockReader;
-import net.minecraft.world.IWorld;
-import net.minecraft.world.IWorldReader;
+import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
+import net.minecraft.world.item.context.BlockPlaceContext;
+import net.minecraft.world.level.BlockGetter;
+import net.minecraft.world.level.LevelAccessor;
+import net.minecraft.world.level.LevelReader;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.block.DirectionalBlock;
+import net.minecraft.world.level.block.Mirror;
+import net.minecraft.world.level.block.Rotation;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.block.state.StateDefinition;
+import net.minecraft.world.phys.shapes.CollisionContext;
+import net.minecraft.world.phys.shapes.VoxelShape;
 
 public class FacingBlock extends DirectionalBlock {
 
@@ -26,56 +26,56 @@ public class FacingBlock extends DirectionalBlock {
 		super(builder);
 		Preconditions.checkElementIndex(5, shapes.length);
 		this.shapes = shapes;
-		this.setDefaultState(this.stateContainer.getBaseState().with(FACING, Direction.UP));
+		this.registerDefaultState(this.stateDefinition.any().setValue(FACING, Direction.UP));
 	}
 
 	// D-U-N-S-W-E
 	@Override
-	public VoxelShape getShape(BlockState state, IBlockReader worldIn, BlockPos pos, ISelectionContext context) {
-		return shapes[state.get(FACING).getIndex()];
+	public VoxelShape getShape(BlockState state, BlockGetter worldIn, BlockPos pos, CollisionContext context) {
+		return shapes[state.getValue(FACING).get3DDataValue()];
 	}
 
 	@Override
-	public boolean isValidPosition(BlockState state, IWorldReader worldIn, BlockPos pos) {
-		Direction direction = state.get(FACING);
-		pos = pos.offset(direction.getOpposite());
+	public boolean canSurvive(BlockState state, LevelReader worldIn, BlockPos pos) {
+		Direction direction = state.getValue(FACING);
+		pos = pos.relative(direction.getOpposite());
 		state = worldIn.getBlockState(pos);
-		return state.isSolidSide(worldIn, pos, direction);
+		return state.isFaceSturdy(worldIn, pos, direction);
 	}
 
 	@Override
 	public BlockState rotate(BlockState state, Rotation rot) {
-		return state.with(FACING, rot.rotate(state.get(FACING)));
+		return state.setValue(FACING, rot.rotate(state.getValue(FACING)));
 	}
 
 	@Override
 	public BlockState mirror(BlockState state, Mirror mirrorIn) {
-		return state.with(FACING, mirrorIn.mirror(state.get(FACING)));
+		return state.setValue(FACING, mirrorIn.mirror(state.getValue(FACING)));
 	}
 
 	@Override
-	public BlockState getStateForPlacement(BlockItemUseContext context) {
-		BlockState state = getDefaultState();
-		IWorldReader world = context.getWorld();
-		BlockPos pos = context.getPos();
+	public BlockState getStateForPlacement(BlockPlaceContext context) {
+		BlockState state = defaultBlockState();
+		LevelReader world = context.getLevel();
+		BlockPos pos = context.getClickedPos();
 
 		for (Direction direction : context.getNearestLookingDirections())
-			if ((state = state.with(FACING, direction.getOpposite())).isValidPosition(world, pos))
+			if ((state = state.setValue(FACING, direction.getOpposite())).canSurvive(world, pos))
 				return state;
 
 		return null;
 	}
 
 	@Override
-	protected void fillStateContainer(StateContainer.Builder<Block, BlockState> builder) {
+	protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> builder) {
 		builder.add(FACING);
 	}
 
 	@Override
-	public BlockState updatePostPlacement(BlockState stateIn, Direction facing, BlockState facingState, IWorld worldIn,
+	public BlockState updateShape(BlockState stateIn, Direction facing, BlockState facingState, LevelAccessor worldIn,
 			BlockPos currentPos, BlockPos facingPos) {
-		return facing.getOpposite() == stateIn.get(FACING) && !stateIn.isValidPosition(worldIn, currentPos)
-				? Blocks.AIR.getDefaultState()
+		return facing.getOpposite() == stateIn.getValue(FACING) && !stateIn.canSurvive(worldIn, currentPos)
+				? Blocks.AIR.defaultBlockState()
 				: stateIn;
 	}
 

@@ -1,16 +1,18 @@
 {
-  "effects": "minecraft:overworld",
+  "effects": "runeworld:blood",
   "ultrawarm": false,
   "natural": true,
   "ambient_light": 0.0,
   "has_skylight": true,
   "fixed_time": 13500,
   "has_ceiling": false,
-  "infiniburn": "minecraft:infiniburn_overworld",
+  "infiniburn": "#minecraft:infiniburn_overworld",
   "logical_height" : 256,
   "has_raids" : false,
   "respawn_anchor_works": false,
   "bed_works" : true,
   "piglin_safe" : false,
-  "coordinate_scale": 1.0
+  "coordinate_scale": 1.0,
+  "height": 256,
+  "min_y": 0
 }

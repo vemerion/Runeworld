@@ -18,16 +18,16 @@ import mod.vemerion.runeworld.block.FireRitualStoneBlock;
 import mod.vemerion.runeworld.block.FireRootBlock;
 import mod.vemerion.runeworld.block.RunePortalBlock;
 import mod.vemerion.runeworld.block.complex.StoneMaterial;
-import net.minecraft.block.AbstractBlock;
-import net.minecraft.block.Block;
-import net.minecraft.block.Blocks;
-import net.minecraft.block.FlowingFluidBlock;
-import net.minecraft.block.SoundType;
-import net.minecraft.block.material.Material;
-import net.minecraft.block.material.MaterialColor;
-import net.minecraft.item.Item;
-import net.minecraft.util.RegistryKey;
-import net.minecraft.world.World;
+import net.minecraft.world.level.block.state.BlockBehaviour;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.block.LiquidBlock;
+import net.minecraft.world.level.block.SoundType;
+import net.minecraft.world.level.material.Material;
+import net.minecraft.world.level.material.MaterialColor;
+import net.minecraft.world.item.Item;
+import net.minecraft.resources.ResourceKey;
+import net.minecraft.world.level.Level;
 import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod.EventBusSubscriber;
@@ -39,7 +39,7 @@ import net.minecraftforge.registries.ObjectHolder;
 @EventBusSubscriber(bus = Bus.MOD, modid = Main.MODID)
 public class ModBlocks {
 
-	public static final FlowingFluidBlock BLOOD = null;
+	public static final LiquidBlock BLOOD = null;
 	public static final Block BLOOD_FLOWER = null;
 	public static final BloodPillarBlock BLOOD_PILLAR_LARGE = null;
 	public static final BloodPillarBlock BLOOD_PILLAR_MEDIUM = null;
@@ -72,15 +72,15 @@ public class ModBlocks {
 		registry.register(withItem(Init.setup(new BloodPillarBlock(BloodPillarBlock.MEDIUM), "blood_pillar_medium")));
 		registry.register(withItem(Init.setup(new BloodPillarBlock(BloodPillarBlock.SMALL), "blood_pillar_small")));
 		registry.register(
-				withItem(Init.setup(new Block(AbstractBlock.Properties.from(Blocks.COBBLESTONE)), "blood_rock")));
+				withItem(Init.setup(new Block(BlockBehaviour.Properties.copy(Blocks.COBBLESTONE)), "blood_rock")));
 		registry.register(
-				withItem(Init.setup(new Block(AbstractBlock.Properties.from(Blocks.COBBLESTONE)), "blood_moss")));
+				withItem(Init.setup(new Block(BlockBehaviour.Properties.copy(Blocks.COBBLESTONE)), "blood_moss")));
 		registry.register(withItem(Init.setup(new BloodCrystalBlock(), "blood_crystal")));
 		registry.register(withItem(Init.setup(new BloodLeechBlock(), "blood_leech")));
 		registry.register(withItem(Init.setup(new CharredDirtBlock(), "charred_dirt")));
 		registry.register(withItem(
-				Init.setup(new FireGroundBlock(AbstractBlock.Properties.create(Material.ORGANIC, MaterialColor.ADOBE)
-						.hardnessAndResistance(0.6F).sound(SoundType.PLANT)), "burnt_dirt")));
+				Init.setup(new FireGroundBlock(BlockBehaviour.Properties.of(Material.GRASS, MaterialColor.COLOR_ORANGE)
+						.strength(0.6F).sound(SoundType.GRASS)), "burnt_dirt")));
 		registry.register(withItem(Init.setup(new FireRitualStoneBlock(), "fire_ritual_stone"), noFire()));
 		registry.register(Init.setup(new FireRootBlock(), "fire_root"));
 
@@ -90,7 +90,7 @@ public class ModBlocks {
 
 		// Complex
 		SPARKSTONE = new StoneMaterial("sparkstone", MaterialColor.STONE);
-		CHARRED_STONE = new StoneMaterial("charred_stone", MaterialColor.BLACK);
+		CHARRED_STONE = new StoneMaterial("charred_stone", MaterialColor.COLOR_BLACK);
 		stoneMaterial(SPARKSTONE, registry);
 		stoneMaterial(CHARRED_STONE, registry);
 	}
@@ -111,13 +111,13 @@ public class ModBlocks {
 	}
 
 	private static Item.Properties noFire() {
-		return new Item.Properties().isImmuneToFire();
+		return new Item.Properties().fireResistant();
 	}
 
-	private static RunePortalBlock createRunePortal(RegistryKey<World> dimension, Supplier<Item> rune, int red,
+	private static RunePortalBlock createRunePortal(ResourceKey<Level> dimension, Supplier<Item> rune, int red,
 			int green, int blue) {
 		RunePortalBlock portal = Init.setup(new RunePortalBlock(dimension, rune, red, green, blue),
-				dimension.getLocation().getPath() + "_rune_portal");
+				dimension.location().getPath() + "_rune_portal");
 		RUNE_PORTALS.add(portal);
 		return portal;
 	}

@@ -1,43 +1,43 @@
 package mod.vemerion.runeworld.block;
 
 import mod.vemerion.runeworld.init.ModItems;
-import net.minecraft.block.AbstractBlock;
-import net.minecraft.block.Block;
-import net.minecraft.block.BlockState;
-import net.minecraft.block.CropsBlock;
-import net.minecraft.block.SoundType;
-import net.minecraft.block.material.Material;
-import net.minecraft.block.material.MaterialColor;
-import net.minecraft.util.IItemProvider;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.shapes.ISelectionContext;
-import net.minecraft.util.math.shapes.VoxelShape;
-import net.minecraft.world.IBlockReader;
+import net.minecraft.world.level.block.state.BlockBehaviour;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.block.CropBlock;
+import net.minecraft.world.level.block.SoundType;
+import net.minecraft.world.level.material.Material;
+import net.minecraft.world.level.material.MaterialColor;
+import net.minecraft.world.level.ItemLike;
+import net.minecraft.core.BlockPos;
+import net.minecraft.world.phys.shapes.CollisionContext;
+import net.minecraft.world.phys.shapes.VoxelShape;
+import net.minecraft.world.level.BlockGetter;
 import net.minecraftforge.common.PlantType;
 
-public class FireRootBlock extends CropsBlock {
+public class FireRootBlock extends CropBlock {
 
 	public FireRootBlock() {
-		super(AbstractBlock.Properties.create(Material.PLANTS, MaterialColor.GRAY).doesNotBlockMovement().tickRandomly()
-				.zeroHardnessAndResistance().sound(SoundType.CROP));
+		super(BlockBehaviour.Properties.of(Material.PLANT, MaterialColor.COLOR_GRAY).noCollission().randomTicks()
+				.instabreak().sound(SoundType.CROP));
 	}
 
 	@Override
-	protected IItemProvider getSeedsItem() {
+	protected ItemLike getBaseSeedId() {
 		return ModItems.FIRE_ROOT;
 	}
 
 	@Override
-	protected boolean isValidGround(BlockState state, IBlockReader worldIn, BlockPos pos) {
+	protected boolean mayPlaceOn(BlockState state, BlockGetter worldIn, BlockPos pos) {
 		return false;
 	}
 
 	@Override
-	public PlantType getPlantType(IBlockReader world, BlockPos pos) {
+	public PlantType getPlantType(BlockGetter world, BlockPos pos) {
 		return PlantType.get("fire");
 	}
 
-	public VoxelShape getShape(BlockState state, IBlockReader worldIn, BlockPos pos, ISelectionContext context) {
-		return Block.makeCuboidShape(0, 0, 0, 16, state.get(getAgeProperty()) + 2, 16);
+	public VoxelShape getShape(BlockState state, BlockGetter worldIn, BlockPos pos, CollisionContext context) {
+		return Block.box(0, 0, 0, 16, state.getValue(getAgeProperty()) + 2, 16);
 	}
 }

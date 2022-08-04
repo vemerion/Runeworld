@@ -3,17 +3,17 @@ package mod.vemerion.runeworld.init;
 import mod.vemerion.runeworld.Main;
 import mod.vemerion.runeworld.structure.BloodBatLairStructure;
 import mod.vemerion.runeworld.structure.FireRitualStructure;
-import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.registry.Registry;
-import net.minecraft.world.gen.feature.structure.IStructurePieceType;
+import net.minecraft.core.Registry;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.level.levelgen.structure.pieces.StructurePieceType;
 
 public class ModStructurePieces {
 
-	public static IStructurePieceType BLOOD_BAT_LAIR_PIECE;
-	public static IStructurePieceType FIRE_RITUAL_PIECE;
+	public static StructurePieceType BLOOD_BAT_LAIR_PIECE;
+	public static StructurePieceType FIRE_RITUAL_PIECE;
 
 	public static void register() {
-		Registry<IStructurePieceType> reg = Registry.STRUCTURE_PIECE;
+		Registry<StructurePieceType> reg = Registry.STRUCTURE_PIECE;
 
 		BLOOD_BAT_LAIR_PIECE = BloodBatLairStructure.Piece::new;
 		FIRE_RITUAL_PIECE = FireRitualStructure.Piece::new;

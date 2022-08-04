@@ -6,11 +6,11 @@ import mod.vemerion.runeworld.capability.RuneTeleport;
 import mod.vemerion.runeworld.helpers.Helper;
 import mod.vemerion.runeworld.init.ModSounds;
 import mod.vemerion.runeworld.init.Runesword;
-import net.minecraft.block.BlockState;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.ItemStack;
-import net.minecraft.util.SoundCategory;
-import net.minecraft.util.math.BlockPos;
+import net.minecraft.core.BlockPos;
+import net.minecraft.sounds.SoundSource;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.block.state.BlockState;
 import net.minecraftforge.common.Tags;
 import net.minecraftforge.event.TickEvent.Phase;
 import net.minecraftforge.event.TickEvent.PlayerTickEvent;
@@ -30,26 +30,28 @@ public class ForgeEventSubscriber {
 
 	@SubscribeEvent
 	public static void createPortal(PlayerInteractEvent.RightClickBlock event) {
-		if (event.getWorld().isRemote)
+		var level = event.getWorld();
+		if (level.isClientSide)
 			return;
+
 		ItemStack stack = event.getItemStack();
 		BlockState state = event.getWorld().getBlockState(event.getPos());
 		BlockPos pos = event.getPos();
-		if (Runesword.isRune(stack.getItem()) && state.isIn(Tags.Blocks.OBSIDIAN)) {
+		if (Runesword.isRune(stack.getItem()) && state.is(Tags.Blocks.OBSIDIAN)) {
 			if (RunePortalBlock.createPortal(event.getWorld(), pos,
 					RunePortalBlock.getPortalFromRune(stack.getItem()))) {
 				if (!event.getPlayer().isCreative())
 					stack.shrink(1);
 				event.getWorld().playSound(null, pos.getX(), pos.getY(), pos.getZ(), ModSounds.PORTAL,
-						SoundCategory.PLAYERS, 1, Helper.soundPitch(event.getPlayer().getRNG()));
+						SoundSource.PLAYERS, 1, Helper.soundPitch(event.getPlayer().getRandom()));
 			}
 		}
 	}
 
 	@SubscribeEvent
 	public static void playerTick(PlayerTickEvent event) {
-		PlayerEntity player = event.player;
-		if (player.world.isRemote || event.phase == Phase.END)
+		Player player = event.player;
+		if (player.level.isClientSide || event.phase == Phase.END)
 			return;
 		RuneTeleport.getRuneTeleport(player).ifPresent(tp -> tp.tick(player));
 	}

@@ -3,25 +3,25 @@ package mod.vemerion.runeworld.block;
 import java.util.Random;
 
 import mod.vemerion.runeworld.init.ModBlocks;
-import net.minecraft.block.AbstractBlock;
-import net.minecraft.block.AbstractFireBlock;
-import net.minecraft.block.BlockState;
-import net.minecraft.block.SoundType;
-import net.minecraft.block.material.Material;
-import net.minecraft.block.material.MaterialColor;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.server.ServerWorld;
+import net.minecraft.world.level.block.state.BlockBehaviour;
+import net.minecraft.world.level.block.BaseFireBlock;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.block.SoundType;
+import net.minecraft.world.level.material.Material;
+import net.minecraft.world.level.material.MaterialColor;
+import net.minecraft.core.BlockPos;
+import net.minecraft.server.level.ServerLevel;
 
 public class CharredDirtBlock extends FireGroundBlock {
 
 	public CharredDirtBlock() {
-		super(AbstractBlock.Properties.create(Material.EARTH, MaterialColor.BLACK).hardnessAndResistance(0.5f)
-				.sound(SoundType.GROUND).tickRandomly());
+		super(BlockBehaviour.Properties.of(Material.DIRT, MaterialColor.COLOR_BLACK).strength(0.5f)
+				.sound(SoundType.GRAVEL).randomTicks());
 	}
 
 	@Override
-	public void randomTick(BlockState state, ServerWorld worldIn, BlockPos pos, Random random) {
-		if (worldIn.getBlockState(pos.up()).getBlock() instanceof AbstractFireBlock)
-			worldIn.setBlockState(pos, ModBlocks.BURNT_DIRT.getDefaultState());
+	public void randomTick(BlockState state, ServerLevel worldIn, BlockPos pos, Random random) {
+		if (worldIn.getBlockState(pos.above()).getBlock() instanceof BaseFireBlock)
+			worldIn.setBlockAndUpdate(pos, ModBlocks.BURNT_DIRT.defaultBlockState());
 	}
 }

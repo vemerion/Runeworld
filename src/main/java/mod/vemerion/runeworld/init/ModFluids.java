@@ -2,24 +2,18 @@ package mod.vemerion.runeworld.init;
 
 import mod.vemerion.runeworld.Main;
 import mod.vemerion.runeworld.fluid.BloodFluid;
-import net.minecraft.fluid.Fluid;
-import net.minecraftforge.event.RegistryEvent;
-import net.minecraftforge.eventbus.api.SubscribeEvent;
-import net.minecraftforge.fluids.ForgeFlowingFluid;
-import net.minecraftforge.fml.common.Mod.EventBusSubscriber;
-import net.minecraftforge.fml.common.Mod.EventBusSubscriber.Bus;
-import net.minecraftforge.registries.ObjectHolder;
+import net.minecraft.world.level.material.Fluid;
+import net.minecraftforge.registries.DeferredRegister;
+import net.minecraftforge.registries.ForgeRegistries;
+import net.minecraftforge.registries.RegistryObject;
 
-@ObjectHolder(value = Main.MODID)
-@EventBusSubscriber(bus = Bus.MOD, modid = Main.MODID)
 public class ModFluids {
 	
-	public static final ForgeFlowingFluid BLOOD_FLOWING = null;
-	public static final ForgeFlowingFluid BLOOD = null;
+	public static final DeferredRegister<Fluid> FLUIDS = DeferredRegister.create(ForgeRegistries.FLUIDS, Main.MODID);
 
-	@SubscribeEvent
-	public static void onRegisterFluid(RegistryEvent.Register<Fluid> event) {
-		event.getRegistry().register(Init.setup(new BloodFluid.Flowing(), "blood_flowing"));
-		event.getRegistry().register(Init.setup(new BloodFluid.Source(), "blood"));
-	}
+	public static final RegistryObject<BloodFluid.Flowing> BLOOD_FLOWING = FLUIDS.register("blood_flowing",
+			() -> new BloodFluid.Flowing());
+	
+	public static final RegistryObject<BloodFluid.Source> BLOOD = FLUIDS.register("blood",
+			() -> new BloodFluid.Source());
 }

@@ -1,33 +1,33 @@
 package mod.vemerion.runeworld.item;
 
 import mod.vemerion.runeworld.init.ModFluids;
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.BucketItem;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemGroup;
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.Items;
-import net.minecraft.item.UseAction;
-import net.minecraft.util.ActionResult;
-import net.minecraft.util.ActionResultType;
-import net.minecraft.util.DrinkHelper;
-import net.minecraft.util.Hand;
-import net.minecraft.world.World;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.BucketItem;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.CreativeModeTab;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
+import net.minecraft.world.item.UseAnim;
+import net.minecraft.world.InteractionResultHolder;
+import net.minecraft.world.InteractionResult;
+import net.minecraft.world.item.ItemUtils;
+import net.minecraft.world.InteractionHand;
+import net.minecraft.world.level.Level;
 
 public class BloodBucketItem extends BucketItem {
 
 	public BloodBucketItem() {
-		super(() -> ModFluids.BLOOD,
-				new Item.Properties().containerItem(Items.BUCKET).maxStackSize(1).group(ItemGroup.SEARCH));
+		super(ModFluids.BLOOD,
+				new Item.Properties().craftRemainder(Items.BUCKET).stacksTo(1).tab(CreativeModeTab.TAB_SEARCH));
 	}
 
 	@Override
-	public ItemStack onItemUseFinish(ItemStack stack, World worldIn, LivingEntity entityLiving) {
-		if (!worldIn.isRemote)
+	public ItemStack finishUsingItem(ItemStack stack, Level worldIn, LivingEntity entityLiving) {
+		if (!worldIn.isClientSide)
 			entityLiving.curePotionEffects(stack);
 
-		if (entityLiving instanceof PlayerEntity && !((PlayerEntity) entityLiving).abilities.isCreativeMode) {
+		if (entityLiving instanceof Player player && !player.getAbilities().instabuild) {
 			stack.shrink(1);
 		}
 
@@ -40,15 +40,15 @@ public class BloodBucketItem extends BucketItem {
 	}
 
 	@Override
-	public UseAction getUseAction(ItemStack stack) {
-		return UseAction.DRINK;
+	public UseAnim getUseAnimation(ItemStack stack) {
+		return UseAnim.DRINK;
 	}
 
 	@Override
-	public ActionResult<ItemStack> onItemRightClick(World worldIn, PlayerEntity playerIn, Hand handIn) {
-		ActionResult<ItemStack> bucket = super.onItemRightClick(worldIn, playerIn, handIn);
-		if (bucket.getType() == ActionResultType.PASS) {
-			return DrinkHelper.startDrinking(worldIn, playerIn, handIn);
+	public InteractionResultHolder<ItemStack> use(Level worldIn, Player playerIn, InteractionHand handIn) {
+		InteractionResultHolder<ItemStack> bucket = super.use(worldIn, playerIn, handIn);
+		if (bucket.getResult() == InteractionResult.PASS) {
+			return ItemUtils.startUsingInstantly(worldIn, playerIn, handIn);
 		} else {
 			return bucket;
 		}

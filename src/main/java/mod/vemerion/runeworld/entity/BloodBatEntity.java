@@ -6,66 +6,63 @@ import mod.vemerion.runeworld.goal.HoverWanderGoal;
 import mod.vemerion.runeworld.init.ModEffects;
 import mod.vemerion.runeworld.init.ModParticleTypes;
 import mod.vemerion.runeworld.init.ModSounds;
-import net.minecraft.block.BlockState;
-import net.minecraft.entity.CreatureEntity;
-import net.minecraft.entity.Entity;
-import net.minecraft.entity.EntityType;
-import net.minecraft.entity.MobEntity;
-import net.minecraft.entity.ai.attributes.AttributeModifierMap;
-import net.minecraft.entity.ai.attributes.Attributes;
-import net.minecraft.entity.ai.controller.FlyingMovementController;
-import net.minecraft.entity.ai.goal.Goal;
-import net.minecraft.entity.ai.goal.LookAtGoal;
-import net.minecraft.entity.ai.goal.LookRandomlyGoal;
-import net.minecraft.entity.ai.goal.MeleeAttackGoal;
-import net.minecraft.entity.ai.goal.NearestAttackableTargetGoal;
-import net.minecraft.entity.passive.IFlyingAnimal;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.network.datasync.DataParameter;
-import net.minecraft.network.datasync.DataSerializers;
-import net.minecraft.network.datasync.EntityDataManager;
-import net.minecraft.pathfinding.FlyingPathNavigator;
-import net.minecraft.pathfinding.PathNavigator;
-import net.minecraft.potion.EffectInstance;
-import net.minecraft.util.DamageSource;
-import net.minecraft.util.SoundEvent;
-import net.minecraft.util.math.AxisAlignedBB;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.MathHelper;
-import net.minecraft.util.math.vector.Vector3d;
-import net.minecraft.world.IWorld;
-import net.minecraft.world.World;
+import net.minecraft.core.BlockPos;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.network.syncher.EntityDataAccessor;
+import net.minecraft.network.syncher.EntityDataSerializers;
+import net.minecraft.network.syncher.SynchedEntityData;
+import net.minecraft.sounds.SoundEvent;
+import net.minecraft.util.Mth;
+import net.minecraft.world.damagesource.DamageSource;
+import net.minecraft.world.effect.MobEffectInstance;
+import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.Mob;
+import net.minecraft.world.entity.PathfinderMob;
+import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
+import net.minecraft.world.entity.ai.attributes.Attributes;
+import net.minecraft.world.entity.ai.control.FlyingMoveControl;
+import net.minecraft.world.entity.ai.goal.Goal;
+import net.minecraft.world.entity.ai.goal.LookAtPlayerGoal;
+import net.minecraft.world.entity.ai.goal.MeleeAttackGoal;
+import net.minecraft.world.entity.ai.goal.RandomLookAroundGoal;
+import net.minecraft.world.entity.ai.goal.target.NearestAttackableTargetGoal;
+import net.minecraft.world.entity.ai.navigation.FlyingPathNavigation;
+import net.minecraft.world.entity.ai.navigation.PathNavigation;
+import net.minecraft.world.entity.animal.FlyingAnimal;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.LevelAccessor;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.phys.AABB;
+import net.minecraft.world.phys.Vec3;
 
-public class BloodBatEntity extends CreatureEntity implements IFlyingAnimal {
+public class BloodBatEntity extends PathfinderMob implements FlyingAnimal {
 
-	private static final DataParameter<Boolean> HANGING = EntityDataManager.createKey(BloodBatEntity.class,
-			DataSerializers.BOOLEAN);
+	private static final EntityDataAccessor<Boolean> HANGING = SynchedEntityData.defineId(BloodBatEntity.class,
+			EntityDataSerializers.BOOLEAN);
 
-	private Vector3d hangingPos;
+	private Vec3 hangingPos;
 
-	public BloodBatEntity(EntityType<? extends BloodBatEntity> type, World worldIn) {
+	public BloodBatEntity(EntityType<? extends BloodBatEntity> type, Level worldIn) {
 		super(type, worldIn);
-		this.moveController = new FlyingMovementController(this, 20, true);
-		this.experienceValue = 5;
+		this.moveControl = new FlyingMoveControl(this, 20, true);
+		this.xpReward = 5;
 	}
 
-	public static AttributeModifierMap.MutableAttribute attributes() {
-		return MobEntity.func_233666_p_().createMutableAttribute(Attributes.MAX_HEALTH, 20)
-				.createMutableAttribute(Attributes.MOVEMENT_SPEED, 0.2D)
-				.createMutableAttribute(Attributes.FOLLOW_RANGE, 24)
-				.createMutableAttribute(Attributes.FLYING_SPEED, 0.4D)
-				.createMutableAttribute(Attributes.ATTACK_DAMAGE, 3);
+	public static AttributeSupplier.Builder attributes() {
+		return Mob.createMobAttributes().add(Attributes.MAX_HEALTH, 20).add(Attributes.MOVEMENT_SPEED, 0.2D)
+				.add(Attributes.FOLLOW_RANGE, 24).add(Attributes.FLYING_SPEED, 0.4D).add(Attributes.ATTACK_DAMAGE, 3);
 	}
 
 	@Override
 	public void tick() {
 		super.tick();
-		updateArmSwingProgress();
-		if (isHanging() && !world.isRemote) {
-			setPosition(hangingPos.x, hangingPos.y, hangingPos.z);
+		updateSwingTime();
+		if (isHanging() && !level.isClientSide) {
+			setPos(hangingPos.x, hangingPos.y, hangingPos.z);
 
-			if (!world.getBlockState(getPosition().up(2)).isSolid())
+			if (!level.getBlockState(blockPosition().above(2)).canOcclude())
 				stopHanging();
 		}
 
@@ -83,33 +80,33 @@ public class BloodBatEntity extends CreatureEntity implements IFlyingAnimal {
 	}
 
 	@Override
-	public int getTalkInterval() {
+	public int getAmbientSoundInterval() {
 		return isHanging() ? 80 : 20;
 	}
 
 	private void dripBlood() {
-		if (!world.isRemote || !isHanging())
+		if (!level.isClientSide || !isHanging())
 			return;
 
-		if (getRNG().nextDouble() < 0.02) {
-			Vector3d offset = new Vector3d((getRNG().nextDouble() - 0.5) * 0.2, 0.15,
-					(getRNG().nextDouble() - 0.5) * 0.2);
-			Vector3d pos = getPositionVec().add(Vector3d.fromPitchYaw(0, rotationYaw).scale(0.7)).add(offset);
-			world.addParticle(ModParticleTypes.DRIPPING_BLOOD, pos.x, pos.y, pos.z, 0, 0, 0);
+		if (getRandom().nextDouble() < 0.02) {
+			Vec3 offset = new Vec3((getRandom().nextDouble() - 0.5) * 0.2, 0.15,
+					(getRandom().nextDouble() - 0.5) * 0.2);
+			Vec3 pos = position().add(Vec3.directionFromRotation(0, getYRot()).scale(0.7)).add(offset);
+			level.addParticle(ModParticleTypes.DRIPPING_BLOOD, pos.x, pos.y, pos.z, 0, 0, 0);
 		}
 	}
 
 	@Override
-	protected PathNavigator createNavigator(World world) {
-		FlyingPathNavigator navigator = new FlyingPathNavigator(this, world) {
+	protected PathNavigation createNavigation(Level world) {
+		FlyingPathNavigation navigator = new FlyingPathNavigation(this, world) {
 			@Override
-			public boolean canEntityStandOnPos(BlockPos pos) {
-				BlockState state = this.world.getBlockState(pos);
-				return state.getBlock().isAir(state, world, pos) || !state.getMaterial().blocksMovement();
+			public boolean isStableDestination(BlockPos pos) {
+				BlockState state = this.level.getBlockState(pos);
+				return state.isAir() || !state.getMaterial().blocksMotion();
 			}
 		};
-		navigator.setCanEnterDoors(false);
-		navigator.setCanSwim(false);
+		navigator.setCanPassDoors(false);
+		navigator.setCanFloat(false);
 		navigator.setCanOpenDoors(false);
 		return navigator;
 	}
@@ -118,72 +115,72 @@ public class BloodBatEntity extends CreatureEntity implements IFlyingAnimal {
 	protected void registerGoals() {
 		goalSelector.addGoal(1, new MeleeAttackGoal(this, 1.65, true) {
 			@Override
-			public boolean shouldExecute() {
-				return super.shouldExecute() && !isHanging();
+			public boolean canUse() {
+				return super.canUse() && !isHanging();
 			}
 		});
 		goalSelector.addGoal(2, new FindLedgeGoal(this));
 		goalSelector.addGoal(3, new HoverWanderGoal(this) {
 			@Override
-			public boolean shouldExecute() {
-				return super.shouldExecute() && !isHanging();
+			public boolean canUse() {
+				return super.canUse() && !isHanging();
 			}
 		});
-		goalSelector.addGoal(4, new LookAtGoal(this, PlayerEntity.class, 6.0F) {
+		goalSelector.addGoal(4, new LookAtPlayerGoal(this, Player.class, 6.0F) {
 			@Override
-			public boolean shouldExecute() {
-				return super.shouldExecute() && !isHanging();
+			public boolean canUse() {
+				return super.canUse() && !isHanging();
 			}
 		});
-		goalSelector.addGoal(5, new LookRandomlyGoal(this) {
+		goalSelector.addGoal(5, new RandomLookAroundGoal(this) {
 			@Override
-			public boolean shouldExecute() {
-				return super.shouldExecute() && !isHanging();
+			public boolean canUse() {
+				return super.canUse() && !isHanging();
 			}
 		});
-		targetSelector.addGoal(1, new NearestAttackableTargetGoal<PlayerEntity>(this, PlayerEntity.class, true) {
+		targetSelector.addGoal(1, new NearestAttackableTargetGoal<Player>(this, Player.class, true) {
 			@Override
-			public boolean shouldExecute() {
-				return super.shouldExecute() && !isHanging();
+			public boolean canUse() {
+				return super.canUse() && !isHanging();
 			}
 		});
 	}
 
 	@Override
-	public boolean canDespawn(double distanceToClosestPlayer) {
+	public boolean removeWhenFarAway(double distanceToClosestPlayer) {
 		return false;
 	}
 
 	@Override
-	protected boolean isDespawnPeaceful() {
+	protected boolean shouldDespawnInPeaceful() {
 		return true;
 	}
 
 	@Override
-	protected void registerData() {
-		super.registerData();
-		dataManager.register(HANGING, false);
+	protected void defineSynchedData() {
+		super.defineSynchedData();
+		entityData.define(HANGING, false);
 	}
 
 	@Override
-	public void readAdditional(CompoundNBT compound) {
-		super.readAdditional(compound);
+	public void readAdditionalSaveData(CompoundTag compound) {
+		super.readAdditionalSaveData(compound);
 		if (compound.contains("hanging") && compound.getBoolean("hanging")) {
-			startHanging(new Vector3d(compound.getDouble("hangingX"), compound.getDouble("hangingY"),
+			startHanging(new Vec3(compound.getDouble("hangingX"), compound.getDouble("hangingY"),
 					compound.getDouble("hangingZ")));
 		}
 	}
 
 	@Override
-	protected Vector3d handlePistonMovement(Vector3d pos) {
+	protected Vec3 limitPistonMovement(Vec3 pos) {
 		if (isHanging())
 			stopHanging();
-		return super.handlePistonMovement(pos);
+		return super.limitPistonMovement(pos);
 	}
 
 	@Override
-	public void writeAdditional(CompoundNBT compound) {
-		super.writeAdditional(compound);
+	public void addAdditionalSaveData(CompoundTag compound) {
+		super.addAdditionalSaveData(compound);
 		if (isHanging()) {
 			compound.putDouble("hangingX", hangingPos.x);
 			compound.putDouble("hangingY", hangingPos.y);
@@ -195,69 +192,74 @@ public class BloodBatEntity extends CreatureEntity implements IFlyingAnimal {
 	}
 
 	public boolean isHanging() {
-		return dataManager.get(HANGING);
+		return entityData.get(HANGING);
 	}
 
-	public void startHanging(Vector3d pos) {
+	public void startHanging(Vec3 pos) {
 		hangingPos = pos;
-		dataManager.set(HANGING, true);
+		entityData.set(HANGING, true);
 	}
 
 	public void stopHanging() {
-		dataManager.set(HANGING, false);
+		entityData.set(HANGING, false);
 	}
 
 	public float getAnimationHeight(float partialTicks) {
-		return MathHelper.cos((ticksExisted + partialTicks) / 5);
+		return Mth.cos((tickCount + partialTicks) / 5);
 	}
 
 	@Override
-	public boolean attackEntityAsMob(Entity entityIn) {
-		if (super.attackEntityAsMob(entityIn)) {
-			if (rand.nextDouble() < 0.15 && entityIn instanceof PlayerEntity)
-				((PlayerEntity) entityIn).addPotionEffect(new EffectInstance(ModEffects.BLOOD_DRAINED, 20 * 60));
+	public boolean doHurtTarget(Entity entityIn) {
+		if (super.doHurtTarget(entityIn)) {
+			if (random.nextDouble() < 0.15 && entityIn instanceof Player)
+				((Player) entityIn).addEffect(new MobEffectInstance(ModEffects.BLOOD_DRAINED, 20 * 60));
 			return true;
 		}
 		return false;
 	}
 
 	@Override
-	protected boolean makeFlySound() {
-		return true;
-	}
-
-	@Override
-	public boolean onLivingFall(float fallDistance, float damageMultiplier) {
+	public boolean causeFallDamage(float fallDistance, float damageMultiplier, DamageSource pSource) {
 		return false;
 	}
 
 	@Override
-	public boolean hasNoGravity() {
+	public boolean isNoGravity() {
 		return true;
 	}
 
 	@Override
-	protected boolean canTriggerWalking() {
-		return !isHanging();
+	protected MovementEmission getMovementEmission() {
+		return isHanging() ? MovementEmission.NONE : MovementEmission.ALL;
 	}
 
 	@Override
-	public boolean attackEntityFrom(DamageSource source, float amount) {
-		if (super.attackEntityFrom(source, amount)) {
+	protected boolean isFlapping() {
+		return isFlying() && tickCount % 20 == 0;
+	}
+
+	@Override
+	public boolean isFlying() {
+		return !this.onGround;
+	}
+
+	@Override
+	public boolean hurt(DamageSource source, float amount) {
+		if (super.hurt(source, amount)) {
 			if (isHanging()) {
 				stopHanging();
-				if (source.getTrueSource() instanceof PlayerEntity)
-					setAttackTarget((PlayerEntity) source.getTrueSource());
+				if (source.getEntity() instanceof Player)
+					setTarget((Player) source.getEntity());
 			}
 			return true;
 		}
 		return false;
 	}
 
-	public static boolean isValidLedgePos(IWorld world, BlockPos pos, BloodBatEntity bat) {
-		return pos != null && world.getBlockState(pos).isSolid() && world.isAirBlock(pos.down())
-				&& world.isAirBlock(pos.down(2))
-				&& world.getEntitiesWithinAABBExcludingEntity(bat, new AxisAlignedBB(pos).expand(0, -2, 0)).isEmpty();
+	public static boolean isValidLedgePos(LevelAccessor world, BlockPos pos, BloodBatEntity bat) {
+		return pos != null && world.getBlockState(pos).canOcclude() && world.isEmptyBlock(pos.below())
+				&& world.isEmptyBlock(pos.below(2))
+				&& world.getEntities(bat, new AABB(pos).expandTowards(0, -2, 0)).isEmpty();
 	}
 
 	private static class FindLedgeGoal extends Goal {
@@ -266,46 +268,46 @@ public class BloodBatEntity extends CreatureEntity implements IFlyingAnimal {
 
 		private FindLedgeGoal(BloodBatEntity mosquito) {
 			this.bat = mosquito;
-			this.setMutexFlags(EnumSet.of(Goal.Flag.MOVE));
+			this.setFlags(EnumSet.of(Goal.Flag.MOVE));
 		}
 
 		@Override
-		public boolean shouldExecute() {
-			return bat.getNavigator().noPath() && bat.getRNG().nextInt(2) == 0 && !bat.isHanging();
+		public boolean canUse() {
+			return bat.getNavigation().isDone() && bat.getRandom().nextInt(2) == 0 && !bat.isHanging();
 		}
 
 		@Override
-		public boolean shouldContinueExecuting() {
-			return bat.getNavigator().hasPath();
+		public boolean canContinueToUse() {
+			return bat.getNavigation().isInProgress();
 		}
 
 		@Override
-		public void startExecuting() {
+		public void start() {
 			updateLedgePos();
 		}
 
 		@Override
 		public void tick() {
-			if (!isValidLedgePos(bat.world, ledgePos, bat))
+			if (!isValidLedgePos(bat.level, ledgePos, bat))
 				updateLedgePos();
 
 			if (ledgePos != null) {
-				Vector3d target = Vector3d.copyCenteredHorizontally(ledgePos).add(0, -1.75, 0);
-				if (target.squareDistanceTo(bat.getPositionVec()) < 3) {
-					bat.getNavigator().setPath(null, 0);
-					bat.setPosition(target.x, target.y, target.z);
+				Vec3 target = Vec3.atBottomCenterOf(ledgePos).add(0, -1.75, 0);
+				if (target.distanceToSqr(bat.position()) < 3) {
+					bat.getNavigation().stop();
+					bat.setPos(target.x, target.y, target.z);
 					bat.startHanging(target);
 				}
 			}
 		}
 
 		private BlockPos ledgePos() {
-			World world = bat.world;
-			BlockPos batPos = bat.getPosition();
+			Level world = bat.level;
+			BlockPos batPos = bat.blockPosition();
 			for (int x = -6; x < 7; x++) {
 				for (int y = -6; y < 7; y++) {
 					for (int z = -6; z < 7; z++) {
-						BlockPos pos = batPos.add(x, y, z);
+						BlockPos pos = batPos.offset(x, y, z);
 						if (isValidLedgePos(world, pos, bat))
 							return pos;
 					}
@@ -318,7 +320,7 @@ public class BloodBatEntity extends CreatureEntity implements IFlyingAnimal {
 			BlockPos pos = ledgePos();
 			if (pos != null) {
 				ledgePos = pos;
-				bat.getNavigator().setPath(bat.getNavigator().getPathToPos(pos.down(2), 1), 1);
+				bat.getNavigation().moveTo(bat.getNavigation().createPath(pos.below(2), 1), 1);
 			}
 		}
 	}

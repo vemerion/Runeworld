@@ -1,25 +1,25 @@
 package mod.vemerion.runeworld.item;
 
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.item.Food;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemGroup;
-import net.minecraft.item.ItemStack;
-import net.minecraft.world.World;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.food.FoodProperties;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.CreativeModeTab;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.Level;
 
 public class BloodPuddingItem extends Item {
 
 	public BloodPuddingItem() {
-		super(new Item.Properties().group(ItemGroup.SEARCH)
-				.food(new Food.Builder().hunger(3).saturation(0.3F).meat().build()));
+		super(new Item.Properties().tab(CreativeModeTab.TAB_SEARCH)
+				.food(new FoodProperties.Builder().nutrition(3).saturationMod(0.3F).meat().build()));
 	}
 
 	@Override
-	public ItemStack onItemUseFinish(ItemStack stack, World worldIn, LivingEntity entityLiving) {
-		if (!worldIn.isRemote)
+	public ItemStack finishUsingItem(ItemStack stack, Level worldIn, LivingEntity entityLiving) {
+		if (!worldIn.isClientSide)
 			entityLiving.curePotionEffects(stack);
 		
-		return super.onItemUseFinish(stack, worldIn, entityLiving);
+		return super.finishUsingItem(stack, worldIn, entityLiving);
 	}
 
 }

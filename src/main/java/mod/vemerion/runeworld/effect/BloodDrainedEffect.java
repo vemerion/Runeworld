@@ -5,30 +5,30 @@ import java.util.List;
 import com.google.common.collect.ImmutableList;
 
 import mod.vemerion.runeworld.init.ModItems;
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.item.ItemStack;
-import net.minecraft.potion.Effect;
-import net.minecraft.potion.EffectInstance;
-import net.minecraft.potion.EffectType;
-import net.minecraft.potion.Effects;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.effect.MobEffect;
+import net.minecraft.world.effect.MobEffectInstance;
+import net.minecraft.world.effect.MobEffectCategory;
+import net.minecraft.world.effect.MobEffects;
 
-public class BloodDrainedEffect extends Effect {
+public class BloodDrainedEffect extends MobEffect {
 
-	private static final Effect[] EFFECTS = { Effects.BLINDNESS, Effects.NAUSEA, Effects.POISON, Effects.SLOWNESS };
+	private static final MobEffect[] EFFECTS = { MobEffects.BLINDNESS, MobEffects.CONFUSION, MobEffects.POISON, MobEffects.MOVEMENT_SLOWDOWN };
 
-	public BloodDrainedEffect(EffectType typeIn, int liquidColorIn) {
+	public BloodDrainedEffect(MobEffectCategory typeIn, int liquidColorIn) {
 		super(typeIn, liquidColorIn);
 	}
 
 	@Override
-	public void performEffect(LivingEntity entityLivingBaseIn, int amplifier) {
-		if (!entityLivingBaseIn.world.isRemote)
-			entityLivingBaseIn.addPotionEffect(new EffectInstance(
-					EFFECTS[entityLivingBaseIn.getRNG().nextInt(EFFECTS.length)], 20 * 15, amplifier));
+	public void applyEffectTick(LivingEntity entityLivingBaseIn, int amplifier) {
+		if (!entityLivingBaseIn.level.isClientSide)
+			entityLivingBaseIn.addEffect(new MobEffectInstance(
+					EFFECTS[entityLivingBaseIn.getRandom().nextInt(EFFECTS.length)], 20 * 15, amplifier));
 	}
 
 	@Override
-	public boolean isReady(int duration, int amplifier) {
+	public boolean isDurationEffectTick(int duration, int amplifier) {
 		return duration % (20 * 20) == 0;
 	}
 

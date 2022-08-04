@@ -4,9 +4,9 @@ import mod.vemerion.runesword.api.IGuide;
 import mod.vemerion.runesword.api.IGuideChapter;
 import mod.vemerion.runesword.api.RuneswordAPI;
 import mod.vemerion.runeworld.Main;
-import net.minecraft.block.Blocks;
-import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.text.TranslationTextComponent;
+import net.minecraft.world.level.block.Blocks;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.network.chat.TranslatableComponent;
 
 public class ModGuide {
 
@@ -20,16 +20,16 @@ public class ModGuide {
 	public static IGuideChapter getStartChapter() {
 		if (start == null) {
 			IGuide guide = RuneswordAPI.guide;
-			start = guide.createGuideChapter(ModItems.GUIDE, new TranslationTextComponent(transKey("guide")));
-			portal = guide.createGuideChapter(Blocks.OBSIDIAN, new TranslationTextComponent(transKey("portal")));
+			start = guide.createGuideChapter(ModItems.GUIDE, new TranslatableComponent(transKey("guide")));
+			portal = guide.createGuideChapter(Blocks.OBSIDIAN, new TranslatableComponent(transKey("portal")));
 			bloodWorld = guide.createGuideChapter(Runesword.BLOOD_RUNE,
-					new TranslationTextComponent(transKey("blood_world")));
+					new TranslatableComponent(transKey("blood_world")));
 			blood = guide.createGuideChapter(ModItems.BLOOD_BUCKET,
-					new TranslationTextComponent(transKey("blood_world.blood")));
+					new TranslatableComponent(transKey("blood_world.blood")));
 			bloodWorldMobs = guide.createGuideChapter(ModEntities.MOSQUITO_SPAWN_EGG,
-					new TranslationTextComponent(transKey("blood_world.mobs")));
+					new TranslatableComponent(transKey("blood_world.mobs")));
 			bloodCrystallite = guide.createGuideChapter(ModItems.BLOOD_CRYSTALLITE,
-					new TranslationTextComponent(transKey("blood_world.blood_crystallite")));
+					new TranslatableComponent(transKey("blood_world.blood_crystallite")));
 
 			portal.addText(transKey("portal.text1")).addText(transKey("portal.text2"))
 					.addImage(image("portal1"), 1536, 864).addImage(image("portal2"), 1536, 864)

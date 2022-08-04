@@ -14,16 +14,17 @@ import mod.vemerion.runeworld.entity.FireElementalProjectileEntity;
 import mod.vemerion.runeworld.entity.MosquitoEggsEntity;
 import mod.vemerion.runeworld.entity.MosquitoEntity;
 import mod.vemerion.runeworld.helpers.Helper;
-import net.minecraft.entity.EntityClassification;
-import net.minecraft.entity.EntitySpawnPlacementRegistry;
-import net.minecraft.entity.EntityType;
-import net.minecraft.entity.ai.attributes.GlobalEntityTypeAttributes;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemGroup;
-import net.minecraft.item.SpawnEggItem;
-import net.minecraft.util.ResourceLocation;
-import net.minecraft.world.gen.Heightmap;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.Mob;
+import net.minecraft.world.entity.MobCategory;
+import net.minecraft.world.entity.SpawnPlacements;
+import net.minecraft.world.item.CreativeModeTab;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.SpawnEggItem;
+import net.minecraft.world.level.levelgen.Heightmap;
 import net.minecraftforge.event.RegistryEvent;
+import net.minecraftforge.event.entity.EntityAttributeCreationEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod.EventBusSubscriber;
 import net.minecraftforge.fml.common.Mod.EventBusSubscriber.Bus;
@@ -46,9 +47,9 @@ public class ModEntities {
 	public static final Item BLOOD_BAT_SPAWN_EGG = null;
 	public static final Item BLOOD_MONKEY_SPAWN_EGG = null;
 
-	private static EntityType<?> mosquito;
-	private static EntityType<?> bloodBat;
-	private static EntityType<?> bloodMonkey;
+	private static EntityType<? extends Mob> mosquito;
+	private static EntityType<? extends Mob> bloodBat;
+	private static EntityType<? extends Mob> bloodMonkey;
 
 	private static final List<SpawnEggItem> SPAWN_EGGS = new ArrayList<>();
 
@@ -59,21 +60,21 @@ public class ModEntities {
 		event.getRegistry().register(bloodMonkey);
 
 		EntityType<MosquitoEggsEntity> mosquitoEggs = EntityType.Builder
-				.<MosquitoEggsEntity>create(MosquitoEggsEntity::new, EntityClassification.MISC).size(0.25F, 0.25F)
-				.trackingRange(4).func_233608_b_(10)
+				.<MosquitoEggsEntity>of(MosquitoEggsEntity::new, MobCategory.MISC).sized(0.25F, 0.25F)
+				.clientTrackingRange(4).updateInterval(10)
 				.build(new ResourceLocation(Main.MODID, "mosquito_eggs").toString());
 
 		EntityType<BloodPebbleEntity> bloodPebble = EntityType.Builder
-				.<BloodPebbleEntity>create(BloodPebbleEntity::new, EntityClassification.MISC).size(0.25F, 0.25F)
-				.trackingRange(4).func_233608_b_(10).build(new ResourceLocation(Main.MODID, "blood_pebble").toString());
+				.<BloodPebbleEntity>of(BloodPebbleEntity::new, MobCategory.MISC).sized(0.25F, 0.25F)
+				.clientTrackingRange(4).updateInterval(10).build(new ResourceLocation(Main.MODID, "blood_pebble").toString());
 
 		EntityType<FireElementalEntity> fireElemental = EntityType.Builder
-				.<FireElementalEntity>create(FireElementalEntity::new, EntityClassification.MONSTER).immuneToFire()
-				.size(2, 7).trackingRange(10).build(new ResourceLocation(Main.MODID, "fire_elemental").toString());
+				.<FireElementalEntity>of(FireElementalEntity::new, MobCategory.MONSTER).fireImmune()
+				.sized(2, 7).clientTrackingRange(10).build(new ResourceLocation(Main.MODID, "fire_elemental").toString());
 
 		EntityType<FireElementalProjectileEntity> fireElementalProjectile = EntityType.Builder
-				.<FireElementalProjectileEntity>create(FireElementalProjectileEntity::new, EntityClassification.MISC)
-				.size(1, 1).trackingRange(4).func_233608_b_(10)
+				.<FireElementalProjectileEntity>of(FireElementalProjectileEntity::new, MobCategory.MISC)
+				.sized(1, 1).clientTrackingRange(4).updateInterval(10)
 				.build(new ResourceLocation(Main.MODID, "fire_elemental_projectile").toString());
 
 		event.getRegistry().registerAll(Init.setup(mosquitoEggs, "mosquito_eggs"),
@@ -84,14 +85,14 @@ public class ModEntities {
 	@SubscribeEvent
 	public static void onRegisterSpawnEggs(RegistryEvent.Register<Item> event) {
 		mosquito = Init
-				.setup(EntityType.Builder.<MosquitoEntity>create(MosquitoEntity::new, EntityClassification.MONSTER)
-						.size(1, 1).build(new ResourceLocation(Main.MODID, "mosquito").toString()), "mosquito");
+				.setup(EntityType.Builder.<MosquitoEntity>of(MosquitoEntity::new, MobCategory.MONSTER)
+						.sized(1, 1).build(new ResourceLocation(Main.MODID, "mosquito").toString()), "mosquito");
 		bloodBat = Init
-				.setup(EntityType.Builder.<BloodBatEntity>create(BloodBatEntity::new, EntityClassification.MONSTER)
-						.size(1f, 1.6f).build(new ResourceLocation(Main.MODID, "blood_bat").toString()), "blood_bat");
+				.setup(EntityType.Builder.<BloodBatEntity>of(BloodBatEntity::new, MobCategory.MONSTER)
+						.sized(1f, 1.6f).build(new ResourceLocation(Main.MODID, "blood_bat").toString()), "blood_bat");
 		bloodMonkey = Init.setup(
-				EntityType.Builder.<BloodMonkeyEntity>create(BloodMonkeyEntity::new, EntityClassification.MONSTER)
-						.size(1f, 1.6f).build(new ResourceLocation(Main.MODID, "blood_monkey").toString()),
+				EntityType.Builder.<BloodMonkeyEntity>of(BloodMonkeyEntity::new, MobCategory.MONSTER)
+						.sized(1f, 1.6f).build(new ResourceLocation(Main.MODID, "blood_monkey").toString()),
 				"blood_monkey");
 
 		Item mosquitoSpawnEgg = createSpawnEgg(mosquito, Helper.color(100, 50, 0, 255), Helper.color(255, 0, 0, 255));
@@ -104,26 +105,26 @@ public class ModEntities {
 
 	@SubscribeEvent
 	public static void setupEntities(ParallelDispatchEvent event) {
-		event.enqueueWork(() -> setEntityAttributes());
 		event.enqueueWork(() -> setEntitySpawns());
 	}
-
-	private static void setEntityAttributes() {
-		GlobalEntityTypeAttributes.put(MOSQUITO, MosquitoEntity.attributes().create());
-		GlobalEntityTypeAttributes.put(BLOOD_BAT, BloodBatEntity.attributes().create());
-		GlobalEntityTypeAttributes.put(BLOOD_MONKEY, BloodMonkeyEntity.attributes().create());
-		GlobalEntityTypeAttributes.put(FIRE_ELEMENTAL, FireElementalEntity.attributes().create());
+	
+	@SubscribeEvent
+	public static void onRegisterEntityAttributes(EntityAttributeCreationEvent event) {
+		event.put(MOSQUITO, MosquitoEntity.attributes().build());
+		event.put(BLOOD_BAT, BloodBatEntity.attributes().build());
+		event.put(BLOOD_MONKEY, BloodMonkeyEntity.attributes().build());
+		event.put(FIRE_ELEMENTAL, FireElementalEntity.attributes().build());
 	}
 
 	private static void setEntitySpawns() {
-		EntitySpawnPlacementRegistry.register(MOSQUITO, EntitySpawnPlacementRegistry.PlacementType.NO_RESTRICTIONS,
-				Heightmap.Type.MOTION_BLOCKING_NO_LEAVES, MosquitoEntity::canSpawn);
+		SpawnPlacements.register(MOSQUITO, SpawnPlacements.Type.NO_RESTRICTIONS,
+				Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, MosquitoEntity::canSpawn);
 
 	}
 
-	private static SpawnEggItem createSpawnEgg(EntityType<?> type, int primaryColor, int secondaryColor) {
+	private static SpawnEggItem createSpawnEgg(EntityType<? extends Mob> type, int primaryColor, int secondaryColor) {
 		SpawnEggItem egg = Init.<SpawnEggItem>setup(
-				new SpawnEggItem(type, primaryColor, secondaryColor, (new Item.Properties()).group(ItemGroup.SEARCH)),
+				new SpawnEggItem(type, primaryColor, secondaryColor, (new Item.Properties()).tab(CreativeModeTab.TAB_SEARCH)),
 				type.getRegistryName().getPath() + "_spawn_egg");
 		SPAWN_EGGS.add(egg);
 		return egg;

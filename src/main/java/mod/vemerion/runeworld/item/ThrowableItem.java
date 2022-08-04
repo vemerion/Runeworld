@@ -2,49 +2,49 @@ package mod.vemerion.runeworld.item;
 
 import java.util.function.Supplier;
 
-import net.minecraft.entity.EntityType;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.entity.projectile.ProjectileItemEntity;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemGroup;
-import net.minecraft.item.ItemStack;
-import net.minecraft.util.ActionResult;
-import net.minecraft.util.Hand;
-import net.minecraft.world.World;
+import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.entity.projectile.ThrowableItemProjectile;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.CreativeModeTab;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.InteractionResultHolder;
+import net.minecraft.world.InteractionHand;
+import net.minecraft.world.level.Level;
 
 public class ThrowableItem extends Item {
 
-	private Supplier<EntityType<? extends ProjectileItemEntity>> projectile;
+	private Supplier<EntityType<? extends ThrowableItemProjectile>> projectile;
 	private double motionScale;
 
-	public ThrowableItem(Supplier<EntityType<? extends ProjectileItemEntity>> projectile, double motionScale) {
-		super(new Item.Properties().group(ItemGroup.SEARCH));
+	public ThrowableItem(Supplier<EntityType<? extends ThrowableItemProjectile>> projectile, double motionScale) {
+		super(new Item.Properties().tab(CreativeModeTab.TAB_SEARCH));
 		this.projectile = projectile;
 		this.motionScale = motionScale;
 	}
 
-	public ThrowableItem(Supplier<EntityType<? extends ProjectileItemEntity>> supplier) {
+	public ThrowableItem(Supplier<EntityType<? extends ThrowableItemProjectile>> supplier) {
 		this(supplier, 1);
 	}
 
 	@Override
-	public ActionResult<ItemStack> onItemRightClick(World worldIn, PlayerEntity playerIn, Hand handIn) {
-		ItemStack heldStack = playerIn.getHeldItem(handIn);
-		if (!worldIn.isRemote) {
-			ProjectileItemEntity entity = projectile.get().create(worldIn);
-			entity.setShooter(playerIn);
-			entity.setPosition(playerIn.getPosX(), playerIn.getPosYEye() - 0.1f, playerIn.getPosZ());
+	public InteractionResultHolder<ItemStack> use(Level worldIn, Player playerIn, InteractionHand handIn) {
+		ItemStack heldStack = playerIn.getItemInHand(handIn);
+		if (!worldIn.isClientSide) {
+			ThrowableItemProjectile entity = projectile.get().create(worldIn);
+			entity.setOwner(playerIn);
+			entity.setPos(playerIn.getX(), playerIn.getEyeY() - 0.1f, playerIn.getZ());
 			entity.setItem(heldStack);
-			entity.func_234612_a_(playerIn, playerIn.rotationPitch, playerIn.rotationYaw, 0.0F, 1.5F, 1.0F);
-			entity.setMotion(entity.getMotion().scale(motionScale));
-			worldIn.addEntity(entity);
+			entity.shootFromRotation(playerIn, playerIn.getXRot(), playerIn.getYRot(), 0.0F, 1.5F, 1.0F);
+			entity.setDeltaMovement(entity.getDeltaMovement().scale(motionScale));
+			worldIn.addFreshEntity(entity);
 		}
 
-		if (!playerIn.abilities.isCreativeMode) {
+		if (!playerIn.getAbilities().instabuild) {
 			heldStack.shrink(1);
 		}
 
-		return ActionResult.func_233538_a_(heldStack, worldIn.isRemote());
+		return InteractionResultHolder.sidedSuccess(heldStack, worldIn.isClientSide());
 	}
 
 }

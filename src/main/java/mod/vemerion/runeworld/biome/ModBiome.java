@@ -1,6 +1,6 @@
 package mod.vemerion.runeworld.biome;
 
-import net.minecraft.world.biome.Biome;
+import net.minecraft.world.level.biome.Biome;
 
 public abstract class ModBiome {
 

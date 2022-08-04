@@ -6,34 +6,34 @@ import java.lang.reflect.InvocationTargetException;
 import mod.vemerion.runeworld.Main;
 import mod.vemerion.runeworld.init.ModFluids;
 import net.minecraft.client.particle.DripParticle;
-import net.minecraft.client.particle.IAnimatedSprite;
-import net.minecraft.client.particle.IParticleFactory;
+import net.minecraft.client.particle.SpriteSet;
+import net.minecraft.client.particle.ParticleProvider;
 import net.minecraft.client.particle.Particle;
-import net.minecraft.client.world.ClientWorld;
-import net.minecraft.fluid.Fluid;
-import net.minecraft.particles.BasicParticleType;
-import net.minecraftforge.fml.common.ObfuscationReflectionHelper;
+import net.minecraft.client.multiplayer.ClientLevel;
+import net.minecraft.world.level.material.Fluid;
+import net.minecraftforge.fml.util.ObfuscationReflectionHelper;
+import net.minecraft.core.particles.SimpleParticleType;
 
-public class DrippingBloodFactory implements IParticleFactory<BasicParticleType> {
+public class DrippingBloodProvider implements ParticleProvider<SimpleParticleType> {
 
-	private IAnimatedSprite sprite;
+	private SpriteSet sprite;
 	Constructor<DripParticle> dripConstructor;
 
-	public DrippingBloodFactory(IAnimatedSprite sprite) {
+	public DrippingBloodProvider(SpriteSet sprite) {
 		this.sprite = sprite;
 
-		dripConstructor = ObfuscationReflectionHelper.findConstructor(DripParticle.class, ClientWorld.class,
+		dripConstructor = ObfuscationReflectionHelper.findConstructor(DripParticle.class, ClientLevel.class,
 				double.class, double.class, double.class, Fluid.class);
 	}
 
 	@Override
-	public Particle makeParticle(BasicParticleType typeIn, ClientWorld worldIn, double x, double y, double z,
+	public Particle createParticle(SimpleParticleType typeIn, ClientLevel worldIn, double x, double y, double z,
 			double xSpeed, double ySpeed, double zSpeed) {
 		DripParticle particle = null;
 		try {
 			particle = dripConstructor.newInstance(worldIn, x, y, z, ModFluids.BLOOD);
 			particle.setColor(1, 0, 0);
-			particle.selectSpriteRandomly(sprite);
+			particle.pickSprite(sprite);
 		} catch (InstantiationException | IllegalAccessException | IllegalArgumentException
 				| InvocationTargetException e) {
 			Main.LOGGER.warn("Could not construct a new drip particle: " + e.getMessage());

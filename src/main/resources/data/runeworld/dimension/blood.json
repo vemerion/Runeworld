@@ -4,11 +4,6 @@
     "type": "minecraft:noise",
     "seed": 0,
     "settings": "runeworld:blood",
-    "structures": {
-      "structures": {
-
-      }
-    },
     "biome_source": {
       "seed": 0,
       "biome": "runeworld:blood_plains",

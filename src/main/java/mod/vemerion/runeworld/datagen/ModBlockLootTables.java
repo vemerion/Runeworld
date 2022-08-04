@@ -8,19 +8,19 @@ import mod.vemerion.runeworld.block.FireRootBlock;
 import mod.vemerion.runeworld.block.complex.StoneMaterial;
 import mod.vemerion.runeworld.init.ModBlocks;
 import mod.vemerion.runeworld.init.ModItems;
-import net.minecraft.advancements.criterion.StatePropertiesPredicate;
-import net.minecraft.block.Block;
-import net.minecraft.data.loot.BlockLootTables;
-import net.minecraft.enchantment.Enchantments;
-import net.minecraft.loot.ItemLootEntry;
-import net.minecraft.loot.LootPool;
-import net.minecraft.loot.LootTable;
-import net.minecraft.loot.conditions.BlockStateProperty;
-import net.minecraft.loot.conditions.ILootCondition;
-import net.minecraft.loot.functions.ApplyBonus;
+import net.minecraft.advancements.critereon.StatePropertiesPredicate;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.data.loot.BlockLoot;
+import net.minecraft.world.item.enchantment.Enchantments;
+import net.minecraft.world.level.storage.loot.entries.LootItem;
+import net.minecraft.world.level.storage.loot.LootPool;
+import net.minecraft.world.level.storage.loot.LootTable;
+import net.minecraft.world.level.storage.loot.predicates.LootItemBlockStatePropertyCondition;
+import net.minecraft.world.level.storage.loot.predicates.LootItemCondition;
+import net.minecraft.world.level.storage.loot.functions.ApplyBonusCount;
 import net.minecraftforge.registries.ForgeRegistries;
 
-public class ModBlockLootTables extends BlockLootTables {
+public class ModBlockLootTables extends BlockLoot {
 
 	@Override
 	protected Iterable<Block> getKnownBlocks() {
@@ -36,22 +36,22 @@ public class ModBlockLootTables extends BlockLootTables {
 
 	@Override
 	protected void addTables() {
-		registerDropSelfLootTable(ModBlocks.BLOOD_FLOWER);
-		registerDropSelfLootTable(ModBlocks.BLOOD_PILLAR_LARGE);
-		registerDropSelfLootTable(ModBlocks.BLOOD_PILLAR_MEDIUM);
-		registerDropSelfLootTable(ModBlocks.BLOOD_PILLAR_SMALL);
-		registerDropSelfLootTable(ModBlocks.BLOOD_ROCK);
-		registerDropSelfLootTable(ModBlocks.BLOOD_MOSS);
-		registerDropSelfLootTable(ModBlocks.BLOOD_CRYSTAL);
-		registerDropSelfLootTable(ModBlocks.BLOOD_LEECH);
-		registerDropSelfLootTable(ModBlocks.CHARRED_DIRT);
-		registerDropSelfLootTable(ModBlocks.FIRE_RITUAL_STONE);
-		registerLootTable(ModBlocks.BURNT_DIRT, block -> {
-			return droppingWithSilkTouch(block, ModBlocks.CHARRED_DIRT);
+		dropSelf(ModBlocks.BLOOD_FLOWER);
+		dropSelf(ModBlocks.BLOOD_PILLAR_LARGE);
+		dropSelf(ModBlocks.BLOOD_PILLAR_MEDIUM);
+		dropSelf(ModBlocks.BLOOD_PILLAR_SMALL);
+		dropSelf(ModBlocks.BLOOD_ROCK);
+		dropSelf(ModBlocks.BLOOD_MOSS);
+		dropSelf(ModBlocks.BLOOD_CRYSTAL);
+		dropSelf(ModBlocks.BLOOD_LEECH);
+		dropSelf(ModBlocks.CHARRED_DIRT);
+		dropSelf(ModBlocks.FIRE_RITUAL_STONE);
+		add(ModBlocks.BURNT_DIRT, block -> {
+			return createSingleItemTableWithSilkTouch(block, ModBlocks.CHARRED_DIRT);
 		});
 
 		for (Block portal : ModBlocks.getRunePortals())
-			registerLootTable(portal, blockNoDrop());
+			add(portal, noDrop());
 
 		stoneMaterial(ModBlocks.SPARKSTONE);
 		stoneMaterial(ModBlocks.CHARRED_STONE);
@@ -60,18 +60,18 @@ public class ModBlockLootTables extends BlockLootTables {
 	}
 
 	private void fireRoot() {
-		ILootCondition.IBuilder condition = BlockStateProperty.builder(ModBlocks.FIRE_ROOT)
-				.fromProperties(StatePropertiesPredicate.Builder.newBuilder().withIntProp(FireRootBlock.AGE, 7));
-		registerLootTable(ModBlocks.FIRE_ROOT, withExplosionDecay(ModBlocks.FIRE_ROOT,
-				LootTable.builder().addLootPool(LootPool.builder().addEntry(ItemLootEntry.builder(ModItems.FIRE_ROOT)))
-						.addLootPool(LootPool.builder().acceptCondition(condition)
-								.addEntry(ItemLootEntry.builder(ModItems.FIRE_ROOT).acceptFunction(
-										ApplyBonus.binomialWithBonusCount(Enchantments.FORTUNE, 0.6f, 4))))));
+		LootItemCondition.Builder condition = LootItemBlockStatePropertyCondition.hasBlockStateProperties(ModBlocks.FIRE_ROOT)
+				.setProperties(StatePropertiesPredicate.Builder.properties().hasProperty(FireRootBlock.AGE, 7));
+		add(ModBlocks.FIRE_ROOT, applyExplosionDecay(ModBlocks.FIRE_ROOT,
+				LootTable.lootTable().withPool(LootPool.lootPool().add(LootItem.lootTableItem(ModItems.FIRE_ROOT)))
+						.withPool(LootPool.lootPool().when(condition)
+								.add(LootItem.lootTableItem(ModItems.FIRE_ROOT).apply(
+										ApplyBonusCount.addBonusBinomialDistributionCount(Enchantments.BLOCK_FORTUNE, 0.6f, 4))))));
 	}
 
 	private void stoneMaterial(StoneMaterial material) {
 		for (Block b : material.getBlocks()) {
-			registerDropSelfLootTable(b);
+			dropSelf(b);
 		}
 	}
 }

@@ -3,50 +3,50 @@ package mod.vemerion.runeworld.entity;
 import mod.vemerion.runeworld.block.BloodPillarBlock;
 import mod.vemerion.runeworld.helpers.Helper;
 import mod.vemerion.runeworld.init.ModSounds;
-import net.minecraft.entity.EntityType;
-import net.minecraft.entity.IRangedAttackMob;
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.MobEntity;
-import net.minecraft.entity.ai.attributes.AttributeModifierMap;
-import net.minecraft.entity.ai.attributes.Attributes;
-import net.minecraft.entity.ai.goal.LookRandomlyGoal;
-import net.minecraft.entity.ai.goal.MeleeAttackGoal;
-import net.minecraft.entity.ai.goal.MoveToBlockGoal;
-import net.minecraft.entity.ai.goal.NearestAttackableTargetGoal;
-import net.minecraft.entity.ai.goal.RangedAttackGoal;
-import net.minecraft.entity.ai.goal.WaterAvoidingRandomWalkingGoal;
-import net.minecraft.entity.monster.MonsterEntity;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.entity.projectile.ProjectileItemEntity;
-import net.minecraft.pathfinding.ClimberPathNavigator;
-import net.minecraft.pathfinding.PathNavigator;
-import net.minecraft.util.DamageSource;
-import net.minecraft.util.Hand;
-import net.minecraft.util.SoundEvent;
-import net.minecraft.util.math.AxisAlignedBB;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.MathHelper;
-import net.minecraft.world.IWorldReader;
-import net.minecraft.world.World;
+import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.monster.RangedAttackMob;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.Mob;
+import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
+import net.minecraft.world.entity.ai.attributes.Attributes;
+import net.minecraft.world.entity.ai.goal.RandomLookAroundGoal;
+import net.minecraft.world.entity.ai.goal.MeleeAttackGoal;
+import net.minecraft.world.entity.ai.goal.MoveToBlockGoal;
+import net.minecraft.world.entity.ai.goal.target.NearestAttackableTargetGoal;
+import net.minecraft.world.entity.ai.goal.RangedAttackGoal;
+import net.minecraft.world.entity.ai.goal.WaterAvoidingRandomStrollGoal;
+import net.minecraft.world.entity.monster.Monster;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.entity.projectile.ThrowableItemProjectile;
+import net.minecraft.world.entity.ai.navigation.WallClimberNavigation;
+import net.minecraft.world.entity.ai.navigation.PathNavigation;
+import net.minecraft.world.damagesource.DamageSource;
+import net.minecraft.world.InteractionHand;
+import net.minecraft.sounds.SoundEvent;
+import net.minecraft.world.phys.AABB;
+import net.minecraft.core.BlockPos;
+import net.minecraft.util.Mth;
+import net.minecraft.world.level.LevelReader;
+import net.minecraft.world.level.Level;
 
-public class BloodMonkeyEntity extends MonsterEntity implements IRangedAttackMob {
+public class BloodMonkeyEntity extends Monster implements RangedAttackMob {
 
 	private float bodyRot, prevBodyRot;
 
-	public BloodMonkeyEntity(EntityType<? extends BloodMonkeyEntity> type, World worldIn) {
+	public BloodMonkeyEntity(EntityType<? extends BloodMonkeyEntity> type, Level worldIn) {
 		super(type, worldIn);
-		this.experienceValue = 5;
+		this.xpReward = 5;
 	}
 
-	public static AttributeModifierMap.MutableAttribute attributes() {
-		return MobEntity.func_233666_p_().createMutableAttribute(Attributes.MAX_HEALTH, 20)
-				.createMutableAttribute(Attributes.MOVEMENT_SPEED, 0.25)
-				.createMutableAttribute(Attributes.FOLLOW_RANGE, 16)
-				.createMutableAttribute(Attributes.ATTACK_DAMAGE, 3);
+	public static AttributeSupplier.Builder attributes() {
+		return Mob.createMobAttributes().add(Attributes.MAX_HEALTH, 20)
+				.add(Attributes.MOVEMENT_SPEED, 0.25)
+				.add(Attributes.FOLLOW_RANGE, 16)
+				.add(Attributes.ATTACK_DAMAGE, 3);
 	}
 
 	@Override
-	public boolean canDespawn(double distanceToClosestPlayer) {
+	public boolean removeWhenFarAway(double distanceToClosestPlayer) {
 		return false;
 	}
 
@@ -71,21 +71,21 @@ public class BloodMonkeyEntity extends MonsterEntity implements IRangedAttackMob
 
 		prevBodyRot = bodyRot;
 		if (isStandingOnPillar())
-			bodyRot = MathHelper.lerp(0.1f, bodyRot, Helper.toRad(15));
+			bodyRot = Mth.lerp(0.1f, bodyRot, Helper.toRad(15));
 		else
-			bodyRot = MathHelper.lerp(0.1f, bodyRot, Helper.toRad(70));
+			bodyRot = Mth.lerp(0.1f, bodyRot, Helper.toRad(70));
 	}
 
 	public float getBodyRot(float partialTicks) {
-		return MathHelper.lerp(partialTicks, prevBodyRot, bodyRot);
+		return Mth.lerp(partialTicks, prevBodyRot, bodyRot);
 	}
 
-	protected PathNavigator createNavigator(World worldIn) {
-		return new ClimberPathNavigator(this, worldIn);
+	protected PathNavigation createNavigation(Level worldIn) {
+		return new WallClimberNavigation(this, worldIn);
 	}
 
 	@Override
-	public boolean onLivingFall(float distance, float damageMultiplier) {
+	public boolean causeFallDamage(float fallDistance, float damageMultiplier, DamageSource pSource) {
 		return false;
 	}
 
@@ -93,52 +93,52 @@ public class BloodMonkeyEntity extends MonsterEntity implements IRangedAttackMob
 	protected void registerGoals() {
 		goalSelector.addGoal(0, new RangedAttackGoal(this, 0, 45, 10) {
 			@Override
-			public boolean shouldExecute() {
-				return super.shouldExecute() && isStandingOnPillar();
+			public boolean canUse() {
+				return super.canUse() && isStandingOnPillar();
 			}
 		});
 		goalSelector.addGoal(1, new MeleeAttackGoal(this, 1.5, true) {
 			@Override
-			public boolean shouldExecute() {
-				return super.shouldExecute() && !isStandingOnPillar();
+			public boolean canUse() {
+				return super.canUse() && !isStandingOnPillar();
 			}
 		});
 		goalSelector.addGoal(2, new ClimbPillarGoal(this, 1, 10));
-		goalSelector.addGoal(3, new WaterAvoidingRandomWalkingGoal(this, 0.8) {
+		goalSelector.addGoal(3, new WaterAvoidingRandomStrollGoal(this, 0.8) {
 			@Override
-			public boolean shouldExecute() {
-				return super.shouldExecute() && !isStandingOnPillar();
+			public boolean canUse() {
+				return super.canUse() && !isStandingOnPillar();
 			}
 		});
-		goalSelector.addGoal(4, new LookRandomlyGoal(this));
-		targetSelector.addGoal(1, new NearestAttackableTargetGoal<>(this, PlayerEntity.class, true));
+		goalSelector.addGoal(4, new RandomLookAroundGoal(this));
+		targetSelector.addGoal(1, new NearestAttackableTargetGoal<>(this, Player.class, true));
 	}
 
 	@Override
-	public boolean isOnLadder() {
-		return super.isOnLadder() || collidedHorizontally;
+	public boolean onClimbable() {
+		return super.onClimbable() || horizontalCollision;
 	}
 
 	@Override
-	public void attackEntityWithRangedAttack(LivingEntity target, float distanceFactor) {
-		swingArm(Hand.MAIN_HAND);
-		ProjectileItemEntity projectile = rand.nextDouble() < 0.1 ? new MosquitoEggsEntity(this, world)
-				: new BloodPebbleEntity(this, world);
-		double x = target.getPosX() - getPosX();
-		double y = target.getPosYEye() - 1.1f - projectile.getPosY();
-		double z = target.getPosZ() - getPosZ();
-		double height = MathHelper.sqrt(x * x + z * z) * 0.2;
+	public void performRangedAttack(LivingEntity target, float distanceFactor) {
+		swing(InteractionHand.MAIN_HAND);
+		ThrowableItemProjectile projectile = random.nextDouble() < 0.1 ? new MosquitoEggsEntity(this, level)
+				: new BloodPebbleEntity(this, level);
+		double x = target.getX() - getX();
+		double y = target.getEyeY() - 1.1f - projectile.getY();
+		double z = target.getZ() - getZ();
+		double height = Math.sqrt(x * x + z * z) * 0.2;
 		projectile.shoot(x, y + height, z, 1f, 1f);
-		world.addEntity(projectile);
-		playSound(ModSounds.THROWING, 1, Helper.soundPitch(rand));
+		level.addFreshEntity(projectile);
+		playSound(ModSounds.THROWING, 1, Helper.soundPitch(random));
 	}
 
 	public boolean isStandingOnPillar() {
-		float halfWidth = getWidth() * 0.51f;
+		float halfWidth = getBbWidth() * 0.51f;
 		return BlockPos
-				.getAllInBox(new AxisAlignedBB(getPositionVec().subtract(halfWidth, 0.5, halfWidth),
-						getPositionVec().add(halfWidth, -0.1, halfWidth)))
-				.anyMatch(p -> BloodPillarBlock.isPillar(world, p) && !BloodPillarBlock.isPillar(world, p.up()));
+				.betweenClosedStream(new AABB(position().subtract(halfWidth, 0.5, halfWidth),
+						position().add(halfWidth, -0.1, halfWidth)))
+				.anyMatch(p -> BloodPillarBlock.isPillar(level, p) && !BloodPillarBlock.isPillar(level, p.above()));
 	}
 
 	private static class ClimbPillarGoal extends MoveToBlockGoal {
@@ -151,13 +151,13 @@ public class BloodMonkeyEntity extends MonsterEntity implements IRangedAttackMob
 		}
 
 		@Override
-		protected boolean shouldMoveTo(IWorldReader worldIn, BlockPos pos) {
+		protected boolean isValidTarget(LevelReader worldIn, BlockPos pos) {
 			return BloodPillarBlock.isPillar(worldIn, pos);
 		}
 
 		@Override
-		public boolean shouldExecute() {
-			return super.shouldExecute() && !monkey.isStandingOnPillar();
+		public boolean canUse() {
+			return super.canUse() && !monkey.isStandingOnPillar();
 		}
 
 	}

@@ -3,8 +3,8 @@ package mod.vemerion.runeworld.init;
 import mod.vemerion.runeworld.Main;
 import mod.vemerion.runeworld.effect.BloodDrainedEffect;
 import mod.vemerion.runeworld.helpers.Helper;
-import net.minecraft.potion.Effect;
-import net.minecraft.potion.EffectType;
+import net.minecraft.world.effect.MobEffect;
+import net.minecraft.world.effect.MobEffectCategory;
 import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod.EventBusSubscriber;
@@ -15,11 +15,11 @@ import net.minecraftforge.registries.ObjectHolder;
 @EventBusSubscriber(bus = Bus.MOD, modid = Main.MODID)
 public class ModEffects {
 
-	public static final Effect BLOOD_DRAINED = null;
+	public static final MobEffect BLOOD_DRAINED = null;
 
 	@SubscribeEvent
-	public static void onRegisterEffect(RegistryEvent.Register<Effect> event) {
+	public static void onRegisterEffect(RegistryEvent.Register<MobEffect> event) {
 		event.getRegistry().register(Init
-				.setup(new BloodDrainedEffect(EffectType.HARMFUL, Helper.color(150, 20, 20, 255)), "blood_drained"));
+				.setup(new BloodDrainedEffect(MobEffectCategory.HARMFUL, Helper.color(150, 20, 20, 255)), "blood_drained"));
 	}
 }

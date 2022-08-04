@@ -7,13 +7,14 @@ import mod.vemerion.runeworld.feature.BloodPillarSingleFeature;
 import mod.vemerion.runeworld.feature.BloodPoolFeature;
 import mod.vemerion.runeworld.feature.BloodRockPatchFeature;
 import mod.vemerion.runeworld.feature.RunePortalFeature;
-import net.minecraft.world.gen.feature.BlockStateFeatureConfig;
-import net.minecraft.world.gen.feature.Feature;
-import net.minecraft.world.gen.feature.NoFeatureConfig;
+import net.minecraft.world.level.levelgen.feature.configurations.BlockStateConfiguration;
+import net.minecraft.world.level.levelgen.feature.Feature;
+import net.minecraft.world.level.levelgen.feature.configurations.NoneFeatureConfiguration;
 import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod.EventBusSubscriber;
 import net.minecraftforge.fml.common.Mod.EventBusSubscriber.Bus;
+import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.registries.ObjectHolder;
 
 @ObjectHolder(value = Main.MODID)
@@ -22,12 +23,12 @@ public class ModFeatures {
 
 	private static boolean init = true;
 
-	public static Feature<NoFeatureConfig> BLOOD_POOL;
-	public static Feature<NoFeatureConfig> BLOOD_PILLAR_SINGLE;
-	public static Feature<NoFeatureConfig> BLOOD_PILLAR_CLUSTER;
-	public static Feature<NoFeatureConfig> BLOOD_ROCK_PATCH;
-	public static Feature<NoFeatureConfig> BLOOD_BAT_TREE;
-	public static Feature<BlockStateFeatureConfig> RUNE_PORTAL_FEATURE;
+	public static Feature<NoneFeatureConfiguration> BLOOD_POOL;
+	public static Feature<NoneFeatureConfiguration> BLOOD_PILLAR_SINGLE;
+	public static Feature<NoneFeatureConfiguration> BLOOD_PILLAR_CLUSTER;
+	public static Feature<NoneFeatureConfiguration> BLOOD_ROCK_PATCH;
+	public static Feature<NoneFeatureConfiguration> BLOOD_BAT_TREE;
+	public static Feature<BlockStateConfiguration> RUNE_PORTAL_FEATURE;
 
 	public static void init() {
 		if (init) {

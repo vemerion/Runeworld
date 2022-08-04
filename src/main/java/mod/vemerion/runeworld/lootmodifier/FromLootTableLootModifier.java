@@ -4,11 +4,11 @@ import java.util.List;
 
 import com.google.gson.JsonObject;
 
-import net.minecraft.item.ItemStack;
-import net.minecraft.loot.LootContext;
-import net.minecraft.loot.conditions.ILootCondition;
-import net.minecraft.util.JSONUtils;
-import net.minecraft.util.ResourceLocation;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.storage.loot.LootContext;
+import net.minecraft.world.level.storage.loot.predicates.LootItemCondition;
+import net.minecraft.util.GsonHelper;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraftforge.common.loot.GlobalLootModifierSerializer;
 import net.minecraftforge.common.loot.LootModifier;
 
@@ -17,7 +17,7 @@ public class FromLootTableLootModifier extends LootModifier {
 	private ResourceLocation table;
 	private boolean alreadyGenerated; // To avoid recursion
 
-	public FromLootTableLootModifier(ILootCondition[] conditionsIn, ResourceLocation table) {
+	public FromLootTableLootModifier(LootItemCondition[] conditionsIn, ResourceLocation table) {
 		super(conditionsIn);
 		this.table = table;
 	}
@@ -27,8 +27,8 @@ public class FromLootTableLootModifier extends LootModifier {
 		if (alreadyGenerated)
 			return generatedLoot;
 		alreadyGenerated = true;
-		generatedLoot = context.getWorld().getServer().getLootTableManager().getLootTableFromLocation(table)
-				.generate(context);
+		generatedLoot = context.getLevel().getServer().getLootTables().get(table)
+				.getRandomItems(context);
 		alreadyGenerated = false;
 		return generatedLoot;
 	}
@@ -39,8 +39,8 @@ public class FromLootTableLootModifier extends LootModifier {
 		}
 
 		@Override
-		public FromLootTableLootModifier read(ResourceLocation name, JsonObject object, ILootCondition[] conditionsIn) {
-			String table = JSONUtils.getString(object, "table");
+		public FromLootTableLootModifier read(ResourceLocation name, JsonObject object, LootItemCondition[] conditionsIn) {
+			String table = GsonHelper.getAsString(object, "table");
 			return new FromLootTableLootModifier(conditionsIn, new ResourceLocation(table));
 		}
 

@@ -5,27 +5,30 @@ import java.util.Random;
 import mod.vemerion.runeworld.block.BloodPillarBlock;
 import mod.vemerion.runeworld.entity.BloodMonkeyEntity;
 import mod.vemerion.runeworld.init.ModEntities;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.vector.Vector3d;
-import net.minecraft.world.ISeedReader;
-import net.minecraft.world.gen.ChunkGenerator;
-import net.minecraft.world.gen.feature.Feature;
-import net.minecraft.world.gen.feature.NoFeatureConfig;
+import net.minecraft.core.BlockPos;
+import net.minecraft.world.level.WorldGenLevel;
+import net.minecraft.world.level.levelgen.feature.Feature;
+import net.minecraft.world.level.levelgen.feature.FeaturePlaceContext;
+import net.minecraft.world.level.levelgen.feature.configurations.NoneFeatureConfiguration;
+import net.minecraft.world.phys.Vec3;
 
-public class BloodPillarClusterFeature extends Feature<NoFeatureConfig> {
+public class BloodPillarClusterFeature extends Feature<NoneFeatureConfiguration> {
 
 	public BloodPillarClusterFeature() {
-		super(NoFeatureConfig.field_236558_a_);
+		super(NoneFeatureConfiguration.CODEC);
 	}
 
 	@Override
-	public boolean generate(ISeedReader reader, ChunkGenerator generator, Random rand, BlockPos pos,
-			NoFeatureConfig config) {
+	public boolean place(FeaturePlaceContext<NoneFeatureConfiguration> context) {
+		var reader = context.level();
+		var pos = context.origin();
+		var rand = context.random();
+		
 		boolean generated = false;
 		for (int i = 0; i < rand.nextInt(5) + 5; i++) {
-			BlockPos p = pos.add(rand.nextInt(10) - 5, 0, rand.nextInt(10) - 5);
+			BlockPos p = pos.offset(rand.nextInt(10) - 5, 0, rand.nextInt(10) - 5);
 			p = findGround(reader, p);
-			if (!reader.getBlockState(p.down()).isSolid() && !BloodPillarBlock.isPillar(reader, p.down()))
+			if (!reader.getBlockState(p.below()).canOcclude() && !BloodPillarBlock.isPillar(reader, p.below()))
 				continue;
 			if (BloodPillarBlock.generatePillar(reader, rand, p)) {
 				generated = true;
@@ -36,21 +39,21 @@ public class BloodPillarClusterFeature extends Feature<NoFeatureConfig> {
 		return generated;
 	}
 
-	private void spawnBloodMonkey(ISeedReader reader, Random rand, BlockPos p) {
+	private void spawnBloodMonkey(WorldGenLevel reader, Random rand, BlockPos p) {
 		while (BloodPillarBlock.isPillar(reader, p))
-			p = p.up();
-		BloodMonkeyEntity monkey = ModEntities.BLOOD_MONKEY.create(reader.getWorld());
-		Vector3d position = Vector3d.copyCenteredHorizontally(p);
-		monkey.setPositionAndRotation(position.x, position.y, position.z, rand.nextFloat() * 360, 0);
-		reader.addEntity(monkey);
+			p = p.above();
+		BloodMonkeyEntity monkey = ModEntities.BLOOD_MONKEY.create(reader.getLevel());
+		Vec3 position = Vec3.atBottomCenterOf(p);
+		monkey.absMoveTo(position.x, position.y, position.z, rand.nextFloat() * 360, 0);
+		reader.addFreshEntity(monkey);
 	}
 
-	private BlockPos findGround(ISeedReader reader, BlockPos p) {
+	private BlockPos findGround(WorldGenLevel reader, BlockPos p) {
 		for (int i = 0; i < 4; i++) {
-			if (reader.getBlockState(p.down(i)).isSolid())
-				return p.down(i - 1);
-			if (reader.getBlockState(p.up(i)).isSolid())
-				return p.up(i + 1);
+			if (reader.getBlockState(p.below(i)).canOcclude())
+				return p.below(i - 1);
+			if (reader.getBlockState(p.above(i)).canOcclude())
+				return p.above(i + 1);
 		}
 		return p;
 	}

@@ -2,43 +2,43 @@ package mod.vemerion.runeworld.goal;
 
 import java.util.EnumSet;
 
-import net.minecraft.entity.CreatureEntity;
-import net.minecraft.entity.ai.RandomPositionGenerator;
-import net.minecraft.entity.ai.goal.Goal;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.vector.Vector3d;
+import net.minecraft.core.BlockPos;
+import net.minecraft.world.entity.PathfinderMob;
+import net.minecraft.world.entity.ai.goal.Goal;
+import net.minecraft.world.entity.ai.util.AirAndWaterRandomPos;
+import net.minecraft.world.phys.Vec3;
 
 public class HoverWanderGoal extends Goal {
-	private CreatureEntity entity;
+	private PathfinderMob entity;
 
-	public HoverWanderGoal(CreatureEntity entity) {
+	public HoverWanderGoal(PathfinderMob entity) {
 		this.entity = entity;
-		this.setMutexFlags(EnumSet.of(Goal.Flag.MOVE));
+		this.setFlags(EnumSet.of(Goal.Flag.MOVE));
 	}
 
 	@Override
-	public boolean shouldExecute() {
-		return entity.getNavigator().noPath() && entity.getRNG().nextInt(4) == 0;
+	public boolean canUse() {
+		return entity.getNavigation().isDone() && entity.getRandom().nextInt(4) == 0;
 	}
 
 	@Override
-	public boolean shouldContinueExecuting() {
-		return entity.getNavigator().hasPath();
+	public boolean canContinueToUse() {
+		return entity.getNavigation().isInProgress();
 	}
 
 	@Override
-	public void startExecuting() {
-		Vector3d pos = wanderPos();
+	public void start() {
+		Vec3 pos = wanderPos();
 		if (pos != null) {
-			entity.getNavigator().setPath(entity.getNavigator().getPathToPos(new BlockPos(pos), 1), 1);
+			entity.getNavigation().moveTo(entity.getNavigation().createPath(new BlockPos(pos), 1), 1);
 		}
 
 	}
 
-	private Vector3d wanderPos() {
-		Vector3d look = entity.getLook(0);
-		Vector3d pos = RandomPositionGenerator.findGroundTarget(entity, 8, 4, -2, look, (float) Math.PI / 2);
-		if (pos != null && !entity.world.getBlockState(new BlockPos(pos).up()).getMaterial().isSolid())
+	private Vec3 wanderPos() {
+		Vec3 look = entity.getViewVector(0);
+		Vec3 pos = AirAndWaterRandomPos.getPos(entity, 8, 4, -2, look.x, look.z, (float) Math.PI / 2);
+		if (pos != null && !entity.level.getBlockState(new BlockPos(pos).above()).getMaterial().isSolid())
 			pos = pos.add(0, 1, 0);
 		return pos;
 	}

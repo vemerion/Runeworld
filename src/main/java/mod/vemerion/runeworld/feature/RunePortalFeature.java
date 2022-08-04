@@ -3,29 +3,30 @@ package mod.vemerion.runeworld.feature;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
-import java.util.Random;
 import java.util.Set;
 
 import mod.vemerion.runeworld.block.RunePortalBlock;
 import mod.vemerion.runeworld.helpers.Helper;
-import net.minecraft.block.Blocks;
-import net.minecraft.util.Direction;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.ISeedReader;
-import net.minecraft.world.gen.ChunkGenerator;
-import net.minecraft.world.gen.feature.BlockStateFeatureConfig;
-import net.minecraft.world.gen.feature.Feature;
+import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
+import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.levelgen.feature.Feature;
+import net.minecraft.world.level.levelgen.feature.FeaturePlaceContext;
+import net.minecraft.world.level.levelgen.feature.configurations.BlockStateConfiguration;
 
-public class RunePortalFeature extends Feature<BlockStateFeatureConfig> {
+public class RunePortalFeature extends Feature<BlockStateConfiguration> {
 
 	public RunePortalFeature() {
-		super(BlockStateFeatureConfig.field_236455_a_);
+		super(BlockStateConfiguration.CODEC);
 	}
 
 	@Override
-	public boolean generate(ISeedReader reader, ChunkGenerator generator, Random rand, BlockPos pos,
-			BlockStateFeatureConfig config) {
-		if (!reader.getBlockState(pos.down()).isSolid() || !reader.isAirBlock(pos))
+	public boolean place(FeaturePlaceContext<BlockStateConfiguration> context) {
+		var reader = context.level();
+		var pos = context.origin();
+		var rand = context.random();
+		
+		if (!reader.getBlockState(pos.below()).canOcclude() || !reader.isEmptyBlock(pos))
 			return false;
 
 		int size = 15 + rand.nextInt(10);
@@ -39,12 +40,12 @@ public class RunePortalFeature extends Feature<BlockStateFeatureConfig> {
 
 		while (!positions.isEmpty() && portal.size() < size) {
 			pos = positions.remove(0);
-			if (reader.isAirBlock(pos)) {
+			if (reader.isEmptyBlock(pos)) {
 				portal.add(pos);
 
 				
 				for (int i = 0; i < 4; i++) {
-					BlockPos p = pos.add(offsets[rand.nextInt(offsets.length)]);
+					BlockPos p = pos.offset(offsets[rand.nextInt(offsets.length)]);
 					if (!portal.contains(p))
 						positions.add(p);
 				}
@@ -60,10 +61,10 @@ public class RunePortalFeature extends Feature<BlockStateFeatureConfig> {
 
 		for (BlockPos p : portal) {
 			if (isBorder(portal, p, offsets))
-				reader.setBlockState(p, Blocks.OBSIDIAN.getDefaultState(), 2);
+				reader.setBlock(p, Blocks.OBSIDIAN.defaultBlockState(), 2);
 		}
 		
-		RunePortalBlock.createPortal(reader, createPortalPos, config.state.getBlock(), axis);
+		RunePortalBlock.createPortal(reader, createPortalPos, context.config().state.getBlock(), axis);
 
 		return false;
 	}
@@ -77,10 +78,10 @@ public class RunePortalFeature extends Feature<BlockStateFeatureConfig> {
 				nonBorder.add(p);
 		
 		for (BlockPos p : nonBorder) {
-			if (nonBorder.contains(p.up())) {
-				while (nonBorder.contains(p.down()))
-					p = p.down();
-				return p.down();
+			if (nonBorder.contains(p.above())) {
+				while (nonBorder.contains(p.below()))
+					p = p.below();
+				return p.below();
 			}
 		}
 		
@@ -89,7 +90,7 @@ public class RunePortalFeature extends Feature<BlockStateFeatureConfig> {
 
 	private boolean isBorder(Set<BlockPos> portal, BlockPos pos, BlockPos[] offsets) {
 		for (BlockPos offset : offsets)
-			if (!portal.contains(pos.add(offset)))
+			if (!portal.contains(pos.offset(offset)))
 				return true;
 		return false;
 	}

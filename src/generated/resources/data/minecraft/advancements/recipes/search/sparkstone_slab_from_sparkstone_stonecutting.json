@@ -11,7 +11,9 @@
       "conditions": {
         "items": [
           {
-            "item": "runeworld:sparkstone"
+            "items": [
+              "runeworld:sparkstone"
+            ]
           }
         ]
       }

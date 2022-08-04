@@ -9,39 +9,37 @@ import java.util.Set;
 import mod.vemerion.runeworld.block.BloodLeechBlock;
 import mod.vemerion.runeworld.block.BloodPillarBlock;
 import mod.vemerion.runeworld.init.ModBlocks;
-import mod.vemerion.runeworld.init.ModStructures;
-import net.minecraft.block.BlockState;
-import net.minecraft.block.Blocks;
-import net.minecraft.util.Direction;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.SectionPos;
-import net.minecraft.world.ISeedReader;
-import net.minecraft.world.gen.ChunkGenerator;
-import net.minecraft.world.gen.Heightmap;
-import net.minecraft.world.gen.feature.Feature;
-import net.minecraft.world.gen.feature.NoFeatureConfig;
+import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
+import net.minecraft.world.level.WorldGenLevel;
+import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.levelgen.Heightmap;
+import net.minecraft.world.level.levelgen.feature.Feature;
+import net.minecraft.world.level.levelgen.feature.FeaturePlaceContext;
+import net.minecraft.world.level.levelgen.feature.configurations.NoneFeatureConfiguration;
 
-public class BloodPoolFeature extends Feature<NoFeatureConfig> {
-	private static final BlockState BLOOD = ModBlocks.BLOOD.getDefaultState();
-	private static final BlockState AIR = Blocks.AIR.getDefaultState();
-	private static final BlockState FLOWER = ModBlocks.BLOOD_FLOWER.getDefaultState();
-	private static final BlockState ROCK = ModBlocks.BLOOD_ROCK.getDefaultState();
-	private static final BlockState LEECH = ModBlocks.BLOOD_LEECH.getDefaultState().with(BloodLeechBlock.WATERLOGGED,
+public class BloodPoolFeature extends Feature<NoneFeatureConfiguration> {
+	private static final BlockState BLOOD = ModBlocks.BLOOD.defaultBlockState();
+	private static final BlockState AIR = Blocks.AIR.defaultBlockState();
+	private static final BlockState FLOWER = ModBlocks.BLOOD_FLOWER.defaultBlockState();
+	private static final BlockState ROCK = ModBlocks.BLOOD_ROCK.defaultBlockState();
+	private static final BlockState LEECH = ModBlocks.BLOOD_LEECH.defaultBlockState().setValue(BloodLeechBlock.WATERLOGGED,
 			true);
 
 	public BloodPoolFeature() {
-		super(NoFeatureConfig.field_236558_a_);
+		super(NoneFeatureConfiguration.CODEC);
 	}
 
 	@Override
-	public boolean generate(ISeedReader reader, ChunkGenerator generator, Random rand, BlockPos pos,
-			NoFeatureConfig config) {
-		pos = reader.getHeight(Heightmap.Type.WORLD_SURFACE_WG, pos);
+	public boolean place(FeaturePlaceContext<NoneFeatureConfiguration> context) {
+		var reader = context.level();
+		var pos = context.origin();
+		var rand = context.random();
+		
+		pos = reader.getHeightmapPos(Heightmap.Types.WORLD_SURFACE_WG, pos);
 
-		if (reader.func_241827_a(SectionPos.from(pos), ModStructures.BLOOD_BAT_LAIR).findAny().isPresent())
-			return false;
-
-		pos = pos.down();
+		pos = pos.below();
 		List<BlockPos> positions = new ArrayList<>();
 		Set<BlockPos> bloods = new HashSet<>();
 		positions.add(pos);
@@ -56,7 +54,7 @@ public class BloodPoolFeature extends Feature<NoFeatureConfig> {
 						if (Math.abs(i + j) != 1)
 							continue;
 
-						BlockPos p = pos.add(i, 0, j);
+						BlockPos p = pos.offset(i, 0, j);
 						if (rand.nextDouble() < 0.6 && !bloods.contains(p)) {
 							positions.add(p);
 						}
@@ -69,20 +67,20 @@ public class BloodPoolFeature extends Feature<NoFeatureConfig> {
 			return false;
 
 		for (BlockPos blood : bloods) { // Actually create blood pool
-			BlockPos up = blood.up();
-			if (reader.getBlockState(up).isSolid())
+			BlockPos up = blood.above();
+			if (reader.getBlockState(up).canOcclude())
 				continue;
 
-			reader.setBlockState(blood, BLOOD, 2);
+			reader.setBlock(blood, BLOOD, 2);
 			if (rand.nextDouble() < 0.1)
-				reader.setBlockState(up, FLOWER, 2);
+				reader.setBlock(up, FLOWER, 2);
 			else
-				reader.setBlockState(up, AIR, 2);
+				reader.setBlock(up, AIR, 2);
 		}
 
 		for (BlockPos blood : bloods) {
 			if (shouldBeDeep(reader, rand, blood))
-				reader.setBlockState(blood.down(), BLOOD, 2); // Make the pool deeper at certain parts
+				reader.setBlock(blood.below(), BLOOD, 2); // Make the pool deeper at certain parts
 			surroundWithBloodRock(reader, rand, blood);
 		}
 
@@ -94,7 +92,7 @@ public class BloodPoolFeature extends Feature<NoFeatureConfig> {
 		return true;
 	}
 
-	private void generateLeeches(Set<BlockPos> bloods, ISeedReader reader, Random rand) {
+	private void generateLeeches(Set<BlockPos> bloods, WorldGenLevel reader, Random rand) {
 		int count = rand.nextInt(3);
 		if (count == 0)
 			return;
@@ -105,9 +103,9 @@ public class BloodPoolFeature extends Feature<NoFeatureConfig> {
 
 			if (rand.nextDouble() < 0.01 && reader.getBlockState(pos).getBlock() == ModBlocks.BLOOD) {
 				for (Direction d : Direction.values()) {
-					BlockState leech = LEECH.with(BloodLeechBlock.FACING, d);
-					if (leech.isValidPosition(reader, pos)) {
-						reader.setBlockState(pos, leech, 2);
+					BlockState leech = LEECH.setValue(BloodLeechBlock.FACING, d);
+					if (leech.canSurvive(reader, pos)) {
+						reader.setBlock(pos, leech, 2);
 						count--;
 						break;
 					}
@@ -116,48 +114,48 @@ public class BloodPoolFeature extends Feature<NoFeatureConfig> {
 		}
 	}
 
-	private void generateBloodPillars(Set<BlockPos> bloods, ISeedReader reader, Random rand) {
+	private void generateBloodPillars(Set<BlockPos> bloods, WorldGenLevel reader, Random rand) {
 		for (BlockPos pos : bloods) {
-			while (reader.getBlockState(pos.down()) == BLOOD)
-				pos = pos.down();
+			while (reader.getBlockState(pos.below()) == BLOOD)
+				pos = pos.below();
 			if (rand.nextDouble() < 0.1)
 				BloodPillarBlock.generatePillar(reader, rand, pos);
 		}
 	}
 
-	private void surroundWithBloodRock(ISeedReader reader, Random rand, BlockPos blood) {
+	private void surroundWithBloodRock(WorldGenLevel reader, Random rand, BlockPos blood) {
 		for (int i = -1; i < 2; i++) {
 			for (int j = -1; j < 2; j++) {
-				BlockPos pos = blood.add(i, 0, j);
-				if (reader.getBlockState(blood.add(i, 0, j)).isSolid() && rand.nextDouble() < 0.5)
-					reader.setBlockState(pos, ROCK, 2);
+				BlockPos pos = blood.offset(i, 0, j);
+				if (reader.getBlockState(blood.offset(i, 0, j)).canOcclude() && rand.nextDouble() < 0.5)
+					reader.setBlock(pos, ROCK, 2);
 			}
 		}
 	}
 
-	private boolean shouldBeDeep(ISeedReader reader, Random rand, BlockPos blood) {
+	private boolean shouldBeDeep(WorldGenLevel reader, Random rand, BlockPos blood) {
 		if (reader.getBlockState(blood) != BLOOD)
 			return false;
 
 		int limit = rand.nextBoolean() ? 1 : 2;
 		for (int i = -limit; i <= limit; i++) {
 			for (int j = -limit; j <= limit; j++) {
-				if (reader.getBlockState(blood.add(i, 0, j)) != BLOOD)
+				if (reader.getBlockState(blood.offset(i, 0, j)) != BLOOD)
 					return false;
 			}
 		}
 		return true;
 	}
 
-	private boolean isSurrounded(ISeedReader reader, BlockPos pos) {
-		return validBorder(reader.getBlockState(pos.add(1, 0, 0)))
-				&& validBorder(reader.getBlockState(pos.add(-1, 0, 0)))
-				&& validBorder(reader.getBlockState(pos.add(0, 0, 1)))
-				&& validBorder(reader.getBlockState(pos.add(0, 0, -1)));
+	private boolean isSurrounded(WorldGenLevel reader, BlockPos pos) {
+		return validBorder(reader.getBlockState(pos.offset(1, 0, 0)))
+				&& validBorder(reader.getBlockState(pos.offset(-1, 0, 0)))
+				&& validBorder(reader.getBlockState(pos.offset(0, 0, 1)))
+				&& validBorder(reader.getBlockState(pos.offset(0, 0, -1)));
 	}
 
 	private boolean validBorder(BlockState state) {
-		return state.isSolid() || state == BLOOD;
+		return state.canOcclude() || state == BLOOD;
 	}
 
 }

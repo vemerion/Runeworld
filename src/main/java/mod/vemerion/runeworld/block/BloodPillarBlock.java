@@ -4,67 +4,67 @@ import java.util.Random;
 
 import mod.vemerion.runeworld.init.ModBlocks;
 import mod.vemerion.runeworld.init.ModFluids;
-import net.minecraft.block.Block;
-import net.minecraft.block.BlockState;
-import net.minecraft.block.material.Material;
-import net.minecraft.block.material.MaterialColor;
-import net.minecraft.fluid.FluidState;
-import net.minecraft.item.BlockItemUseContext;
-import net.minecraft.state.BooleanProperty;
-import net.minecraft.state.StateContainer;
-import net.minecraft.state.properties.BlockStateProperties;
-import net.minecraft.util.Direction;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.shapes.ISelectionContext;
-import net.minecraft.util.math.shapes.VoxelShape;
-import net.minecraft.world.IBlockReader;
-import net.minecraft.world.IWorld;
-import net.minecraft.world.IWorldReader;
+import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
+import net.minecraft.world.item.context.BlockPlaceContext;
+import net.minecraft.world.level.BlockGetter;
+import net.minecraft.world.level.LevelAccessor;
+import net.minecraft.world.level.LevelReader;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.block.state.StateDefinition;
+import net.minecraft.world.level.block.state.properties.BlockStateProperties;
+import net.minecraft.world.level.block.state.properties.BooleanProperty;
+import net.minecraft.world.level.material.FluidState;
+import net.minecraft.world.level.material.Material;
+import net.minecraft.world.level.material.MaterialColor;
+import net.minecraft.world.phys.shapes.CollisionContext;
+import net.minecraft.world.phys.shapes.VoxelShape;
 
 public class BloodPillarBlock extends Block implements IBloodLoggable {
 	private static final BooleanProperty WATERLOGGED = BlockStateProperties.WATERLOGGED;
 
-	public static final VoxelShape LARGE = Block.makeCuboidShape(2, 0, 2, 14, 16, 14);
-	public static final VoxelShape MEDIUM = Block.makeCuboidShape(4, 0, 4, 12, 16, 12);
-	public static final VoxelShape SMALL = Block.makeCuboidShape(6, 0, 6, 10, 16, 10);
+	public static final VoxelShape LARGE = Block.box(2, 0, 2, 14, 16, 14);
+	public static final VoxelShape MEDIUM = Block.box(4, 0, 4, 12, 16, 12);
+	public static final VoxelShape SMALL = Block.box(6, 0, 6, 10, 16, 10);
 
 	private VoxelShape shape;
 
 	public BloodPillarBlock(VoxelShape shape) {
-		super(Properties.create(Material.ROCK, MaterialColor.RED).setRequiresTool().hardnessAndResistance(1.5F, 6.0F));
+		super(Properties.of(Material.STONE, MaterialColor.COLOR_RED).requiresCorrectToolForDrops().strength(1.5F,
+				6.0F));
 		this.shape = shape;
-		this.setDefaultState(this.stateContainer.getBaseState().with(WATERLOGGED, false));
+		this.registerDefaultState(this.stateDefinition.any().setValue(WATERLOGGED, false));
 	}
 
 	@Override
-	public BlockState updatePostPlacement(BlockState stateIn, Direction facing, BlockState facingState, IWorld worldIn,
+	public BlockState updateShape(BlockState stateIn, Direction facing, BlockState facingState, LevelAccessor level,
 			BlockPos currentPos, BlockPos facingPos) {
-		if (stateIn.get(WATERLOGGED)) {
-			worldIn.getPendingFluidTicks().scheduleTick(currentPos, ModFluids.BLOOD,
-					ModFluids.BLOOD.getTickRate(worldIn));
+		if (stateIn.getValue(WATERLOGGED)) {
+			level.scheduleTick(currentPos, ModFluids.BLOOD.get(), ModFluids.BLOOD.get().getTickDelay(level));
 		}
 
-		return super.updatePostPlacement(stateIn, facing, facingState, worldIn, currentPos, facingPos);
+		return super.updateShape(stateIn, facing, facingState, level, currentPos, facingPos);
 	}
 
 	@Override
 	public FluidState getFluidState(BlockState state) {
-		return state.get(WATERLOGGED) ? ModFluids.BLOOD.getStillFluidState(false) : super.getFluidState(state);
+		return state.getValue(WATERLOGGED) ? ModFluids.BLOOD.get().getSource(false) : super.getFluidState(state);
 	}
 
 	@Override
-	public BlockState getStateForPlacement(BlockItemUseContext context) {
-		FluidState fluidstate = context.getWorld().getFluidState(context.getPos());
-		return getDefaultState().with(WATERLOGGED, Boolean.valueOf(fluidstate.getFluid() == ModFluids.BLOOD));
+	public BlockState getStateForPlacement(BlockPlaceContext context) {
+		FluidState fluidstate = context.getLevel().getFluidState(context.getClickedPos());
+		return defaultBlockState().setValue(WATERLOGGED, Boolean.valueOf(fluidstate.getType() == ModFluids.BLOOD.get()));
 	}
 
 	@Override
-	protected void fillStateContainer(StateContainer.Builder<Block, BlockState> builder) {
+	protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> builder) {
 		builder.add(WATERLOGGED);
 	}
 
 	@Override
-	public VoxelShape getShape(BlockState state, IBlockReader worldIn, BlockPos pos, ISelectionContext context) {
+	public VoxelShape getShape(BlockState state, BlockGetter worldIn, BlockPos pos, CollisionContext context) {
 		return shape;
 	}
 
@@ -73,12 +73,12 @@ public class BloodPillarBlock extends Block implements IBloodLoggable {
 				|| block == ModBlocks.BLOOD_PILLAR_SMALL;
 	}
 
-	public static boolean isPillar(IWorldReader world, BlockPos pos) {
+	public static boolean isPillar(LevelReader world, BlockPos pos) {
 		Block block = world.getBlockState(pos).getBlock();
 		return isPillar(block);
 	}
 
-	public static boolean generatePillar(IWorld world, Random rand, BlockPos pos) {
+	public static boolean generatePillar(LevelAccessor world, Random rand, BlockPos pos) {
 		int height = 0;
 		for (int i = 0; i < 4; i++) {
 			if (!isValidPos(world, pos))
@@ -94,50 +94,49 @@ public class BloodPillarBlock extends Block implements IBloodLoggable {
 		if (height == 2) {
 			if (rand.nextBoolean()) {
 				setPillar(world, pos, ModBlocks.BLOOD_PILLAR_MEDIUM, 2);
-				setPillar(world, pos.up(), ModBlocks.BLOOD_PILLAR_SMALL, 2);
+				setPillar(world, pos.above(), ModBlocks.BLOOD_PILLAR_SMALL, 2);
 			} else {
 				setPillar(world, pos, ModBlocks.BLOOD_PILLAR_LARGE, 2);
-				setPillar(world, pos.up(), ModBlocks.BLOOD_PILLAR_MEDIUM, 2);
+				setPillar(world, pos.above(), ModBlocks.BLOOD_PILLAR_MEDIUM, 2);
 			}
 		} else if (height == 3) {
 			if (rand.nextBoolean()) {
 				setPillar(world, pos, ModBlocks.BLOOD_PILLAR_LARGE, 2);
-				setPillar(world, pos.up(), ModBlocks.BLOOD_PILLAR_MEDIUM, 2);
-				setPillar(world, pos.up(2), ModBlocks.BLOOD_PILLAR_SMALL, 2);
+				setPillar(world, pos.above(), ModBlocks.BLOOD_PILLAR_MEDIUM, 2);
+				setPillar(world, pos.above(2), ModBlocks.BLOOD_PILLAR_SMALL, 2);
 
 			} else {
 				setPillar(world, pos, ModBlocks.BLOOD_PILLAR_MEDIUM, 2);
-				setPillar(world, pos.up(), ModBlocks.BLOOD_PILLAR_MEDIUM, 2);
-				setPillar(world, pos.up(2), ModBlocks.BLOOD_PILLAR_SMALL, 2);
+				setPillar(world, pos.above(), ModBlocks.BLOOD_PILLAR_MEDIUM, 2);
+				setPillar(world, pos.above(2), ModBlocks.BLOOD_PILLAR_SMALL, 2);
 			}
 		} else if (height == 4) {
 			if (rand.nextBoolean()) {
 				setPillar(world, pos, ModBlocks.BLOOD_PILLAR_LARGE, 2);
-				setPillar(world, pos.up(), ModBlocks.BLOOD_PILLAR_LARGE, 2);
-				setPillar(world, pos.up(2), ModBlocks.BLOOD_PILLAR_MEDIUM, 2);
-				setPillar(world, pos.up(3), ModBlocks.BLOOD_PILLAR_SMALL, 2);
+				setPillar(world, pos.above(), ModBlocks.BLOOD_PILLAR_LARGE, 2);
+				setPillar(world, pos.above(2), ModBlocks.BLOOD_PILLAR_MEDIUM, 2);
+				setPillar(world, pos.above(3), ModBlocks.BLOOD_PILLAR_SMALL, 2);
 			} else {
 				setPillar(world, pos, ModBlocks.BLOOD_PILLAR_MEDIUM, 2);
-				setPillar(world, pos.up(), ModBlocks.BLOOD_PILLAR_MEDIUM, 2);
-				setPillar(world, pos.up(2), ModBlocks.BLOOD_PILLAR_SMALL, 2);
-				setPillar(world, pos.up(3), ModBlocks.BLOOD_PILLAR_SMALL, 2);
+				setPillar(world, pos.above(), ModBlocks.BLOOD_PILLAR_MEDIUM, 2);
+				setPillar(world, pos.above(2), ModBlocks.BLOOD_PILLAR_SMALL, 2);
+				setPillar(world, pos.above(3), ModBlocks.BLOOD_PILLAR_SMALL, 2);
 			}
 		}
 
 		return true;
 	}
 
-	private static void setPillar(IWorld world, BlockPos pos, BloodPillarBlock pillar, int i) {
+	private static void setPillar(LevelAccessor world, BlockPos pos, BloodPillarBlock pillar, int i) {
 		FluidState fluidState = world.getFluidState(pos);
-		BlockState state = pillar.getDefaultState();
-		world.setBlockState(pos, state, 2);
-		pillar.receiveFluid(world, pos, state, fluidState);
+		BlockState state = pillar.defaultBlockState();
+		world.setBlock(pos, state, 2);
+		pillar.placeLiquid(world, pos, state, fluidState);
 
 	}
 
-	private static boolean isValidPos(IWorld world, BlockPos pos) {
+	private static boolean isValidPos(LevelAccessor world, BlockPos pos) {
 		BlockState state = world.getBlockState(pos);
-		return state.getFluidState().getFluid().isEquivalentTo(ModFluids.BLOOD)
-				|| state.getBlock().isAir(state, world, pos);
+		return state.getFluidState().getType().isSame(ModFluids.BLOOD.get()) || state.isAir();
 	}
 }

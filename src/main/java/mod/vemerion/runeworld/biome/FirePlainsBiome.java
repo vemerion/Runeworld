@@ -1,44 +1,35 @@
 package mod.vemerion.runeworld.biome;
 
 import mod.vemerion.runeworld.helpers.Helper;
-import mod.vemerion.runeworld.init.ModBlocks;
-import mod.vemerion.runeworld.init.ModConfiguredFeatures;
-import mod.vemerion.runeworld.init.ModConfiguredStructures;
-import net.minecraft.world.biome.Biome;
-import net.minecraft.world.biome.BiomeAmbience;
-import net.minecraft.world.biome.BiomeGenerationSettings;
-import net.minecraft.world.biome.MobSpawnInfo;
-import net.minecraft.world.biome.MoodSoundAmbience;
-import net.minecraft.world.gen.GenerationStage;
-import net.minecraft.world.gen.feature.Features;
-import net.minecraft.world.gen.surfacebuilders.SurfaceBuilder;
-import net.minecraft.world.gen.surfacebuilders.SurfaceBuilderConfig;
+import mod.vemerion.runeworld.init.ModPlacedFeatures;
+import net.minecraft.data.worldgen.placement.MiscOverworldPlacements;
+import net.minecraft.world.level.biome.AmbientMoodSettings;
+import net.minecraft.world.level.biome.Biome;
+import net.minecraft.world.level.biome.BiomeGenerationSettings;
+import net.minecraft.world.level.biome.BiomeSpecialEffects;
+import net.minecraft.world.level.biome.MobSpawnSettings;
+import net.minecraft.world.level.levelgen.GenerationStep;
 
 public class FirePlainsBiome extends ModBiome {
 
 	@Override
 	public Biome create() {
-		MobSpawnInfo.Builder mobs = new MobSpawnInfo.Builder();
-		BiomeGenerationSettings.Builder generation = new BiomeGenerationSettings.Builder()
-				.withSurfaceBuilder(() -> SurfaceBuilder.DEFAULT
-						.func_242929_a(new SurfaceBuilderConfig(ModBlocks.BURNT_DIRT.getDefaultState(),
-								ModBlocks.CHARRED_DIRT.getDefaultState(), ModBlocks.CHARRED_DIRT.getDefaultState())));
+		MobSpawnSettings.Builder mobs = new MobSpawnSettings.Builder();
+		BiomeGenerationSettings.Builder generation = new BiomeGenerationSettings.Builder();
 
-		generation.withFeature(GenerationStage.Decoration.LAKES, Features.LAKE_LAVA);
-		generation.withFeature(GenerationStage.Decoration.VEGETAL_DECORATION, ModConfiguredFeatures.FIRE_ROOT_PATCH);
-		generation.withFeature(GenerationStage.Decoration.VEGETAL_DECORATION, ModConfiguredFeatures.FIRE_PATCH);
-
-		generation.withStructure(ModConfiguredStructures.FIRE_RITUAL);
+		generation.addFeature(GenerationStep.Decoration.LAKES, MiscOverworldPlacements.LAKE_LAVA_SURFACE);
+		generation.addFeature(GenerationStep.Decoration.VEGETAL_DECORATION, ModPlacedFeatures.FIRE_ROOT_PATCH);
+		generation.addFeature(GenerationStep.Decoration.VEGETAL_DECORATION, ModPlacedFeatures.FIRE_PATCH);
 
 		int waterColor = Helper.color(200, 100, 0, 100);
 		int skyColor = Helper.color(255, 155, 85, 255);
 		int fogColor = Helper.color(255, 155, 85, 255);
-		return new Biome.Builder().precipitation(Biome.RainType.NONE).category(Biome.Category.PLAINS).depth(0.125F)
-				.scale(0.05F).temperature(2).downfall(0)
-				.setEffects((new BiomeAmbience.Builder()).setWaterColor(waterColor).setWaterFogColor(waterColor)
-						.setFogColor(fogColor).withSkyColor(skyColor).setMoodSound(MoodSoundAmbience.DEFAULT_CAVE)
+		return new Biome.BiomeBuilder().precipitation(Biome.Precipitation.NONE).biomeCategory(Biome.BiomeCategory.PLAINS)
+				.temperature(2).downfall(0)
+				.specialEffects((new BiomeSpecialEffects.Builder()).waterColor(waterColor).waterFogColor(waterColor)
+						.fogColor(fogColor).skyColor(skyColor).ambientMoodSound(AmbientMoodSettings.LEGACY_CAVE_SETTINGS)
 						.build())
-				.withMobSpawnSettings(mobs.copy()).withGenerationSettings(generation.build()).build();
+				.mobSpawnSettings(mobs.build()).generationSettings(generation.build()).build();
 	}
 
 }

@@ -1,7 +1,7 @@
 package mod.vemerion.runeworld.init;
 
 import mod.vemerion.runeworld.Main;
-import net.minecraft.util.ResourceLocation;
+import net.minecraft.resources.ResourceLocation;
 
 public class ModLootTables {
 

@@ -8,17 +8,17 @@ import com.google.gson.JsonSerializationContext;
 
 import mod.vemerion.runeworld.init.ModFluids;
 import mod.vemerion.runeworld.init.ModLootConditions;
-import net.minecraft.item.FishingRodItem;
-import net.minecraft.loot.ILootSerializer;
-import net.minecraft.loot.LootConditionType;
-import net.minecraft.loot.LootContext;
-import net.minecraft.loot.LootParameter;
-import net.minecraft.loot.LootParameterSets;
-import net.minecraft.loot.LootParameters;
-import net.minecraft.loot.conditions.ILootCondition;
-import net.minecraft.util.math.BlockPos;
+import net.minecraft.core.BlockPos;
+import net.minecraft.world.item.FishingRodItem;
+import net.minecraft.world.level.storage.loot.LootContext;
+import net.minecraft.world.level.storage.loot.Serializer;
+import net.minecraft.world.level.storage.loot.parameters.LootContextParam;
+import net.minecraft.world.level.storage.loot.parameters.LootContextParamSets;
+import net.minecraft.world.level.storage.loot.parameters.LootContextParams;
+import net.minecraft.world.level.storage.loot.predicates.LootItemCondition;
+import net.minecraft.world.level.storage.loot.predicates.LootItemConditionType;
 
-public class BloodFishingCondition implements ILootCondition {
+public class BloodFishingCondition implements LootItemCondition {
 	private static final BloodFishingCondition INSTANCE = new BloodFishingCondition();
 
 	public BloodFishingCondition() {
@@ -26,30 +26,30 @@ public class BloodFishingCondition implements ILootCondition {
 
 	@Override
 	public boolean test(LootContext t) {
-		for (LootParameter<?> p : LootParameterSets.FISHING.getRequiredParameters())
-			if (!t.has(p))
+		for (LootContextParam<?> p : LootContextParamSets.FISHING.getRequired())
+			if (!t.hasParam(p))
 				return false;
-		Set<LootParameter<?>> allowed = LootParameterSets.FISHING.getAllParameters();
-		for (LootParameter<?> p : LootParameterSets.GENERIC.getAllParameters())
-			if (t.has(p) && !allowed.contains(p))
+		Set<LootContextParam<?>> allowed = LootContextParamSets.FISHING.getAllowed();
+		for (LootContextParam<?> p : LootContextParamSets.ALL_PARAMS.getAllowed())
+			if (t.hasParam(p) && !allowed.contains(p))
 				return false;
 
-		if (!(t.get(LootParameters.TOOL).getItem() instanceof FishingRodItem))
+		if (!(t.getParamOrNull(LootContextParams.TOOL).getItem() instanceof FishingRodItem))
 			return false;
 
-		if (!t.getWorld().getFluidState(new BlockPos(t.get(LootParameters.field_237457_g_))).getFluid()
-				.isEquivalentTo(ModFluids.BLOOD))
+		if (!t.getLevel().getFluidState(new BlockPos(t.getParamOrNull(LootContextParams.ORIGIN))).getType()
+				.isSame(ModFluids.BLOOD.get()))
 			return false;
 
 		return true;
 	}
 
 	@Override
-	public LootConditionType func_230419_b_() {
+	public LootItemConditionType getType() {
 		return ModLootConditions.BLOOD_FISHING;
 	}
 
-	public static class Serializer implements ILootSerializer<BloodFishingCondition> {
+	public static class ConditionSerializer implements Serializer<BloodFishingCondition> {
 		public void serialize(JsonObject json, BloodFishingCondition instance, JsonSerializationContext p_230424_3_) {
 		}
 

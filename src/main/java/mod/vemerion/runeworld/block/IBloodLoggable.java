@@ -1,30 +1,30 @@
 package mod.vemerion.runeworld.block;
 
 import mod.vemerion.runeworld.init.ModFluids;
-import net.minecraft.block.BlockState;
-import net.minecraft.block.IWaterLoggable;
-import net.minecraft.fluid.Fluid;
-import net.minecraft.fluid.FluidState;
-import net.minecraft.fluid.Fluids;
-import net.minecraft.state.properties.BlockStateProperties;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.IBlockReader;
-import net.minecraft.world.IWorld;
+import mod.vemerion.runeworld.init.ModItems;
+import net.minecraft.core.BlockPos;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.BlockGetter;
+import net.minecraft.world.level.LevelAccessor;
+import net.minecraft.world.level.block.SimpleWaterloggedBlock;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.block.state.properties.BlockStateProperties;
+import net.minecraft.world.level.material.Fluid;
+import net.minecraft.world.level.material.FluidState;
 
-public interface IBloodLoggable extends IWaterLoggable {
-	
+public interface IBloodLoggable extends SimpleWaterloggedBlock {
+
 	@Override
-	default boolean canContainFluid(IBlockReader worldIn, BlockPos pos, BlockState state, Fluid fluidIn) {
-		return !state.get(BlockStateProperties.WATERLOGGED) && fluidIn == ModFluids.BLOOD;
+	default boolean canPlaceLiquid(BlockGetter worldIn, BlockPos pos, BlockState state, Fluid fluidIn) {
+		return !state.getValue(BlockStateProperties.WATERLOGGED) && fluidIn == ModFluids.BLOOD.get();
 	}
 
 	@Override
-	default boolean receiveFluid(IWorld worldIn, BlockPos pos, BlockState state, FluidState fluidStateIn) {
-		if (!state.get(BlockStateProperties.WATERLOGGED) && fluidStateIn.getFluid() == ModFluids.BLOOD) {
-			if (!worldIn.isRemote()) {
-				worldIn.setBlockState(pos, state.with(BlockStateProperties.WATERLOGGED, Boolean.valueOf(true)), 3);
-				worldIn.getPendingFluidTicks().scheduleTick(pos, fluidStateIn.getFluid(),
-						fluidStateIn.getFluid().getTickRate(worldIn));
+	default boolean placeLiquid(LevelAccessor level, BlockPos pos, BlockState state, FluidState fluidStateIn) {
+		if (!state.getValue(BlockStateProperties.WATERLOGGED) && fluidStateIn.getType() == ModFluids.BLOOD.get()) {
+			if (!level.isClientSide()) {
+				level.setBlock(pos, state.setValue(BlockStateProperties.WATERLOGGED, Boolean.valueOf(true)), 3);
+				level.scheduleTick(pos, fluidStateIn.getType(), fluidStateIn.getType().getTickDelay(level));
 			}
 
 			return true;
@@ -34,12 +34,16 @@ public interface IBloodLoggable extends IWaterLoggable {
 	}
 
 	@Override
-	default Fluid pickupFluid(IWorld worldIn, BlockPos pos, BlockState state) {
-		if (state.get(BlockStateProperties.WATERLOGGED)) {
-			worldIn.setBlockState(pos, state.with(BlockStateProperties.WATERLOGGED, Boolean.valueOf(false)), 3);
-			return ModFluids.BLOOD;
+	default ItemStack pickupBlock(LevelAccessor pLevel, BlockPos pPos, BlockState pState) {
+		if (pState.getValue(BlockStateProperties.WATERLOGGED)) {
+			pLevel.setBlock(pPos, pState.setValue(BlockStateProperties.WATERLOGGED, Boolean.valueOf(false)), 3);
+			if (!pState.canSurvive(pLevel, pPos)) {
+				pLevel.destroyBlock(pPos, true);
+			}
+
+			return new ItemStack(ModItems.BLOOD_BUCKET);
 		} else {
-			return Fluids.EMPTY;
+			return ItemStack.EMPTY;
 		}
 	}
 }
