@@ -23,5 +23,6 @@ public class Main {
      * TODO: Use LootTableIdCondition
      * TODO: Use DeferredRegisters
      * TODO: Use datagen for sounds
+     * TODO: Use new guide api
      */
 }

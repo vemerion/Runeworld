@@ -78,5 +78,13 @@
         "stream": false
       }
     ]
+  },
+  "blood_drop": {
+    "sounds": [
+      {
+        "name": "runeworld:blood_drop",
+        "stream": false
+      }
+    ]
   }
 }

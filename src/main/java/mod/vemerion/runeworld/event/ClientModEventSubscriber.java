@@ -13,12 +13,14 @@ import mod.vemerion.runeworld.init.ModEntities;
 import mod.vemerion.runeworld.init.ModFluids;
 import mod.vemerion.runeworld.init.ModItems;
 import mod.vemerion.runeworld.init.ModLayerLocations;
-import mod.vemerion.runeworld.init.ModParticleTypes;
+import mod.vemerion.runeworld.init.ModParticles;
 import mod.vemerion.runeworld.item.DislocatorItem;
 import mod.vemerion.runeworld.model.BloodBatModel;
 import mod.vemerion.runeworld.model.BloodLeechModel;
 import mod.vemerion.runeworld.model.BloodMonkeyModel;
 import mod.vemerion.runeworld.model.MosquitoModel;
+import mod.vemerion.runeworld.particle.BloodDropParticle;
+import mod.vemerion.runeworld.particle.BloodSplashParticle;
 import mod.vemerion.runeworld.particle.DrippingBloodProvider;
 import mod.vemerion.runeworld.particle.RunePortalParticle;
 import mod.vemerion.runeworld.renderer.BloodBatRenderer;
@@ -53,9 +55,10 @@ public class ClientModEventSubscriber {
 	public static void onRegisterParticleFactory(ParticleFactoryRegisterEvent event) {
 		Minecraft mc = Minecraft.getInstance();
 
-		mc.particleEngine.register(ModParticleTypes.DRIPPING_BLOOD, (s) -> new DrippingBloodProvider(s));
-		mc.particleEngine.register(ModParticleTypes.RUNE_PORTAL, (s) -> new RunePortalParticle.Factory(s));
-
+		mc.particleEngine.register(ModParticles.DRIPPING_BLOOD, (s) -> new DrippingBloodProvider(s));
+		mc.particleEngine.register(ModParticles.RUNE_PORTAL, (s) -> new RunePortalParticle.Provider(s));
+		mc.particleEngine.register(ModParticles.BLOOD_DROP, (s) -> new BloodDropParticle.Provider(s));
+		mc.particleEngine.register(ModParticles.BLOOD_SPLASH, (s) -> new BloodSplashParticle.Provider(s));
 	}
 
 	@SubscribeEvent

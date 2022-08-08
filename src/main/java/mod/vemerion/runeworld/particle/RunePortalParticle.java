@@ -16,10 +16,10 @@ public class RunePortalParticle extends PortalParticle {
 		this.bCol = data.getBlue() * 0.7f;
 	}
 
-	public static class Factory implements ParticleProvider<RunePortalParticleData> {
+	public static class Provider implements ParticleProvider<RunePortalParticleData> {
 		private final SpriteSet spriteSet;
 
-		public Factory(SpriteSet spriteSet) {
+		public Provider(SpriteSet spriteSet) {
 			this.spriteSet = spriteSet;
 		}
 

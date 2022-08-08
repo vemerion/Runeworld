@@ -7,7 +7,7 @@ import mod.vemerion.runeworld.helpers.Helper;
 import mod.vemerion.runeworld.init.ModBlocks;
 import mod.vemerion.runeworld.init.ModFluids;
 import mod.vemerion.runeworld.init.ModItems;
-import mod.vemerion.runeworld.init.ModParticleTypes;
+import mod.vemerion.runeworld.init.ModParticles;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.Blocks;
@@ -41,7 +41,7 @@ public class BloodFluid {
 
 		@Override
 		protected ParticleOptions getDripParticle() {
-			return ModParticleTypes.DRIPPING_BLOOD;
+			return ModParticles.DRIPPING_BLOOD;
 		}
 	}
 
@@ -52,7 +52,7 @@ public class BloodFluid {
 
 		@Override
 		protected ParticleOptions getDripParticle() {
-			return ModParticleTypes.DRIPPING_BLOOD;
+			return ModParticles.DRIPPING_BLOOD;
 		}
 
 		@Override

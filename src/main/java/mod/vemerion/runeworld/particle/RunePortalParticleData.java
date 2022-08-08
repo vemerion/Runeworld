@@ -7,7 +7,7 @@ import com.mojang.brigadier.exceptions.CommandSyntaxException;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 
-import mod.vemerion.runeworld.init.ModParticleTypes;
+import mod.vemerion.runeworld.init.ModParticles;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.core.particles.ParticleOptions;
 import net.minecraft.core.particles.ParticleType;
@@ -34,7 +34,7 @@ public class RunePortalParticleData implements ParticleOptions {
 
 	@Override
 	public ParticleType<?> getType() {
-		return ModParticleTypes.RUNE_PORTAL;
+		return ModParticles.RUNE_PORTAL;
 	}
 
 	@Override

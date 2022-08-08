@@ -14,10 +14,12 @@ import net.minecraftforge.registries.ObjectHolder;
 
 @ObjectHolder(value = Main.MODID)
 @EventBusSubscriber(bus = Bus.MOD, modid = Main.MODID)
-public class ModParticleTypes {
+public class ModParticles {
 
 	public static final SimpleParticleType DRIPPING_BLOOD = null;
 	public static final ParticleType<RunePortalParticleData> RUNE_PORTAL = null;
+	public static final SimpleParticleType BLOOD_DROP = null;
+	public static final SimpleParticleType BLOOD_SPLASH = null;
 
 	@SubscribeEvent
 	public static void onRegisterParticle(RegistryEvent.Register<ParticleType<?>> event) {
@@ -30,5 +32,7 @@ public class ModParticleTypes {
 						return RunePortalParticleData.CODEC;
 					}
 				}, "rune_portal"));
+		event.getRegistry().register(Init.setup(new SimpleParticleType(false), "blood_drop"));
+		event.getRegistry().register(Init.setup(new SimpleParticleType(false), "blood_splash"));
 	}
 }

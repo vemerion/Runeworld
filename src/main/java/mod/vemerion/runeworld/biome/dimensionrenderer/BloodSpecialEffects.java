@@ -13,21 +13,28 @@ import com.mojang.math.Matrix4f;
 import com.mojang.math.Vector3f;
 
 import mod.vemerion.runeworld.Main;
+import mod.vemerion.runeworld.init.ModParticles;
+import mod.vemerion.runeworld.init.ModSounds;
+import net.minecraft.client.Camera;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.multiplayer.ClientLevel;
 import net.minecraft.client.renderer.DimensionSpecialEffects.OverworldEffects;
 import net.minecraft.client.renderer.GameRenderer;
 import net.minecraft.client.renderer.LightTexture;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.sounds.SoundSource;
 import net.minecraft.util.Mth;
 import net.minecraftforge.client.ISkyRenderHandler;
+import net.minecraftforge.client.IWeatherParticleRenderHandler;
 import net.minecraftforge.client.IWeatherRenderHandler;
 
 public class BloodSpecialEffects extends OverworldEffects {
-	
+
 	public BloodSpecialEffects() {
 		super();
 		this.setSkyRenderHandler(new SkyRenderer());
+		this.setWeatherRenderHandler(new WeatherRenderer());
+		this.setWeatherParticleRenderHandler(new WeatherParticleRenderer());
 	}
 
 	public static class SkyRenderer implements ISkyRenderHandler {
@@ -95,6 +102,34 @@ public class BloodSpecialEffects extends OverworldEffects {
 
 	}
 
+	public static class WeatherParticleRenderer implements IWeatherParticleRenderHandler {
+
+		private static final int DISTANCE = 30;
+		private static final int COUNT = 30;
+
+		private int soundDelay;
+
+		@Override
+		public void render(int ticks, ClientLevel level, Minecraft minecraft, Camera camera) {
+			var pos = camera.getPosition();
+			var rand = level.random;
+			for (int i = 0; i < COUNT; i++) {
+				level.addParticle(ModParticles.BLOOD_DROP, pos.x + rand.nextDouble(-DISTANCE, DISTANCE),
+						pos.y + rand.nextDouble(-DISTANCE, DISTANCE), pos.z + rand.nextDouble(-DISTANCE, DISTANCE), 0,
+						rand.nextDouble(-0.6, -0.4), 0);
+			}
+			
+			if (soundDelay-- == 0) {
+				minecraft.level.playLocalSound(
+						camera.getBlockPosition().offset(rand.nextDouble(-DISTANCE, DISTANCE),
+								rand.nextDouble(-DISTANCE, DISTANCE), rand.nextDouble(-DISTANCE, DISTANCE)),
+						ModSounds.BLOOD_DROP, SoundSource.WEATHER, 1, rand.nextFloat(0.8f, 1.5f), true);
+				soundDelay = rand.nextInt(10, 30);
+			}
+		}
+
+	}
+
 	public static class WeatherRenderer implements IWeatherRenderHandler {
 
 		@Override
@@ -103,43 +138,41 @@ public class BloodSpecialEffects extends OverworldEffects {
 //			if (!world.isRaining())
 //				return;
 //
-//			MatrixStack matrix = new MatrixStack();
-//			RenderSystem.disableAlphaTest();
+//			PoseStack poseStack = new PoseStack();
 //
 //			RenderSystem.enableBlend();
 //			RenderSystem.defaultBlendFunc();
 //			RenderSystem.depthMask(false);
-//			mc.getTextureManager().bindTexture(new ResourceLocation("textures/environment/rain.png"));
-//			Tessellator tessellator = Tessellator.getInstance();
+//			RenderSystem.setShader(GameRenderer::getPositionTexColorShader);
+//			RenderSystem.setShaderColor(1, 1, 1, 1);
+//			RenderSystem.setShaderTexture(0, new ResourceLocation("textures/environment/rain.png"));
 //
-//			matrix.push();
-//			matrix.rotate(mc.getRenderManager().getCameraOrientation());
-//			matrix.scale(-1, -1, 1);
-//			matrix.translate(-0.15, -0.09, 0.1);
-//			matrix.scale(0.01f, 0.01f, 0.01f);
+//			poseStack.pushPose();
+//			poseStack.mulPose(mc.getEntityRenderDispatcher().cameraOrientation());
+//			poseStack.scale(-1, -1, 1);
+//			poseStack.translate(-0.15, -0.09, 0.1);
+//			poseStack.scale(0.1f, 0.1f, 0.1f);
 //
 //			for (int i = 0; i < 2; i++) {
-//				matrix.push();
-//				matrix.scale(0.5f, 0.5f, 1);
+//				poseStack.pushPose();
+//				poseStack.scale(0.5f, 0.5f, 1);
 //				float height = (ticks + partialTicks) % 30;
-//				Matrix4f matrix4f = matrix.getLast().getMatrix();
-//				BufferBuilder bufferbuilder = tessellator.getBuffer();
-//				bufferbuilder.begin(7, DefaultVertexFormats.POSITION_TEX_COLOR);
-//				bufferbuilder.pos(matrix4f, 0, height - i * 30, 0).tex(0.0F, 0.0F).color(255, 0, 0, 200).endVertex();
-//				bufferbuilder.pos(matrix4f, 0, 40 + height - i * 30, 0).tex(0.0F, 1.0F).color(255, 0, 0, 200).endVertex();
-//				bufferbuilder.pos(matrix4f, 10, 40 + height - i * 30, 0).tex(1.0F, 1.0F).color(255, 0, 0, 200).endVertex();
-//				bufferbuilder.pos(matrix4f, 10, height - i * 30, 0).tex(1.0F, 0.0F).color(255, 0, 0, 200).endVertex();
-//
-//				tessellator.draw();
-//				matrix.pop();
+//				Matrix4f matrix4f = poseStack.last().pose();
+//				BufferBuilder bufferbuilder = Tesselator.getInstance().getBuilder();
+//				bufferbuilder.begin(Mode.QUADS, DefaultVertexFormat.POSITION_TEX_COLOR);
+//				bufferbuilder.vertex(matrix4f, 0, height - i * 30, 0).uv(0.0F, 0.0F).color(255, 0, 0, 200).endVertex();
+//				bufferbuilder.vertex(matrix4f, 0, 40 + height - i * 30, 0).uv(0.0F, 1.0F).color(255, 0, 0, 200).endVertex();
+//				bufferbuilder.vertex(matrix4f, 10, 40 + height - i * 30, 0).uv(1.0F, 1.0F).color(255, 0, 0, 200).endVertex();
+//				bufferbuilder.vertex(matrix4f, 10, height - i * 30, 0).uv(1.0F, 0.0F).color(255, 0, 0, 200).endVertex();
+//				bufferbuilder.end();
+//				BufferUploader.end(bufferbuilder);
+//				poseStack.popPose();
 //			}
 //			
-//			matrix.pop();
+//			poseStack.popPose();
 //
 //			RenderSystem.depthMask(true);
-//			RenderSystem.enableTexture();
 //			RenderSystem.disableBlend();
-//			RenderSystem.enableAlphaTest();
 		}
 	}
 }

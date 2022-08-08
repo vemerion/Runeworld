@@ -4,7 +4,7 @@ import java.util.EnumSet;
 
 import mod.vemerion.runeworld.goal.HoverWanderGoal;
 import mod.vemerion.runeworld.init.ModEffects;
-import mod.vemerion.runeworld.init.ModParticleTypes;
+import mod.vemerion.runeworld.init.ModParticles;
 import mod.vemerion.runeworld.init.ModSounds;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
@@ -92,7 +92,7 @@ public class BloodBatEntity extends PathfinderMob implements FlyingAnimal {
 			Vec3 offset = new Vec3((getRandom().nextDouble() - 0.5) * 0.2, 0.15,
 					(getRandom().nextDouble() - 0.5) * 0.2);
 			Vec3 pos = position().add(Vec3.directionFromRotation(0, getYRot()).scale(0.7)).add(offset);
-			level.addParticle(ModParticleTypes.DRIPPING_BLOOD, pos.x, pos.y, pos.z, 0, 0, 0);
+			level.addParticle(ModParticles.DRIPPING_BLOOD, pos.x, pos.y, pos.z, 0, 0, 0);
 		}
 	}
 
