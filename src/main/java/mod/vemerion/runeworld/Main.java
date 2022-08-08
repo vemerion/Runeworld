@@ -4,6 +4,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import mod.vemerion.runeworld.init.ModFluids;
+import mod.vemerion.runeworld.init.ModItems;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 
@@ -16,10 +17,10 @@ public class Main {
     public Main() {
 		var bus = FMLJavaModLoadingContext.get().getModEventBus();
 		ModFluids.FLUIDS.register(bus);
+		ModItems.Deferred.ITEMS.register(bus);
 	}
     
     /*
-     * TODO: Use ForgeSpawnEggItem
      * TODO: Use LootTableIdCondition
      * TODO: Use DeferredRegisters
      * TODO: Use datagen for sounds

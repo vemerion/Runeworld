@@ -26,7 +26,7 @@ public class ModGuide {
 					new TranslatableComponent(transKey("blood_world")));
 			blood = guide.createGuideChapter(ModItems.BLOOD_BUCKET,
 					new TranslatableComponent(transKey("blood_world.blood")));
-			bloodWorldMobs = guide.createGuideChapter(ModEntities.MOSQUITO_SPAWN_EGG,
+			bloodWorldMobs = guide.createGuideChapter(ModItems.Deferred.MOSQUITO_SPAWN_EGG.get(),
 					new TranslatableComponent(transKey("blood_world.mobs")));
 			bloodCrystallite = guide.createGuideChapter(ModItems.BLOOD_CRYSTALLITE,
 					new TranslatableComponent(transKey("blood_world.blood_crystallite")));

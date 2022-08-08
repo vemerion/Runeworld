@@ -36,7 +36,6 @@ import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.entity.ThrownItemRenderer;
 import net.minecraft.client.renderer.item.ItemProperties;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.world.item.SpawnEggItem;
 import net.minecraft.world.level.block.Block;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.client.event.ColorHandlerEvent;
@@ -126,12 +125,6 @@ public class ClientModEventSubscriber {
 
 					return property;
 				});
-	}
-
-	@SubscribeEvent
-	public static void onRegisterItemColor(ColorHandlerEvent.Item event) {
-		event.getItemColors().register((stack, color) -> ((SpawnEggItem) stack.getItem()).getColor(color),
-				ModEntities.getSpawnEggs().toArray(new SpawnEggItem[0]));
 	}
 
 	@SubscribeEvent

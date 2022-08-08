@@ -3,11 +3,11 @@ package mod.vemerion.runeworld.datagen;
 import mod.vemerion.runeworld.Main;
 import mod.vemerion.runeworld.block.complex.StoneMaterial;
 import mod.vemerion.runeworld.init.ModBlocks;
-import mod.vemerion.runeworld.init.ModEntities;
 import mod.vemerion.runeworld.init.ModItems;
 import net.minecraft.data.DataGenerator;
-import net.minecraft.world.item.Item;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.SpawnEggItem;
 import net.minecraftforge.client.model.generators.ItemModelProvider;
 import net.minecraftforge.client.model.generators.ModelFile;
 import net.minecraftforge.client.model.generators.ModelProvider;
@@ -34,9 +34,13 @@ public class ModItemModelProvider extends ItemModelProvider {
 		simpleItem(ModItems.FIRE_ROOT);
 		simpleItem(ModItems.BLOOD_FLOWER, BLOCK_FOLDER);
 		simpleItem(ModItems.BLOOD_CRYSTAL, BLOCK_FOLDER);
-		ModEntities.getSpawnEggs().forEach(egg -> spawnEgg(egg));
 		dislocator(ModItems.BLOOD_DISLOCATOR);
 		dislocator(ModItems.FIRE_DISLOCATOR);
+		
+		ModItems.Deferred.ITEMS.getEntries().forEach(item -> {
+			if (item.get() instanceof SpawnEggItem egg)
+				spawnEgg(egg);
+		});
 		
 		// Complex
 		stoneMaterial(ModBlocks.SPARKSTONE);

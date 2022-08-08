@@ -43,13 +43,13 @@ public class ModLanguageProvider extends LanguageProvider {
 		add(ModItems.GRILLED_BLOOD_LEECH, "Grilled Blood Leech");
 		add(ModItems.FIRE_HEART, "Fire Heart");
 		add(ModItems.FIRE_DISLOCATOR, "Fire Dislocator");
+		add(ModItems.Deferred.MOSQUITO_SPAWN_EGG.get(), "Mosquito Spawn Egg");
+		add(ModItems.Deferred.BLOOD_BAT_SPAWN_EGG.get(), "Blood Bat Spawn Egg");
+		add(ModItems.Deferred.BLOOD_MONKEY_SPAWN_EGG.get(), "Blood Monkey Spawn Egg");
 		add(ModEffects.BLOOD_DRAINED, "Blood Drained");
 		add(ModBiomes.BLOOD_PLAINS, "Blood Plains");
 		add(ModBiomes.FIRE_PLAINS, "Fire Plains");
 		add(ModEntities.MOSQUITO, "Mosquito");
-		add(ModEntities.MOSQUITO_SPAWN_EGG, "Mosquito Spawn Egg");
-		add(ModEntities.BLOOD_BAT_SPAWN_EGG, "Blood Bat Spawn Egg");
-		add(ModEntities.BLOOD_MONKEY_SPAWN_EGG, "Blood Monkey Spawn Egg");
 		add(ModEntities.MOSQUITO_EGGS, "Mosquito Eggs");
 		add(ModEntities.BLOOD_BAT, "Blood Bat");
 		add(ModEntities.BLOOD_MONKEY, "Blood Monkey");
