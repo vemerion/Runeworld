@@ -9,6 +9,7 @@ import mod.vemerion.runeworld.model.BloodMonkeyModel;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.minecraft.client.renderer.entity.MobRenderer;
+import net.minecraft.client.renderer.entity.layers.ItemInHandLayer;
 import net.minecraft.resources.ResourceLocation;
 
 public class BloodMonkeyRenderer extends MobRenderer<BloodMonkeyEntity, BloodMonkeyModel> {
@@ -18,6 +19,7 @@ public class BloodMonkeyRenderer extends MobRenderer<BloodMonkeyEntity, BloodMon
 
 	public BloodMonkeyRenderer(EntityRendererProvider.Context context) {
 		super(context, new BloodMonkeyModel(context.bakeLayer(ModLayerLocations.BLOOD_MONKEY)), 0.5f);
+		this.addLayer(new ItemInHandLayer<>(this));
 	}
 
 	@Override

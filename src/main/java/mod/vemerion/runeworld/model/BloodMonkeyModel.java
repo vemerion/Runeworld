@@ -6,6 +6,7 @@ import com.mojang.blaze3d.vertex.VertexConsumer;
 
 import mod.vemerion.runeworld.entity.BloodMonkeyEntity;
 import mod.vemerion.runeworld.helpers.Helper;
+import net.minecraft.client.model.ArmedModel;
 import net.minecraft.client.model.EntityModel;
 import net.minecraft.client.model.geom.ModelPart;
 import net.minecraft.client.model.geom.PartPose;
@@ -14,11 +15,12 @@ import net.minecraft.client.model.geom.builders.LayerDefinition;
 import net.minecraft.client.model.geom.builders.MeshDefinition;
 import net.minecraft.client.model.geom.builders.PartDefinition;
 import net.minecraft.util.Mth;
+import net.minecraft.world.entity.HumanoidArm;
 
 /**
  * Created using Tabula 8.0.0
  */
-public class BloodMonkeyModel extends EntityModel<BloodMonkeyEntity> {
+public class BloodMonkeyModel extends EntityModel<BloodMonkeyEntity> implements ArmedModel {
 	public ModelPart body;
 	public ModelPart leftLeg1;
 	public ModelPart rightLeg1;
@@ -145,5 +147,17 @@ public class BloodMonkeyModel extends EntityModel<BloodMonkeyEntity> {
 		rightLeg1.setRotation(-0.52f, -0.77f, 0.66f);
 		rightLeg2.setRotation(0.10f, 0.41f, -0.47f);
 		head.setRotation(-0.19f, 0, 0);
+	}
+
+	@Override
+	public void translateToHand(HumanoidArm pSide, PoseStack pPoseStack) {
+		getArmParts(pSide).forEach(p -> p.translateAndRotate(pPoseStack));
+		pPoseStack.translate(0.05, -0.05, 0);
+		pPoseStack.scale(0.75f, 0.75f, 0.75f);
+	}
+
+	private Iterable<ModelPart> getArmParts(HumanoidArm pSide) {
+		return pSide == HumanoidArm.LEFT ? ImmutableList.of(body, leftArm1, leftArm2)
+				: ImmutableList.of(body, rightArm1, rightArm2);
 	}
 }
