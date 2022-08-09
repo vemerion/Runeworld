@@ -1,9 +1,18 @@
 {
   "conditions": [
     {
-      "condition": "runeworld:blood_fishing"
+      "condition": "minecraft:location_check",
+      "predicate": {
+        "fluid": {
+          "fluid": "runeworld:blood"
+        }
+      }
+    },
+    {
+      "condition": "forge:loot_table_id",
+      "loot_table_id": "minecraft:gameplay/fishing"
     }
   ],
   "table": "runeworld:gameplay/blood_fishing",
-  "type": "runeworld:blood_fishing"
+  "type": "runeworld:from_loot_table"
 }

@@ -7,14 +7,13 @@ import mod.vemerion.runeworld.feature.BloodPillarSingleFeature;
 import mod.vemerion.runeworld.feature.BloodPoolFeature;
 import mod.vemerion.runeworld.feature.BloodRockPatchFeature;
 import mod.vemerion.runeworld.feature.RunePortalFeature;
-import net.minecraft.world.level.levelgen.feature.configurations.BlockStateConfiguration;
 import net.minecraft.world.level.levelgen.feature.Feature;
+import net.minecraft.world.level.levelgen.feature.configurations.BlockStateConfiguration;
 import net.minecraft.world.level.levelgen.feature.configurations.NoneFeatureConfiguration;
 import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod.EventBusSubscriber;
 import net.minecraftforge.fml.common.Mod.EventBusSubscriber.Bus;
-import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.registries.ObjectHolder;
 
 @ObjectHolder(value = Main.MODID)
