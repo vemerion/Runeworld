@@ -25,6 +25,5 @@ public class Main {
     /*
      * TODO: Use DeferredRegisters
      * TODO: Use datagen for sounds
-     * TODO: Use new guide api
      */
 }

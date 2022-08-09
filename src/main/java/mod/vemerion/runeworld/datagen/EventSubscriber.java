@@ -9,7 +9,9 @@ import java.util.function.Supplier;
 import com.google.common.collect.ImmutableList;
 import com.mojang.datafixers.util.Pair;
 
+import mod.vemerion.runesword.api.RuneswordAPI;
 import mod.vemerion.runeworld.Main;
+import mod.vemerion.runeworld.init.ModGuide;
 import net.minecraft.data.tags.BlockTagsProvider;
 import net.minecraft.data.DataGenerator;
 import net.minecraft.data.loot.LootTableProvider;
@@ -48,6 +50,7 @@ public class EventSubscriber {
 			dataGenerator.addProvider(blockTagsProvider);
 			dataGenerator.addProvider(new ModItemTagsProvider(dataGenerator, blockTagsProvider, existingFileHelper));
 			dataGenerator.addProvider(new ModBiomeTagsProvider(dataGenerator, blockTagsProvider, existingFileHelper));
+			dataGenerator.addProvider(RuneswordAPI.guide.guideProvider(dataGenerator, Main.MODID, "guide", ModGuide.getStartChapter()));
 			dataGenerator.addProvider(new LootTableProvider(dataGenerator) {
 				@Override
 				protected List<Pair<Supplier<Consumer<BiConsumer<ResourceLocation, Builder>>>, LootContextParamSet>> getTables() {

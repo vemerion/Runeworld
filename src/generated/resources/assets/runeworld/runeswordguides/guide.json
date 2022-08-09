@@ -1,0 +1,174 @@
+{
+  "item_icon": "runeworld:guide",
+  "title": {
+    "type": "header",
+    "key": "guide.runeworld.guide"
+  },
+  "components": [
+    {
+      "type": "paragraph",
+      "key": "guide.runeworld.intro"
+    }
+  ],
+  "children": [
+    {
+      "item_icon": "minecraft:obsidian",
+      "title": {
+        "type": "header",
+        "key": "guide.runeworld.portal"
+      },
+      "components": [
+        {
+          "type": "paragraph",
+          "key": "guide.runeworld.portal.text1"
+        },
+        {
+          "type": "paragraph",
+          "key": "guide.runeworld.portal.text2"
+        },
+        {
+          "type": "image",
+          "width": 1536,
+          "height": 864,
+          "key": "runeworld:textures/guide/portal1.png"
+        },
+        {
+          "type": "image",
+          "width": 1536,
+          "height": 864,
+          "key": "runeworld:textures/guide/portal2.png"
+        },
+        {
+          "type": "paragraph",
+          "key": "guide.runeworld.portal.text3"
+        }
+      ],
+      "children": []
+    },
+    {
+      "item_icon": "runesword:blood_rune",
+      "title": {
+        "type": "header",
+        "key": "guide.runeworld.blood_world"
+      },
+      "components": [
+        {
+          "type": "paragraph",
+          "key": "guide.runeworld.blood_world.text1"
+        }
+      ],
+      "children": [
+        {
+          "item_icon": "runeworld:blood_bucket",
+          "title": {
+            "type": "header",
+            "key": "guide.runeworld.blood_world.blood"
+          },
+          "components": [
+            {
+              "type": "paragraph",
+              "key": "guide.runeworld.blood_world.blood.text1"
+            },
+            {
+              "type": "paragraph",
+              "key": "guide.runeworld.blood_world.blood.text2"
+            },
+            {
+              "type": "paragraph",
+              "key": "guide.runeworld.blood_world.blood.text3"
+            },
+            {
+              "type": "paragraph",
+              "key": "guide.runeworld.blood_world.blood.text4"
+            },
+            {
+              "type": "paragraph",
+              "key": "guide.runeworld.blood_world.blood.text5"
+            }
+          ],
+          "children": []
+        },
+        {
+          "item_icon": "runeworld:mosquito_spawn_egg",
+          "title": {
+            "type": "header",
+            "key": "guide.runeworld.blood_world.mobs"
+          },
+          "components": [
+            {
+              "type": "paragraph",
+              "key": "guide.runeworld.blood_world.mobs.intro"
+            },
+            {
+              "type": "header",
+              "key": "guide.runeworld.blood_world.mobs.blood_bat"
+            },
+            {
+              "type": "paragraph",
+              "key": "guide.runeworld.blood_world.mobs.blood_bat.text1"
+            },
+            {
+              "type": "paragraph",
+              "key": "guide.runeworld.blood_world.mobs.blood_bat.text2"
+            },
+            {
+              "type": "header",
+              "key": "guide.runeworld.blood_world.mobs.mosquito"
+            },
+            {
+              "type": "paragraph",
+              "key": "guide.runeworld.blood_world.mobs.mosquito.text1"
+            },
+            {
+              "type": "paragraph",
+              "key": "guide.runeworld.blood_world.mobs.mosquito.text2"
+            },
+            {
+              "type": "header",
+              "key": "guide.runeworld.blood_world.mobs.blood_monkey"
+            },
+            {
+              "type": "paragraph",
+              "key": "guide.runeworld.blood_world.mobs.blood_monkey.text1"
+            },
+            {
+              "type": "paragraph",
+              "key": "guide.runeworld.blood_world.mobs.blood_monkey.text2"
+            }
+          ],
+          "children": []
+        },
+        {
+          "item_icon": "runeworld:blood_crystallite",
+          "title": {
+            "type": "header",
+            "key": "guide.runeworld.blood_world.blood_crystallite"
+          },
+          "components": [
+            {
+              "type": "paragraph",
+              "key": "guide.runeworld.blood_world.blood_crystallite.text1"
+            },
+            {
+              "type": "paragraph",
+              "key": "guide.runeworld.blood_world.blood_crystallite.text2"
+            },
+            {
+              "type": "paragraph",
+              "key": "guide.runeworld.blood_world.blood_crystallite.text3"
+            },
+            {
+              "type": "paragraph",
+              "key": "guide.runeworld.blood_world.blood_crystallite.text4"
+            },
+            {
+              "type": "paragraph",
+              "key": "guide.runeworld.blood_world.blood_crystallite.text5"
+            }
+          ],
+          "children": []
+        }
+      ]
+    }
+  ]
+}
