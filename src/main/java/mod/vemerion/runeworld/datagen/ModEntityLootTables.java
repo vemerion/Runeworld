@@ -54,6 +54,8 @@ public class ModEntityLootTables extends EntityLoot {
 								.add(LootItem.lootTableItem(ModBlocks.FIRE_RITUAL_STONE)
 										.apply(SetItemCountFunction.setCount(UniformGenerator.between(0, 2)))
 										.apply(LootingEnchantFunction.lootingMultiplier(UniformGenerator.between(0, 1))))));
+		
+		add(ModEntities.BLOOD_GORILLA, LootTable.lootTable());
 	}
 
 	@Override

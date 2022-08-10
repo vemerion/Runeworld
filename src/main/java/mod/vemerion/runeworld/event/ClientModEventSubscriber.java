@@ -16,6 +16,7 @@ import mod.vemerion.runeworld.init.ModLayerLocations;
 import mod.vemerion.runeworld.init.ModParticles;
 import mod.vemerion.runeworld.item.DislocatorItem;
 import mod.vemerion.runeworld.model.BloodBatModel;
+import mod.vemerion.runeworld.model.BloodGorillaModel;
 import mod.vemerion.runeworld.model.BloodLeechModel;
 import mod.vemerion.runeworld.model.BloodMonkeyModel;
 import mod.vemerion.runeworld.model.MosquitoModel;
@@ -24,6 +25,7 @@ import mod.vemerion.runeworld.particle.BloodSplashParticle;
 import mod.vemerion.runeworld.particle.DrippingBloodProvider;
 import mod.vemerion.runeworld.particle.RunePortalParticle;
 import mod.vemerion.runeworld.renderer.BloodBatRenderer;
+import mod.vemerion.runeworld.renderer.BloodGorillaRenderer;
 import mod.vemerion.runeworld.renderer.BloodLeechBlockEntityRenderer;
 import mod.vemerion.runeworld.renderer.BloodMonkeyRenderer;
 import mod.vemerion.runeworld.renderer.FireElementalProjectileRenderer;
@@ -93,6 +95,7 @@ public class ClientModEventSubscriber {
 		event.registerLayerDefinition(ModLayerLocations.BLOOD_LEECH, BloodLeechModel::createLayer);
 		event.registerLayerDefinition(ModLayerLocations.BLOOD_MONKEY, BloodMonkeyModel::createLayer);
 		event.registerLayerDefinition(ModLayerLocations.MOSQUITO, MosquitoModel::createLayer);
+		event.registerLayerDefinition(ModLayerLocations.BLOOD_GORILLA, BloodGorillaModel::createBodyLayer);
 	}
 	
 	@SubscribeEvent
@@ -106,6 +109,7 @@ public class ClientModEventSubscriber {
 		event.registerEntityRenderer(ModEntities.BLOOD_PEBBLE, ThrownItemRenderer::new);
 		event.registerEntityRenderer(ModEntities.FIRE_ELEMENTAL, FireElementalRenderer::new);
 		event.registerEntityRenderer(ModEntities.FIRE_ELEMENTAL_PROJECTILE, FireElementalProjectileRenderer::new);
+		event.registerEntityRenderer(ModEntities.BLOOD_GORILLA, BloodGorillaRenderer::new);
 	}
 
 	private static void registerItemProperties() {

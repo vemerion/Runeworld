@@ -2,6 +2,7 @@ package mod.vemerion.runeworld.init;
 
 import mod.vemerion.runeworld.Main;
 import mod.vemerion.runeworld.entity.BloodBatEntity;
+import mod.vemerion.runeworld.entity.BloodGorillaEntity;
 import mod.vemerion.runeworld.entity.BloodMonkeyEntity;
 import mod.vemerion.runeworld.entity.BloodPebbleEntity;
 import mod.vemerion.runeworld.entity.FireElementalEntity;
@@ -32,6 +33,7 @@ public class ModEntities {
 	public static final EntityType<BloodPebbleEntity> BLOOD_PEBBLE = null;
 	public static final EntityType<FireElementalEntity> FIRE_ELEMENTAL = null;
 	public static final EntityType<FireElementalProjectileEntity> FIRE_ELEMENTAL_PROJECTILE = null;
+	public static final EntityType<BloodGorillaEntity> BLOOD_GORILLA = null;
 
 	@SubscribeEvent
 	public static void onRegisterEntity(RegistryEvent.Register<EntityType<?>> event) {
@@ -65,10 +67,13 @@ public class ModEntities {
 				.<FireElementalProjectileEntity>of(FireElementalProjectileEntity::new, MobCategory.MISC)
 				.sized(1, 1).clientTrackingRange(4).updateInterval(10)
 				.build(new ResourceLocation(Main.MODID, "fire_elemental_projectile").toString());
+		
+		var bloodGorilla = EntityType.Builder.<BloodGorillaEntity>of(BloodGorillaEntity::new, MobCategory.MONSTER)
+				.sized(2.1f, 2.1f).build("");
 
 		event.getRegistry().registerAll(Init.setup(mosquitoEggs, "mosquito_eggs"),
 				Init.setup(bloodPebble, "blood_pebble"), Init.setup(fireElemental, "fire_elemental"),
-				Init.setup(fireElementalProjectile, "fire_elemental_projectile"), mosquito, bloodBat, bloodMonkey);
+				Init.setup(fireElementalProjectile, "fire_elemental_projectile"), Init.setup(bloodGorilla, "blood_gorilla"), mosquito, bloodBat, bloodMonkey);
 	}
 
 	@SubscribeEvent
@@ -82,6 +87,7 @@ public class ModEntities {
 		event.put(BLOOD_BAT, BloodBatEntity.attributes().build());
 		event.put(BLOOD_MONKEY, BloodMonkeyEntity.attributes().build());
 		event.put(FIRE_ELEMENTAL, FireElementalEntity.attributes().build());
+		event.put(BLOOD_GORILLA, BloodGorillaEntity.attributes().build());
 	}
 
 	private static void setEntitySpawns() {
