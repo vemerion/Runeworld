@@ -70,12 +70,12 @@ public class MosquitoEntity extends PathfinderMob implements FlyingAnimal {
 
 	@Override
 	protected SoundEvent getAmbientSound() {
-		return ModSounds.MOSQUITO_FLYING;
+		return ModSounds.MOSQUITO_FLYING.get();
 	}
 	
 	@Override
 	protected SoundEvent getDeathSound() {
-		return ModSounds.MOSQUITO_SPLASH;
+		return ModSounds.MOSQUITO_SPLASH.get();
 	}
 	
 	@Override

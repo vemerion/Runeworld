@@ -40,6 +40,7 @@ public class EventSubscriber {
 			dataGenerator.addProvider(new ModLanguageProvider(dataGenerator));
 			dataGenerator.addProvider(new ModBlockStateProvider(dataGenerator, existingFileHelper));
 			dataGenerator.addProvider(new ModItemModelProvider(dataGenerator, existingFileHelper));
+			dataGenerator.addProvider(new ModSoundProvider(dataGenerator, existingFileHelper));
 		}
 		if (event.includeServer()) {
 			BlockTagsProvider blockTagsProvider = new ModBlockTagsProvider(dataGenerator, existingFileHelper);

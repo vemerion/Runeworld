@@ -72,17 +72,17 @@ public class BloodMonkeyEntity extends Monster implements RangedAttackMob {
 
 	@Override
 	protected SoundEvent getAmbientSound() {
-		return ModSounds.MONKEY_AMBIENT;
+		return ModSounds.MONKEY_AMBIENT.get();
 	}
 
 	@Override
 	protected SoundEvent getHurtSound(DamageSource damageSourceIn) {
-		return ModSounds.MONKEY_AMBIENT;
+		return ModSounds.MONKEY_AMBIENT.get();
 	}
 
 	@Override
 	protected SoundEvent getDeathSound() {
-		return ModSounds.MONKEY_DEATH;
+		return ModSounds.MONKEY_DEATH.get();
 	}
 
 	@Override
@@ -150,7 +150,7 @@ public class BloodMonkeyEntity extends Monster implements RangedAttackMob {
 		double height = Math.sqrt(x * x + z * z) * 0.2;
 		projectile.shoot(x, y + height, z, 1f, 1f);
 		level.addFreshEntity(projectile);
-		playSound(ModSounds.THROWING, 1, Helper.soundPitch(random));
+		playSound(ModSounds.THROWING.get(), 1, Helper.soundPitch(random));
 	}
 
 	public boolean isStandingOnPillar() {

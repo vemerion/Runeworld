@@ -33,7 +33,7 @@ public class MosquitoEggsEntity extends ThrowableItemProjectile {
 	protected void onHit(HitResult result) {
 		super.onHit(result);
 		
-		playSound(ModSounds.MOSQUITO_SPLASH, 1, Helper.soundPitch(random));
+		playSound(ModSounds.MOSQUITO_SPLASH.get(), 1, Helper.soundPitch(random));
 
 		if (!level.isClientSide && isAlive()) {
 			Vec3 pos = result.getLocation();

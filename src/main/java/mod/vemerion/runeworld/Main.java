@@ -6,6 +6,7 @@ import org.apache.logging.log4j.Logger;
 import mod.vemerion.runeworld.init.ModFluids;
 import mod.vemerion.runeworld.init.ModItems;
 import mod.vemerion.runeworld.init.ModLootModifiers;
+import mod.vemerion.runeworld.init.ModSounds;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 
@@ -20,10 +21,10 @@ public class Main {
 		ModFluids.FLUIDS.register(bus);
 		ModItems.Deferred.ITEMS.register(bus);
 		ModLootModifiers.LOOT_MODIFIERS.register(bus);
+		ModSounds.SOUNDS.register(bus);
 	}
     
     /*
      * TODO: Use DeferredRegisters
-     * TODO: Use datagen for sounds
      */
 }

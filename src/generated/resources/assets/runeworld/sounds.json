@@ -1,0 +1,57 @@
+{
+  "blood_bat_death": {
+    "sounds": [
+      "runeworld:blood_bat_death"
+    ]
+  },
+  "blood_bat_snoring": {
+    "sounds": [
+      "runeworld:blood_bat_snoring"
+    ]
+  },
+  "blood_bat_wings": {
+    "sounds": [
+      "runeworld:blood_bat_wings"
+    ]
+  },
+  "blood_drop": {
+    "sounds": [
+      "runeworld:blood_drop"
+    ]
+  },
+  "monkey_ambient": {
+    "sounds": [
+      "runeworld:monkey_ambient"
+    ]
+  },
+  "monkey_death": {
+    "sounds": [
+      "runeworld:monkey_death"
+    ]
+  },
+  "mosquito_flying": {
+    "sounds": [
+      "runeworld:mosquito_flying"
+    ]
+  },
+  "mosquito_splash": {
+    "sounds": [
+      "runeworld:mosquito_splash"
+    ]
+  },
+  "portal": {
+    "sounds": [
+      "runeworld:portal"
+    ]
+  },
+  "sizzle": {
+    "sounds": [
+      "runeworld:sizzle"
+    ]
+  },
+  "throwing": {
+    "sounds": [
+      "runeworld:throwing"
+    ]
+  }
+}

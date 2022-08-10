@@ -42,7 +42,7 @@ public class ForgeEventSubscriber {
 					RunePortalBlock.getPortalFromRune(stack.getItem()))) {
 				if (!event.getPlayer().isCreative())
 					stack.shrink(1);
-				event.getWorld().playSound(null, pos.getX(), pos.getY(), pos.getZ(), ModSounds.PORTAL,
+				event.getWorld().playSound(null, pos.getX(), pos.getY(), pos.getZ(), ModSounds.PORTAL.get(),
 						SoundSource.PLAYERS, 1, Helper.soundPitch(event.getPlayer().getRandom()));
 			}
 		}

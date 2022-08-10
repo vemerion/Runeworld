@@ -123,7 +123,7 @@ public class BloodSpecialEffects extends OverworldEffects {
 				minecraft.level.playLocalSound(
 						camera.getBlockPosition().offset(rand.nextDouble(-DISTANCE, DISTANCE),
 								rand.nextDouble(-DISTANCE, DISTANCE), rand.nextDouble(-DISTANCE, DISTANCE)),
-						ModSounds.BLOOD_DROP, SoundSource.WEATHER, 1, rand.nextFloat(0.8f, 1.5f), true);
+						ModSounds.BLOOD_DROP.get(), SoundSource.WEATHER, 1, rand.nextFloat(0.8f, 1.5f), true);
 				soundDelay = rand.nextInt(10, 30);
 			}
 		}

@@ -71,12 +71,12 @@ public class BloodBatEntity extends PathfinderMob implements FlyingAnimal {
 
 	@Override
 	protected SoundEvent getAmbientSound() {
-		return isHanging() ? ModSounds.BLOOD_BAT_SNORING : ModSounds.BLOOD_BAT_WINGS;
+		return isHanging() ? ModSounds.BLOOD_BAT_SNORING.get() : ModSounds.BLOOD_BAT_WINGS.get();
 	}
 
 	@Override
 	protected SoundEvent getDeathSound() {
-		return ModSounds.BLOOD_BAT_DEATH;
+		return ModSounds.BLOOD_BAT_DEATH.get();
 	}
 
 	@Override

@@ -47,7 +47,7 @@ public class FireRitual {
 				ItemEntity grilledLeech = new ItemEntity(world, itemPos.x, itemPos.y, itemPos.z,
 						ModItems.GRILLED_BLOOD_LEECH.getDefaultInstance());
 				world.addFreshEntity(grilledLeech);
-				world.playSound(null, p, ModSounds.SIZZLE, SoundSource.BLOCKS, 1, Helper.soundPitch(world.random));
+				world.playSound(null, p, ModSounds.SIZZLE.get(), SoundSource.BLOCKS, 1, Helper.soundPitch(world.random));
 			}
 		}
 
