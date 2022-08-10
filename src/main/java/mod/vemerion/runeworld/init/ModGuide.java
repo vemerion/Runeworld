@@ -16,6 +16,8 @@ public class ModGuide {
 	private static IGuideChapter blood;
 	private static IGuideChapter bloodWorldMobs;
 	private static IGuideChapter bloodCrystallite;
+	private static IGuideChapter fireWorld;
+	private static IGuideChapter fireRitual;
 
 	public static IGuideChapter getStartChapter() {
 		if (start == null) {
@@ -30,6 +32,10 @@ public class ModGuide {
 					new TranslatableComponent(transKey("blood_world.mobs")));
 			bloodCrystallite = guide.createGuideChapter(ModItems.BLOOD_CRYSTALLITE,
 					new TranslatableComponent(transKey("blood_world.blood_crystallite")));
+			fireWorld = guide.createGuideChapter(Runesword.FIRE_RUNE,
+					new TranslatableComponent(transKey("fire_world")));
+			fireRitual = guide.createGuideChapter(ModBlocks.FIRE_RITUAL_STONE,
+					new TranslatableComponent(transKey("fire_world.fire_ritual")));
 
 			portal.addText(transKey("portal.text1")).addText(transKey("portal.text2"))
 					.addImage(image("portal1"), 1536, 864).addImage(image("portal2"), 1536, 864)
@@ -53,7 +59,10 @@ public class ModGuide {
 					.addText(transKey("blood_world.blood_crystallite.text3"))
 					.addText(transKey("blood_world.blood_crystallite.text4"))
 					.addText(transKey("blood_world.blood_crystallite.text5"));
-			start.addChild(portal).addChild(bloodWorld).addText(transKey("intro"));
+			fireWorld.addChild(fireRitual).addText(transKey("fire_world.text1"));
+			fireRitual.addText(transKey("fire_world.fire_ritual.text1"))
+					.addText(transKey("fire_world.fire_ritual.text2"));
+			start.addChild(portal).addChild(bloodWorld).addChild(fireWorld).addText(transKey("intro"));
 		}
 		return start;
 	}

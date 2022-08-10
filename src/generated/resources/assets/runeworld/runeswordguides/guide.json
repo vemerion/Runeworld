@@ -169,6 +169,39 @@
           "children": []
         }
       ]
+    },
+    {
+      "item_icon": "runesword:fire_rune",
+      "title": {
+        "type": "header",
+        "key": "guide.runeworld.fire_world"
+      },
+      "components": [
+        {
+          "type": "paragraph",
+          "key": "guide.runeworld.fire_world.text1"
+        }
+      ],
+      "children": [
+        {
+          "item_icon": "runeworld:fire_ritual_stone",
+          "title": {
+            "type": "header",
+            "key": "guide.runeworld.fire_world.fire_ritual"
+          },
+          "components": [
+            {
+              "type": "paragraph",
+              "key": "guide.runeworld.fire_world.fire_ritual.text1"
+            },
+            {
+              "type": "paragraph",
+              "key": "guide.runeworld.fire_world.fire_ritual.text2"
+            }
+          ],
+          "children": []
+        }
+      ]
     }
   ]
 }

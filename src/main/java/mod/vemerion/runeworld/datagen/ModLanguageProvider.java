@@ -130,6 +130,15 @@ public class ModLanguageProvider extends LanguageProvider {
 				"The blood can be washed of the crystallite in a cauldron, revealing a diamond underneath.");
 		addGuide("blood_world.blood_crystallite.text5",
 				"It can be used to craft a blood translocator item, which functions like a portable rune portal to and from the blood world. Unfortunately, it is consumed after it is used once.");
+
+		addGuide("fire_world", "Fire World");
+		addGuide("fire_world.text1",
+				"The fire world is, to no one's surprise, a very warm place. Instead of water, there is lava. Instead of grass, there is fire. But for adventurers brave enough to enter, there is also valuable treasures!");
+		addGuide("fire_world.fire_ritual", "Fire Ritual");
+		addGuide("fire_world.fire_ritual.text1",
+				"The fire ritual is a structure that can be founds while exploring the fire world. It is made up of a single pillar of a rare type of stone, which will at random intervals convert certain blocks placed adjacent to the pillar.");
+		addGuide("fire_world.fire_ritual.text2",
+				"Another, forbidden and dangerous ritual exists. A blood crystallite can be used to coat a single fire ritual block with blood. If four fire ritual blocks are coated in blood, a terrible and deadly creature will spawn! But beware, as this will permanently destroy the ritual pillar...");
 	}
 
 	private void addGuide(String suffix, String text) {
