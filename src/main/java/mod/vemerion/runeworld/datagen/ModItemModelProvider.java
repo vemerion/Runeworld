@@ -8,6 +8,7 @@ import net.minecraft.data.DataGenerator;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.SpawnEggItem;
+import net.minecraft.world.level.ItemLike;
 import net.minecraftforge.client.model.generators.ItemModelProvider;
 import net.minecraftforge.client.model.generators.ModelFile;
 import net.minecraftforge.client.model.generators.ModelProvider;
@@ -21,23 +22,23 @@ public class ModItemModelProvider extends ItemModelProvider {
 
 	@Override
 	protected void registerModels() {
-		simpleItem(ModItems.BLOOD_BUCKET);
-		simpleItem(ModItems.BLOOD_PUDDING);
-		simpleItem(ModItems.MOSQUITO_EGGS);
-		simpleItem(ModItems.BLOOD_BAT_TOOTH);
-		simpleItem(ModItems.BLOOD_LEECH);
-		simpleItem(ModItems.GUIDE);
-		simpleItem(ModItems.BLOOD_CRYSTALLITE);
-		simpleItem(ModItems.BLOOD_PEBBLE);
-		simpleItem(ModItems.GRILLED_BLOOD_LEECH);
-		simpleItem(ModItems.FIRE_HEART);
-		simpleItem(ModItems.FIRE_ROOT);
-		simpleItem(ModItems.BLOOD_FLOWER, BLOCK_FOLDER);
-		simpleItem(ModItems.BLOOD_CRYSTAL, BLOCK_FOLDER);
-		dislocator(ModItems.BLOOD_DISLOCATOR);
-		dislocator(ModItems.FIRE_DISLOCATOR);
+		simpleItem(ModItems.BLOOD_BUCKET.get());
+		simpleItem(ModItems.BLOOD_PUDDING.get());
+		simpleItem(ModItems.MOSQUITO_EGGS.get());
+		simpleItem(ModItems.BLOOD_BAT_TOOTH.get());
+		simpleItem(ModBlocks.BLOOD_LEECH);
+		simpleItem(ModItems.GUIDE.get());
+		simpleItem(ModItems.BLOOD_CRYSTALLITE.get());
+		simpleItem(ModItems.BLOOD_PEBBLE.get());
+		simpleItem(ModItems.GRILLED_BLOOD_LEECH.get());
+		simpleItem(ModItems.FIRE_HEART.get());
+		simpleItem(ModItems.FIRE_ROOT.get());
+		simpleItem(ModBlocks.BLOOD_FLOWER, BLOCK_FOLDER);
+		simpleItem(ModBlocks.BLOOD_CRYSTAL, BLOCK_FOLDER);
+		dislocator(ModItems.BLOOD_DISLOCATOR.get());
+		dislocator(ModItems.FIRE_DISLOCATOR.get());
 		
-		ModItems.Deferred.ITEMS.getEntries().forEach(item -> {
+		ModItems.ITEMS.getEntries().forEach(item -> {
 			if (item.get() instanceof SpawnEggItem egg)
 				spawnEgg(egg);
 		});
@@ -51,17 +52,17 @@ public class ModItemModelProvider extends ItemModelProvider {
 		withExistingParent(item.getRegistryName().getPath(), mcLoc(ITEM_FOLDER + "/template_spawn_egg"));
 	}
 
-	private void simpleItem(Item item) {
-		simpleItem(item, ITEM_FOLDER);
+	private void simpleItem(ItemLike item) {
+		simpleItem(item.asItem(), ITEM_FOLDER);
 	}
 
-	private void simpleItem(Item item, String folder) {
-		String name = item.getRegistryName().getPath();
+	private void simpleItem(ItemLike item, String folder) {
+		String name = item.asItem().getRegistryName().getPath();
 		singleTexture(name, mcLoc(ITEM_FOLDER + "/generated"), "layer0", modLoc(folder + "/" + name));
 	}
 
-	private void dislocator(Item dislocator) {
-		String name = dislocator.getRegistryName().getPath();
+	private void dislocator(ItemLike dislocator) {
+		String name = dislocator.asItem().getRegistryName().getPath();
 		ResourceLocation property = new ResourceLocation(Main.MODID, "dimension");
 		ModelFile dim = singleTexture(name + "_dimension", mcLoc(ITEM_FOLDER + "/generated"), "layer0",
 				modLoc(ITEM_FOLDER + "/" + name + "_dimension"));

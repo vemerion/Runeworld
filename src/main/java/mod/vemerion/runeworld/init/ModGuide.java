@@ -22,15 +22,15 @@ public class ModGuide {
 	public static IGuideChapter getStartChapter() {
 		if (start == null) {
 			IGuide guide = RuneswordAPI.guide;
-			start = guide.createGuideChapter(ModItems.GUIDE, new TranslatableComponent(transKey("guide")));
+			start = guide.createGuideChapter(ModItems.GUIDE.get(), new TranslatableComponent(transKey("guide")));
 			portal = guide.createGuideChapter(Blocks.OBSIDIAN, new TranslatableComponent(transKey("portal")));
 			bloodWorld = guide.createGuideChapter(Runesword.BLOOD_RUNE,
 					new TranslatableComponent(transKey("blood_world")));
-			blood = guide.createGuideChapter(ModItems.BLOOD_BUCKET,
+			blood = guide.createGuideChapter(ModItems.BLOOD_BUCKET.get(),
 					new TranslatableComponent(transKey("blood_world.blood")));
-			bloodWorldMobs = guide.createGuideChapter(ModItems.Deferred.MOSQUITO_SPAWN_EGG.get(),
+			bloodWorldMobs = guide.createGuideChapter(ModItems.MOSQUITO_SPAWN_EGG.get(),
 					new TranslatableComponent(transKey("blood_world.mobs")));
-			bloodCrystallite = guide.createGuideChapter(ModItems.BLOOD_CRYSTALLITE,
+			bloodCrystallite = guide.createGuideChapter(ModItems.BLOOD_CRYSTALLITE.get(),
 					new TranslatableComponent(transKey("blood_world.blood_crystallite")));
 			fireWorld = guide.createGuideChapter(Runesword.FIRE_RUNE,
 					new TranslatableComponent(transKey("fire_world")));

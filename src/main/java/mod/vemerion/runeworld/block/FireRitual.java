@@ -45,7 +45,7 @@ public class FireRitual {
 				world.setBlockAndUpdate(p, Blocks.AIR.defaultBlockState());
 				Vec3 itemPos = Vec3.atCenterOf(p);
 				ItemEntity grilledLeech = new ItemEntity(world, itemPos.x, itemPos.y, itemPos.z,
-						ModItems.GRILLED_BLOOD_LEECH.getDefaultInstance());
+						ModItems.GRILLED_BLOOD_LEECH.get().getDefaultInstance());
 				world.addFreshEntity(grilledLeech);
 				world.playSound(null, p, ModSounds.SIZZLE.get(), SoundSource.BLOCKS, 1, Helper.soundPitch(world.random));
 			}

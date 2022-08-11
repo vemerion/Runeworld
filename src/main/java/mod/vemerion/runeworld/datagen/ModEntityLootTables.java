@@ -26,30 +26,30 @@ public class ModEntityLootTables extends EntityLoot {
 		add(ModEntities.MOSQUITO.get(),
 				LootTable.lootTable()
 						.withPool(LootPool.lootPool().setRolls(ConstantValue.exactly(1))
-								.add(LootItem.lootTableItem(ModItems.MOSQUITO_EGGS))
+								.add(LootItem.lootTableItem(ModItems.MOSQUITO_EGGS.get()))
 								.when(LootItemKilledByPlayerCondition.killedByPlayer())
 								.when(LootItemRandomChanceWithLootingCondition.randomChanceAndLootingBoost(0.05f, 0.02f))));
 		add(ModEntities.BLOOD_BAT.get(),
 				LootTable.lootTable()
 						.withPool(LootPool.lootPool().setRolls(ConstantValue.exactly(1))
-								.add(LootItem.lootTableItem(ModItems.BLOOD_BAT_TOOTH))
+								.add(LootItem.lootTableItem(ModItems.BLOOD_BAT_TOOTH.get()))
 								.when(LootItemKilledByPlayerCondition.killedByPlayer())
 								.when(LootItemRandomChanceWithLootingCondition.randomChanceAndLootingBoost(0.05f, 0.02f))));
 		add(ModEntities.BLOOD_MONKEY.get(),
 				LootTable.lootTable()
 						.withPool(LootPool.lootPool().setRolls(ConstantValue.exactly(1))
-								.add(LootItem.lootTableItem(ModItems.BLOOD_PEBBLE)
+								.add(LootItem.lootTableItem(ModItems.BLOOD_PEBBLE.get())
 										.apply(SetItemCountFunction.setCount(UniformGenerator.between(0, 1)))
 										.apply(LootingEnchantFunction.lootingMultiplier(UniformGenerator.between(0, 1)))))
 						.withPool(LootPool.lootPool().setRolls(ConstantValue.exactly(1))
-								.add(LootItem.lootTableItem(ModItems.MOSQUITO_EGGS))
+								.add(LootItem.lootTableItem(ModItems.MOSQUITO_EGGS.get()))
 								.when(LootItemKilledByPlayerCondition.killedByPlayer())
 								.when(LootItemRandomChanceWithLootingCondition.randomChanceAndLootingBoost(0.04f, 0.01f))));
 
 		add(ModEntities.FIRE_ELEMENTAL.get(),
 				LootTable.lootTable()
 						.withPool(LootPool.lootPool().setRolls(ConstantValue.exactly(1))
-								.add(LootItem.lootTableItem(ModItems.FIRE_HEART)))
+								.add(LootItem.lootTableItem(ModItems.FIRE_HEART.get())))
 						.withPool(LootPool.lootPool().setRolls(ConstantValue.exactly(1))
 								.add(LootItem.lootTableItem(ModBlocks.FIRE_RITUAL_STONE)
 										.apply(SetItemCountFunction.setCount(UniformGenerator.between(0, 2)))

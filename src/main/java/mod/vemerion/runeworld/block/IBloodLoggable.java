@@ -41,7 +41,7 @@ public interface IBloodLoggable extends SimpleWaterloggedBlock {
 				pLevel.destroyBlock(pPos, true);
 			}
 
-			return new ItemStack(ModItems.BLOOD_BUCKET);
+			return new ItemStack(ModItems.BLOOD_BUCKET.get());
 		} else {
 			return ItemStack.EMPTY;
 		}

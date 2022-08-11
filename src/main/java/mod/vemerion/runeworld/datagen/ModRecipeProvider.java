@@ -19,6 +19,7 @@ import net.minecraft.tags.TagKey;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.crafting.Ingredient;
+import net.minecraft.world.level.ItemLike;
 import net.minecraft.world.level.block.Block;
 import net.minecraftforge.common.Tags;
 
@@ -30,22 +31,22 @@ public class ModRecipeProvider extends RecipeProvider {
 
 	@Override
 	protected void buildCraftingRecipes(Consumer<FinishedRecipe> consumer) {
-		ShapelessRecipeBuilder.shapeless(ModItems.BLOOD_PUDDING, 4).requires(Items.WHEAT)
-				.requires(Items.PORKCHOP).requires(ModItems.BLOOD_BUCKET)
-				.unlockedBy("has_blood_bucket", has(ModItems.BLOOD_BUCKET)).save(consumer);
-		ShapelessRecipeBuilder.shapeless(Items.RED_DYE).requires(ModItems.BLOOD_FLOWER)
-				.unlockedBy("has_blood_dye", has(ModItems.BLOOD_FLOWER))
+		ShapelessRecipeBuilder.shapeless(ModItems.BLOOD_PUDDING.get(), 4).requires(Items.WHEAT)
+				.requires(Items.PORKCHOP).requires(ModItems.BLOOD_BUCKET.get())
+				.unlockedBy("has_blood_bucket", has(ModItems.BLOOD_BUCKET.get())).save(consumer);
+		ShapelessRecipeBuilder.shapeless(Items.RED_DYE).requires(ModBlocks.BLOOD_FLOWER)
+				.unlockedBy("has_blood_dye", has(ModBlocks.BLOOD_FLOWER))
 				.save(consumer, new ResourceLocation(Main.MODID, "blood_flower_to_dye"));
-		pillar(ModItems.BLOOD_PILLAR_LARGE, ModItems.BLOOD_PILLAR_MEDIUM, consumer);
-		pillar(ModItems.BLOOD_PILLAR_MEDIUM, ModItems.BLOOD_PILLAR_SMALL, consumer);
+		pillar(ModBlocks.BLOOD_PILLAR_LARGE, ModBlocks.BLOOD_PILLAR_MEDIUM, consumer);
+		pillar(ModBlocks.BLOOD_PILLAR_MEDIUM, ModBlocks.BLOOD_PILLAR_SMALL, consumer);
 		
 		var runes = TagKey.create(Registry.ITEM_REGISTRY, new ResourceLocation(Runesword.MODID, "runes"));
 
-		ShapelessRecipeBuilder.shapeless(ModItems.GUIDE).requires(Tags.Items.OBSIDIAN).requires(runes)
+		ShapelessRecipeBuilder.shapeless(ModItems.GUIDE.get()).requires(Tags.Items.OBSIDIAN).requires(runes)
 				.unlockedBy("has_rune", has(runes)).unlockedBy("has_obsidian", has(Tags.Items.OBSIDIAN))
 				.save(consumer);
-		dislocator(ModItems.BLOOD_DISLOCATOR, ModItems.BLOOD_CRYSTALLITE).save(consumer);
-		dislocator(ModItems.FIRE_DISLOCATOR, ModItems.FIRE_HEART).save(consumer);
+		dislocator(ModItems.BLOOD_DISLOCATOR.get(), ModItems.BLOOD_CRYSTALLITE.get()).save(consumer);
+		dislocator(ModItems.FIRE_DISLOCATOR.get(), ModItems.FIRE_HEART.get()).save(consumer);
 
 		// Complex
 		stoneMaterial(ModBlocks.SPARKSTONE, consumer);
@@ -58,9 +59,9 @@ public class ModRecipeProvider extends RecipeProvider {
 				.unlockedBy("has_" + component.getRegistryName().getPath(), has(component));
 	}
 
-	private void pillar(Item large, Item small, Consumer<FinishedRecipe> consumer) {
-		String largeName = large.getRegistryName().getPath();
-		String smallName = small.getRegistryName().getPath();
+	private void pillar(ItemLike large, ItemLike small, Consumer<FinishedRecipe> consumer) {
+		String largeName = large.asItem().getRegistryName().getPath();
+		String smallName = small.asItem().getRegistryName().getPath();
 		ShapedRecipeBuilder.shaped(large).define('#', small).pattern("#").pattern("#")
 				.unlockedBy("has_" + smallName, has(small))
 				.save(consumer, new ResourceLocation(Main.MODID, smallName + "_to_" + largeName));

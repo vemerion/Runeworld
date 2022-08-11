@@ -24,7 +24,7 @@ public class FireRootBlock extends CropBlock {
 
 	@Override
 	protected ItemLike getBaseSeedId() {
-		return ModItems.FIRE_ROOT;
+		return ModItems.FIRE_ROOT.get();
 	}
 
 	@Override

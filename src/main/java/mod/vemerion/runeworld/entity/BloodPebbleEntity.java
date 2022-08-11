@@ -33,7 +33,7 @@ public class BloodPebbleEntity extends ThrowableItemProjectile {
 
 	@Override
 	protected Item getDefaultItem() {
-		return ModItems.BLOOD_PEBBLE;
+		return ModItems.BLOOD_PEBBLE.get();
 	}
 
 	@Override

@@ -20,7 +20,7 @@ public class Main {
     public Main() {
 		var bus = FMLJavaModLoadingContext.get().getModEventBus();
 		ModFluids.FLUIDS.register(bus);
-		ModItems.Deferred.ITEMS.register(bus);
+		ModItems.ITEMS.register(bus);
 		ModLootModifiers.LOOT_MODIFIERS.register(bus);
 		ModSounds.SOUNDS.register(bus);
 		ModEntities.ENTITIES.register(bus);

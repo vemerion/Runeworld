@@ -2,6 +2,7 @@ package mod.vemerion.runeworld.datagen;
 
 import java.util.function.BiConsumer;
 
+import mod.vemerion.runeworld.init.ModBlocks;
 import mod.vemerion.runeworld.init.ModItems;
 import mod.vemerion.runeworld.init.ModLootTables;
 import mod.vemerion.runeworld.init.Runesword;
@@ -31,18 +32,18 @@ public class ModFishingLootTables extends FishingLoot {
 				.add(LootTableReference.lootTableReference(ModLootTables.BLOOD_FISHING_FISH).setWeight(85).setQuality(-1))));
 
 		p_accept_1_.accept(ModLootTables.BLOOD_FISHING_FISH, LootTable.lootTable()
-				.withPool(LootPool.lootPool().add(LootItem.lootTableItem(ModItems.BLOOD_LEECH))));
+				.withPool(LootPool.lootPool().add(LootItem.lootTableItem(ModBlocks.BLOOD_LEECH))));
 
 		p_accept_1_.accept(ModLootTables.BLOOD_FISHING_JUNK,
 				LootTable.lootTable()
-						.withPool(LootPool.lootPool().add(LootItem.lootTableItem(ModItems.BLOOD_CRYSTAL))
-								.add(LootItem.lootTableItem(ModItems.BLOOD_FLOWER))));
+						.withPool(LootPool.lootPool().add(LootItem.lootTableItem(ModBlocks.BLOOD_CRYSTAL))
+								.add(LootItem.lootTableItem(ModBlocks.BLOOD_FLOWER))));
 
 		p_accept_1_.accept(ModLootTables.BLOOD_FISHING_TREASURE,
 				LootTable.lootTable()
 						.withPool(LootPool.lootPool().add(LootItem.lootTableItem(Runesword.BLOOD_RUNE))
-								.add(LootItem.lootTableItem(ModItems.BLOOD_BAT_TOOTH))
-								.add(LootItem.lootTableItem(ModItems.MOSQUITO_EGGS))));
+								.add(LootItem.lootTableItem(ModItems.BLOOD_BAT_TOOTH.get()))
+								.add(LootItem.lootTableItem(ModItems.MOSQUITO_EGGS.get()))));
 
 	}
 }

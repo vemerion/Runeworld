@@ -113,8 +113,8 @@ public class ClientModEventSubscriber {
 	}
 
 	private static void registerItemProperties() {
-		registerDislocator(ModItems.BLOOD_DISLOCATOR);
-		registerDislocator(ModItems.FIRE_DISLOCATOR);
+		registerDislocator(ModItems.BLOOD_DISLOCATOR.get());
+		registerDislocator(ModItems.FIRE_DISLOCATOR.get());
 	}
 
 	private static void registerDislocator(DislocatorItem dislocator) {

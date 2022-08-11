@@ -33,7 +33,7 @@ public class FireRitualStoneBlock extends Block {
 	public InteractionResult use(BlockState state, Level worldIn, BlockPos pos, Player player,
 			InteractionHand handIn, BlockHitResult hit) {
 		ItemStack stack = player.getItemInHand(handIn);
-		if (stack.getItem() == ModItems.BLOOD_CRYSTALLITE && !state.getValue(BLOODIED)) {
+		if (stack.getItem() == ModItems.BLOOD_CRYSTALLITE.get() && !state.getValue(BLOODIED)) {
 			if (!player.isCreative())
 				stack.shrink(1);
 

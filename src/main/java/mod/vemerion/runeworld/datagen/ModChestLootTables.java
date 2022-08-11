@@ -2,6 +2,7 @@ package mod.vemerion.runeworld.datagen;
 
 import java.util.function.BiConsumer;
 
+import mod.vemerion.runeworld.init.ModBlocks;
 import mod.vemerion.runeworld.init.ModItems;
 import mod.vemerion.runeworld.init.ModLootTables;
 import mod.vemerion.runeworld.init.Runesword;
@@ -22,7 +23,7 @@ public class ModChestLootTables extends ChestLoot {
 		consumer.accept(ModLootTables.CHEST_BLOOD_BAT_LAIR,
 				LootTable.lootTable()
 						.withPool(LootPool.lootPool().setRolls(ConstantValue.exactly(1))
-								.add(LootItem.lootTableItem(ModItems.BLOOD_CRYSTALLITE)))
+								.add(LootItem.lootTableItem(ModItems.BLOOD_CRYSTALLITE.get())))
 						.withPool(LootPool.lootPool().setRolls(UniformGenerator.between(3, 5))
 								.add(LootItem.lootTableItem(Items.IRON_INGOT).setWeight(10)
 										.apply(SetItemCountFunction.setCount(UniformGenerator.between(1.0F, 5.0F))))
@@ -35,10 +36,10 @@ public class ModChestLootTables extends ChestLoot {
 								.add(LootItem.lootTableItem(Items.COAL).setWeight(10)
 										.apply(SetItemCountFunction.setCount(UniformGenerator.between(3.0F, 8.0F))))
 								.add(LootItem.lootTableItem(Runesword.BLOOD_RUNE).setWeight(4))
-								.add(LootItem.lootTableItem(ModItems.BLOOD_BAT_TOOTH).setWeight(5))
-								.add(LootItem.lootTableItem(ModItems.BLOOD_LEECH).setWeight(10)
+								.add(LootItem.lootTableItem(ModItems.BLOOD_BAT_TOOTH.get()).setWeight(5))
+								.add(LootItem.lootTableItem(ModBlocks.BLOOD_LEECH).setWeight(10)
 										.apply(SetItemCountFunction.setCount(UniformGenerator.between(2, 4))))
-								.add(LootItem.lootTableItem(ModItems.BLOOD_CRYSTAL).setWeight(10)
+								.add(LootItem.lootTableItem(ModBlocks.BLOOD_CRYSTAL).setWeight(10)
 										.apply(SetItemCountFunction.setCount(UniformGenerator.between(4, 6))))));
 	}
 }

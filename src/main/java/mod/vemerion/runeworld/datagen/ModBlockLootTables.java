@@ -63,9 +63,9 @@ public class ModBlockLootTables extends BlockLoot {
 		LootItemCondition.Builder condition = LootItemBlockStatePropertyCondition.hasBlockStateProperties(ModBlocks.FIRE_ROOT)
 				.setProperties(StatePropertiesPredicate.Builder.properties().hasProperty(FireRootBlock.AGE, 7));
 		add(ModBlocks.FIRE_ROOT, applyExplosionDecay(ModBlocks.FIRE_ROOT,
-				LootTable.lootTable().withPool(LootPool.lootPool().add(LootItem.lootTableItem(ModItems.FIRE_ROOT)))
+				LootTable.lootTable().withPool(LootPool.lootPool().add(LootItem.lootTableItem(ModItems.FIRE_ROOT.get())))
 						.withPool(LootPool.lootPool().when(condition)
-								.add(LootItem.lootTableItem(ModItems.FIRE_ROOT).apply(
+								.add(LootItem.lootTableItem(ModItems.FIRE_ROOT.get()).apply(
 										ApplyBonusCount.addBonusBinomialDistributionCount(Enchantments.BLOCK_FORTUNE, 0.6f, 4))))));
 	}
 

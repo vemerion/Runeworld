@@ -34,6 +34,6 @@ public class BloodDrainedEffect extends MobEffect {
 
 	@Override
 	public List<ItemStack> getCurativeItems() {
-		return ImmutableList.of(new ItemStack(ModItems.BLOOD_PUDDING), new ItemStack(ModItems.BLOOD_BUCKET));
+		return ImmutableList.of(new ItemStack(ModItems.BLOOD_PUDDING.get()), new ItemStack(ModItems.BLOOD_BUCKET.get()));
 	}
 }

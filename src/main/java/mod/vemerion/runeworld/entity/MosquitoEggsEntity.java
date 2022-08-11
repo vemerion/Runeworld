@@ -26,7 +26,7 @@ public class MosquitoEggsEntity extends ThrowableItemProjectile {
 
 	@Override
 	protected Item getDefaultItem() {
-		return ModItems.MOSQUITO_EGGS;
+		return ModItems.MOSQUITO_EGGS.get();
 	}
 
 	@Override

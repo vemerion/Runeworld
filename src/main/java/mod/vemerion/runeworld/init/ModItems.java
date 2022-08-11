@@ -32,41 +32,33 @@ import net.minecraftforge.fml.common.Mod.EventBusSubscriber.Bus;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.registries.IForgeRegistry;
-import net.minecraftforge.registries.ObjectHolder;
 import net.minecraftforge.registries.RegistryObject;
 
-@ObjectHolder(value = Main.MODID)
 @EventBusSubscriber(bus = Bus.MOD, modid = Main.MODID)
 public class ModItems {
 	
-	public static class Deferred {
 		public static final DeferredRegister<Item> ITEMS = DeferredRegister.create(ForgeRegistries.ITEMS, Main.MODID);
 		
 		public static final RegistryObject<Item> MOSQUITO_SPAWN_EGG = ITEMS.register("mosquito_spawn_egg", () -> new ForgeSpawnEggItem(ModEntities.MOSQUITO, Helper.color(100, 50, 0, 255), Helper.color(255, 0, 0, 255), (new Item.Properties()).tab(CreativeModeTab.TAB_SEARCH)));
 		public static final RegistryObject<Item> BLOOD_BAT_SPAWN_EGG = ITEMS.register("blood_bat_spawn_egg", () -> new ForgeSpawnEggItem(ModEntities.BLOOD_BAT, Helper.color(40, 40, 40, 255), Helper.color(255, 0, 0, 255), (new Item.Properties()).tab(CreativeModeTab.TAB_SEARCH)));
 		public static final RegistryObject<Item> BLOOD_MONKEY_SPAWN_EGG = ITEMS.register("blood_monkey_spawn_egg", () -> new ForgeSpawnEggItem(ModEntities.BLOOD_MONKEY, Helper.color(70, 30, 10, 255), Helper.color(215, 70, 70, 255), (new Item.Properties()).tab(CreativeModeTab.TAB_SEARCH)));
-	}
+		public static final RegistryObject<Item> BLOOD_GORILLA_SPAWN_EGG = ITEMS.register("blood_gorilla_spawn_egg", () -> new ForgeSpawnEggItem(ModEntities.BLOOD_GORILLA, 0x864141, 0x2a2a2a, (new Item.Properties()).tab(CreativeModeTab.TAB_SEARCH)));
 
-	public static final Item BLOOD_BUCKET = null;
-	public static final Item BLOOD_PUDDING = null;
-	public static final Item BLOOD_FLOWER = null;
-	public static final Item BLOOD_PILLAR_LARGE = null;
-	public static final Item BLOOD_PILLAR_MEDIUM = null;
-	public static final Item BLOOD_PILLAR_SMALL = null;
-	public static final Item BLOOD_ROCK = null;
-	public static final Item BLOOD_MOSS = null;
-	public static final Item BLOOD_CRYSTAL = null;
-	public static final Item MOSQUITO_EGGS = null;
-	public static final Item BLOOD_BAT_TOOTH = null;
-	public static final Item BLOOD_LEECH = null;
-	public static final Item GUIDE = null;
-	public static final Item BLOOD_CRYSTALLITE = null;
-	public static final DislocatorItem BLOOD_DISLOCATOR = null;
-	public static final Item BLOOD_PEBBLE = null;
-	public static final Item GRILLED_BLOOD_LEECH = null;
-	public static final Item FIRE_HEART = null;
-	public static final DislocatorItem FIRE_DISLOCATOR = null;
-	public static final Item FIRE_ROOT = null;
+		public static final RegistryObject<Item> BLOOD_BUCKET = ITEMS.register("blood_bucket", BloodBucketItem::new);
+		public static final RegistryObject<Item> BLOOD_PUDDING = ITEMS.register("blood_pudding", BloodPuddingItem::new);
+		public static final RegistryObject<Item> BLOOD_FLOWER = ITEMS.register("blood_flower", BloodFlowerItem::new);
+		public static final RegistryObject<Item> MOSQUITO_EGGS = ITEMS.register("mosquito_eggs", () -> new ThrowableItem(ModEntities.MOSQUITO_EGGS, 0.5));
+		public static final RegistryObject<Item> BLOOD_BAT_TOOTH = ITEMS.register("blood_bat_tooth", BloodBatToothItem::new);
+		public static final RegistryObject<Item> GUIDE = ITEMS.register("guide", () -> new GuideItem(new Item.Properties().tab(CreativeModeTab.TAB_SEARCH)));
+		public static final RegistryObject<Item> BLOOD_CRYSTALLITE = ITEMS.register("blood_crystallite", BloodCrystalliteItem::new);
+		public static final RegistryObject<DislocatorItem> BLOOD_DISLOCATOR = ITEMS.register("blood_dislocator", () -> new DislocatorItem(new Item.Properties().tab(CreativeModeTab.TAB_SEARCH), ModDimensions.BLOOD));
+		public static final RegistryObject<Item> BLOOD_PEBBLE = ITEMS.register("blood_pebble", () -> new ThrowableItem(ModEntities.BLOOD_PEBBLE, 0.75));
+		public static final RegistryObject<Item> GRILLED_BLOOD_LEECH = ITEMS.register("grilled_blood_leech", () -> new Item(new Item.Properties().tab(CreativeModeTab.TAB_SEARCH)
+				.food(new FoodProperties.Builder().nutrition(4).saturationMod(0.4f).meat().build())));
+		public static final RegistryObject<Item> FIRE_HEART = ITEMS.register("fire_heart", () -> new Item(new Item.Properties().tab(CreativeModeTab.TAB_SEARCH).rarity(Rarity.UNCOMMON).fireResistant()));
+		public static final RegistryObject<DislocatorItem> FIRE_DISLOCATOR = ITEMS.register("fire_dislocator", () -> new DislocatorItem(new Item.Properties().tab(CreativeModeTab.TAB_SEARCH).durability(16).fireResistant(),
+				ModDimensions.FIRE));
+		public static final RegistryObject<Item> FIRE_ROOT = ITEMS.register("fire_root", FireRootItem::new);
 
 	static final CreativeModeTab ITEM_GROUP = new RuneworldItemGroup();
 
@@ -74,32 +66,7 @@ public class ModItems {
 
 	@SubscribeEvent
 	public static void onRegisterItem(RegistryEvent.Register<Item> event) {
-		IForgeRegistry<Item> registry = event.getRegistry();
-		Item bloodBucket = Init.setup(new BloodBucketItem(), "blood_bucket");
-		Item bloodPudding = Init.setup(new BloodPuddingItem(), "blood_pudding");
-		Item bloodFlower = Init.setup(new BloodFlowerItem(), "blood_flower");
-		Item mosquitoEggs = Init.setup(new ThrowableItem(ModEntities.MOSQUITO_EGGS, 0.5), "mosquito_eggs");
-		Item bloodBatTooth = Init.setup(new BloodBatToothItem(), "blood_bat_tooth");
-		Item guide = Init.setup(new GuideItem(new Item.Properties().tab(CreativeModeTab.TAB_SEARCH)), "guide");
-		Item bloodCrystallite = Init.setup(new BloodCrystalliteItem(), "blood_crystallite");
-		Item bloodDislocator = Init.setup(
-				new DislocatorItem(new Item.Properties().tab(CreativeModeTab.TAB_SEARCH), ModDimensions.BLOOD),
-				"blood_dislocator");
-		Item bloodPebble = Init.setup(new ThrowableItem(ModEntities.BLOOD_PEBBLE, 0.75), "blood_pebble");
-		Item grilledBloodLeech = Init.setup(new Item(new Item.Properties().tab(CreativeModeTab.TAB_SEARCH)
-				.food(new FoodProperties.Builder().nutrition(4).saturationMod(0.4f).meat().build())), "grilled_blood_leech");
-		Item fireHeart = Init.setup(
-				new Item(new Item.Properties().tab(CreativeModeTab.TAB_SEARCH).rarity(Rarity.UNCOMMON).fireResistant()),
-				"fire_heart");
-		Item fireDislocator = Init
-				.setup(new DislocatorItem(new Item.Properties().tab(CreativeModeTab.TAB_SEARCH).durability(16).fireResistant(),
-						ModDimensions.FIRE), "fire_dislocator");
-		Item fireRoot = Init.setup(new FireRootItem(), "fire_root");
-
-		registry.registerAll(bloodBucket, bloodPudding, bloodFlower, mosquitoEggs, bloodBatTooth, guide,
-				bloodCrystallite, bloodDislocator, bloodPebble, grilledBloodLeech, fireHeart, fireDislocator, fireRoot);
-
-		registerBlockItems(registry);
+		registerBlockItems(event.getRegistry());
 	}
 
 	private static void registerBlockItems(IForgeRegistry<Item> registry) {
@@ -126,7 +93,7 @@ public class ModItems {
 
 		@Override
 		public ItemStack makeIcon() {
-			return new ItemStack(BLOOD_CRYSTAL);
+			return new ItemStack(ModBlocks.BLOOD_CRYSTAL);
 		}
 
 		@Override
