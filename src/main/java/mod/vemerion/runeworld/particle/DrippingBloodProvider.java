@@ -31,7 +31,7 @@ public class DrippingBloodProvider implements ParticleProvider<SimpleParticleTyp
 			double xSpeed, double ySpeed, double zSpeed) {
 		DripParticle particle = null;
 		try {
-			particle = dripConstructor.newInstance(worldIn, x, y, z, ModFluids.BLOOD);
+			particle = dripConstructor.newInstance(worldIn, x, y, z, ModFluids.BLOOD.get());
 			particle.setColor(1, 0, 0);
 			particle.pickSprite(sprite);
 		} catch (InstantiationException | IllegalAccessException | IllegalArgumentException

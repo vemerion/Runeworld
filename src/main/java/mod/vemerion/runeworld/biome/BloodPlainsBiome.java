@@ -31,7 +31,7 @@ public class BloodPlainsBiome extends ModBiome {
 		generation.addFeature(GenerationStep.Decoration.SURFACE_STRUCTURES,
 				ModPlacedFeatures.BLOOD_RUNE_PORTAL_FEATURE);
 
-		mobs.addSpawn(MobCategory.MONSTER, new SpawnerData(ModEntities.MOSQUITO, 10, 1, 2));
+		mobs.addSpawn(MobCategory.MONSTER, new SpawnerData(ModEntities.MOSQUITO.get(), 10, 1, 2));
 
 		int waterColor = Helper.color(200, 70, 70, 100);
 		int skyColor = Helper.color(255, 180, 180, 255);

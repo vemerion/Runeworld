@@ -1,6 +1,6 @@
 package mod.vemerion.runeworld.init;
 
-import mod.vemerion.runesword.Main;
+import mod.vemerion.runeworld.Main;
 import net.minecraft.client.model.geom.ModelLayerLocation;
 import net.minecraft.resources.ResourceLocation;
 

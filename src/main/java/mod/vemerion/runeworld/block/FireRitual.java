@@ -68,7 +68,7 @@ public class FireRitual {
 				world.destroyBlock(p, false);
 			world.explode(null, pos.getX(), pos.getY(), pos.getZ(), 5, BlockInteraction.DESTROY);
 
-			FireElementalEntity elemental = new FireElementalEntity(ModEntities.FIRE_ELEMENTAL, world);
+			FireElementalEntity elemental = new FireElementalEntity(ModEntities.FIRE_ELEMENTAL.get(), world);
 			elemental.setPos(pos.getX(), pos.getY(), pos.getZ());
 			world.addFreshEntity(elemental);
 		}

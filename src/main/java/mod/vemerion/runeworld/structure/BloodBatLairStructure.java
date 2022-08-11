@@ -214,7 +214,7 @@ public class BloodBatLairStructure extends StructureFeature<NoneFeatureConfigura
 				p = p.below(height - 1);
 
 				if (BloodBatEntity.isValidLedgePos(world, p, null)) {
-					BloodBatEntity bat = ModEntities.BLOOD_BAT.create(world.getLevel());
+					BloodBatEntity bat = ModEntities.BLOOD_BAT.get().create(world.getLevel());
 					Vec3 position = Vec3.atBottomCenterOf(p).add(0, -1.75, 0);
 					bat.absMoveTo(position.x, position.y, position.z, rand.nextFloat() * 360, 0);
 					bat.startHanging(position);

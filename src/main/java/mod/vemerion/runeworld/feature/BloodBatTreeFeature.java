@@ -69,7 +69,7 @@ public class BloodBatTreeFeature extends Feature<NoneFeatureConfiguration> {
 				break;
 			BlockPos pos = batLocations.remove(rand.nextInt(batLocations.size()));
 			if (BloodBatEntity.isValidLedgePos(reader, pos, null)) {
-				BloodBatEntity bat = ModEntities.BLOOD_BAT.create(reader.getLevel());
+				BloodBatEntity bat = ModEntities.BLOOD_BAT.get().create(reader.getLevel());
 				Vec3 position = Vec3.atBottomCenterOf(pos).add(0, -1.75, 0);
 				bat.absMoveTo(position.x, position.y, position.z, rand.nextFloat() * 360, 0);
 				bat.startHanging(position);

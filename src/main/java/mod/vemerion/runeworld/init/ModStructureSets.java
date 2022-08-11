@@ -1,6 +1,6 @@
 package mod.vemerion.runeworld.init;
 
-import mod.vemerion.runesword.Main;
+import mod.vemerion.runeworld.Main;
 import net.minecraft.core.Holder;
 import net.minecraft.core.Registry;
 import net.minecraft.data.BuiltinRegistries;

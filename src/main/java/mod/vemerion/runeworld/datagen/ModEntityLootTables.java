@@ -23,19 +23,19 @@ import net.minecraftforge.registries.ForgeRegistries;
 public class ModEntityLootTables extends EntityLoot {
 	@Override
 	protected void addTables() {
-		add(ModEntities.MOSQUITO,
+		add(ModEntities.MOSQUITO.get(),
 				LootTable.lootTable()
 						.withPool(LootPool.lootPool().setRolls(ConstantValue.exactly(1))
 								.add(LootItem.lootTableItem(ModItems.MOSQUITO_EGGS))
 								.when(LootItemKilledByPlayerCondition.killedByPlayer())
 								.when(LootItemRandomChanceWithLootingCondition.randomChanceAndLootingBoost(0.05f, 0.02f))));
-		add(ModEntities.BLOOD_BAT,
+		add(ModEntities.BLOOD_BAT.get(),
 				LootTable.lootTable()
 						.withPool(LootPool.lootPool().setRolls(ConstantValue.exactly(1))
 								.add(LootItem.lootTableItem(ModItems.BLOOD_BAT_TOOTH))
 								.when(LootItemKilledByPlayerCondition.killedByPlayer())
 								.when(LootItemRandomChanceWithLootingCondition.randomChanceAndLootingBoost(0.05f, 0.02f))));
-		add(ModEntities.BLOOD_MONKEY,
+		add(ModEntities.BLOOD_MONKEY.get(),
 				LootTable.lootTable()
 						.withPool(LootPool.lootPool().setRolls(ConstantValue.exactly(1))
 								.add(LootItem.lootTableItem(ModItems.BLOOD_PEBBLE)
@@ -46,7 +46,7 @@ public class ModEntityLootTables extends EntityLoot {
 								.when(LootItemKilledByPlayerCondition.killedByPlayer())
 								.when(LootItemRandomChanceWithLootingCondition.randomChanceAndLootingBoost(0.04f, 0.01f))));
 
-		add(ModEntities.FIRE_ELEMENTAL,
+		add(ModEntities.FIRE_ELEMENTAL.get(),
 				LootTable.lootTable()
 						.withPool(LootPool.lootPool().setRolls(ConstantValue.exactly(1))
 								.add(LootItem.lootTableItem(ModItems.FIRE_HEART)))
@@ -55,7 +55,7 @@ public class ModEntityLootTables extends EntityLoot {
 										.apply(SetItemCountFunction.setCount(UniformGenerator.between(0, 2)))
 										.apply(LootingEnchantFunction.lootingMultiplier(UniformGenerator.between(0, 1))))));
 		
-		add(ModEntities.BLOOD_GORILLA, LootTable.lootTable());
+		add(ModEntities.BLOOD_GORILLA.get(), LootTable.lootTable());
 	}
 
 	@Override

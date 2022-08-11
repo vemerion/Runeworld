@@ -17,7 +17,7 @@ import net.minecraft.world.level.Level;
 public class MosquitoEggsEntity extends ThrowableItemProjectile {
 
 	public MosquitoEggsEntity(LivingEntity livingEntityIn, Level worldIn) {
-		super(ModEntities.MOSQUITO_EGGS, livingEntityIn, worldIn);
+		super(ModEntities.MOSQUITO_EGGS.get(), livingEntityIn, worldIn);
 	}
 
 	public MosquitoEggsEntity(EntityType<? extends MosquitoEggsEntity> type, Level world) {
@@ -38,7 +38,7 @@ public class MosquitoEggsEntity extends ThrowableItemProjectile {
 		if (!level.isClientSide && isAlive()) {
 			Vec3 pos = result.getLocation();
 			for (int i = 0; i < random.nextInt(2) + 2; i++) {
-				MosquitoEntity mosquito = new MosquitoEntity(ModEntities.MOSQUITO, level);
+				MosquitoEntity mosquito = new MosquitoEntity(ModEntities.MOSQUITO.get(), level);
 				mosquito.absMoveTo(pos.x + (random.nextDouble() - 0.5) * 2, pos.y,
 						pos.z + (random.nextDouble() - 0.5) * 2, random.nextInt(360), 0);
 				level.addFreshEntity(mosquito);

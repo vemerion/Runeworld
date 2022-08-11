@@ -24,7 +24,7 @@ public class BloodPebbleEntity extends ThrowableItemProjectile {
 	private boolean prevInWater;
 
 	public BloodPebbleEntity(LivingEntity livingEntityIn, Level worldIn) {
-		super(ModEntities.BLOOD_PEBBLE, livingEntityIn, worldIn);
+		super(ModEntities.BLOOD_PEBBLE.get(), livingEntityIn, worldIn);
 	}
 
 	public BloodPebbleEntity(EntityType<? extends BloodPebbleEntity> type, Level world) {

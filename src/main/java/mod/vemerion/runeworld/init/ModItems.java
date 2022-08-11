@@ -42,9 +42,9 @@ public class ModItems {
 	public static class Deferred {
 		public static final DeferredRegister<Item> ITEMS = DeferredRegister.create(ForgeRegistries.ITEMS, Main.MODID);
 		
-		public static final RegistryObject<Item> MOSQUITO_SPAWN_EGG = ITEMS.register("mosquito_spawn_egg", () -> new ForgeSpawnEggItem(() -> ModEntities.MOSQUITO, Helper.color(100, 50, 0, 255), Helper.color(255, 0, 0, 255), (new Item.Properties()).tab(CreativeModeTab.TAB_SEARCH)));
-		public static final RegistryObject<Item> BLOOD_BAT_SPAWN_EGG = ITEMS.register("blood_bat_spawn_egg", () -> new ForgeSpawnEggItem(() -> ModEntities.BLOOD_BAT, Helper.color(40, 40, 40, 255), Helper.color(255, 0, 0, 255), (new Item.Properties()).tab(CreativeModeTab.TAB_SEARCH)));
-		public static final RegistryObject<Item> BLOOD_MONKEY_SPAWN_EGG = ITEMS.register("blood_monkey_spawn_egg", () -> new ForgeSpawnEggItem(() -> ModEntities.BLOOD_MONKEY, Helper.color(70, 30, 10, 255), Helper.color(215, 70, 70, 255), (new Item.Properties()).tab(CreativeModeTab.TAB_SEARCH)));
+		public static final RegistryObject<Item> MOSQUITO_SPAWN_EGG = ITEMS.register("mosquito_spawn_egg", () -> new ForgeSpawnEggItem(ModEntities.MOSQUITO, Helper.color(100, 50, 0, 255), Helper.color(255, 0, 0, 255), (new Item.Properties()).tab(CreativeModeTab.TAB_SEARCH)));
+		public static final RegistryObject<Item> BLOOD_BAT_SPAWN_EGG = ITEMS.register("blood_bat_spawn_egg", () -> new ForgeSpawnEggItem(ModEntities.BLOOD_BAT, Helper.color(40, 40, 40, 255), Helper.color(255, 0, 0, 255), (new Item.Properties()).tab(CreativeModeTab.TAB_SEARCH)));
+		public static final RegistryObject<Item> BLOOD_MONKEY_SPAWN_EGG = ITEMS.register("blood_monkey_spawn_egg", () -> new ForgeSpawnEggItem(ModEntities.BLOOD_MONKEY, Helper.color(70, 30, 10, 255), Helper.color(215, 70, 70, 255), (new Item.Properties()).tab(CreativeModeTab.TAB_SEARCH)));
 	}
 
 	public static final Item BLOOD_BUCKET = null;
@@ -78,14 +78,14 @@ public class ModItems {
 		Item bloodBucket = Init.setup(new BloodBucketItem(), "blood_bucket");
 		Item bloodPudding = Init.setup(new BloodPuddingItem(), "blood_pudding");
 		Item bloodFlower = Init.setup(new BloodFlowerItem(), "blood_flower");
-		Item mosquitoEggs = Init.setup(new ThrowableItem(() -> ModEntities.MOSQUITO_EGGS, 0.5), "mosquito_eggs");
+		Item mosquitoEggs = Init.setup(new ThrowableItem(ModEntities.MOSQUITO_EGGS, 0.5), "mosquito_eggs");
 		Item bloodBatTooth = Init.setup(new BloodBatToothItem(), "blood_bat_tooth");
 		Item guide = Init.setup(new GuideItem(new Item.Properties().tab(CreativeModeTab.TAB_SEARCH)), "guide");
 		Item bloodCrystallite = Init.setup(new BloodCrystalliteItem(), "blood_crystallite");
 		Item bloodDislocator = Init.setup(
 				new DislocatorItem(new Item.Properties().tab(CreativeModeTab.TAB_SEARCH), ModDimensions.BLOOD),
 				"blood_dislocator");
-		Item bloodPebble = Init.setup(new ThrowableItem(() -> ModEntities.BLOOD_PEBBLE, 0.75), "blood_pebble");
+		Item bloodPebble = Init.setup(new ThrowableItem(ModEntities.BLOOD_PEBBLE, 0.75), "blood_pebble");
 		Item grilledBloodLeech = Init.setup(new Item(new Item.Properties().tab(CreativeModeTab.TAB_SEARCH)
 				.food(new FoodProperties.Builder().nutrition(4).saturationMod(0.4f).meat().build())), "grilled_blood_leech");
 		Item fireHeart = Init.setup(

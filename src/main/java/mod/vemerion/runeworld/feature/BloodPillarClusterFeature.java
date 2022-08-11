@@ -42,7 +42,7 @@ public class BloodPillarClusterFeature extends Feature<NoneFeatureConfiguration>
 	private void spawnBloodMonkey(WorldGenLevel reader, Random rand, BlockPos p) {
 		while (BloodPillarBlock.isPillar(reader, p))
 			p = p.above();
-		BloodMonkeyEntity monkey = ModEntities.BLOOD_MONKEY.create(reader.getLevel());
+		BloodMonkeyEntity monkey = ModEntities.BLOOD_MONKEY.get().create(reader.getLevel());
 		Vec3 position = Vec3.atBottomCenterOf(p);
 		monkey.absMoveTo(position.x, position.y, position.z, rand.nextFloat() * 360, 0);
 		reader.addFreshEntity(monkey);

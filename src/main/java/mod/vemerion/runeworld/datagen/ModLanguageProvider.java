@@ -49,14 +49,14 @@ public class ModLanguageProvider extends LanguageProvider {
 		add(ModEffects.BLOOD_DRAINED, "Blood Drained");
 		add(ModBiomes.BLOOD_PLAINS, "Blood Plains");
 		add(ModBiomes.FIRE_PLAINS, "Fire Plains");
-		add(ModEntities.MOSQUITO, "Mosquito");
-		add(ModEntities.MOSQUITO_EGGS, "Mosquito Eggs");
-		add(ModEntities.BLOOD_BAT, "Blood Bat");
-		add(ModEntities.BLOOD_MONKEY, "Blood Monkey");
-		add(ModEntities.BLOOD_PEBBLE, "Blood Pebble");
-		add(ModEntities.FIRE_ELEMENTAL, "Fire Elemental");
-		add(ModEntities.FIRE_ELEMENTAL_PROJECTILE, "Fire Elemental Projectile");
-		add(ModEntities.BLOOD_GORILLA, "Blood Gorilla");
+		add(ModEntities.MOSQUITO.get(), "Mosquito");
+		add(ModEntities.MOSQUITO_EGGS.get(), "Mosquito Eggs");
+		add(ModEntities.BLOOD_BAT.get(), "Blood Bat");
+		add(ModEntities.BLOOD_MONKEY.get(), "Blood Monkey");
+		add(ModEntities.BLOOD_PEBBLE.get(), "Blood Pebble");
+		add(ModEntities.FIRE_ELEMENTAL.get(), "Fire Elemental");
+		add(ModEntities.FIRE_ELEMENTAL_PROJECTILE.get(), "Fire Elemental Projectile");
+		add(ModEntities.BLOOD_GORILLA.get(), "Blood Gorilla");
 		add("itemGroup." + Main.MODID, "Runeworld");
 
 		// Complex

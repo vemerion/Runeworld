@@ -3,6 +3,7 @@ package mod.vemerion.runeworld;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import mod.vemerion.runeworld.init.ModEntities;
 import mod.vemerion.runeworld.init.ModFluids;
 import mod.vemerion.runeworld.init.ModItems;
 import mod.vemerion.runeworld.init.ModLootModifiers;
@@ -22,6 +23,7 @@ public class Main {
 		ModItems.Deferred.ITEMS.register(bus);
 		ModLootModifiers.LOOT_MODIFIERS.register(bus);
 		ModSounds.SOUNDS.register(bus);
+		ModEntities.ENTITIES.register(bus);
 	}
     
     /*

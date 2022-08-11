@@ -19,7 +19,7 @@ public class FireElementalProjectileEntity extends ThrowableItemProjectile {
 	private int duration = 20 * 5;
 
 	public FireElementalProjectileEntity(LivingEntity livingEntityIn, Level worldIn) {
-		super(ModEntities.FIRE_ELEMENTAL_PROJECTILE, livingEntityIn, worldIn);
+		super(ModEntities.FIRE_ELEMENTAL_PROJECTILE.get(), livingEntityIn, worldIn);
 		this.setNoGravity(true);
 	}
 
@@ -29,7 +29,7 @@ public class FireElementalProjectileEntity extends ThrowableItemProjectile {
 	}
 
 	public FireElementalProjectileEntity(Level world) {
-		this(ModEntities.FIRE_ELEMENTAL_PROJECTILE, world);
+		this(ModEntities.FIRE_ELEMENTAL_PROJECTILE.get(), world);
 	}
 
 	@Override

@@ -102,14 +102,14 @@ public class ClientModEventSubscriber {
 	public static void onRegisterEntityRenderers(EntityRenderersEvent.RegisterRenderers event) {
 		event.registerBlockEntityRenderer(ModBlockEntities.BLOOD_LEECH, BloodLeechBlockEntityRenderer::new);
 		
-		event.registerEntityRenderer(ModEntities.MOSQUITO, MosquitoRenderer::new);
-		event.registerEntityRenderer(ModEntities.BLOOD_BAT, BloodBatRenderer::new);
-		event.registerEntityRenderer(ModEntities.BLOOD_MONKEY, BloodMonkeyRenderer::new);
-		event.registerEntityRenderer(ModEntities.MOSQUITO_EGGS, ThrownItemRenderer::new);
-		event.registerEntityRenderer(ModEntities.BLOOD_PEBBLE, ThrownItemRenderer::new);
-		event.registerEntityRenderer(ModEntities.FIRE_ELEMENTAL, FireElementalRenderer::new);
-		event.registerEntityRenderer(ModEntities.FIRE_ELEMENTAL_PROJECTILE, FireElementalProjectileRenderer::new);
-		event.registerEntityRenderer(ModEntities.BLOOD_GORILLA, BloodGorillaRenderer::new);
+		event.registerEntityRenderer(ModEntities.MOSQUITO.get(), MosquitoRenderer::new);
+		event.registerEntityRenderer(ModEntities.BLOOD_BAT.get(), BloodBatRenderer::new);
+		event.registerEntityRenderer(ModEntities.BLOOD_MONKEY.get(), BloodMonkeyRenderer::new);
+		event.registerEntityRenderer(ModEntities.MOSQUITO_EGGS.get(), ThrownItemRenderer::new);
+		event.registerEntityRenderer(ModEntities.BLOOD_PEBBLE.get(), ThrownItemRenderer::new);
+		event.registerEntityRenderer(ModEntities.FIRE_ELEMENTAL.get(), FireElementalRenderer::new);
+		event.registerEntityRenderer(ModEntities.FIRE_ELEMENTAL_PROJECTILE.get(), FireElementalProjectileRenderer::new);
+		event.registerEntityRenderer(ModEntities.BLOOD_GORILLA.get(), BloodGorillaRenderer::new);
 	}
 
 	private static void registerItemProperties() {
