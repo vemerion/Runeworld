@@ -47,6 +47,7 @@ public class ModLanguageProvider extends LanguageProvider {
 		add(ModItems.BLOOD_BAT_SPAWN_EGG.get(), "Blood Bat Spawn Egg");
 		add(ModItems.BLOOD_MONKEY_SPAWN_EGG.get(), "Blood Monkey Spawn Egg");
 		add(ModItems.BLOOD_GORILLA_SPAWN_EGG.get(), "Blood Gorilla Spawn Egg");
+		add(ModItems.BLOOD_CROWN.get(), "Blood Crown");
 		add(ModEffects.BLOOD_DRAINED, "Blood Drained");
 		add(ModBiomes.BLOOD_PLAINS, "Blood Plains");
 		add(ModBiomes.FIRE_PLAINS, "Fire Plains");
@@ -58,7 +59,9 @@ public class ModLanguageProvider extends LanguageProvider {
 		add(ModEntities.FIRE_ELEMENTAL.get(), "Fire Elemental");
 		add(ModEntities.FIRE_ELEMENTAL_PROJECTILE.get(), "Fire Elemental Projectile");
 		add(ModEntities.BLOOD_GORILLA.get(), "Blood Gorilla");
+		
 		add("itemGroup." + Main.MODID, "Runeworld");
+		add("item." + Main.MODID + "." + ModItems.BLOOD_CROWN.getId().getPath() + ".description", "Majestic");
 
 		// Complex
 		stoneMaterial(ModBlocks.SPARKSTONE, "Sparkstone");

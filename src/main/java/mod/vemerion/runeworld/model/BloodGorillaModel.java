@@ -12,15 +12,38 @@ import net.minecraft.client.model.geom.builders.CubeListBuilder;
 import net.minecraft.client.model.geom.builders.LayerDefinition;
 import net.minecraft.client.model.geom.builders.MeshDefinition;
 import net.minecraft.client.model.geom.builders.PartDefinition;
+import net.minecraft.util.Mth;
 
 // Made with Blockbench 4.3.1
 
 
 public class BloodGorillaModel extends EntityModel<BloodGorillaEntity> {
-	private final ModelPart body;
+	public final ModelPart body;
+	public final ModelPart leftArm1;
+	public final ModelPart leftArm2;
+	public final ModelPart head;
+	public final ModelPart headTop_r1;
+	public final ModelPart nose_r1;
+	public final ModelPart leftLeg1;
+	public final ModelPart leftLeg2;
+	public final ModelPart rightArm1;
+	public final ModelPart rightArm2;
+	public final ModelPart rightLeg1;
+	public final ModelPart righteg2;
 
 	public BloodGorillaModel(ModelPart root) {
 		this.body = root.getChild("body");
+		this.leftArm1 = body.getChild("leftArm1");
+		this.leftArm2 = leftArm1.getChild("leftArm2");
+		this.head = body.getChild("head");
+		this.headTop_r1 = head.getChild("headTop_r1");
+		this.nose_r1 = head.getChild("nose_r1");
+		this.leftLeg1 = body.getChild("leftLeg1");
+		this.leftLeg2 = leftLeg1.getChild("leftLeg2");
+		this.rightArm1 = body.getChild("rightArm1");
+		this.rightArm2 = rightArm1.getChild("rightArm2");
+		this.rightLeg1 = body.getChild("rightLeg1");
+		this.righteg2 = rightLeg1.getChild("righteg2");
 	}
 
 	public static LayerDefinition createBodyLayer() {
@@ -34,8 +57,6 @@ public class BloodGorillaModel extends EntityModel<BloodGorillaEntity> {
 		leftArm1.addOrReplaceChild("leftArm2", CubeListBuilder.create().texOffs(48, 40).addBox(-6.0F, -2.0F, -7.0F, 10.0F, 16.0F, 10.0F, new CubeDeformation(0.0F)), PartPose.offsetAndRotation(0.0F, 11.0F, 0.0F, 0.1745F, 0.0F, 0.0F));
 
 		PartDefinition head = body.addOrReplaceChild("head", CubeListBuilder.create(), PartPose.offset(-1.0F, -8.0F, -7.5F));
-
-		head.addOrReplaceChild("crown_r1", CubeListBuilder.create().texOffs(96, 0).addBox(-3.0F, -1.0F, -5.0F, 8.0F, 4.0F, 8.0F, new CubeDeformation(0.0F)), PartPose.offsetAndRotation(3.0F, -8.7615F, -9.8117F, 0.4363F, -0.0873F, 0.2618F));
 
 		head.addOrReplaceChild("headTop_r1", CubeListBuilder.create().texOffs(0, 64).addBox(-6.0F, -8.0F, -4.0F, 10.0F, 2.0F, 10.0F, new CubeDeformation(0.0F)), PartPose.offsetAndRotation(1.0F, 0.3801F, -5.2917F, 0.2618F, 0.0F, 0.0F));
 
@@ -59,7 +80,7 @@ public class BloodGorillaModel extends EntityModel<BloodGorillaEntity> {
 
 	@Override
 	public void setupAnim(BloodGorillaEntity entity, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch) {
-
+		head.yRot = Mth.cos(ageInTicks * 0.1f) * 0.7f;
 	}
 
 	@Override

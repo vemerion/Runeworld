@@ -16,6 +16,7 @@ import mod.vemerion.runeworld.init.ModLayerLocations;
 import mod.vemerion.runeworld.init.ModParticles;
 import mod.vemerion.runeworld.item.DislocatorItem;
 import mod.vemerion.runeworld.model.BloodBatModel;
+import mod.vemerion.runeworld.model.BloodCrownModel;
 import mod.vemerion.runeworld.model.BloodGorillaModel;
 import mod.vemerion.runeworld.model.BloodLeechModel;
 import mod.vemerion.runeworld.model.BloodMonkeyModel;
@@ -96,6 +97,7 @@ public class ClientModEventSubscriber {
 		event.registerLayerDefinition(ModLayerLocations.BLOOD_MONKEY, BloodMonkeyModel::createLayer);
 		event.registerLayerDefinition(ModLayerLocations.MOSQUITO, MosquitoModel::createLayer);
 		event.registerLayerDefinition(ModLayerLocations.BLOOD_GORILLA, BloodGorillaModel::createBodyLayer);
+		event.registerLayerDefinition(ModLayerLocations.BLOOD_CROWN, BloodCrownModel::createBodyLayer);
 	}
 	
 	@SubscribeEvent

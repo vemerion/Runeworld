@@ -55,7 +55,11 @@ public class ModEntityLootTables extends EntityLoot {
 										.apply(SetItemCountFunction.setCount(UniformGenerator.between(0, 2)))
 										.apply(LootingEnchantFunction.lootingMultiplier(UniformGenerator.between(0, 1))))));
 		
-		add(ModEntities.BLOOD_GORILLA.get(), LootTable.lootTable());
+		add(ModEntities.BLOOD_GORILLA.get(), LootTable.lootTable()
+				.withPool(LootPool.lootPool().setRolls(ConstantValue.exactly(1))
+						.add(LootItem.lootTableItem(ModItems.BLOOD_CROWN.get())))
+				.withPool(LootPool.lootPool().setRolls(ConstantValue.exactly(1))
+						.add(LootItem.lootTableItem(ModItems.BLOOD_CRYSTALLITE.get()))));
 	}
 
 	@Override

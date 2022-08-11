@@ -33,6 +33,7 @@ public class ModItemModelProvider extends ItemModelProvider {
 		simpleItem(ModItems.GRILLED_BLOOD_LEECH.get());
 		simpleItem(ModItems.FIRE_HEART.get());
 		simpleItem(ModItems.FIRE_ROOT.get());
+		simpleItem(ModItems.BLOOD_CROWN.get());
 		simpleItem(ModBlocks.BLOOD_FLOWER, BLOCK_FOLDER);
 		simpleItem(ModBlocks.BLOOD_CRYSTAL, BLOCK_FOLDER);
 		dislocator(ModItems.BLOOD_DISLOCATOR.get());

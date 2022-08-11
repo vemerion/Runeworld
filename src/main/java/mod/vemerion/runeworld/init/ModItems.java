@@ -9,6 +9,7 @@ import mod.vemerion.runeworld.Main;
 import mod.vemerion.runeworld.helpers.Helper;
 import mod.vemerion.runeworld.item.BloodBatToothItem;
 import mod.vemerion.runeworld.item.BloodBucketItem;
+import mod.vemerion.runeworld.item.BloodCrownItem;
 import mod.vemerion.runeworld.item.BloodCrystalliteItem;
 import mod.vemerion.runeworld.item.BloodFlowerItem;
 import mod.vemerion.runeworld.item.BloodPuddingItem;
@@ -59,6 +60,7 @@ public class ModItems {
 		public static final RegistryObject<DislocatorItem> FIRE_DISLOCATOR = ITEMS.register("fire_dislocator", () -> new DislocatorItem(new Item.Properties().tab(CreativeModeTab.TAB_SEARCH).durability(16).fireResistant(),
 				ModDimensions.FIRE));
 		public static final RegistryObject<Item> FIRE_ROOT = ITEMS.register("fire_root", FireRootItem::new);
+		public static final RegistryObject<Item> BLOOD_CROWN = ITEMS.register("blood_crown", BloodCrownItem::new);
 
 	static final CreativeModeTab ITEM_GROUP = new RuneworldItemGroup();
 

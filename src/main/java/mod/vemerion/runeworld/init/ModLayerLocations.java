@@ -15,5 +15,7 @@ public class ModLayerLocations {
 			new ResourceLocation(Main.MODID, "mosquito"), "main");
 	public static final ModelLayerLocation BLOOD_GORILLA = new ModelLayerLocation(
 			new ResourceLocation(Main.MODID, "blood_gorilla"), "main");
+	public static final ModelLayerLocation BLOOD_CROWN = new ModelLayerLocation(new ResourceLocation(Main.MODID, "blood_crown"), "main");
+
 
 }
