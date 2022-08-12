@@ -44,6 +44,7 @@ public class BloodMonkeyEntity extends Monster implements RangedAttackMob {
 	public BloodMonkeyEntity(EntityType<? extends BloodMonkeyEntity> type, Level worldIn) {
 		super(type, worldIn);
 		this.xpReward = 5;
+		this.setDropChance(EquipmentSlot.MAINHAND, 0);
 	}
 
 	public static AttributeSupplier.Builder attributes() {
@@ -59,7 +60,6 @@ public class BloodMonkeyEntity extends Monster implements RangedAttackMob {
 		
 		if (random.nextDouble() < 0.1) {
 			setItemSlot(EquipmentSlot.MAINHAND, new ItemStack(Items.IRON_SWORD));
-			setDropChance(EquipmentSlot.MAINHAND, 0);
 		}
 		
 		return super.finalizeSpawn(pLevel, pDifficulty, pReason, pSpawnData, pDataTag);
