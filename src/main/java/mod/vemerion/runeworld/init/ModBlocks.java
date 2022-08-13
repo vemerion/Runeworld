@@ -45,6 +45,7 @@ public class ModBlocks {
 	public static final BloodPillarBlock BLOOD_PILLAR_MEDIUM = null;
 	public static final BloodPillarBlock BLOOD_PILLAR_SMALL = null;
 	public static final Block BLOOD_ROCK = null;
+	public static final Block HIDEABLE_BLOOD_ROCK = null;
 	public static final Block BLOOD_MOSS = null;
 	public static final Block BLOOD_CRYSTAL = null;
 	public static final Block BLOOD_LEECH = null;
@@ -73,6 +74,8 @@ public class ModBlocks {
 		registry.register(withItem(Init.setup(new BloodPillarBlock(BloodPillarBlock.SMALL), "blood_pillar_small")));
 		registry.register(
 				withItem(Init.setup(new Block(BlockBehaviour.Properties.copy(Blocks.COBBLESTONE)), "blood_rock")));
+		registry.register(
+				withItem(Init.setup(new Block(BlockBehaviour.Properties.copy(Blocks.COBBLESTONE).noOcclusion().noDrops()), "hideable_blood_rock")));
 		registry.register(
 				withItem(Init.setup(new Block(BlockBehaviour.Properties.copy(Blocks.COBBLESTONE)), "blood_moss")));
 		registry.register(withItem(Init.setup(new BloodCrystalBlock(), "blood_crystal")));

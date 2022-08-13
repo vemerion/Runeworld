@@ -25,6 +25,7 @@ public class ModLanguageProvider extends LanguageProvider {
 		add(ModBlocks.BLOOD_PILLAR_MEDIUM, "Blood Pillar Medium");
 		add(ModBlocks.BLOOD_PILLAR_SMALL, "Blood Pillar Small");
 		add(ModBlocks.BLOOD_ROCK, "Blood Rock");
+		add(ModBlocks.HIDEABLE_BLOOD_ROCK, "Hideable Blood Rock");
 		add(ModBlocks.BLOOD_MOSS, "Blood Moss");
 		add(ModBlocks.BLOOD_CRYSTAL, "Blood Crystal");
 		add(ModBlocks.BLOOD_LEECH, "Blood Leech");

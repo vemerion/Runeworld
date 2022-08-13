@@ -32,6 +32,7 @@ import mod.vemerion.runeworld.renderer.BloodMonkeyRenderer;
 import mod.vemerion.runeworld.renderer.FireElementalProjectileRenderer;
 import mod.vemerion.runeworld.renderer.FireElementalRenderer;
 import mod.vemerion.runeworld.renderer.MosquitoRenderer;
+import mod.vemerion.runeworld.renderer.textureatlas.HideableTextureAtlasSprite;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.DimensionSpecialEffects;
 import net.minecraft.client.renderer.ItemBlockRenderTypes;
@@ -41,6 +42,7 @@ import net.minecraft.client.renderer.item.ItemProperties;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.level.block.Block;
 import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.client.MinecraftForgeClient;
 import net.minecraftforge.client.event.ColorHandlerEvent;
 import net.minecraftforge.client.event.EntityRenderersEvent;
 import net.minecraftforge.client.event.ParticleFactoryRegisterEvent;
@@ -68,6 +70,7 @@ public class ClientModEventSubscriber {
 		ItemBlockRenderTypes.setRenderLayer(ModBlocks.BLOOD_FLOWER, RenderType.cutout());
 		ItemBlockRenderTypes.setRenderLayer(ModBlocks.BLOOD_CRYSTAL, RenderType.cutout());
 		ItemBlockRenderTypes.setRenderLayer(ModBlocks.FIRE_ROOT, RenderType.cutout());
+		ItemBlockRenderTypes.setRenderLayer(ModBlocks.HIDEABLE_BLOOD_ROCK, RenderType.cutout());
 		ItemBlockRenderTypes.setRenderLayer(ModFluids.BLOOD.get(), RenderType.translucent());
 		ItemBlockRenderTypes.setRenderLayer(ModFluids.BLOOD_FLOWING.get(), RenderType.translucent());
 
@@ -76,7 +79,8 @@ public class ClientModEventSubscriber {
 
 		event.enqueueWork(() -> registerItemProperties());
 		event.enqueueWork(ClientModEventSubscriber::registerDimensionSpecialEffects);
-
+		
+		MinecraftForgeClient.registerTextureAtlasSpriteLoader(new ResourceLocation(Main.MODID, "hideable_tas_loader"), new HideableTextureAtlasSprite.Loader());
 	}
 	
 	private static void registerDimensionSpecialEffects() {
