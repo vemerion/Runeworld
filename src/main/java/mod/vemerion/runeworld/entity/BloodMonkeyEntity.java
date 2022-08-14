@@ -90,7 +90,7 @@ public class BloodMonkeyEntity extends Monster implements RangedAttackMob {
 		super.tick();
 
 		prevBodyRot = bodyRot;
-		if (isStandingOnPillar())
+		if (canUseRangedAttack())
 			bodyRot = Mth.lerp(0.1f, bodyRot, Helper.toRad(15));
 		else
 			bodyRot = Mth.lerp(0.1f, bodyRot, Helper.toRad(70));
@@ -114,7 +114,13 @@ public class BloodMonkeyEntity extends Monster implements RangedAttackMob {
 		goalSelector.addGoal(0, new RangedAttackGoal(this, 0, 45, 10) {
 			@Override
 			public boolean canUse() {
-				return super.canUse() && isStandingOnPillar();
+				return super.canUse() && canUseRangedAttack() && !isPassenger();
+			}
+		});
+		goalSelector.addGoal(0, new RangedAttackGoal(this, 0, 10, 10) {
+			@Override
+			public boolean canUse() {
+				return super.canUse() && canUseRangedAttack() && isPassenger();
 			}
 		});
 		goalSelector.addGoal(1, new MeleeAttackGoal(this, 1.5, true) {
@@ -151,6 +157,10 @@ public class BloodMonkeyEntity extends Monster implements RangedAttackMob {
 		projectile.shoot(x, y + height, z, 1f, 1f);
 		level.addFreshEntity(projectile);
 		playSound(ModSounds.THROWING.get(), 1, Helper.soundPitch(random));
+	}
+	
+	public boolean canUseRangedAttack() {
+		return isStandingOnPillar() || getVehicle() instanceof BloodGorillaEntity;
 	}
 
 	public boolean isStandingOnPillar() {

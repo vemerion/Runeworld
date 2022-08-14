@@ -111,7 +111,7 @@ public class BloodMonkeyModel extends EntityModel<BloodMonkeyEntity> implements 
 		head.yRot = Helper.toRad(netHeadYaw) * 0.25f;
 		head.zRot = Helper.toRad(netHeadYaw) * 0.25f;
 
-		if (entityIn.isStandingOnPillar()) {
+		if (entityIn.canUseRangedAttack()) {
 			rightArm1.xRot = Helper.toRad(-130) + Mth.cos(ageInTicks / 30) * Helper.toRad(10)
 					+ Mth.sin(attackTime * (float) Math.PI * 2f) * Helper.toRad(50);
 			leftArm1.xRot = Helper.toRad(-20) + Mth.cos(ageInTicks / 30) * Helper.toRad(10);
