@@ -2,9 +2,16 @@ package mod.vemerion.runeworld.helpers;
 
 import java.util.Random;
 
-import net.minecraft.world.entity.Entity;
-import net.minecraft.core.Direction;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
+import net.minecraft.world.entity.Entity;
+import net.minecraft.world.level.ChunkPos;
+import net.minecraft.world.level.StructureFeatureManager;
+import net.minecraft.world.level.WorldGenLevel;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.chunk.ChunkGenerator;
+import net.minecraft.world.level.levelgen.structure.BoundingBox;
+import net.minecraft.world.level.levelgen.structure.pieces.PiecesContainer;
 import net.minecraft.world.phys.Vec3;
 
 public class Helper {
@@ -33,8 +40,31 @@ public class Helper {
 		return entity.position().add((rand.nextDouble() - 0.5) * width, rand.nextDouble() * height,
 				(rand.nextDouble() - 0.5) * width);
 	}
-	
+
 	public static float toRad(double deg) {
 		return (float) Math.toRadians(deg);
+	}
+
+	public static void fillBelowStructure(WorldGenLevel level, StructureFeatureManager manager,
+			ChunkGenerator generator, Random rand, BoundingBox box, ChunkPos chunkPos, PiecesContainer pieces,
+			BlockState first, BlockState second) {
+		var pos = new BlockPos.MutableBlockPos();
+		BoundingBox boundingbox = pieces.calculateBoundingBox();
+		int yStart = boundingbox.minY() - 1;
+
+		for (int x = box.minX(); x <= box.maxX(); x++) {
+			for (int z = box.minZ(); z <= box.maxZ(); z++) {
+				pos.set(x, yStart + 1, z);
+				if (!level.isEmptyBlock(pos) && boundingbox.isInside(pos) && pieces.isInsidePiece(pos)) {
+					for (int y = yStart; y > level.getMinBuildHeight(); y--) {
+						pos.setY(y);
+						if (!level.isEmptyBlock(pos))
+							break;
+
+						level.setBlock(pos, y == yStart ? first : second, 2);
+					}
+				}
+			}
+		}
 	}
 }

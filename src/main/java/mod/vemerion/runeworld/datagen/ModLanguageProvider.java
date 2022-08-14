@@ -24,7 +24,6 @@ public class ModLanguageProvider extends LanguageProvider {
 		add(ModBlocks.BLOOD_PILLAR_LARGE.get(), "Blood Pillar Large");
 		add(ModBlocks.BLOOD_PILLAR_MEDIUM.get(), "Blood Pillar Medium");
 		add(ModBlocks.BLOOD_PILLAR_SMALL.get(), "Blood Pillar Small");
-		add(ModBlocks.BLOOD_ROCK.get(), "Blood Rock");
 		add(ModBlocks.HIDEABLE_BLOOD_ROCK.get(), "Hideable Blood Rock");
 		add(ModBlocks.BLOOD_MOSS.get(), "Blood Moss");
 		add(ModBlocks.BLOOD_CRYSTAL.get(), "Blood Crystal");
@@ -67,6 +66,7 @@ public class ModLanguageProvider extends LanguageProvider {
 		// Complex
 		stoneMaterial(ModBlocks.SPARKSTONE_MATERIAL, "Sparkstone");
 		stoneMaterial(ModBlocks.CHARRED_STONE_MATERIAL, "Charred Stone");
+		stoneMaterial(ModBlocks.BLOOD_ROCK_MATERIAL, "Blood Rock");
 
 		// Guide
 		guide();

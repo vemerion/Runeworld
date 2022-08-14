@@ -1,0 +1,8 @@
+{
+  "parent": "minecraft:block/slab_top",
+  "textures": {
+    "side": "runeworld:block/blood_rock",
+    "bottom": "runeworld:block/blood_rock",
+    "top": "runeworld:block/blood_rock"
+  }
+}

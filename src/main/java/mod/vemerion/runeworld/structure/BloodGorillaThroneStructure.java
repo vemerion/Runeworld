@@ -27,22 +27,22 @@ import net.minecraft.world.level.levelgen.structure.templatesystem.BlockIgnorePr
 import net.minecraft.world.level.levelgen.structure.templatesystem.StructureManager;
 import net.minecraft.world.level.levelgen.structure.templatesystem.StructurePlaceSettings;
 
-public class FireRitualStructure extends StructureFeature<NoneFeatureConfiguration> {
+public class BloodGorillaThroneStructure extends StructureFeature<NoneFeatureConfiguration> {
 
-	public FireRitualStructure(Codec<NoneFeatureConfiguration> codec) {
+	public BloodGorillaThroneStructure(Codec<NoneFeatureConfiguration> codec) {
 		super(codec,
 				PieceGeneratorSupplier.simple(c -> c.validBiomeOnTop(Heightmap.Types.WORLD_SURFACE_WG),
-						FireRitualStructure::generatePieces),
+						BloodGorillaThroneStructure::generatePieces),
 				(level, manager, generator, rand, bb, pos, container) -> Helper.fillBelowStructure(level, manager,
-						generator, rand, bb, pos, container, ModBlocks.BURNT_DIRT.get().defaultBlockState(),
-						ModBlocks.CHARRED_STONE.get().defaultBlockState()));
+						generator, rand, bb, pos, container, ModBlocks.BLOOD_MOSS.get().defaultBlockState(),
+						ModBlocks.BLOOD_ROCK.get().defaultBlockState()));
 	}
 
 	@Override
 	public Decoration step() {
 		return Decoration.SURFACE_STRUCTURES;
 	}
-
+	
 	private static void generatePieces(StructurePiecesBuilder builder,
 			PieceGenerator.Context<NoneFeatureConfiguration> context) {
 		int x = context.chunkPos().getMinBlockX();
@@ -54,15 +54,15 @@ public class FireRitualStructure extends StructureFeature<NoneFeatureConfigurati
 
 	public static class Piece extends TemplateStructurePiece {
 
-		private static final ResourceLocation TEMPLATE = new ResourceLocation(Main.MODID, "fire_ritual");
+		private static final ResourceLocation TEMPLATE = new ResourceLocation(Main.MODID, "blood_gorilla_throne");
 
 		public Piece(StructureManager structureManager, BlockPos pos) {
-			super(ModStructurePieces.FIRE_RITUAL_PIECE, 0, structureManager, TEMPLATE, TEMPLATE.toString(),
+			super(ModStructurePieces.BLOOD_GORILLA_THRONE_PIECE, 0, structureManager, TEMPLATE, TEMPLATE.toString(),
 					new StructurePlaceSettings().addProcessor(BlockIgnoreProcessor.STRUCTURE_BLOCK), pos);
 		}
 
 		public Piece(StructurePieceSerializationContext context, CompoundTag nbt) {
-			super(ModStructurePieces.FIRE_RITUAL_PIECE, nbt, context.structureManager(),
+			super(ModStructurePieces.BLOOD_GORILLA_THRONE_PIECE, nbt, context.structureManager(),
 					a -> new StructurePlaceSettings().addProcessor(BlockIgnoreProcessor.STRUCTURE_BLOCK));
 		}
 
@@ -73,4 +73,5 @@ public class FireRitualStructure extends StructureFeature<NoneFeatureConfigurati
 		}
 
 	}
+
 }

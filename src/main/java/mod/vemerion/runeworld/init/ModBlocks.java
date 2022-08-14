@@ -42,7 +42,6 @@ public class ModBlocks {
 	public static final RegistryObject<BloodPillarBlock> BLOOD_PILLAR_LARGE = BLOCKS.register("blood_pillar_large", () -> withItem(new BloodPillarBlock(BloodPillarBlock.LARGE)));
 	public static final RegistryObject<BloodPillarBlock> BLOOD_PILLAR_MEDIUM = BLOCKS.register("blood_pillar_medium", () -> withItem(new BloodPillarBlock(BloodPillarBlock.MEDIUM)));
 	public static final RegistryObject<BloodPillarBlock> BLOOD_PILLAR_SMALL = BLOCKS.register("blood_pillar_small", () -> withItem(new BloodPillarBlock(BloodPillarBlock.SMALL)));
-	public static final RegistryObject<Block> BLOOD_ROCK = BLOCKS.register("blood_rock", () -> withItem(new Block(BlockBehaviour.Properties.copy(Blocks.COBBLESTONE))));
 	public static final RegistryObject<Block> HIDEABLE_BLOOD_ROCK = BLOCKS.register("hideable_blood_rock", () -> withItem(new Block(BlockBehaviour.Properties.copy(Blocks.COBBLESTONE).noOcclusion().noDrops())));
 	public static final RegistryObject<Block> BLOOD_MOSS = BLOCKS.register("blood_moss", () -> withItem(new Block(BlockBehaviour.Properties.copy(Blocks.COBBLESTONE))));
 	public static final RegistryObject<Block> BLOOD_CRYSTAL = BLOCKS.register("blood_crystal", () -> withItem(new BloodCrystalBlock()));
@@ -53,8 +52,11 @@ public class ModBlocks {
 	public static final RegistryObject<Block> FIRE_RITUAL_STONE = BLOCKS.register("fire_ritual_stone", () -> withItem(new FireRitualStoneBlock(), noFire()));
 	public static final RegistryObject<Block> FIRE_ROOT = BLOCKS.register("fire_root", FireRootBlock::new);
 	
-	public static final RegistryObject<Block> BLOOD_RUNE_PORTAL = BLOCKS.register("blood_rune_portal", () -> createRunePortal(ModDimensions.BLOOD, () -> Runesword.BLOOD_RUNE, 170, 0, 0));
-	public static final RegistryObject<Block> FIRE_RUNE_PORTAL = BLOCKS.register("fire_rune_portal", () -> createRunePortal(ModDimensions.FIRE, () -> Runesword.FIRE_RUNE, 255, 100, 0));
+	public static final RegistryObject<Block> BLOOD_ROCK = BLOCKS.register("blood_rock", () -> withItem(new Block(BlockBehaviour.Properties.copy(Blocks.COBBLESTONE))));
+	public static final RegistryObject<StairBlock> BLOOD_ROCK_STAIRS = BLOCKS.register("blood_rock_stairs", () -> withItem(new StairBlock(() -> BLOOD_ROCK.get().defaultBlockState(), BlockBehaviour.Properties.copy(Blocks.COBBLESTONE))));
+	public static final RegistryObject<SlabBlock> BLOOD_ROCK_SLAB = BLOCKS.register("blood_rock_slab", () -> withItem(new SlabBlock(BlockBehaviour.Properties.copy(Blocks.COBBLESTONE))));
+	public static final RegistryObject<WallBlock> BLOOD_ROCK_WALL = BLOCKS.register("blood_rock_wall", () -> withItem(new WallBlock(BlockBehaviour.Properties.copy(Blocks.COBBLESTONE))));
+
 	
 	public static final RegistryObject<Block> SPARKSTONE = BLOCKS.register("sparkstone", () -> withItem(new Block(BlockBehaviour.Properties.of(Material.STONE, MaterialColor.STONE).requiresCorrectToolForDrops().strength(1.5f, 6))));
 	public static final RegistryObject<StairBlock> SPARKSTONE_STAIRS = BLOCKS.register("sparkstone_stairs", () -> withItem(new StairBlock(() -> SPARKSTONE.get().defaultBlockState(), BlockBehaviour.Properties.of(Material.STONE, MaterialColor.STONE).requiresCorrectToolForDrops().strength(1.5f, 6))));
@@ -68,6 +70,10 @@ public class ModBlocks {
 	
 	public static StoneMaterial SPARKSTONE_MATERIAL = new StoneMaterial(SPARKSTONE, SPARKSTONE_STAIRS, SPARKSTONE_SLAB, SPARKSTONE_WALL);
 	public static StoneMaterial CHARRED_STONE_MATERIAL = new StoneMaterial(CHARRED_STONE, CHARRED_STONE_STAIRS, CHARRED_STONE_SLAB, CHARRED_STONE_WALL);
+	public static StoneMaterial BLOOD_ROCK_MATERIAL = new StoneMaterial(BLOOD_ROCK, BLOOD_ROCK_STAIRS, BLOOD_ROCK_SLAB, BLOOD_ROCK_WALL);
+	
+	public static final RegistryObject<Block> BLOOD_RUNE_PORTAL = BLOCKS.register("blood_rune_portal", () -> createRunePortal(ModDimensions.BLOOD, () -> Runesword.BLOOD_RUNE, 170, 0, 0));
+	public static final RegistryObject<Block> FIRE_RUNE_PORTAL = BLOCKS.register("fire_rune_portal", () -> createRunePortal(ModDimensions.FIRE, () -> Runesword.FIRE_RUNE, 255, 100, 0));
 
 	private static final Set<RunePortalBlock> RUNE_PORTALS = new HashSet<>();
 

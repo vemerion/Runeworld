@@ -40,7 +40,6 @@ public class ModBlockLootTables extends BlockLoot {
 		dropSelf(ModBlocks.BLOOD_PILLAR_LARGE.get());
 		dropSelf(ModBlocks.BLOOD_PILLAR_MEDIUM.get());
 		dropSelf(ModBlocks.BLOOD_PILLAR_SMALL.get());
-		dropSelf(ModBlocks.BLOOD_ROCK.get());
 		dropSelf(ModBlocks.BLOOD_MOSS.get());
 		dropSelf(ModBlocks.BLOOD_CRYSTAL.get());
 		dropSelf(ModBlocks.BLOOD_LEECH.get());
@@ -55,6 +54,7 @@ public class ModBlockLootTables extends BlockLoot {
 
 		stoneMaterial(ModBlocks.SPARKSTONE_MATERIAL);
 		stoneMaterial(ModBlocks.CHARRED_STONE_MATERIAL);
+		stoneMaterial(ModBlocks.BLOOD_ROCK_MATERIAL);
 
 		fireRoot();
 	}

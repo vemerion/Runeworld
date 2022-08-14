@@ -31,7 +31,6 @@ public class ModBlockStateProvider extends BlockStateProvider {
 				models().singleTexture("blood_flower", mcLoc("block/cross"), "cross", modLoc("block/blood_flower")));
 		directionalBlock(ModBlocks.BLOOD_CRYSTAL.get(),
 				models().singleTexture("blood_crystal", mcLoc("block/cross"), "cross", modLoc("block/blood_crystal")));
-		simpleBlockWithItem(ModBlocks.BLOOD_ROCK.get());
 		simpleBlockWithItem(ModBlocks.HIDEABLE_BLOOD_ROCK.get());
 		simpleBlockWithItem(ModBlocks.CHARRED_DIRT.get());
 		ResourceLocation bloodPillar = modLoc("block/blood_pillar");
@@ -51,6 +50,7 @@ public class ModBlockStateProvider extends BlockStateProvider {
 		// Complex
 		stoneMaterial(ModBlocks.SPARKSTONE_MATERIAL);
 		stoneMaterial(ModBlocks.CHARRED_STONE_MATERIAL);
+		stoneMaterial(ModBlocks.BLOOD_ROCK_MATERIAL);
 	}
 
 	private void fireRoot() {

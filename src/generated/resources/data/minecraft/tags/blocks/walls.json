@@ -2,6 +2,7 @@
   "replace": false,
   "values": [
     "runeworld:charred_stone_wall",
-    "runeworld:sparkstone_wall"
+    "runeworld:sparkstone_wall",
+    "runeworld:blood_rock_wall"
   ]
 }

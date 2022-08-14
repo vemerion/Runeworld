@@ -51,6 +51,7 @@ public class ModRecipeProvider extends RecipeProvider {
 		// Complex
 		stoneMaterial(ModBlocks.SPARKSTONE_MATERIAL, consumer);
 		stoneMaterial(ModBlocks.CHARRED_STONE_MATERIAL, consumer);
+		stoneMaterial(ModBlocks.BLOOD_ROCK_MATERIAL, consumer);
 	}
 
 	private ShapedRecipeBuilder dislocator(Item dislocator, Item component) {

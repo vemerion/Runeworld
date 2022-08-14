@@ -47,6 +47,7 @@ public class ModItemModelProvider extends ItemModelProvider {
 		// Complex
 		stoneMaterial(ModBlocks.SPARKSTONE_MATERIAL);
 		stoneMaterial(ModBlocks.CHARRED_STONE_MATERIAL);
+		stoneMaterial(ModBlocks.BLOOD_ROCK_MATERIAL);
 	}
 
 	private void spawnEgg(Item item) {
