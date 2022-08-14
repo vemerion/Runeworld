@@ -1,7 +1,7 @@
 {
   "replace": false,
   "values": [
-    "runeworld:sparkstone_wall",
-    "runeworld:charred_stone_wall"
+    "runeworld:charred_stone_wall",
+    "runeworld:sparkstone_wall"
   ]
 }
