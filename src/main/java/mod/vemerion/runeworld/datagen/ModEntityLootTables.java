@@ -51,7 +51,7 @@ public class ModEntityLootTables extends EntityLoot {
 						.withPool(LootPool.lootPool().setRolls(ConstantValue.exactly(1))
 								.add(LootItem.lootTableItem(ModItems.FIRE_HEART.get())))
 						.withPool(LootPool.lootPool().setRolls(ConstantValue.exactly(1))
-								.add(LootItem.lootTableItem(ModBlocks.FIRE_RITUAL_STONE)
+								.add(LootItem.lootTableItem(ModBlocks.FIRE_RITUAL_STONE.get())
 										.apply(SetItemCountFunction.setCount(UniformGenerator.between(0, 2)))
 										.apply(LootingEnchantFunction.lootingMultiplier(UniformGenerator.between(0, 1))))));
 		

@@ -34,11 +34,11 @@ public class ModRecipeProvider extends RecipeProvider {
 		ShapelessRecipeBuilder.shapeless(ModItems.BLOOD_PUDDING.get(), 4).requires(Items.WHEAT)
 				.requires(Items.PORKCHOP).requires(ModItems.BLOOD_BUCKET.get())
 				.unlockedBy("has_blood_bucket", has(ModItems.BLOOD_BUCKET.get())).save(consumer);
-		ShapelessRecipeBuilder.shapeless(Items.RED_DYE).requires(ModBlocks.BLOOD_FLOWER)
-				.unlockedBy("has_blood_dye", has(ModBlocks.BLOOD_FLOWER))
+		ShapelessRecipeBuilder.shapeless(Items.RED_DYE).requires(ModBlocks.BLOOD_FLOWER.get())
+				.unlockedBy("has_blood_dye", has(ModBlocks.BLOOD_FLOWER.get()))
 				.save(consumer, new ResourceLocation(Main.MODID, "blood_flower_to_dye"));
-		pillar(ModBlocks.BLOOD_PILLAR_LARGE, ModBlocks.BLOOD_PILLAR_MEDIUM, consumer);
-		pillar(ModBlocks.BLOOD_PILLAR_MEDIUM, ModBlocks.BLOOD_PILLAR_SMALL, consumer);
+		pillar(ModBlocks.BLOOD_PILLAR_LARGE.get(), ModBlocks.BLOOD_PILLAR_MEDIUM.get(), consumer);
+		pillar(ModBlocks.BLOOD_PILLAR_MEDIUM.get(), ModBlocks.BLOOD_PILLAR_SMALL.get(), consumer);
 		
 		var runes = TagKey.create(Registry.ITEM_REGISTRY, new ResourceLocation(Runesword.MODID, "runes"));
 
@@ -49,8 +49,8 @@ public class ModRecipeProvider extends RecipeProvider {
 		dislocator(ModItems.FIRE_DISLOCATOR.get(), ModItems.FIRE_HEART.get()).save(consumer);
 
 		// Complex
-		stoneMaterial(ModBlocks.SPARKSTONE, consumer);
-		stoneMaterial(ModBlocks.CHARRED_STONE, consumer);
+		stoneMaterial(ModBlocks.SPARKSTONE_MATERIAL, consumer);
+		stoneMaterial(ModBlocks.CHARRED_STONE_MATERIAL, consumer);
 	}
 
 	private ShapedRecipeBuilder dislocator(Item dislocator, Item component) {
@@ -71,9 +71,9 @@ public class ModRecipeProvider extends RecipeProvider {
 	}
 
 	private void stoneMaterial(StoneMaterial material, Consumer<FinishedRecipe> consumer) {
-		stairs(material.STAIRS, material.BLOCK, consumer);
-		slab(material.SLAB, material.BLOCK, consumer);
-		wall(material.WALL, material.BLOCK, consumer);
+		stairs(material.stair(), material.block(), consumer);
+		slab(material.slab(), material.block(), consumer);
+		wall(material.wall(), material.block(), consumer);
 	}
 
 	private void stairs(Block stairs, Block block, Consumer<FinishedRecipe> consumer) {

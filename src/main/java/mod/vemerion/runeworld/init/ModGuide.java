@@ -34,7 +34,7 @@ public class ModGuide {
 					new TranslatableComponent(transKey("blood_world.blood_crystallite")));
 			fireWorld = guide.createGuideChapter(Runesword.FIRE_RUNE,
 					new TranslatableComponent(transKey("fire_world")));
-			fireRitual = guide.createGuideChapter(ModBlocks.FIRE_RITUAL_STONE,
+			fireRitual = guide.createGuideChapter(ModBlocks.FIRE_RITUAL_STONE.get(),
 					new TranslatableComponent(transKey("fire_world.fire_ritual")));
 
 			portal.addText(transKey("portal.text1")).addText(transKey("portal.text2"))

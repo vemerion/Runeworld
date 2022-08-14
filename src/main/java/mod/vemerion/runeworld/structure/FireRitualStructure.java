@@ -89,8 +89,8 @@ public class FireRitualStructure extends StructureFeature<NoneFeatureConfigurati
 						if (!level.isEmptyBlock(pos))
 							break;
 
-						level.setBlock(pos, y == yStart ? ModBlocks.BURNT_DIRT.defaultBlockState()
-								: ModBlocks.CHARRED_STONE.BLOCK.defaultBlockState(), 2);
+						level.setBlock(pos, y == yStart ? ModBlocks.BURNT_DIRT.get().defaultBlockState()
+								: ModBlocks.CHARRED_STONE.get().defaultBlockState(), 2);
 					}
 				}
 			}

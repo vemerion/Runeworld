@@ -18,7 +18,7 @@ public class ModBlockEntities {
 	@SubscribeEvent
 	public static void onRegisterTileEntity(RegistryEvent.Register<BlockEntityType<?>> event) {
 		BlockEntityType<BloodLeechBlockEntity> bloodLeech = BlockEntityType.Builder
-				.of(BloodLeechBlockEntity::new, ModBlocks.BLOOD_LEECH).build(null);
+				.of(BloodLeechBlockEntity::new, ModBlocks.BLOOD_LEECH.get()).build(null);
 
 		event.getRegistry().register(Init.setup(bloodLeech, "blood_leech"));
 	}

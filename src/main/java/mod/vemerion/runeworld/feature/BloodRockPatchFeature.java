@@ -12,7 +12,7 @@ import net.minecraft.world.level.levelgen.feature.FeaturePlaceContext;
 import net.minecraft.world.level.levelgen.feature.configurations.NoneFeatureConfiguration;
 
 public class BloodRockPatchFeature extends Feature<NoneFeatureConfiguration> {
-	private static final BlockState ROCK = ModBlocks.BLOOD_ROCK.defaultBlockState();
+	private static final BlockState ROCK = ModBlocks.BLOOD_ROCK.get().defaultBlockState();
 
 	public BloodRockPatchFeature() {
 		super(NoneFeatureConfiguration.CODEC);

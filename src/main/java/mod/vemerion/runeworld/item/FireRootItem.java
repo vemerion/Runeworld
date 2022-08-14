@@ -12,7 +12,7 @@ import net.minecraft.world.level.Level;
 public class FireRootItem extends BlockItem {
 
 	public FireRootItem() {
-		super(ModBlocks.FIRE_ROOT, new Item.Properties().tab(CreativeModeTab.TAB_SEARCH).fireResistant()
+		super(ModBlocks.FIRE_ROOT.get(), new Item.Properties().tab(CreativeModeTab.TAB_SEARCH).fireResistant()
 				.food(new FoodProperties.Builder().nutrition(4).saturationMod(0.7f).build()));
 	}
 

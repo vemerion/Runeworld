@@ -1,7 +1,7 @@
 package mod.vemerion.runeworld.init;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
 
 import org.apache.commons.lang3.tuple.Pair;
 
@@ -64,7 +64,7 @@ public class ModItems {
 
 	static final CreativeModeTab ITEM_GROUP = new RuneworldItemGroup();
 
-	private static List<Pair<Block, Item.Properties>> withItem = new ArrayList<>();
+	private static Set<Pair<Block, Item.Properties>> withItem = new HashSet<>();
 
 	@SubscribeEvent
 	public static void onRegisterItem(RegistryEvent.Register<Item> event) {
@@ -95,7 +95,7 @@ public class ModItems {
 
 		@Override
 		public ItemStack makeIcon() {
-			return new ItemStack(ModBlocks.BLOOD_CRYSTAL);
+			return new ItemStack(ModBlocks.BLOOD_CRYSTAL.get());
 		}
 
 		@Override

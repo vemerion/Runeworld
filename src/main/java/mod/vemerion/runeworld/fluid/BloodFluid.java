@@ -29,7 +29,7 @@ public class BloodFluid {
 					.sound(SoundEvents.BUCKET_FILL, SoundEvents.BUCKET_EMPTY)
 					.color(Helper.color(255, 0, 0, 255))
 					.overlay(new ResourceLocation(Main.MODID, "block/blood_overlay"))
-					.translationKey("block." + Main.MODID + "blood")).block(() -> ModBlocks.BLOOD).slopeFindDistance(4)
+					.translationKey("block." + Main.MODID + "blood")).block(ModBlocks.BLOOD).slopeFindDistance(4)
 							.levelDecreasePerBlock(1).explosionResistance(100F).tickRate(15).slopeFindDistance(3)
 							.levelDecreasePerBlock(2).bucket(ModItems.BLOOD_BUCKET);
 

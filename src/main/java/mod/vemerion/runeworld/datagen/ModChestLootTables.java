@@ -37,9 +37,9 @@ public class ModChestLootTables extends ChestLoot {
 										.apply(SetItemCountFunction.setCount(UniformGenerator.between(3.0F, 8.0F))))
 								.add(LootItem.lootTableItem(Runesword.BLOOD_RUNE).setWeight(4))
 								.add(LootItem.lootTableItem(ModItems.BLOOD_BAT_TOOTH.get()).setWeight(5))
-								.add(LootItem.lootTableItem(ModBlocks.BLOOD_LEECH).setWeight(10)
+								.add(LootItem.lootTableItem(ModBlocks.BLOOD_LEECH.get()).setWeight(10)
 										.apply(SetItemCountFunction.setCount(UniformGenerator.between(2, 4))))
-								.add(LootItem.lootTableItem(ModBlocks.BLOOD_CRYSTAL).setWeight(10)
+								.add(LootItem.lootTableItem(ModBlocks.BLOOD_CRYSTAL.get()).setWeight(10)
 										.apply(SetItemCountFunction.setCount(UniformGenerator.between(4, 6))))));
 	}
 }

@@ -23,7 +23,7 @@ public class ModItemTagsProvider extends ItemTagsProvider {
 	}
 
 	private void stoneCraftingTools() {
-		ImmutableList.of(ModBlocks.BLOOD_ROCK.asItem(), ModBlocks.CHARRED_STONE.BLOCK.asItem()).forEach(stone -> {
+		ImmutableList.of(ModBlocks.BLOOD_ROCK.get().asItem(), ModBlocks.CHARRED_STONE.get().asItem()).forEach(stone -> {
 			tag(ItemTags.STONE_CRAFTING_MATERIALS).add(stone);
 			tag(ItemTags.STONE_TOOL_MATERIALS).add(stone);
 		});

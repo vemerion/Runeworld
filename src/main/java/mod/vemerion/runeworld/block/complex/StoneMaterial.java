@@ -1,35 +1,47 @@
 package mod.vemerion.runeworld.block.complex;
 
-import mod.vemerion.runeworld.init.Init;
-import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.SlabBlock;
 import net.minecraft.world.level.block.StairBlock;
 import net.minecraft.world.level.block.WallBlock;
-import net.minecraft.world.level.material.Material;
-import net.minecraft.world.level.material.MaterialColor;
+import net.minecraftforge.registries.RegistryObject;
 
 public class StoneMaterial {
 
-	public final String NAME;
-	public final Block BLOCK;
-	public final StairBlock STAIRS;
-	public final SlabBlock SLAB;
-	public final WallBlock WALL;
+	private final RegistryObject<Block> block;
+	private final RegistryObject<StairBlock> stair;
+	private final RegistryObject<SlabBlock> slab;
+	private final RegistryObject<WallBlock> wall;
 
-	public StoneMaterial(String name, MaterialColor color) {
-		BlockBehaviour.Properties properties = BlockBehaviour.Properties.of(Material.STONE, color).requiresCorrectToolForDrops()
-				.strength(1.5f, 6);
+	public StoneMaterial(RegistryObject<Block> block, RegistryObject<StairBlock> stair, RegistryObject<SlabBlock> slab,
+			RegistryObject<WallBlock> wall) {
+		this.block = block;
+		this.stair = stair;
+		this.slab = slab;
+		this.wall = wall;
+	}
 
-		this.NAME = name;
-		this.BLOCK = Init.setup(new Block(properties), NAME);
-		this.STAIRS = Init.setup(new StairBlock(() -> BLOCK.defaultBlockState(), BlockBehaviour.Properties.copy(BLOCK)),
-				NAME + "_stairs");
-		this.SLAB = Init.setup(new SlabBlock(BlockBehaviour.Properties.copy(BLOCK)), NAME + "_slab");
-		this.WALL = Init.setup(new WallBlock(BlockBehaviour.Properties.copy(BLOCK)), NAME + "_wall");
+	public Block block() {
+		return block.get();
+	}
+
+	public StairBlock stair() {
+		return stair.get();
+	}
+
+	public SlabBlock slab() {
+		return slab.get();
+	}
+
+	public WallBlock wall() {
+		return wall.get();
+	}
+
+	public String getName() {
+		return block.getId().getPath();
 	}
 
 	public Block[] getBlocks() {
-		return new Block[] { BLOCK, STAIRS, SLAB, WALL };
+		return new Block[] { block.get(), stair.get(), slab.get(), wall.get() };
 	}
 }

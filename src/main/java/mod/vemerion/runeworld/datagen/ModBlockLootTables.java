@@ -36,33 +36,33 @@ public class ModBlockLootTables extends BlockLoot {
 
 	@Override
 	protected void addTables() {
-		dropSelf(ModBlocks.BLOOD_FLOWER);
-		dropSelf(ModBlocks.BLOOD_PILLAR_LARGE);
-		dropSelf(ModBlocks.BLOOD_PILLAR_MEDIUM);
-		dropSelf(ModBlocks.BLOOD_PILLAR_SMALL);
-		dropSelf(ModBlocks.BLOOD_ROCK);
-		dropSelf(ModBlocks.BLOOD_MOSS);
-		dropSelf(ModBlocks.BLOOD_CRYSTAL);
-		dropSelf(ModBlocks.BLOOD_LEECH);
-		dropSelf(ModBlocks.CHARRED_DIRT);
-		dropSelf(ModBlocks.FIRE_RITUAL_STONE);
-		add(ModBlocks.BURNT_DIRT, block -> {
-			return createSingleItemTableWithSilkTouch(block, ModBlocks.CHARRED_DIRT);
+		dropSelf(ModBlocks.BLOOD_FLOWER.get());
+		dropSelf(ModBlocks.BLOOD_PILLAR_LARGE.get());
+		dropSelf(ModBlocks.BLOOD_PILLAR_MEDIUM.get());
+		dropSelf(ModBlocks.BLOOD_PILLAR_SMALL.get());
+		dropSelf(ModBlocks.BLOOD_ROCK.get());
+		dropSelf(ModBlocks.BLOOD_MOSS.get());
+		dropSelf(ModBlocks.BLOOD_CRYSTAL.get());
+		dropSelf(ModBlocks.BLOOD_LEECH.get());
+		dropSelf(ModBlocks.CHARRED_DIRT.get());
+		dropSelf(ModBlocks.FIRE_RITUAL_STONE.get());
+		add(ModBlocks.BURNT_DIRT.get(), block -> {
+			return createSingleItemTableWithSilkTouch(block, ModBlocks.CHARRED_DIRT.get());
 		});
 
 		for (Block portal : ModBlocks.getRunePortals())
 			add(portal, noDrop());
 
-		stoneMaterial(ModBlocks.SPARKSTONE);
-		stoneMaterial(ModBlocks.CHARRED_STONE);
+		stoneMaterial(ModBlocks.SPARKSTONE_MATERIAL);
+		stoneMaterial(ModBlocks.CHARRED_STONE_MATERIAL);
 
 		fireRoot();
 	}
 
 	private void fireRoot() {
-		LootItemCondition.Builder condition = LootItemBlockStatePropertyCondition.hasBlockStateProperties(ModBlocks.FIRE_ROOT)
+		LootItemCondition.Builder condition = LootItemBlockStatePropertyCondition.hasBlockStateProperties(ModBlocks.FIRE_ROOT.get())
 				.setProperties(StatePropertiesPredicate.Builder.properties().hasProperty(FireRootBlock.AGE, 7));
-		add(ModBlocks.FIRE_ROOT, applyExplosionDecay(ModBlocks.FIRE_ROOT,
+		add(ModBlocks.FIRE_ROOT.get(), applyExplosionDecay(ModBlocks.FIRE_ROOT.get(),
 				LootTable.lootTable().withPool(LootPool.lootPool().add(LootItem.lootTableItem(ModItems.FIRE_ROOT.get())))
 						.withPool(LootPool.lootPool().when(condition)
 								.add(LootItem.lootTableItem(ModItems.FIRE_ROOT.get()).apply(

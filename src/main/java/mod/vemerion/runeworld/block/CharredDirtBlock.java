@@ -22,6 +22,6 @@ public class CharredDirtBlock extends FireGroundBlock {
 	@Override
 	public void randomTick(BlockState state, ServerLevel worldIn, BlockPos pos, Random random) {
 		if (worldIn.getBlockState(pos.above()).getBlock() instanceof BaseFireBlock)
-			worldIn.setBlockAndUpdate(pos, ModBlocks.BURNT_DIRT.defaultBlockState());
+			worldIn.setBlockAndUpdate(pos, ModBlocks.BURNT_DIRT.get().defaultBlockState());
 	}
 }

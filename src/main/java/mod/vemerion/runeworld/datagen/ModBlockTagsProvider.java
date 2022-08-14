@@ -17,15 +17,15 @@ public class ModBlockTagsProvider extends BlockTagsProvider {
 
 	@Override
 	protected void addTags() {
-		tag(BlockTags.MINEABLE_WITH_PICKAXE).add(ModBlocks.BLOOD_PILLAR_LARGE, ModBlocks.BLOOD_PILLAR_MEDIUM, ModBlocks.BLOOD_PILLAR_SMALL, ModBlocks.BLOOD_MOSS, ModBlocks.BLOOD_ROCK, ModBlocks.HIDEABLE_BLOOD_ROCK, ModBlocks.FIRE_RITUAL_STONE);
-		tag(BlockTags.MINEABLE_WITH_SHOVEL).add(ModBlocks.CHARRED_DIRT, ModBlocks.BURNT_DIRT);
+		tag(BlockTags.MINEABLE_WITH_PICKAXE).add(ModBlocks.BLOOD_PILLAR_LARGE.get(), ModBlocks.BLOOD_PILLAR_MEDIUM.get(), ModBlocks.BLOOD_PILLAR_SMALL.get(), ModBlocks.BLOOD_MOSS.get(), ModBlocks.BLOOD_ROCK.get(), ModBlocks.HIDEABLE_BLOOD_ROCK.get(), ModBlocks.FIRE_RITUAL_STONE.get());
+		tag(BlockTags.MINEABLE_WITH_SHOVEL).add(ModBlocks.CHARRED_DIRT.get(), ModBlocks.BURNT_DIRT.get());
 		
-		stoneMaterial(ModBlocks.CHARRED_STONE);
-		stoneMaterial(ModBlocks.SPARKSTONE);
+		stoneMaterial(ModBlocks.CHARRED_STONE_MATERIAL);
+		stoneMaterial(ModBlocks.SPARKSTONE_MATERIAL);
 	}
 	
 	private void stoneMaterial(StoneMaterial material) {
-		tag(BlockTags.WALLS).add(material.WALL);
+		tag(BlockTags.WALLS).add(material.wall());
 		for (var block : material.getBlocks()) {
 			tag(BlockTags.MINEABLE_WITH_PICKAXE).add(block);
 		}

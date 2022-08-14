@@ -30,7 +30,7 @@ public class FireElementalRenderer extends EntityRenderer<FireElementalEntity> {
 
 	private static final ResourceLocation TEXTURE = new ResourceLocation(Main.MODID,
 			"textures/block/fire_ritual_stone.png");
-	private static final BlockState BODY = ModBlocks.FIRE_RITUAL_STONE.defaultBlockState();
+	private static final BlockState BODY = ModBlocks.FIRE_RITUAL_STONE.get().defaultBlockState();
 
 	public FireElementalRenderer(EntityRendererProvider.Context context) {
 		super(context);

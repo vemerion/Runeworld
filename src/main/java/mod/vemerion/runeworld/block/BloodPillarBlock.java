@@ -1,6 +1,7 @@
 package mod.vemerion.runeworld.block;
 
 import java.util.Random;
+import java.util.function.Supplier;
 
 import mod.vemerion.runeworld.init.ModBlocks;
 import mod.vemerion.runeworld.init.ModFluids;
@@ -69,8 +70,8 @@ public class BloodPillarBlock extends Block implements IBloodLoggable {
 	}
 
 	public static boolean isPillar(Block block) {
-		return block == ModBlocks.BLOOD_PILLAR_LARGE || block == ModBlocks.BLOOD_PILLAR_MEDIUM
-				|| block == ModBlocks.BLOOD_PILLAR_SMALL;
+		return block == ModBlocks.BLOOD_PILLAR_LARGE.get() || block == ModBlocks.BLOOD_PILLAR_MEDIUM.get()
+				|| block == ModBlocks.BLOOD_PILLAR_SMALL.get();
 	}
 
 	public static boolean isPillar(LevelReader world, BlockPos pos) {
@@ -127,11 +128,11 @@ public class BloodPillarBlock extends Block implements IBloodLoggable {
 		return true;
 	}
 
-	private static void setPillar(LevelAccessor world, BlockPos pos, BloodPillarBlock pillar, int i) {
+	private static void setPillar(LevelAccessor world, BlockPos pos, Supplier<BloodPillarBlock> pillar, int i) {
 		FluidState fluidState = world.getFluidState(pos);
-		BlockState state = pillar.defaultBlockState();
+		BlockState state = pillar.get().defaultBlockState();
 		world.setBlock(pos, state, 2);
-		pillar.placeLiquid(world, pos, state, fluidState);
+		pillar.get().placeLiquid(world, pos, state, fluidState);
 
 	}
 

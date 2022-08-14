@@ -32,12 +32,12 @@ public class ModFishingLootTables extends FishingLoot {
 				.add(LootTableReference.lootTableReference(ModLootTables.BLOOD_FISHING_FISH).setWeight(85).setQuality(-1))));
 
 		p_accept_1_.accept(ModLootTables.BLOOD_FISHING_FISH, LootTable.lootTable()
-				.withPool(LootPool.lootPool().add(LootItem.lootTableItem(ModBlocks.BLOOD_LEECH))));
+				.withPool(LootPool.lootPool().add(LootItem.lootTableItem(ModBlocks.BLOOD_LEECH.get()))));
 
 		p_accept_1_.accept(ModLootTables.BLOOD_FISHING_JUNK,
 				LootTable.lootTable()
-						.withPool(LootPool.lootPool().add(LootItem.lootTableItem(ModBlocks.BLOOD_CRYSTAL))
-								.add(LootItem.lootTableItem(ModBlocks.BLOOD_FLOWER))));
+						.withPool(LootPool.lootPool().add(LootItem.lootTableItem(ModBlocks.BLOOD_CRYSTAL.get()))
+								.add(LootItem.lootTableItem(ModBlocks.BLOOD_FLOWER.get()))));
 
 		p_accept_1_.accept(ModLootTables.BLOOD_FISHING_TREASURE,
 				LootTable.lootTable()

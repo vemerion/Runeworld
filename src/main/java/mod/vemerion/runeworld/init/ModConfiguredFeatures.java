@@ -37,11 +37,11 @@ public class ModConfiguredFeatures {
 		BLOOD_PILLAR_SINGLE = FeatureUtils.register(new ResourceLocation(Main.MODID, "blood_pillar_single").toString(), ModFeatures.BLOOD_PILLAR_SINGLE);
 		BLOOD_PILLAR_CLUSTER = FeatureUtils.register(new ResourceLocation(Main.MODID, "blood_pillar_cluster").toString(), ModFeatures.BLOOD_PILLAR_CLUSTER);
 		BLOOD_ROCK_PATCH = FeatureUtils.register(new ResourceLocation(Main.MODID, "blood_rock_patch").toString(), ModFeatures.BLOOD_ROCK_PATCH);
-		BLOOD_CRYSTAL = FeatureUtils.register(new ResourceLocation(Main.MODID, "blood_crystal").toString(), Feature.SIMPLE_BLOCK, new SimpleBlockConfiguration(BlockStateProvider.simple(ModBlocks.BLOOD_CRYSTAL)));
+		BLOOD_CRYSTAL = FeatureUtils.register(new ResourceLocation(Main.MODID, "blood_crystal").toString(), Feature.SIMPLE_BLOCK, new SimpleBlockConfiguration(BlockStateProvider.simple(ModBlocks.BLOOD_CRYSTAL.get())));
 		BLOOD_BAT_TREE = FeatureUtils.register(new ResourceLocation(Main.MODID, "blood_bat_tree").toString(), ModFeatures.BLOOD_BAT_TREE);
-		BLOOD_RUNE_PORTAL_FEATURE = FeatureUtils.register(new ResourceLocation(Main.MODID, "blood_rune_portal_feature").toString(), ModFeatures.RUNE_PORTAL_FEATURE, new BlockStateConfiguration(ModBlocks.BLOOD_RUNE_PORTAL.defaultBlockState()));
+		BLOOD_RUNE_PORTAL_FEATURE = FeatureUtils.register(new ResourceLocation(Main.MODID, "blood_rune_portal_feature").toString(), ModFeatures.RUNE_PORTAL_FEATURE, new BlockStateConfiguration(ModBlocks.BLOOD_RUNE_PORTAL.get().defaultBlockState()));
 		
-		FIRE_ROOT_PATCH = FeatureUtils.register(new ResourceLocation(Main.MODID, "fire_root_patch").toString(), Feature.RANDOM_PATCH, new RandomPatchConfiguration(32, 6, 2, PlacementUtils.onlyWhenEmpty(Feature.SIMPLE_BLOCK, new SimpleBlockConfiguration(new WeightedStateProvider(SimpleWeightedRandomList.<BlockState>builder().add(ModBlocks.FIRE_ROOT.defaultBlockState(), 20).add(ModBlocks.FIRE_ROOT.defaultBlockState().setValue(FireRootBlock.AGE, 3), 10).add(ModBlocks.FIRE_ROOT.defaultBlockState().setValue(FireRootBlock.AGE, 6), 5))))));
+		FIRE_ROOT_PATCH = FeatureUtils.register(new ResourceLocation(Main.MODID, "fire_root_patch").toString(), Feature.RANDOM_PATCH, new RandomPatchConfiguration(32, 6, 2, PlacementUtils.onlyWhenEmpty(Feature.SIMPLE_BLOCK, new SimpleBlockConfiguration(new WeightedStateProvider(SimpleWeightedRandomList.<BlockState>builder().add(ModBlocks.FIRE_ROOT.get().defaultBlockState(), 20).add(ModBlocks.FIRE_ROOT.get().defaultBlockState().setValue(FireRootBlock.AGE, 3), 10).add(ModBlocks.FIRE_ROOT.get().defaultBlockState().setValue(FireRootBlock.AGE, 6), 5))))));
 		FIRE_PATCH = FeatureUtils.register(new ResourceLocation(Main.MODID, "fire_patch").toString(), Feature.RANDOM_PATCH, new RandomPatchConfiguration(64, 6, 2, PlacementUtils.onlyWhenEmpty(Feature.SIMPLE_BLOCK, new SimpleBlockConfiguration(BlockStateProvider.simple(Blocks.FIRE.defaultBlockState())))));
 	}
 }

@@ -19,20 +19,20 @@ public class ModLanguageProvider extends LanguageProvider {
 
 	@Override
 	protected void addTranslations() {
-		add(ModBlocks.BLOOD, "Blood");
-		add(ModBlocks.BLOOD_FLOWER, "Blood Flower");
-		add(ModBlocks.BLOOD_PILLAR_LARGE, "Blood Pillar Large");
-		add(ModBlocks.BLOOD_PILLAR_MEDIUM, "Blood Pillar Medium");
-		add(ModBlocks.BLOOD_PILLAR_SMALL, "Blood Pillar Small");
-		add(ModBlocks.BLOOD_ROCK, "Blood Rock");
-		add(ModBlocks.HIDEABLE_BLOOD_ROCK, "Hideable Blood Rock");
-		add(ModBlocks.BLOOD_MOSS, "Blood Moss");
-		add(ModBlocks.BLOOD_CRYSTAL, "Blood Crystal");
-		add(ModBlocks.BLOOD_LEECH, "Blood Leech");
-		add(ModBlocks.BURNT_DIRT, "Burnt Dirt");
-		add(ModBlocks.CHARRED_DIRT, "Charred Dirt");
-		add(ModBlocks.FIRE_RITUAL_STONE, "Fire Ritual Stone");
-		add(ModBlocks.FIRE_ROOT, "Fire Root");
+		add(ModBlocks.BLOOD.get(), "Blood");
+		add(ModBlocks.BLOOD_FLOWER.get(), "Blood Flower");
+		add(ModBlocks.BLOOD_PILLAR_LARGE.get(), "Blood Pillar Large");
+		add(ModBlocks.BLOOD_PILLAR_MEDIUM.get(), "Blood Pillar Medium");
+		add(ModBlocks.BLOOD_PILLAR_SMALL.get(), "Blood Pillar Small");
+		add(ModBlocks.BLOOD_ROCK.get(), "Blood Rock");
+		add(ModBlocks.HIDEABLE_BLOOD_ROCK.get(), "Hideable Blood Rock");
+		add(ModBlocks.BLOOD_MOSS.get(), "Blood Moss");
+		add(ModBlocks.BLOOD_CRYSTAL.get(), "Blood Crystal");
+		add(ModBlocks.BLOOD_LEECH.get(), "Blood Leech");
+		add(ModBlocks.BURNT_DIRT.get(), "Burnt Dirt");
+		add(ModBlocks.CHARRED_DIRT.get(), "Charred Dirt");
+		add(ModBlocks.FIRE_RITUAL_STONE.get(), "Fire Ritual Stone");
+		add(ModBlocks.FIRE_ROOT.get(), "Fire Root");
 		add(ModItems.BLOOD_BUCKET.get(), "Blood Bucket");
 		add(ModItems.BLOOD_PUDDING.get(), "Blood Pudding");
 		add(ModItems.MOSQUITO_EGGS.get(), "Mosquito Eggs");
@@ -65,18 +65,18 @@ public class ModLanguageProvider extends LanguageProvider {
 		add("item." + Main.MODID + "." + ModItems.BLOOD_CROWN.getId().getPath() + ".description", "Majestic");
 
 		// Complex
-		stoneMaterial(ModBlocks.SPARKSTONE, "Sparkstone");
-		stoneMaterial(ModBlocks.CHARRED_STONE, "Charred Stone");
+		stoneMaterial(ModBlocks.SPARKSTONE_MATERIAL, "Sparkstone");
+		stoneMaterial(ModBlocks.CHARRED_STONE_MATERIAL, "Charred Stone");
 
 		// Guide
 		guide();
 	}
 
 	private void stoneMaterial(StoneMaterial material, String name) {
-		add(material.BLOCK, name);
-		add(material.STAIRS, name + " Stairs");
-		add(material.SLAB, name + " Slab");
-		add(material.WALL, name + " Wall");
+		add(material.block(), name);
+		add(material.stair(), name + " Stairs");
+		add(material.slab(), name + " Slab");
+		add(material.wall(), name + " Wall");
 	}
 
 	private void guide() {

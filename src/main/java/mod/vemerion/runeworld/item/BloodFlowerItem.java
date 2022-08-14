@@ -17,7 +17,7 @@ import net.minecraft.world.level.Level;
 public class BloodFlowerItem extends BlockItem {
 
 	public BloodFlowerItem() {
-		super(ModBlocks.BLOOD_FLOWER, new Item.Properties().tab(CreativeModeTab.TAB_SEARCH));
+		super(ModBlocks.BLOOD_FLOWER.get(), new Item.Properties().tab(CreativeModeTab.TAB_SEARCH));
 	}
 
 	@Override

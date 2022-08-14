@@ -34,7 +34,7 @@ public class FireElementalProjectileEntity extends ThrowableItemProjectile {
 
 	@Override
 	protected Item getDefaultItem() {
-		return ModBlocks.FIRE_RITUAL_STONE.asItem();
+		return ModBlocks.FIRE_RITUAL_STONE.get().asItem();
 	}
 
 	@Override

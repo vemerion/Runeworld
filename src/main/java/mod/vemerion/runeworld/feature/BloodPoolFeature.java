@@ -20,11 +20,11 @@ import net.minecraft.world.level.levelgen.feature.FeaturePlaceContext;
 import net.minecraft.world.level.levelgen.feature.configurations.NoneFeatureConfiguration;
 
 public class BloodPoolFeature extends Feature<NoneFeatureConfiguration> {
-	private static final BlockState BLOOD = ModBlocks.BLOOD.defaultBlockState();
+	private static final BlockState BLOOD = ModBlocks.BLOOD.get().defaultBlockState();
 	private static final BlockState AIR = Blocks.AIR.defaultBlockState();
-	private static final BlockState FLOWER = ModBlocks.BLOOD_FLOWER.defaultBlockState();
-	private static final BlockState ROCK = ModBlocks.BLOOD_ROCK.defaultBlockState();
-	private static final BlockState LEECH = ModBlocks.BLOOD_LEECH.defaultBlockState().setValue(BloodLeechBlock.WATERLOGGED,
+	private static final BlockState FLOWER = ModBlocks.BLOOD_FLOWER.get().defaultBlockState();
+	private static final BlockState ROCK = ModBlocks.BLOOD_ROCK.get().defaultBlockState();
+	private static final BlockState LEECH = ModBlocks.BLOOD_LEECH.get().defaultBlockState().setValue(BloodLeechBlock.WATERLOGGED,
 			true);
 
 	public BloodPoolFeature() {
@@ -101,7 +101,7 @@ public class BloodPoolFeature extends Feature<NoneFeatureConfiguration> {
 			if (count == 0)
 				return;
 
-			if (rand.nextDouble() < 0.01 && reader.getBlockState(pos).getBlock() == ModBlocks.BLOOD) {
+			if (rand.nextDouble() < 0.01 && reader.getBlockState(pos).getBlock() == ModBlocks.BLOOD.get()) {
 				for (Direction d : Direction.values()) {
 					BlockState leech = LEECH.setValue(BloodLeechBlock.FACING, d);
 					if (leech.canSurvive(reader, pos)) {

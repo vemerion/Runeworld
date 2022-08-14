@@ -25,22 +25,22 @@ public class ModBlockStateProvider extends BlockStateProvider {
 
 	@Override
 	protected void registerStatesAndModels() {
-		simpleBlock(ModBlocks.BLOOD, empty("blood").texture("particle", modLoc("block/blood_moss_top")));
-		simpleBlock(ModBlocks.BLOOD_LEECH, empty("blood_leech").texture("particle", modLoc("entity/blood_leech")));
-		simpleBlock(ModBlocks.BLOOD_FLOWER,
+		simpleBlock(ModBlocks.BLOOD.get(), empty("blood").texture("particle", modLoc("block/blood_moss_top")));
+		simpleBlock(ModBlocks.BLOOD_LEECH.get(), empty("blood_leech").texture("particle", modLoc("entity/blood_leech")));
+		simpleBlock(ModBlocks.BLOOD_FLOWER.get(),
 				models().singleTexture("blood_flower", mcLoc("block/cross"), "cross", modLoc("block/blood_flower")));
-		directionalBlock(ModBlocks.BLOOD_CRYSTAL,
+		directionalBlock(ModBlocks.BLOOD_CRYSTAL.get(),
 				models().singleTexture("blood_crystal", mcLoc("block/cross"), "cross", modLoc("block/blood_crystal")));
-		simpleBlockWithItem(ModBlocks.BLOOD_ROCK);
-		simpleBlockWithItem(ModBlocks.HIDEABLE_BLOOD_ROCK);
-		simpleBlockWithItem(ModBlocks.CHARRED_DIRT);
+		simpleBlockWithItem(ModBlocks.BLOOD_ROCK.get());
+		simpleBlockWithItem(ModBlocks.HIDEABLE_BLOOD_ROCK.get());
+		simpleBlockWithItem(ModBlocks.CHARRED_DIRT.get());
 		ResourceLocation bloodPillar = modLoc("block/blood_pillar");
-		pillar(ModBlocks.BLOOD_PILLAR_LARGE, 12, bloodPillar, bloodPillar);
-		pillar(ModBlocks.BLOOD_PILLAR_MEDIUM, 8, bloodPillar, bloodPillar);
-		pillar(ModBlocks.BLOOD_PILLAR_SMALL, 4, bloodPillar, bloodPillar);
-		grassBlock(ModBlocks.BLOOD_MOSS, modLoc("block/blood_moss_side"), modLoc("block/blood_rock"),
+		pillar(ModBlocks.BLOOD_PILLAR_LARGE.get(), 12, bloodPillar, bloodPillar);
+		pillar(ModBlocks.BLOOD_PILLAR_MEDIUM.get(), 8, bloodPillar, bloodPillar);
+		pillar(ModBlocks.BLOOD_PILLAR_SMALL.get(), 4, bloodPillar, bloodPillar);
+		grassBlock(ModBlocks.BLOOD_MOSS.get(), modLoc("block/blood_moss_side"), modLoc("block/blood_rock"),
 				modLoc("block/blood_moss_top"));
-		grassBlock(ModBlocks.BURNT_DIRT, modLoc("block/burnt_dirt_side"), modLoc("block/charred_dirt"),
+		grassBlock(ModBlocks.BURNT_DIRT.get(), modLoc("block/burnt_dirt_side"), modLoc("block/charred_dirt"),
 				modLoc("block/burnt_dirt_top"));
 		fireRitualStone();
 		fireRoot();
@@ -49,12 +49,12 @@ public class ModBlockStateProvider extends BlockStateProvider {
 			runePortal(portal);
 
 		// Complex
-		stoneMaterial(ModBlocks.SPARKSTONE);
-		stoneMaterial(ModBlocks.CHARRED_STONE);
+		stoneMaterial(ModBlocks.SPARKSTONE_MATERIAL);
+		stoneMaterial(ModBlocks.CHARRED_STONE_MATERIAL);
 	}
 
 	private void fireRoot() {
-		Block fireRoot = ModBlocks.FIRE_ROOT;
+		Block fireRoot = ModBlocks.FIRE_ROOT.get();
 		String name = fireRoot.getRegistryName().getPath();
 		ModelFile[] stages = new ModelFile[4];
 		for (int i = 0; i < stages.length; i++) {
@@ -105,7 +105,7 @@ public class ModBlockStateProvider extends BlockStateProvider {
 	}
 
 	private void fireRitualStone() {
-		Block block = ModBlocks.FIRE_RITUAL_STONE;
+		Block block = ModBlocks.FIRE_RITUAL_STONE.get();
 		String name = block.getRegistryName().getPath();
 		ModelFile model = models().cubeColumn(name, modLoc("block/fire_ritual_stone"), modLoc("block/sparkstone"));
 		ModelFile bloodied = models().cubeColumn(name + "_bloodied", modLoc("block/fire_ritual_stone_bloodied"),
@@ -132,14 +132,14 @@ public class ModBlockStateProvider extends BlockStateProvider {
 	}
 
 	private void stoneMaterial(StoneMaterial material) {
-		ResourceLocation texture = modLoc(ModelProvider.BLOCK_FOLDER + "/" + material.NAME);
-		simpleBlock(material.BLOCK);
-		itemModelFromBlock(material.BLOCK);
-		stairsBlock(material.STAIRS, texture);
-		itemModelFromBlock(material.STAIRS);
-		slabBlock(material.SLAB, texture, texture);
-		itemModelFromBlock(material.SLAB);
-		wallBlock(material.WALL, texture);
+		ResourceLocation texture = modLoc(ModelProvider.BLOCK_FOLDER + "/" + material.getName());
+		simpleBlock(material.block());
+		itemModelFromBlock(material.block());
+		stairsBlock(material.stair(), texture);
+		itemModelFromBlock(material.stair());
+		slabBlock(material.slab(), texture, texture);
+		itemModelFromBlock(material.slab());
+		wallBlock(material.wall(), texture);
 	}
 
 	private void itemModelFromBlock(Block block) {

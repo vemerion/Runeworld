@@ -24,7 +24,7 @@ import net.minecraft.world.level.Level;
 
 public class FireRitual {
 
-	private static final Block RITUAL = ModBlocks.FIRE_RITUAL_STONE;
+	private static final Block RITUAL = ModBlocks.FIRE_RITUAL_STONE.get();
 	private static final int RITUAL_SIZE = 5 * 4;
 
 	private Set<BlockPos> positions;
@@ -41,7 +41,7 @@ public class FireRitual {
 		for (int i = 0; i < 4; i++) {
 			Direction d = Direction.from2DDataValue(i);
 			BlockPos p = pos.relative(d);
-			if (world.getBlockState(p).getBlock() == ModBlocks.BLOOD_LEECH) {
+			if (world.getBlockState(p).getBlock() == ModBlocks.BLOOD_LEECH.get()) {
 				world.setBlockAndUpdate(p, Blocks.AIR.defaultBlockState());
 				Vec3 itemPos = Vec3.atCenterOf(p);
 				ItemEntity grilledLeech = new ItemEntity(world, itemPos.x, itemPos.y, itemPos.z,

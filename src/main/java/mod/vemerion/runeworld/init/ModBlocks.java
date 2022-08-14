@@ -1,10 +1,8 @@
 package mod.vemerion.runeworld.init;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
 import java.util.function.Supplier;
-
-import com.google.common.collect.ImmutableList;
 
 import mod.vemerion.runeworld.Main;
 import mod.vemerion.runeworld.block.BloodBlock;
@@ -18,97 +16,67 @@ import mod.vemerion.runeworld.block.FireRitualStoneBlock;
 import mod.vemerion.runeworld.block.FireRootBlock;
 import mod.vemerion.runeworld.block.RunePortalBlock;
 import mod.vemerion.runeworld.block.complex.StoneMaterial;
-import net.minecraft.world.level.block.state.BlockBehaviour;
+import net.minecraft.resources.ResourceKey;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.LiquidBlock;
+import net.minecraft.world.level.block.SlabBlock;
 import net.minecraft.world.level.block.SoundType;
+import net.minecraft.world.level.block.StairBlock;
+import net.minecraft.world.level.block.WallBlock;
+import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.material.Material;
 import net.minecraft.world.level.material.MaterialColor;
-import net.minecraft.world.item.Item;
-import net.minecraft.resources.ResourceKey;
-import net.minecraft.world.level.Level;
-import net.minecraftforge.event.RegistryEvent;
-import net.minecraftforge.eventbus.api.SubscribeEvent;
-import net.minecraftforge.fml.common.Mod.EventBusSubscriber;
-import net.minecraftforge.fml.common.Mod.EventBusSubscriber.Bus;
-import net.minecraftforge.registries.IForgeRegistry;
-import net.minecraftforge.registries.ObjectHolder;
+import net.minecraftforge.registries.DeferredRegister;
+import net.minecraftforge.registries.ForgeRegistries;
+import net.minecraftforge.registries.RegistryObject;
 
-@ObjectHolder(value = Main.MODID)
-@EventBusSubscriber(bus = Bus.MOD, modid = Main.MODID)
 public class ModBlocks {
+	
+	public static final DeferredRegister<Block> BLOCKS = DeferredRegister.create(ForgeRegistries.BLOCKS, Main.MODID);
+	
+	public static final RegistryObject<LiquidBlock> BLOOD = BLOCKS.register("blood", BloodBlock::new);
+	public static final RegistryObject<Block> BLOOD_FLOWER = BLOCKS.register("blood_flower", BloodFlowerBlock::new);
+	public static final RegistryObject<BloodPillarBlock> BLOOD_PILLAR_LARGE = BLOCKS.register("blood_pillar_large", () -> withItem(new BloodPillarBlock(BloodPillarBlock.LARGE)));
+	public static final RegistryObject<BloodPillarBlock> BLOOD_PILLAR_MEDIUM = BLOCKS.register("blood_pillar_medium", () -> withItem(new BloodPillarBlock(BloodPillarBlock.MEDIUM)));
+	public static final RegistryObject<BloodPillarBlock> BLOOD_PILLAR_SMALL = BLOCKS.register("blood_pillar_small", () -> withItem(new BloodPillarBlock(BloodPillarBlock.SMALL)));
+	public static final RegistryObject<Block> BLOOD_ROCK = BLOCKS.register("blood_rock", () -> withItem(new Block(BlockBehaviour.Properties.copy(Blocks.COBBLESTONE))));
+	public static final RegistryObject<Block> HIDEABLE_BLOOD_ROCK = BLOCKS.register("hideable_blood_rock", () -> withItem(new Block(BlockBehaviour.Properties.copy(Blocks.COBBLESTONE).noOcclusion().noDrops())));
+	public static final RegistryObject<Block> BLOOD_MOSS = BLOCKS.register("blood_moss", () -> withItem(new Block(BlockBehaviour.Properties.copy(Blocks.COBBLESTONE))));
+	public static final RegistryObject<Block> BLOOD_CRYSTAL = BLOCKS.register("blood_crystal", () -> withItem(new BloodCrystalBlock()));
+	public static final RegistryObject<Block> BLOOD_LEECH = BLOCKS.register("blood_leech", () -> withItem(new BloodLeechBlock()));
+	public static final RegistryObject<Block> CHARRED_DIRT = BLOCKS.register("charred_dirt", () -> withItem(new CharredDirtBlock()));
+	public static final RegistryObject<Block> BURNT_DIRT = BLOCKS.register("burnt_dirt", () -> withItem(new FireGroundBlock(BlockBehaviour.Properties.of(Material.GRASS, MaterialColor.COLOR_ORANGE)
+			.strength(0.6F).sound(SoundType.GRASS))));
+	public static final RegistryObject<Block> FIRE_RITUAL_STONE = BLOCKS.register("fire_ritual_stone", () -> withItem(new FireRitualStoneBlock(), noFire()));
+	public static final RegistryObject<Block> FIRE_ROOT = BLOCKS.register("fire_root", FireRootBlock::new);
+	
+	public static final RegistryObject<Block> BLOOD_RUNE_PORTAL = BLOCKS.register("blood_rune_portal", () -> createRunePortal(ModDimensions.BLOOD, () -> Runesword.BLOOD_RUNE, 170, 0, 0));
+	public static final RegistryObject<Block> FIRE_RUNE_PORTAL = BLOCKS.register("fire_rune_portal", () -> createRunePortal(ModDimensions.FIRE, () -> Runesword.FIRE_RUNE, 255, 100, 0));
+	
+	public static final RegistryObject<Block> SPARKSTONE = BLOCKS.register("sparkstone", () -> withItem(new Block(BlockBehaviour.Properties.of(Material.STONE, MaterialColor.STONE).requiresCorrectToolForDrops().strength(1.5f, 6))));
+	public static final RegistryObject<StairBlock> SPARKSTONE_STAIRS = BLOCKS.register("sparkstone_stairs", () -> withItem(new StairBlock(() -> SPARKSTONE.get().defaultBlockState(), BlockBehaviour.Properties.of(Material.STONE, MaterialColor.STONE).requiresCorrectToolForDrops().strength(1.5f, 6))));
+	public static final RegistryObject<SlabBlock> SPARKSTONE_SLAB = BLOCKS.register("sparkstone_slab", () -> withItem(new SlabBlock(BlockBehaviour.Properties.of(Material.STONE, MaterialColor.STONE).requiresCorrectToolForDrops().strength(1.5f, 6))));
+	public static final RegistryObject<WallBlock> SPARKSTONE_WALL = BLOCKS.register("sparkstone_wall", () -> withItem(new WallBlock(BlockBehaviour.Properties.of(Material.STONE, MaterialColor.STONE).requiresCorrectToolForDrops().strength(1.5f, 6))));
 
-	public static final LiquidBlock BLOOD = null;
-	public static final Block BLOOD_FLOWER = null;
-	public static final BloodPillarBlock BLOOD_PILLAR_LARGE = null;
-	public static final BloodPillarBlock BLOOD_PILLAR_MEDIUM = null;
-	public static final BloodPillarBlock BLOOD_PILLAR_SMALL = null;
-	public static final Block BLOOD_ROCK = null;
-	public static final Block HIDEABLE_BLOOD_ROCK = null;
-	public static final Block BLOOD_MOSS = null;
-	public static final Block BLOOD_CRYSTAL = null;
-	public static final Block BLOOD_LEECH = null;
-	public static final Block CHARRED_DIRT = null;
-	public static final Block BURNT_DIRT = null;
-	public static final Block FIRE_RITUAL_STONE = null;
-	public static final Block FIRE_ROOT = null;
+	public static final RegistryObject<Block> CHARRED_STONE = BLOCKS.register("charred_stone", () -> withItem(new Block(BlockBehaviour.Properties.of(Material.STONE, MaterialColor.COLOR_BLACK).requiresCorrectToolForDrops().strength(1.5f, 6))));
+	public static final RegistryObject<StairBlock> CHARRED_STONE_STAIRS = BLOCKS.register("charred_stone_stairs", () -> withItem(new StairBlock(() -> CHARRED_STONE.get().defaultBlockState(), BlockBehaviour.Properties.of(Material.STONE, MaterialColor.COLOR_BLACK).requiresCorrectToolForDrops().strength(1.5f, 6))));
+	public static final RegistryObject<SlabBlock> CHARRED_STONE_SLAB = BLOCKS.register("charred_stone_slab", () -> withItem(new SlabBlock(BlockBehaviour.Properties.of(Material.STONE, MaterialColor.COLOR_BLACK).requiresCorrectToolForDrops().strength(1.5f, 6))));
+	public static final RegistryObject<WallBlock> CHARRED_STONE_WALL = BLOCKS.register("charred_stone_wall", () -> withItem(new WallBlock(BlockBehaviour.Properties.of(Material.STONE, MaterialColor.COLOR_BLACK).requiresCorrectToolForDrops().strength(1.5f, 6))));
+	
+	public static StoneMaterial SPARKSTONE_MATERIAL = new StoneMaterial(SPARKSTONE, SPARKSTONE_STAIRS, SPARKSTONE_SLAB, SPARKSTONE_WALL);
+	public static StoneMaterial CHARRED_STONE_MATERIAL = new StoneMaterial(CHARRED_STONE, CHARRED_STONE_STAIRS, CHARRED_STONE_SLAB, CHARRED_STONE_WALL);
 
-	// Complex
-	public static StoneMaterial SPARKSTONE;
-	public static StoneMaterial CHARRED_STONE;
+	private static final Set<RunePortalBlock> RUNE_PORTALS = new HashSet<>();
 
-	public static final Block BLOOD_RUNE_PORTAL = null;
-	public static final Block FIRE_RUNE_PORTAL = null;
-
-	private static final List<RunePortalBlock> RUNE_PORTALS = new ArrayList<>();
-
-	@SubscribeEvent
-	public static void onRegisterBlock(RegistryEvent.Register<Block> event) {
-		IForgeRegistry<Block> registry = event.getRegistry();
-
-		registry.register(Init.setup(new BloodBlock(), "blood"));
-		registry.register(Init.setup(new BloodFlowerBlock(), "blood_flower"));
-		registry.register(withItem(Init.setup(new BloodPillarBlock(BloodPillarBlock.LARGE), "blood_pillar_large")));
-		registry.register(withItem(Init.setup(new BloodPillarBlock(BloodPillarBlock.MEDIUM), "blood_pillar_medium")));
-		registry.register(withItem(Init.setup(new BloodPillarBlock(BloodPillarBlock.SMALL), "blood_pillar_small")));
-		registry.register(
-				withItem(Init.setup(new Block(BlockBehaviour.Properties.copy(Blocks.COBBLESTONE)), "blood_rock")));
-		registry.register(
-				withItem(Init.setup(new Block(BlockBehaviour.Properties.copy(Blocks.COBBLESTONE).noOcclusion().noDrops()), "hideable_blood_rock")));
-		registry.register(
-				withItem(Init.setup(new Block(BlockBehaviour.Properties.copy(Blocks.COBBLESTONE)), "blood_moss")));
-		registry.register(withItem(Init.setup(new BloodCrystalBlock(), "blood_crystal")));
-		registry.register(withItem(Init.setup(new BloodLeechBlock(), "blood_leech")));
-		registry.register(withItem(Init.setup(new CharredDirtBlock(), "charred_dirt")));
-		registry.register(withItem(
-				Init.setup(new FireGroundBlock(BlockBehaviour.Properties.of(Material.GRASS, MaterialColor.COLOR_ORANGE)
-						.strength(0.6F).sound(SoundType.GRASS)), "burnt_dirt")));
-		registry.register(withItem(Init.setup(new FireRitualStoneBlock(), "fire_ritual_stone"), noFire()));
-		registry.register(Init.setup(new FireRootBlock(), "fire_root"));
-
-		createRunePortal(ModDimensions.BLOOD, () -> Runesword.BLOOD_RUNE, 170, 0, 0);
-		createRunePortal(ModDimensions.FIRE, () -> Runesword.FIRE_RUNE, 255, 100, 0);
-		registry.registerAll(getRunePortals().toArray(new RunePortalBlock[0]));
-
-		// Complex
-		SPARKSTONE = new StoneMaterial("sparkstone", MaterialColor.STONE);
-		CHARRED_STONE = new StoneMaterial("charred_stone", MaterialColor.COLOR_BLACK);
-		stoneMaterial(SPARKSTONE, registry);
-		stoneMaterial(CHARRED_STONE, registry);
-	}
-
-	private static void stoneMaterial(StoneMaterial material, IForgeRegistry<Block> registry) {
-		for (Block b : material.getBlocks())
-			registry.register(withItem(b));
-	}
-
-	private static Block withItem(Block block) {
+	private static <T extends Block> T withItem(T block) {
 		ModItems.addBlockWithItem(block);
 		return block;
 	}
 
-	private static Block withItem(Block block, Item.Properties properties) {
+	private static <T extends Block> T withItem(T block, Item.Properties properties) {
 		ModItems.addBlockWithItem(block, properties);
 		return block;
 	}
@@ -119,13 +87,12 @@ public class ModBlocks {
 
 	private static RunePortalBlock createRunePortal(ResourceKey<Level> dimension, Supplier<Item> rune, int red,
 			int green, int blue) {
-		RunePortalBlock portal = Init.setup(new RunePortalBlock(dimension, rune, red, green, blue),
-				dimension.location().getPath() + "_rune_portal");
+		var portal = new RunePortalBlock(dimension, rune, red, green, blue);
 		RUNE_PORTALS.add(portal);
 		return portal;
 	}
 
-	public static ImmutableList<RunePortalBlock> getRunePortals() {
-		return ImmutableList.copyOf(RUNE_PORTALS);
+	public static Set<RunePortalBlock> getRunePortals() {
+		return RUNE_PORTALS;
 	}
 }

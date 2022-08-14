@@ -66,9 +66,9 @@ public class BloodBatLairStructure extends StructureFeature<NoneFeatureConfigura
 
 	public static class Piece extends StructurePiece {
 
-		private static final BlockState ROCK = ModBlocks.BLOOD_ROCK.defaultBlockState();
-		private static final BlockState MOSS = ModBlocks.BLOOD_MOSS.defaultBlockState();
-		private static final BlockState CRYSTAL = ModBlocks.BLOOD_CRYSTAL.defaultBlockState();
+		private static final BlockState ROCK = ModBlocks.BLOOD_ROCK.get().defaultBlockState();
+		private static final BlockState MOSS = ModBlocks.BLOOD_MOSS.get().defaultBlockState();
+		private static final BlockState CRYSTAL = ModBlocks.BLOOD_CRYSTAL.get().defaultBlockState();
 		private static final BlockState AIR = Blocks.AIR.defaultBlockState();
 		private static final double STEP = Math.toRadians(1);
 		private static final int MAX_BASE_EXTEND_DOWN = 10;

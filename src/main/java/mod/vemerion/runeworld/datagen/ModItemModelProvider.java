@@ -26,7 +26,7 @@ public class ModItemModelProvider extends ItemModelProvider {
 		simpleItem(ModItems.BLOOD_PUDDING.get());
 		simpleItem(ModItems.MOSQUITO_EGGS.get());
 		simpleItem(ModItems.BLOOD_BAT_TOOTH.get());
-		simpleItem(ModBlocks.BLOOD_LEECH);
+		simpleItem(ModBlocks.BLOOD_LEECH.get());
 		simpleItem(ModItems.GUIDE.get());
 		simpleItem(ModItems.BLOOD_CRYSTALLITE.get());
 		simpleItem(ModItems.BLOOD_PEBBLE.get());
@@ -34,8 +34,8 @@ public class ModItemModelProvider extends ItemModelProvider {
 		simpleItem(ModItems.FIRE_HEART.get());
 		simpleItem(ModItems.FIRE_ROOT.get());
 		simpleItem(ModItems.BLOOD_CROWN.get());
-		simpleItem(ModBlocks.BLOOD_FLOWER, BLOCK_FOLDER);
-		simpleItem(ModBlocks.BLOOD_CRYSTAL, BLOCK_FOLDER);
+		simpleItem(ModBlocks.BLOOD_FLOWER.get(), BLOCK_FOLDER);
+		simpleItem(ModBlocks.BLOOD_CRYSTAL.get(), BLOCK_FOLDER);
 		dislocator(ModItems.BLOOD_DISLOCATOR.get());
 		dislocator(ModItems.FIRE_DISLOCATOR.get());
 		
@@ -45,8 +45,8 @@ public class ModItemModelProvider extends ItemModelProvider {
 		});
 		
 		// Complex
-		stoneMaterial(ModBlocks.SPARKSTONE);
-		stoneMaterial(ModBlocks.CHARRED_STONE);
+		stoneMaterial(ModBlocks.SPARKSTONE_MATERIAL);
+		stoneMaterial(ModBlocks.CHARRED_STONE_MATERIAL);
 	}
 
 	private void spawnEgg(Item item) {
@@ -75,6 +75,6 @@ public class ModItemModelProvider extends ItemModelProvider {
 	}
 	
 	private void stoneMaterial(StoneMaterial material) {
-		wallInventory(material.WALL.getRegistryName().getPath(), modLoc(ModelProvider.BLOCK_FOLDER + "/" + material.NAME));
+		wallInventory(material.wall().getRegistryName().getPath(), modLoc(ModelProvider.BLOCK_FOLDER + "/" + material.getName()));
 	}
 }
