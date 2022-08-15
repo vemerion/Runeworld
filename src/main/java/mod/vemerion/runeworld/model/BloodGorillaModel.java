@@ -29,7 +29,7 @@ public class BloodGorillaModel extends EntityModel<BloodGorillaEntity> {
 	public final ModelPart rightArm1;
 	public final ModelPart rightArm2;
 	public final ModelPart rightLeg1;
-	public final ModelPart righteg2; // TODO: Correct spelling
+	public final ModelPart rightLeg2;
 
 	public BloodGorillaModel(ModelPart root) {
 		this.body = root.getChild("body");
@@ -43,7 +43,7 @@ public class BloodGorillaModel extends EntityModel<BloodGorillaEntity> {
 		this.rightArm1 = body.getChild("rightArm1");
 		this.rightArm2 = rightArm1.getChild("rightArm2");
 		this.rightLeg1 = body.getChild("rightLeg1");
-		this.righteg2 = rightLeg1.getChild("righteg2");
+		this.rightLeg2 = rightLeg1.getChild("rightLeg2");
 	}
 
 	public static LayerDefinition createBodyLayer() {
@@ -102,7 +102,7 @@ public class BloodGorillaModel extends EntityModel<BloodGorillaEntity> {
 						.addBox(-6.0F, -5.0F, -6.0F, 9.0F, 16.0F, 9.0F, new CubeDeformation(0.0F)).mirror(false),
 				PartPose.offsetAndRotation(-8.0F, -7.0F, 18.5F, 0.0873F, 0.0F, 0.0F));
 
-		rightLeg1.addOrReplaceChild("righteg2",
+		rightLeg1.addOrReplaceChild("rightLeg2",
 				CubeListBuilder.create().texOffs(92, 41).mirror()
 						.addBox(-5.99F, -1.0F, -6.01F, 9.0F, 13.0F, 9.0F, new CubeDeformation(0.0F)).mirror(false),
 				PartPose.offsetAndRotation(0.0F, 11.0F, 0.0F, 0.0436F, 0.0F, 0.0F));
@@ -113,6 +113,19 @@ public class BloodGorillaModel extends EntityModel<BloodGorillaEntity> {
 	@Override
 	public void setupAnim(BloodGorillaEntity entity, float limbSwing, float limbSwingAmount, float ageInTicks,
 			float netHeadYaw, float headPitch) {
+		// Reset
+		this.head.z = -7.5f;
+		this.body.xRot = -0.13f;
+		this.body.y = 6;
+		this.leftArm1.yRot = 0;
+		this.leftArm2.xRot = 0.17f;
+		this.leftArm2.zRot = 0;
+		this.rightArm1.yRot = 0;
+		this.rightArm2.zRot = 0;
+		this.rightArm2.xRot = 0.17f;
+		this.leftLeg2.xRot = 0.04f;
+		this.rightLeg2.xRot = 0.04f;
+
 		// Head
 		this.head.xRot = Helper.toRad(headPitch);
 		this.head.yRot = Helper.toRad(netHeadYaw);
@@ -124,7 +137,6 @@ public class BloodGorillaModel extends EntityModel<BloodGorillaEntity> {
 		this.leftLeg1.xRot = Mth.cos(limbSwing * 0.7f + (float) Math.PI) * legRotFactor * limbSwingAmount + 0.09f;
 		this.rightArm1.xRot = Mth.cos(limbSwing * 0.7f + (float) Math.PI) * legRotFactor * limbSwingAmount;
 		this.leftArm1.xRot = Mth.cos(limbSwing * 0.7f) * legRotFactor * limbSwingAmount;
-		this.leftArm2.xRot = 0.17f;
 
 		// Raised hand
 		if (!entity.getPassengers().isEmpty()) {
@@ -138,7 +150,7 @@ public class BloodGorillaModel extends EntityModel<BloodGorillaEntity> {
 			this.head.yRot = Helper.toRad(0);
 			this.head.zRot = Helper.toRad(netHeadYaw);
 			this.head.z = -10f;
-			
+
 			this.body.xRot = Helper.toRad(-100);
 			this.leftArm1.xRot = Helper.toRad(30);
 			this.leftArm1.yRot = Helper.toRad(30);
@@ -146,29 +158,23 @@ public class BloodGorillaModel extends EntityModel<BloodGorillaEntity> {
 			this.rightArm1.xRot = Helper.toRad(30);
 			this.rightArm1.yRot = Helper.toRad(-30);
 			this.rightArm2.zRot = Helper.toRad(-20);
-		} else {
-			this.head.z = -7.5f;
-			this.body.xRot = -0.13f;
-			this.leftArm1.yRot = 0;
-			this.leftArm2.zRot = 0;
-			this.rightArm1.yRot = 0;
-			this.rightArm2.zRot = 0;
+
+		} else if (entity.isChestBeating()) { // Chest beating
+			this.body.xRot = Helper.toRad(-70);
+			this.head.xRot = Helper.toRad(50);
+			this.body.y = -11;
+			this.leftLeg1.xRot = Helper.toRad(50);
+			this.leftLeg2.xRot = Helper.toRad(10);
+			this.rightLeg1.xRot = Helper.toRad(50);
+			this.rightLeg2.xRot = Helper.toRad(10);
+			this.leftArm1.yRot = Helper.toRad(-70);
+			this.leftArm1.xRot = Mth.cos(ageInTicks * 0.5f) * Helper.toRad(-30) + Helper.toRad(-30);
+			this.leftArm2.xRot = Math.min(0, Mth.cos(ageInTicks * 0.5f)) * Helper.toRad(-70);
+			this.rightArm1.yRot = Helper.toRad(70);
+			this.rightArm1.xRot = Mth.cos(ageInTicks * 0.5f + 0.8f) * Helper.toRad(30) + Helper.toRad(-30);
+			this.rightArm2.xRot = Math.max(0, Mth.cos(ageInTicks * 0.5f + 0.8f)) * Helper.toRad(70);
 		}
 
-		// Chest beating
-//		this.body.xRot = Helper.toRad(-70);
-//		this.head.xRot = Helper.toRad(50);
-//		this.body.y = -11;
-//		this.leftLeg1.xRot = Helper.toRad(50);
-//		this.leftLeg2.xRot = Helper.toRad(10);
-//		this.rightLeg1.xRot = Helper.toRad(50);
-//		this.righteg2.xRot = Helper.toRad(10);
-//		this.leftArm1.yRot = Helper.toRad(-70);
-//		this.leftArm1.xRot = Mth.cos(ageInTicks * 0.5f) * Helper.toRad(-30) + Helper.toRad(-30);
-//		this.leftArm2.xRot = Math.min(0, Mth.cos(ageInTicks * 0.5f)) * Helper.toRad(-70);
-//		this.rightArm1.yRot = Helper.toRad(70);
-//		this.rightArm1.xRot = Mth.cos(ageInTicks * 0.5f + 0.8f) * Helper.toRad(30) + Helper.toRad(-30);
-//		this.rightArm2.xRot = Math.max(0, Mth.cos(ageInTicks * 0.5f + 0.8f)) * Helper.toRad(70);
 	}
 
 	@Override
