@@ -113,18 +113,46 @@ public class BloodGorillaModel extends EntityModel<BloodGorillaEntity> {
 	@Override
 	public void setupAnim(BloodGorillaEntity entity, float limbSwing, float limbSwingAmount, float ageInTicks,
 			float netHeadYaw, float headPitch) {
-//		head.yRot = Mth.cos(ageInTicks * 0.1f) * 0.7f;
+		// Head
+		this.head.xRot = Helper.toRad(headPitch);
+		this.head.yRot = Helper.toRad(netHeadYaw);
+		this.head.zRot = 0;
 
+		// Movement
 		float legRotFactor = 0.7f;
-		this.rightLeg1.xRot = Mth.cos(limbSwing * 0.7f) * legRotFactor * limbSwingAmount;
-		this.leftLeg1.xRot = Mth.cos(limbSwing * 0.7f + (float) Math.PI) * legRotFactor * limbSwingAmount;
+		this.rightLeg1.xRot = Mth.cos(limbSwing * 0.7f) * legRotFactor * limbSwingAmount + 0.09f;
+		this.leftLeg1.xRot = Mth.cos(limbSwing * 0.7f + (float) Math.PI) * legRotFactor * limbSwingAmount + 0.09f;
 		this.rightArm1.xRot = Mth.cos(limbSwing * 0.7f + (float) Math.PI) * legRotFactor * limbSwingAmount;
 		this.leftArm1.xRot = Mth.cos(limbSwing * 0.7f) * legRotFactor * limbSwingAmount;
 		this.leftArm2.xRot = 0.17f;
 
+		// Raised hand
 		if (!entity.getPassengers().isEmpty()) {
 			this.leftArm1.xRot = Helper.toRad(-130);
 			this.leftArm2.xRot = Helper.toRad(-40);
+		}
+
+		// Sitting
+		if (entity.isSitting()) {
+			this.head.xRot = Helper.toRad(70);
+			this.head.yRot = Helper.toRad(0);
+			this.head.zRot = Helper.toRad(netHeadYaw);
+			this.head.z = -10f;
+			
+			this.body.xRot = Helper.toRad(-100);
+			this.leftArm1.xRot = Helper.toRad(30);
+			this.leftArm1.yRot = Helper.toRad(30);
+			this.leftArm2.zRot = Helper.toRad(20);
+			this.rightArm1.xRot = Helper.toRad(30);
+			this.rightArm1.yRot = Helper.toRad(-30);
+			this.rightArm2.zRot = Helper.toRad(-20);
+		} else {
+			this.head.z = -7.5f;
+			this.body.xRot = -0.13f;
+			this.leftArm1.yRot = 0;
+			this.leftArm2.zRot = 0;
+			this.rightArm1.yRot = 0;
+			this.rightArm2.zRot = 0;
 		}
 
 		// Chest beating

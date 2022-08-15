@@ -4,15 +4,20 @@ import java.util.EnumSet;
 
 import mod.vemerion.runeworld.helpers.Helper;
 import mod.vemerion.runeworld.init.ModEntities;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.network.syncher.EntityDataAccessor;
+import net.minecraft.network.syncher.EntityDataSerializers;
+import net.minecraft.network.syncher.SynchedEntityData;
+import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.Mob;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
+import net.minecraft.world.entity.ai.control.BodyRotationControl;
 import net.minecraft.world.entity.ai.goal.Goal;
 import net.minecraft.world.entity.ai.goal.LookAtPlayerGoal;
-import net.minecraft.world.entity.ai.goal.RandomLookAroundGoal;
 import net.minecraft.world.entity.ai.goal.target.HurtByTargetGoal;
 import net.minecraft.world.entity.ai.goal.target.NearestAttackableTargetGoal;
 import net.minecraft.world.entity.monster.Monster;
@@ -22,6 +27,9 @@ import net.minecraft.world.item.Items;
 import net.minecraft.world.level.Level;
 
 public class BloodGorillaEntity extends Monster {
+
+	private static final EntityDataAccessor<Boolean> SITTING = SynchedEntityData.defineId(BloodGorillaEntity.class,
+			EntityDataSerializers.BOOLEAN);
 
 	public BloodGorillaEntity(EntityType<? extends BloodGorillaEntity> type, Level level) {
 		super(type, level);
@@ -51,12 +59,113 @@ public class BloodGorillaEntity extends Monster {
 	}
 
 	@Override
+	public void tick() {
+		super.tick();
+
+		if (level.isClientSide) {
+		}
+	}
+
+	public boolean isPushable() {
+		return !isSitting();
+	}
+
+	protected void doPush(Entity pEntity) {
+		if (!isSitting())
+			super.doPush(pEntity);
+	}
+
+	@Override
+	protected void defineSynchedData() {
+		super.defineSynchedData();
+		entityData.define(SITTING, true);
+	}
+
+	@Override
 	protected void registerGoals() {
-		goalSelector.addGoal(0, new ThrowMonkeyGoal(this));
-		goalSelector.addGoal(6, new LookAtPlayerGoal(this, Player.class, 8.0F));
-		goalSelector.addGoal(6, new RandomLookAroundGoal(this));
+		goalSelector.addGoal(0, new SitGoal(this));
+		goalSelector.addGoal(1, new ThrowMonkeyGoal(this));
+		goalSelector.addGoal(6, new LookAtGoal(this));
 		targetSelector.addGoal(1, new HurtByTargetGoal(this));
 		targetSelector.addGoal(2, new NearestAttackableTargetGoal<>(this, Player.class, true));
+	}
+
+	@Override
+	protected BodyRotationControl createBodyControl() {
+		return new BodyRotationControl(this) {
+			@Override
+			public void clientTick() {
+				if (!isSitting())
+					super.clientTick();
+			}
+		};
+	}
+
+	@Override
+	public void addAdditionalSaveData(CompoundTag pCompound) {
+		super.addAdditionalSaveData(pCompound);
+		pCompound.putBoolean("isSitting", isSitting());
+	}
+
+	@Override
+	public void readAdditionalSaveData(CompoundTag pCompound) {
+		super.readAdditionalSaveData(pCompound);
+		if (pCompound.contains("isSitting"))
+			setSitting(pCompound.getBoolean("isSitting"));
+	}
+
+	public boolean isSitting() {
+		return entityData.get(SITTING);
+	}
+
+	private void setSitting(boolean b) {
+		entityData.set(SITTING, b);
+	}
+
+	@Override
+	public boolean hurt(DamageSource pSource, float pAmount) {
+		if (super.hurt(pSource, pAmount)) {
+			setSitting(false);
+			return true;
+		}
+
+		return false;
+	}
+
+	private static class LookAtGoal extends LookAtPlayerGoal {
+
+		public LookAtGoal(Mob pMob) {
+			super(pMob, Player.class, 8);
+			this.lookAtContext.selector(e -> {
+				return e.position().subtract(pMob.position()).normalize().dot(pMob.getForward()) > 0.6;
+			});
+		}
+
+		@Override
+		public boolean canContinueToUse() {
+			return super.canContinueToUse() && mob.getTarget() != null && lookAtContext.test(mob, mob.getTarget());
+		}
+
+	}
+
+	private static class SitGoal extends Goal {
+
+		private BloodGorillaEntity gorilla;
+
+		private SitGoal(BloodGorillaEntity gorilla) {
+			this.gorilla = gorilla;
+			this.setFlags(EnumSet.of(Goal.Flag.MOVE, Goal.Flag.JUMP));
+		}
+
+		@Override
+		public boolean canUse() {
+			return gorilla.isSitting();
+		}
+
+		@Override
+		public void start() {
+			gorilla.getNavigation().stop();
+		}
 	}
 
 	private static class ThrowMonkeyGoal extends Goal {
