@@ -53,5 +53,25 @@
     "sounds": [
       "runeworld:throwing"
     ]
+  },
+  "blood_gorilla_ambient": {
+    "sounds": [
+      "runeworld:blood_gorilla_ambient"
+    ]
+  },
+  "blood_gorilla_hurt": {
+    "sounds": [
+      "runeworld:blood_gorilla_hurt"
+    ]
+  },
+  "blood_gorilla_death": {
+    "sounds": [
+      "runeworld:blood_gorilla_death"
+    ]
+  },
+  "blood_gorilla_grunt": {
+    "sounds": [
+      "runeworld:blood_gorilla_grunt"
+    ]
   }
 }

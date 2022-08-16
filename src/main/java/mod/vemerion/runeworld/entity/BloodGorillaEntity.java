@@ -4,10 +4,12 @@ import java.util.EnumSet;
 
 import mod.vemerion.runeworld.helpers.Helper;
 import mod.vemerion.runeworld.init.ModEntities;
+import mod.vemerion.runeworld.init.ModSounds;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
+import net.minecraft.sounds.SoundEvent;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
@@ -61,12 +63,20 @@ public class BloodGorillaEntity extends Monster {
 			pPassenger.setPos(position().add(direction.x, 2.8, direction.z));
 		}
 	}
+	
+	@Override
+	protected void addPassenger(Entity pPassenger) {
+		super.addPassenger(pPassenger);
+		positionRider(pPassenger);
+	}
 
 	@Override
 	public void tick() {
 		super.tick();
 
-		if (level.isClientSide) {
+		if (!level.isClientSide) {
+			if (isChestBeating() && tickCount % 7 == 0)
+				playSound(ModSounds.BLOOD_GORILLA_GRUNT.get(), getSoundVolume(), getVoicePitch());
 		}
 	}
 
@@ -134,6 +144,26 @@ public class BloodGorillaEntity extends Monster {
 
 	private void setChestBeating(boolean b) {
 		entityData.set(CHEST_BEATING, b);
+	}
+	
+	@Override
+	public int getAmbientSoundInterval() {
+		return super.getAmbientSoundInterval() * 2;
+	}
+
+	@Override
+	protected SoundEvent getAmbientSound() {
+		return isChestBeating() ? null : ModSounds.BLOOD_GORILLA_AMBIENT.get();
+	}
+
+	@Override
+	protected SoundEvent getHurtSound(DamageSource damageSourceIn) {
+		return ModSounds.BLOOD_GORILLA_HURT.get();
+	}
+
+	@Override
+	protected SoundEvent getDeathSound() {
+		return ModSounds.BLOOD_GORILLA_DEATH.get();
 	}
 
 	@Override
