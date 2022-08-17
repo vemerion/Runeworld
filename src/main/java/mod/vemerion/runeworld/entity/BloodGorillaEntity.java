@@ -42,8 +42,8 @@ public class BloodGorillaEntity extends Monster {
 	}
 
 	public static AttributeSupplier.Builder attributes() {
-		return Mob.createMobAttributes().add(Attributes.MAX_HEALTH, 20).add(Attributes.MOVEMENT_SPEED, 0.25)
-				.add(Attributes.FOLLOW_RANGE, 16).add(Attributes.ATTACK_DAMAGE, 3);
+		return Mob.createMobAttributes().add(Attributes.MAX_HEALTH, 200).add(Attributes.MOVEMENT_SPEED, 0.25)
+				.add(Attributes.FOLLOW_RANGE, 16).add(Attributes.ATTACK_DAMAGE, 8);
 	}
 
 	@Override
@@ -63,7 +63,7 @@ public class BloodGorillaEntity extends Monster {
 			pPassenger.setPos(position().add(direction.x, 2.8, direction.z));
 		}
 	}
-	
+
 	@Override
 	protected void addPassenger(Entity pPassenger) {
 		super.addPassenger(pPassenger);
@@ -145,7 +145,7 @@ public class BloodGorillaEntity extends Monster {
 	private void setChestBeating(boolean b) {
 		entityData.set(CHEST_BEATING, b);
 	}
-	
+
 	@Override
 	public int getAmbientSoundInterval() {
 		return super.getAmbientSoundInterval() * 2;
@@ -239,7 +239,8 @@ public class BloodGorillaEntity extends Monster {
 				for (var e : gorilla.level.getEntitiesOfClass(LivingEntity.class, gorilla.getBoundingBox().inflate(0.5),
 						e -> e != gorilla)) {
 					e.knockback(5, direction.x, direction.z);
-					e.hurt(DamageSource.mobAttack(gorilla).bypassArmor(), 8);
+					e.hurt(DamageSource.mobAttack(gorilla).bypassArmor(),
+							(float) gorilla.getAttributeValue(Attributes.ATTACK_DAMAGE));
 				}
 			} else if (duration > CHEST_BEATING_TIME + CHARGING_TIME) {
 				cooldown = 0;
