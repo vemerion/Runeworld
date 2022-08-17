@@ -54,7 +54,8 @@ public class TickRenderer extends MobRenderer<TickEntity, TickModel> {
 			}
 		}
 		matrixStackIn.translate(0, -0.5, 0);
-
+		var size = entity.getSize(partialTicks);
+		matrixStackIn.scale(size, size, size);
 		super.render(entity, entityYaw, partialTicks, matrixStackIn, bufferIn, packedLightIn);
 		matrixStackIn.popPose();
 	}
