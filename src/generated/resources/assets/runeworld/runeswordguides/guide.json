@@ -134,6 +134,18 @@
             {
               "type": "paragraph",
               "key": "guide.runeworld.blood_world.mobs.blood_monkey.text2"
+            },
+            {
+              "type": "header",
+              "key": "guide.runeworld.blood_world.mobs.blood_gorilla"
+            },
+            {
+              "type": "paragraph",
+              "key": "guide.runeworld.blood_world.mobs.blood_gorilla.text1"
+            },
+            {
+              "type": "paragraph",
+              "key": "guide.runeworld.blood_world.mobs.blood_gorilla.text2"
             }
           ],
           "children": []

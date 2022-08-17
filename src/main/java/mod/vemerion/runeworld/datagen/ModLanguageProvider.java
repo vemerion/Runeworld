@@ -59,7 +59,7 @@ public class ModLanguageProvider extends LanguageProvider {
 		add(ModEntities.FIRE_ELEMENTAL.get(), "Fire Elemental");
 		add(ModEntities.FIRE_ELEMENTAL_PROJECTILE.get(), "Fire Elemental Projectile");
 		add(ModEntities.BLOOD_GORILLA.get(), "Blood Gorilla");
-		
+
 		add("itemGroup." + Main.MODID, "Runeworld");
 		add("item." + Main.MODID + "." + ModItems.BLOOD_CROWN.getId().getPath() + ".description", "Majestic");
 
@@ -124,6 +124,11 @@ public class ModLanguageProvider extends LanguageProvider {
 				"The blood monkey is an annoying creature. They balance on top of large blood pillars, out of reach, and throw pebbles at you! And if you knock them down, they will come running at you!");
 		addGuide("blood_world.mobs.blood_monkey.text2",
 				"When killed, they drop their pesky blood pebbles. They can be used to skip stones. Fun!");
+		addGuide("blood_world.mobs.blood_gorilla", "Blood Gorilla");
+		addGuide("blood_world.mobs.blood_gorilla.text1",
+				"The blood gorilla is a menacing type of ape, towering above most other creatures. They reside on giant thrones found throughout the blood world, and will remain calm unless provoked. Adventurers should be prepared before picking a fight with a blood gorilla, since they are both very resilient and hard-hitting.");
+		addGuide("blood_world.mobs.blood_gorilla.text2",
+				"When killed, they drop their crown, which when worn, will allow the player to 'open their eyes'.");
 
 		addGuide("blood_world.blood_crystallite", "Blood Crystallite");
 		addGuide("blood_world.blood_crystallite.text1",
