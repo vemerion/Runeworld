@@ -82,7 +82,7 @@ public class TickModel extends EntityModel<TickEntity> {
 	@Override
 	public void setupAnim(TickEntity entity, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw,
 			float headPitch) {
-
+//		head.yRot = Helper.toRad(270);
 	}
 
 	@Override

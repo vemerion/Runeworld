@@ -29,4 +29,9 @@ public class TickEntity extends Monster {
 	public boolean onClimbable() {
 		return true;
 	}
+	
+	@Override
+	public void tick() {
+		super.tick();
+	}
 }
