@@ -44,6 +44,7 @@ public class ModItems {
 		public static final RegistryObject<Item> BLOOD_BAT_SPAWN_EGG = ITEMS.register("blood_bat_spawn_egg", () -> new ForgeSpawnEggItem(ModEntities.BLOOD_BAT, Helper.color(40, 40, 40, 255), Helper.color(255, 0, 0, 255), (new Item.Properties()).tab(CreativeModeTab.TAB_SEARCH)));
 		public static final RegistryObject<Item> BLOOD_MONKEY_SPAWN_EGG = ITEMS.register("blood_monkey_spawn_egg", () -> new ForgeSpawnEggItem(ModEntities.BLOOD_MONKEY, Helper.color(70, 30, 10, 255), Helper.color(215, 70, 70, 255), (new Item.Properties()).tab(CreativeModeTab.TAB_SEARCH)));
 		public static final RegistryObject<Item> BLOOD_GORILLA_SPAWN_EGG = ITEMS.register("blood_gorilla_spawn_egg", () -> new ForgeSpawnEggItem(ModEntities.BLOOD_GORILLA, 0x864141, 0x2a2a2a, (new Item.Properties()).tab(CreativeModeTab.TAB_SEARCH)));
+		public static final RegistryObject<Item> TICK_SPAWN_EGG = ITEMS.register("tick_spawn_egg", () -> new ForgeSpawnEggItem(ModEntities.TICK, 0xc9a160, 0x4d3d22, (new Item.Properties()).tab(CreativeModeTab.TAB_SEARCH)));
 
 		public static final RegistryObject<Item> BLOOD_BUCKET = ITEMS.register("blood_bucket", BloodBucketItem::new);
 		public static final RegistryObject<Item> BLOOD_PUDDING = ITEMS.register("blood_pudding", BloodPuddingItem::new);

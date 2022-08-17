@@ -35,6 +35,7 @@
   "entity.runeworld.fire_elemental_projectile": "Fire Elemental Projectile",
   "entity.runeworld.mosquito": "Mosquito",
   "entity.runeworld.mosquito_eggs": "Mosquito Eggs",
+  "entity.runeworld.tick": "Tick",
   "guide.runeworld.blood_world": "Blood World",
   "guide.runeworld.blood_world.blood": "Blood",
   "guide.runeworld.blood_world.blood.text1": "Instead of water, blood is the fluid that can be found on the surface of the blood world. In many ways, it functions similar to water, for example, you can scoop it up in a bucket. On the other hand, blood has a lot of unique mechanics, detailed below:",
@@ -91,5 +92,6 @@
   "item.runeworld.guide": "Runeworld Guide",
   "item.runeworld.mosquito_eggs": "Mosquito Eggs",
   "item.runeworld.mosquito_spawn_egg": "Mosquito Spawn Egg",
+  "item.runeworld.tick_spawn_egg": "Tick Spawn Egg",
   "itemGroup.runeworld": "Runeworld"
 }

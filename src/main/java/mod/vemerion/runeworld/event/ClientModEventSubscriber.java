@@ -21,6 +21,7 @@ import mod.vemerion.runeworld.model.BloodGorillaModel;
 import mod.vemerion.runeworld.model.BloodLeechModel;
 import mod.vemerion.runeworld.model.BloodMonkeyModel;
 import mod.vemerion.runeworld.model.MosquitoModel;
+import mod.vemerion.runeworld.model.TickModel;
 import mod.vemerion.runeworld.particle.BloodDropParticle;
 import mod.vemerion.runeworld.particle.BloodSplashParticle;
 import mod.vemerion.runeworld.particle.DrippingBloodProvider;
@@ -32,6 +33,7 @@ import mod.vemerion.runeworld.renderer.BloodMonkeyRenderer;
 import mod.vemerion.runeworld.renderer.FireElementalProjectileRenderer;
 import mod.vemerion.runeworld.renderer.FireElementalRenderer;
 import mod.vemerion.runeworld.renderer.MosquitoRenderer;
+import mod.vemerion.runeworld.renderer.TickRenderer;
 import mod.vemerion.runeworld.renderer.textureatlas.HideableTextureAtlasSprite;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.DimensionSpecialEffects;
@@ -102,6 +104,7 @@ public class ClientModEventSubscriber {
 		event.registerLayerDefinition(ModLayerLocations.MOSQUITO, MosquitoModel::createLayer);
 		event.registerLayerDefinition(ModLayerLocations.BLOOD_GORILLA, BloodGorillaModel::createBodyLayer);
 		event.registerLayerDefinition(ModLayerLocations.BLOOD_CROWN, BloodCrownModel::createBodyLayer);
+		event.registerLayerDefinition(ModLayerLocations.TICK, TickModel::createBodyLayer);
 	}
 	
 	@SubscribeEvent
@@ -116,6 +119,7 @@ public class ClientModEventSubscriber {
 		event.registerEntityRenderer(ModEntities.FIRE_ELEMENTAL.get(), FireElementalRenderer::new);
 		event.registerEntityRenderer(ModEntities.FIRE_ELEMENTAL_PROJECTILE.get(), FireElementalProjectileRenderer::new);
 		event.registerEntityRenderer(ModEntities.BLOOD_GORILLA.get(), BloodGorillaRenderer::new);
+		event.registerEntityRenderer(ModEntities.TICK.get(), TickRenderer::new);
 	}
 
 	private static void registerItemProperties() {

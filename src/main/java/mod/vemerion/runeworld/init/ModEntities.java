@@ -11,6 +11,7 @@ import mod.vemerion.runeworld.entity.FireElementalEntity;
 import mod.vemerion.runeworld.entity.FireElementalProjectileEntity;
 import mod.vemerion.runeworld.entity.MosquitoEggsEntity;
 import mod.vemerion.runeworld.entity.MosquitoEntity;
+import mod.vemerion.runeworld.entity.TickEntity;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.MobCategory;
 import net.minecraft.world.entity.SpawnPlacements;
@@ -65,6 +66,10 @@ public class ModEntities {
 	public static final RegistryObject<EntityType<BloodGorillaEntity>> BLOOD_GORILLA = ENTITIES
 			.register("blood_gorilla", () -> EntityType.Builder
 					.<BloodGorillaEntity>of(BloodGorillaEntity::new, MobCategory.MONSTER).sized(2.1f, 2.1f).build(""));
+	
+	public static final RegistryObject<EntityType<TickEntity>> TICK = ENTITIES
+			.register("tick", () -> EntityType.Builder
+					.<TickEntity>of(TickEntity::new, MobCategory.MONSTER).sized(0.6f, 0.6f).build(""));
 
 	@SubscribeEvent
 	public static void setupEntities(ParallelDispatchEvent event) {
@@ -78,6 +83,7 @@ public class ModEntities {
 		event.put(BLOOD_MONKEY.get(), BloodMonkeyEntity.attributes().build());
 		event.put(FIRE_ELEMENTAL.get(), FireElementalEntity.attributes().build());
 		event.put(BLOOD_GORILLA.get(), BloodGorillaEntity.attributes().build());
+		event.put(TICK.get(), TickEntity.attributes().build());
 	}
 
 	private static void setEntitySpawns() {

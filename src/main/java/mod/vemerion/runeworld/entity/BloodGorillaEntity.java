@@ -39,6 +39,7 @@ public class BloodGorillaEntity extends Monster {
 
 	public BloodGorillaEntity(EntityType<? extends BloodGorillaEntity> type, Level level) {
 		super(type, level);
+		this.xpReward = XP_REWARD_BOSS;
 	}
 
 	public static AttributeSupplier.Builder attributes() {

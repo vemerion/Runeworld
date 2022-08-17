@@ -60,6 +60,8 @@ public class ModEntityLootTables extends EntityLoot {
 						.add(LootItem.lootTableItem(ModItems.BLOOD_CROWN.get())))
 				.withPool(LootPool.lootPool().setRolls(ConstantValue.exactly(1))
 						.add(LootItem.lootTableItem(ModItems.BLOOD_CRYSTALLITE.get()))));
+		
+		add(ModEntities.TICK.get(), LootTable.lootTable());
 	}
 
 	@Override
