@@ -5,6 +5,7 @@ import com.mojang.math.Quaternion;
 import com.mojang.math.Vector3f;
 
 import mod.vemerion.runeworld.Main;
+import mod.vemerion.runeworld.entity.BloodMonkeyEntity;
 import mod.vemerion.runeworld.entity.TickEntity;
 import mod.vemerion.runeworld.helpers.Helper;
 import mod.vemerion.runeworld.init.ModLayerLocations;
@@ -43,14 +44,16 @@ public class TickRenderer extends MobRenderer<TickEntity, TickModel> {
 		matrixStackIn.pushPose();
 
 		matrixStackIn.translate(0, 0.5, 0);
-		if (isAdjacentSturdy(entity, Direction.UP)) {
-			matrixStackIn.mulPose(new Quaternion(180, 0, 0, true));
-		} else {
-			var rotDir = getHorizontalSturdy(entity);
-			if (rotDir != null) {
-				var rot = new Vector3f(Vec3.atLowerCornerOf(rotDir.getNormal()).yRot(Helper.toRad(90)))
-						.rotationDegrees(-90);
-				matrixStackIn.mulPose(rot);
+		if (!(entity.getVehicle() instanceof BloodMonkeyEntity)) {
+			if (isAdjacentSturdy(entity, Direction.UP)) {
+				matrixStackIn.mulPose(new Quaternion(180, 0, 0, true));
+			} else {
+				var rotDir = getHorizontalSturdy(entity);
+				if (rotDir != null) {
+					var rot = new Vector3f(Vec3.atLowerCornerOf(rotDir.getNormal()).yRot(Helper.toRad(90)))
+							.rotationDegrees(-90);
+					matrixStackIn.mulPose(rot);
+				}
 			}
 		}
 		matrixStackIn.translate(0, -0.5, 0);

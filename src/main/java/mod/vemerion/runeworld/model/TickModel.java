@@ -3,7 +3,9 @@ package mod.vemerion.runeworld.model;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
 
+import mod.vemerion.runeworld.entity.BloodMonkeyEntity;
 import mod.vemerion.runeworld.entity.TickEntity;
+import mod.vemerion.runeworld.helpers.Helper;
 import net.minecraft.client.model.EntityModel;
 import net.minecraft.client.model.geom.ModelPart;
 import net.minecraft.client.model.geom.PartPose;
@@ -83,6 +85,15 @@ public class TickModel extends EntityModel<TickEntity> {
 	public void setupAnim(TickEntity entity, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw,
 			float headPitch) {
 //		head.yRot = Helper.toRad(270);
+	}
+
+	@Override
+	public void prepareMobModel(TickEntity entity, float pLimbSwing, float pLimbSwingAmount, float pPartialTick) {
+		if (entity.getVehicle() instanceof BloodMonkeyEntity) {
+			head.xRot = Helper.toRad(entity.getViewXRot(pPartialTick));
+		} else {
+			head.xRot = 0;
+		}
 	}
 
 	@Override

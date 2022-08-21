@@ -98,7 +98,7 @@ public class TickEntity extends Monster {
 		entityData.set(GROWTH, value);
 	}
 
-	private void incGrowth(int value) {
+	public void incGrowth(int value) {
 		setGrowth((byte) (entityData.get(GROWTH) + value));
 		if (random.nextDouble() < getGrowth() / 10f) {
 			setExploding(true);
@@ -129,7 +129,6 @@ public class TickEntity extends Monster {
 	@Override
 	public void tick() {
 		super.tick();
-
 		if (isExploding()) {
 			explodeTimer++;
 			if (explodeTimer == EXPLODE_TIME && !level.isClientSide && isAlive()) {

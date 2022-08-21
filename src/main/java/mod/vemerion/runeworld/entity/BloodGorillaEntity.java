@@ -9,6 +9,7 @@ import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.Entity;
@@ -16,6 +17,7 @@ import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.Mob;
+import net.minecraft.world.entity.MobSpawnType;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.ai.control.BodyRotationControl;
@@ -28,6 +30,7 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.ServerLevelAccessor;
 import net.minecraft.world.phys.Vec3;
 
 public class BloodGorillaEntity extends Monster {
@@ -320,7 +323,8 @@ public class BloodGorillaEntity extends Monster {
 						monkey.setPos(gorilla.position());
 						monkey.setItemSlot(EquipmentSlot.MAINHAND, new ItemStack(
 								gorilla.random.nextDouble() < 0.2 ? Items.DIAMOND_SWORD : Items.IRON_SWORD));
-						gorilla.level.addFreshEntity(monkey);
+						monkey.finalizeSpawn((ServerLevelAccessor) gorilla.level, gorilla.level.getCurrentDifficultyAt(gorilla.blockPosition()), MobSpawnType.REINFORCEMENT, null, null);
+						((ServerLevel) gorilla.level).addFreshEntityWithPassengers(monkey);
 						monkey.startRiding(gorilla);
 					}
 				}
