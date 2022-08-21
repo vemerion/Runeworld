@@ -41,6 +41,9 @@ public class TickRenderer extends MobRenderer<TickEntity, TickModel> {
 	@Override
 	public void render(TickEntity entity, float entityYaw, float partialTicks, PoseStack matrixStackIn,
 			MultiBufferSource bufferIn, int packedLightIn) {
+		if (!entity.isAlive() && entity.isExploding())
+			return;
+		
 		matrixStackIn.pushPose();
 
 		matrixStackIn.translate(0, 0.5, 0);

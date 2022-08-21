@@ -2,10 +2,12 @@ package mod.vemerion.runeworld.entity;
 
 import mod.vemerion.runeworld.helpers.Helper;
 import mod.vemerion.runeworld.init.ModParticles;
+import mod.vemerion.runeworld.init.ModSounds;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
+import net.minecraft.sounds.SoundEvent;
 import net.minecraft.util.Mth;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.Entity;
@@ -19,8 +21,11 @@ import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.ai.goal.LookAtPlayerGoal;
 import net.minecraft.world.entity.ai.goal.MeleeAttackGoal;
 import net.minecraft.world.entity.ai.goal.RandomLookAroundGoal;
+import net.minecraft.world.entity.ai.goal.RandomStrollGoal;
 import net.minecraft.world.entity.ai.goal.target.HurtByTargetGoal;
 import net.minecraft.world.entity.ai.goal.target.NearestAttackableTargetGoal;
+import net.minecraft.world.entity.ai.navigation.PathNavigation;
+import net.minecraft.world.entity.ai.navigation.WallClimberNavigation;
 import net.minecraft.world.entity.monster.Monster;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
@@ -44,16 +49,26 @@ public class TickEntity extends Monster {
 	}
 
 	public static AttributeSupplier.Builder attributes() {
-		return Mob.createMobAttributes().add(Attributes.MAX_HEALTH, 20).add(Attributes.MOVEMENT_SPEED, 0.25)
+		return Mob.createMobAttributes().add(Attributes.MAX_HEALTH, 10).add(Attributes.MOVEMENT_SPEED, 0.25)
 				.add(Attributes.FOLLOW_RANGE, 16).add(Attributes.ATTACK_DAMAGE, 3);
 	}
 
 	protected void registerGoals() {
 		goalSelector.addGoal(0, new MeleeAttackGoal(this, 1, true));
+		goalSelector.addGoal(1, new RandomStrollGoal(this, 0.7));
 		goalSelector.addGoal(1, new LookAtPlayerGoal(this, Player.class, 8.0F));
 		goalSelector.addGoal(1, new RandomLookAroundGoal(this));
 		targetSelector.addGoal(0, new HurtByTargetGoal(this));
 		targetSelector.addGoal(1, new NearestAttackableTargetGoal<>(this, Player.class, true));
+	}
+	
+	@Override
+	protected SoundEvent getAmbientSound() {
+		return ModSounds.TICK.get();
+	}
+	
+	protected PathNavigation createNavigation(Level level) {
+		return new WallClimberNavigation(this, level);
 	}
 
 	@Override
@@ -89,7 +104,7 @@ public class TickEntity extends Monster {
 		entityData.set(EXPLODING, value);
 	}
 
-	private boolean isExploding() {
+	public boolean isExploding() {
 		return entityData.get(EXPLODING);
 	}
 
@@ -132,6 +147,7 @@ public class TickEntity extends Monster {
 		if (isExploding()) {
 			explodeTimer++;
 			if (explodeTimer == EXPLODE_TIME && !level.isClientSide && isAlive()) {
+				playSound(ModSounds.TICK_EXPLOSION.get(), getSoundVolume(), getVoicePitch());
 				kill();
 				for (var e : level.getEntitiesOfClass(LivingEntity.class, getBoundingBox().inflate(3))) {
 					e.hurt(DamageSource.mobAttack(this), (float) (getAttributeValue(Attributes.ATTACK_DAMAGE) * 3));

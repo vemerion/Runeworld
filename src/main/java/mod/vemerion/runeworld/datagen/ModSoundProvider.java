@@ -33,6 +33,8 @@ public class ModSoundProvider extends SoundDefinitionsProvider {
 		addSimple(ModSounds.BLOOD_GORILLA_HURT);
 		addSimple(ModSounds.BLOOD_GORILLA_DEATH);
 		addSimple(ModSounds.BLOOD_GORILLA_GRUNT);
+		addSimple(ModSounds.TICK);
+		addSimple(ModSounds.TICK_EXPLOSION);
 	}
 
 	private void addSimple(Supplier<SoundEvent> sound) {

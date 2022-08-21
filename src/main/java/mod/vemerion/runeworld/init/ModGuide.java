@@ -56,7 +56,9 @@ public class ModGuide {
 					.addText(transKey("blood_world.mobs.blood_monkey.text2"))
 					.addHeader(transKey("blood_world.mobs.blood_gorilla"))
 					.addText(transKey("blood_world.mobs.blood_gorilla.text1"))
-					.addText(transKey("blood_world.mobs.blood_gorilla.text2"));
+					.addText(transKey("blood_world.mobs.blood_gorilla.text2"))
+					.addHeader(transKey("blood_world.mobs.tick"))
+					.addText(transKey("blood_world.mobs.tick.text1"));
 			bloodCrystallite.addText(transKey("blood_world.blood_crystallite.text1"))
 					.addText(transKey("blood_world.blood_crystallite.text2"))
 					.addText(transKey("blood_world.blood_crystallite.text3"))

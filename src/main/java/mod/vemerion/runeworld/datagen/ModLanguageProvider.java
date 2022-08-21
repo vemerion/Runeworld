@@ -131,6 +131,9 @@ public class ModLanguageProvider extends LanguageProvider {
 				"The blood gorilla is a menacing type of ape, towering above most other creatures. They reside on giant thrones found throughout the blood world, and will remain calm unless provoked. Adventurers should be prepared before picking a fight with a blood gorilla, since they are both very resilient and hard-hitting.");
 		addGuide("blood_world.mobs.blood_gorilla.text2",
 				"When killed, they drop their crown, which when worn, will allow the player to 'open their eyes'.");
+		addGuide("blood_world.mobs.tick", "Tick");
+		addGuide("blood_world.mobs.tick.text1",
+				"The tick is a mob that can sometimes be found attached to blood monkeys. They leech blood when attacking (or when their host is hurt), and will grow in size. The bigger they grow, the more unstable they get, and the likelier they are to explode, damaging everyone around them!");
 
 		addGuide("blood_world.blood_crystallite", "Blood Crystallite");
 		addGuide("blood_world.blood_crystallite.text1",

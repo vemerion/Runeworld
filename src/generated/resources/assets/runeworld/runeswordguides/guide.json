@@ -146,6 +146,14 @@
             {
               "type": "paragraph",
               "key": "guide.runeworld.blood_world.mobs.blood_gorilla.text2"
+            },
+            {
+              "type": "header",
+              "key": "guide.runeworld.blood_world.mobs.tick"
+            },
+            {
+              "type": "paragraph",
+              "key": "guide.runeworld.blood_world.mobs.tick.text1"
             }
           ],
           "children": []

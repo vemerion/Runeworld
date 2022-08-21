@@ -14,14 +14,29 @@ import net.minecraft.client.model.geom.builders.CubeListBuilder;
 import net.minecraft.client.model.geom.builders.LayerDefinition;
 import net.minecraft.client.model.geom.builders.MeshDefinition;
 import net.minecraft.client.model.geom.builders.PartDefinition;
+import net.minecraft.util.Mth;
 
 // Made with Blockbench 4.3.1
 
 public class TickModel extends EntityModel<TickEntity> {
 	private final ModelPart head;
+	private final ModelPart leftLeg1;
+	private final ModelPart leftLeg2;
+	private final ModelPart leftLeg3;
+	private final ModelPart rightLeg1;
+	private final ModelPart rightLeg2;
+	private final ModelPart rightLeg3;
+
 
 	public TickModel(ModelPart root) {
 		this.head = root.getChild("head");
+		this.leftLeg1 = head.getChild("leftLeg1_r1");
+		this.leftLeg2 = head.getChild("leftLeg2_r1");
+		this.leftLeg3 = head.getChild("leftLeg3_r1");
+		this.rightLeg1 = head.getChild("rightLeg1_r1");
+		this.rightLeg2 = head.getChild("rightLeg2_r1");
+		this.rightLeg3 = head.getChild("rightLeg3_r1");
+
 	}
 
 	public static LayerDefinition createBodyLayer() {
@@ -84,7 +99,16 @@ public class TickModel extends EntityModel<TickEntity> {
 	@Override
 	public void setupAnim(TickEntity entity, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw,
 			float headPitch) {
-//		head.yRot = Helper.toRad(270);
+	      leftLeg1.xRot = Mth.cos(limbSwing * 1.2f) * 1.4F * limbSwingAmount;
+	      rightLeg2.xRot = Mth.cos(limbSwing * 1.2f) * 1.4F * limbSwingAmount;
+	      leftLeg3.xRot = Mth.cos(limbSwing * 1.2f) * 1.4F * limbSwingAmount;
+	      rightLeg1.xRot = Mth.cos(limbSwing * 1.2f + Mth.PI) * 1.4F * limbSwingAmount;
+	      leftLeg2.xRot = Mth.cos(limbSwing * 1.2f + Mth.PI) * 1.4F * limbSwingAmount;
+	      rightLeg3.xRot = Mth.cos(limbSwing * 1.2f + Mth.PI) * 1.4F * limbSwingAmount;
+	      
+	      if (!(entity.getVehicle() instanceof BloodMonkeyEntity)) {
+	    	  head.xRot = -Mth.sin(attackTime * Helper.toRad(360)) * Helper.toRad(30);
+	      }
 	}
 
 	@Override

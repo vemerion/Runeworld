@@ -73,5 +73,15 @@
     "sounds": [
       "runeworld:blood_gorilla_grunt"
     ]
+  },
+  "tick": {
+    "sounds": [
+      "runeworld:tick"
+    ]
+  },
+  "tick_explosion": {
+    "sounds": [
+      "runeworld:tick_explosion"
+    ]
   }
 }
