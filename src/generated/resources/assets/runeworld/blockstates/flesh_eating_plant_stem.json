@@ -1,0 +1,116 @@
+{
+  "multipart": [
+    {
+      "when": {
+        "facing": "down"
+      },
+      "apply": {
+        "model": "runeworld:block/flesh_eating_plant_stem",
+        "x": 180
+      }
+    },
+    {
+      "when": {
+        "attachment": "down"
+      },
+      "apply": {
+        "model": "runeworld:block/flesh_eating_plant_stem",
+        "x": 180
+      }
+    },
+    {
+      "when": {
+        "facing": "up"
+      },
+      "apply": {
+        "model": "runeworld:block/flesh_eating_plant_stem"
+      }
+    },
+    {
+      "when": {
+        "attachment": "up"
+      },
+      "apply": {
+        "model": "runeworld:block/flesh_eating_plant_stem"
+      }
+    },
+    {
+      "when": {
+        "facing": "north"
+      },
+      "apply": {
+        "model": "runeworld:block/flesh_eating_plant_stem",
+        "x": 90
+      }
+    },
+    {
+      "when": {
+        "attachment": "north"
+      },
+      "apply": {
+        "model": "runeworld:block/flesh_eating_plant_stem",
+        "x": 90
+      }
+    },
+    {
+      "when": {
+        "facing": "south"
+      },
+      "apply": {
+        "model": "runeworld:block/flesh_eating_plant_stem",
+        "x": 90,
+        "y": 180
+      }
+    },
+    {
+      "when": {
+        "attachment": "south"
+      },
+      "apply": {
+        "model": "runeworld:block/flesh_eating_plant_stem",
+        "x": 90,
+        "y": 180
+      }
+    },
+    {
+      "when": {
+        "facing": "west"
+      },
+      "apply": {
+        "model": "runeworld:block/flesh_eating_plant_stem",
+        "x": 90,
+        "y": 270
+      }
+    },
+    {
+      "when": {
+        "attachment": "west"
+      },
+      "apply": {
+        "model": "runeworld:block/flesh_eating_plant_stem",
+        "x": 90,
+        "y": 270
+      }
+    },
+    {
+      "when": {
+        "facing": "east"
+      },
+      "apply": {
+        "model": "runeworld:block/flesh_eating_plant_stem",
+        "x": 90,
+        "y": 90
+      }
+    },
+    {
+      "when": {
+        "attachment": "east"
+      },
+      "apply": {
+        "model": "runeworld:block/flesh_eating_plant_stem",
+        "x": 90,
+        "y": 90
+      }
+    }
+  ]
+}

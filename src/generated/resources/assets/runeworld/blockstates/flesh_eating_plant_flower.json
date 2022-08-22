@@ -1,0 +1,108 @@
+{
+  "variants": {
+    "base=false,facing=down,open=false": {
+      "model": "runeworld:block/flesh_eating_plant_flower_closed",
+      "x": 180
+    },
+    "base=true,facing=down,open=false": {
+      "model": "runeworld:block/flesh_eating_plant_flower_closed",
+      "x": 180
+    },
+    "base=false,facing=up,open=false": {
+      "model": "runeworld:block/flesh_eating_plant_flower_closed"
+    },
+    "base=true,facing=up,open=false": {
+      "model": "runeworld:block/flesh_eating_plant_flower_closed"
+    },
+    "base=false,facing=north,open=false": {
+      "model": "runeworld:block/flesh_eating_plant_flower_closed",
+      "x": 90
+    },
+    "base=true,facing=north,open=false": {
+      "model": "runeworld:block/flesh_eating_plant_flower_closed",
+      "x": 90
+    },
+    "base=false,facing=south,open=false": {
+      "model": "runeworld:block/flesh_eating_plant_flower_closed",
+      "x": 90,
+      "y": 180
+    },
+    "base=true,facing=south,open=false": {
+      "model": "runeworld:block/flesh_eating_plant_flower_closed",
+      "x": 90,
+      "y": 180
+    },
+    "base=false,facing=west,open=false": {
+      "model": "runeworld:block/flesh_eating_plant_flower_closed",
+      "x": 90,
+      "y": 270
+    },
+    "base=true,facing=west,open=false": {
+      "model": "runeworld:block/flesh_eating_plant_flower_closed",
+      "x": 90,
+      "y": 270
+    },
+    "base=false,facing=east,open=false": {
+      "model": "runeworld:block/flesh_eating_plant_flower_closed",
+      "x": 90,
+      "y": 90
+    },
+    "base=true,facing=east,open=false": {
+      "model": "runeworld:block/flesh_eating_plant_flower_closed",
+      "x": 90,
+      "y": 90
+    },
+    "base=false,facing=down,open=true": {
+      "model": "runeworld:block/flesh_eating_plant_flower_open",
+      "x": 180
+    },
+    "base=true,facing=down,open=true": {
+      "model": "runeworld:block/flesh_eating_plant_flower_open",
+      "x": 180
+    },
+    "base=false,facing=up,open=true": {
+      "model": "runeworld:block/flesh_eating_plant_flower_open"
+    },
+    "base=true,facing=up,open=true": {
+      "model": "runeworld:block/flesh_eating_plant_flower_open"
+    },
+    "base=false,facing=north,open=true": {
+      "model": "runeworld:block/flesh_eating_plant_flower_open",
+      "x": 90
+    },
+    "base=true,facing=north,open=true": {
+      "model": "runeworld:block/flesh_eating_plant_flower_open",
+      "x": 90
+    },
+    "base=false,facing=south,open=true": {
+      "model": "runeworld:block/flesh_eating_plant_flower_open",
+      "x": 90,
+      "y": 180
+    },
+    "base=true,facing=south,open=true": {
+      "model": "runeworld:block/flesh_eating_plant_flower_open",
+      "x": 90,
+      "y": 180
+    },
+    "base=false,facing=west,open=true": {
+      "model": "runeworld:block/flesh_eating_plant_flower_open",
+      "x": 90,
+      "y": 270
+    },
+    "base=true,facing=west,open=true": {
+      "model": "runeworld:block/flesh_eating_plant_flower_open",
+      "x": 90,
+      "y": 270
+    },
+    "base=false,facing=east,open=true": {
+      "model": "runeworld:block/flesh_eating_plant_flower_open",
+      "x": 90,
+      "y": 90
+    },
+    "base=true,facing=east,open=true": {
+      "model": "runeworld:block/flesh_eating_plant_flower_open",
+      "x": 90,
+      "y": 90
+    }
+  }
+}

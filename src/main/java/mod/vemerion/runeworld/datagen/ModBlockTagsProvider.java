@@ -19,6 +19,7 @@ public class ModBlockTagsProvider extends BlockTagsProvider {
 	protected void addTags() {
 		tag(BlockTags.MINEABLE_WITH_PICKAXE).add(ModBlocks.BLOOD_PILLAR_LARGE.get(), ModBlocks.BLOOD_PILLAR_MEDIUM.get(), ModBlocks.BLOOD_PILLAR_SMALL.get(), ModBlocks.BLOOD_MOSS.get(), ModBlocks.BLOOD_ROCK.get(), ModBlocks.HIDEABLE_BLOOD_ROCK.get(), ModBlocks.FIRE_RITUAL_STONE.get());
 		tag(BlockTags.MINEABLE_WITH_SHOVEL).add(ModBlocks.CHARRED_DIRT.get(), ModBlocks.BURNT_DIRT.get());
+		tag(BlockTags.CLIMBABLE).add(ModBlocks.FLESH_EATING_PLANT_STEM.get(), ModBlocks.FLESH_EATING_PLANT_FLOWER.get());
 		
 		stoneMaterial(ModBlocks.CHARRED_STONE_MATERIAL);
 		stoneMaterial(ModBlocks.SPARKSTONE_MATERIAL);

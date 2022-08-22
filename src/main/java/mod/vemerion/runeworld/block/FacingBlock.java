@@ -1,7 +1,5 @@
 package mod.vemerion.runeworld.block;
 
-import com.google.common.base.Preconditions;
-
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.world.item.context.BlockPlaceContext;
@@ -24,7 +22,6 @@ public class FacingBlock extends DirectionalBlock {
 
 	public FacingBlock(Properties builder, VoxelShape[] shapes) {
 		super(builder);
-		Preconditions.checkElementIndex(5, shapes.length);
 		this.shapes = shapes;
 		this.registerDefaultState(this.stateDefinition.any().setValue(FACING, Direction.UP));
 	}

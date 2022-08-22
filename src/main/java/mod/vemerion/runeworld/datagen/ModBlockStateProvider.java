@@ -3,18 +3,23 @@ package mod.vemerion.runeworld.datagen;
 import mod.vemerion.runeworld.Main;
 import mod.vemerion.runeworld.block.FireRitualStoneBlock;
 import mod.vemerion.runeworld.block.FireRootBlock;
+import mod.vemerion.runeworld.block.FleshEatingPlantBlock;
+import mod.vemerion.runeworld.block.FleshEatingPlantFlowerBlock;
 import mod.vemerion.runeworld.block.RunePortalBlock;
 import mod.vemerion.runeworld.block.complex.StoneMaterial;
 import mod.vemerion.runeworld.init.ModBlocks;
-import net.minecraft.world.level.block.Block;
-import net.minecraft.data.DataGenerator;
 import net.minecraft.core.Direction;
+import net.minecraft.core.Direction.Axis;
+import net.minecraft.data.DataGenerator;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.level.block.Block;
 import net.minecraftforge.client.model.generators.BlockModelBuilder;
 import net.minecraftforge.client.model.generators.BlockStateProvider;
 import net.minecraftforge.client.model.generators.ConfiguredModel;
+import net.minecraftforge.client.model.generators.ModelBuilder.FaceRotation;
 import net.minecraftforge.client.model.generators.ModelFile;
 import net.minecraftforge.client.model.generators.ModelProvider;
+import net.minecraftforge.client.model.generators.MultiPartBlockStateBuilder.PartBuilder;
 import net.minecraftforge.common.data.ExistingFileHelper;
 
 public class ModBlockStateProvider extends BlockStateProvider {
@@ -26,7 +31,8 @@ public class ModBlockStateProvider extends BlockStateProvider {
 	@Override
 	protected void registerStatesAndModels() {
 		simpleBlock(ModBlocks.BLOOD.get(), empty("blood").texture("particle", modLoc("block/blood_moss_top")));
-		simpleBlock(ModBlocks.BLOOD_LEECH.get(), empty("blood_leech").texture("particle", modLoc("entity/blood_leech")));
+		simpleBlock(ModBlocks.BLOOD_LEECH.get(),
+				empty("blood_leech").texture("particle", modLoc("entity/blood_leech")));
 		simpleBlock(ModBlocks.BLOOD_FLOWER.get(),
 				models().singleTexture("blood_flower", mcLoc("block/cross"), "cross", modLoc("block/blood_flower")));
 		directionalBlock(ModBlocks.BLOOD_CRYSTAL.get(),
@@ -44,6 +50,9 @@ public class ModBlockStateProvider extends BlockStateProvider {
 		fireRitualStone();
 		fireRoot();
 
+		fleshEatingPlantFlower();
+		fleshEatingPlantStem();
+
 		for (Block portal : ModBlocks.getRunePortals())
 			runePortal(portal);
 
@@ -51,6 +60,80 @@ public class ModBlockStateProvider extends BlockStateProvider {
 		stoneMaterial(ModBlocks.SPARKSTONE_MATERIAL);
 		stoneMaterial(ModBlocks.CHARRED_STONE_MATERIAL);
 		stoneMaterial(ModBlocks.BLOOD_ROCK_MATERIAL);
+	}
+
+	private void fleshEatingPlantFlower() {
+		var plant = ModBlocks.FLESH_EATING_PLANT_FLOWER.get();
+		var stem = ModBlocks.FLESH_EATING_PLANT_STEM.get();
+
+		var flowerOpen = flowerElements(22.5f, plant, "_open", stem);
+		var flowerClosed = flowerElements(0, plant, "_closed", stem);
+
+		directionalBlock(plant, state -> state.getValue(FleshEatingPlantFlowerBlock.OPEN) ? flowerOpen : flowerClosed);
+	}
+
+	private BlockModelBuilder flowerElements(float rotation, Block plant, String suffix, Block stem) {
+		var name = plant.getRegistryName().getPath();
+		var stemName = stem.getRegistryName().getPath();
+
+		return models().withExistingParent(name + suffix, mcLoc("block/block"))
+				.texture("side", modLoc("block/" + name + "_side")).texture("back", modLoc("block/" + name + "_back"))
+				.texture("inside", modLoc("block/" + name + "_inside")).texture("particle", "#side")
+				.texture("stem_side", modLoc("block/" + stemName + "_side"))
+				.texture("stem_end", modLoc("block/" + stemName + "_end"))
+				// Stem
+				.element().from(6, 0, 6).to(10, 4, 10).allFaces((direction, builder) -> {
+					if (direction == Direction.UP || direction == Direction.DOWN) {
+						builder.texture("#stem_end").uvs(6, 6, 10, 10).end();
+					} else {
+						builder.texture("#stem_side").uvs(6, 0, 10, 4).end();
+					}
+				}).end()
+				// Left part
+				.element().from(3, 4, 3).to(13, 14, 8).rotation().origin(8, 4, 8).axis(Axis.X).angle(-rotation).end()
+				.face(Direction.NORTH).texture("#back").uvs(3, 3, 13, 13).end().face(Direction.SOUTH).texture("#inside")
+				.uvs(3, 3, 13, 13).end().face(Direction.UP).texture("#side").uvs(5, 3, 10, 13)
+				.rotation(FaceRotation.CLOCKWISE_90).end().face(Direction.DOWN).texture("#side").uvs(5, 3, 10, 13)
+				.rotation(FaceRotation.COUNTERCLOCKWISE_90).end().face(Direction.EAST).texture("#side")
+				.uvs(5, 3, 10, 13).rotation(FaceRotation.UPSIDE_DOWN).end().face(Direction.WEST).texture("#side")
+				.uvs(5, 3, 10, 13).rotation(FaceRotation.ZERO).end().end()
+				// Right part
+				.element().from(3, 4, 8).to(13, 14, 13).rotation().origin(8, 4, 8).axis(Axis.X).angle(rotation).end()
+				.face(Direction.SOUTH).texture("#back").uvs(3, 3, 13, 13).end().face(Direction.NORTH).texture("#inside")
+				.uvs(3, 3, 13, 13).end().face(Direction.UP).texture("#side").uvs(5, 3, 10, 13)
+				.rotation(FaceRotation.COUNTERCLOCKWISE_90).end().face(Direction.DOWN).texture("#side")
+				.uvs(5, 3, 10, 13).rotation(FaceRotation.CLOCKWISE_90).end().face(Direction.EAST).texture("#side")
+				.uvs(5, 3, 10, 13).rotation(FaceRotation.ZERO).end().face(Direction.WEST).texture("#side")
+				.uvs(5, 3, 10, 13).rotation(FaceRotation.UPSIDE_DOWN).end().end();
+	}
+
+	private void fleshEatingPlantStem() {
+		var plant = ModBlocks.FLESH_EATING_PLANT_STEM.get();
+		var name = plant.getRegistryName().getPath();
+
+		var stem = models().withExistingParent(name, mcLoc("block/block"))
+				.texture("side", modLoc("block/" + name + "_side")).texture("end", modLoc("block/" + name + "_end"))
+				.texture("particle", "#side").element().from(6, 0, 6).to(10, 8, 10).allFaces((direction, builder) -> {
+					if (direction == Direction.UP || direction == Direction.DOWN) {
+						builder.texture("#end").uvs(6, 6, 10, 10).end();
+					} else {
+						builder.texture("#side").uvs(6, 0, 10, 8).end();
+					}
+				}).end();
+
+		for (var dir : Direction.values()) {
+			// facing: incoming dir
+			rotationPart(plant, stem, dir).condition(FleshEatingPlantBlock.FACING, dir).end();
+
+			// Attachment: outgoing dir
+			rotationPart(plant, stem, dir).condition(FleshEatingPlantBlock.ATTACHMENT, dir).end();
+		}
+	}
+
+	private PartBuilder rotationPart(Block block, ModelFile model, Direction dir) {
+		return getMultipartBuilder(block).part().modelFile(model)
+				.rotationX(dir == Direction.DOWN ? 180 : dir.getAxis().isHorizontal() ? 90 : 0)
+				.rotationY(dir.getAxis().isVertical() ? 0 : (((int) dir.toYRot()) + 180) % 360).addModel();
 	}
 
 	private void fireRoot() {

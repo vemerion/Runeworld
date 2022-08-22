@@ -1,0 +1,229 @@
+{
+  "parent": "minecraft:block/block",
+  "textures": {
+    "side": "runeworld:block/flesh_eating_plant_flower_side",
+    "back": "runeworld:block/flesh_eating_plant_flower_back",
+    "inside": "runeworld:block/flesh_eating_plant_flower_inside",
+    "particle": "#side",
+    "stem_side": "runeworld:block/flesh_eating_plant_stem_side",
+    "stem_end": "runeworld:block/flesh_eating_plant_stem_end"
+  },
+  "elements": [
+    {
+      "from": [
+        6,
+        0,
+        6
+      ],
+      "to": [
+        10,
+        4,
+        10
+      ],
+      "faces": {
+        "down": {
+          "texture": "#stem_end"
+        },
+        "up": {
+          "texture": "#stem_end"
+        },
+        "north": {
+          "texture": "#stem_side",
+          "uv": [
+            6.0,
+            0.0,
+            10.0,
+            4.0
+          ]
+        },
+        "south": {
+          "texture": "#stem_side",
+          "uv": [
+            6.0,
+            0.0,
+            10.0,
+            4.0
+          ]
+        },
+        "west": {
+          "texture": "#stem_side",
+          "uv": [
+            6.0,
+            0.0,
+            10.0,
+            4.0
+          ]
+        },
+        "east": {
+          "texture": "#stem_side",
+          "uv": [
+            6.0,
+            0.0,
+            10.0,
+            4.0
+          ]
+        }
+      }
+    },
+    {
+      "from": [
+        3,
+        4,
+        3
+      ],
+      "to": [
+        13,
+        14,
+        8
+      ],
+      "rotation": {
+        "origin": [
+          8,
+          4,
+          8
+        ],
+        "axis": "x",
+        "angle": -22.5
+      },
+      "faces": {
+        "down": {
+          "texture": "#side",
+          "uv": [
+            5.0,
+            3.0,
+            10.0,
+            13.0
+          ],
+          "rotation": 270
+        },
+        "up": {
+          "texture": "#side",
+          "uv": [
+            5.0,
+            3.0,
+            10.0,
+            13.0
+          ],
+          "rotation": 90
+        },
+        "north": {
+          "texture": "#back",
+          "uv": [
+            3.0,
+            3.0,
+            13.0,
+            13.0
+          ]
+        },
+        "south": {
+          "texture": "#inside",
+          "uv": [
+            3.0,
+            3.0,
+            13.0,
+            13.0
+          ]
+        },
+        "west": {
+          "texture": "#side",
+          "uv": [
+            5.0,
+            3.0,
+            10.0,
+            13.0
+          ]
+        },
+        "east": {
+          "texture": "#side",
+          "uv": [
+            5.0,
+            3.0,
+            10.0,
+            13.0
+          ],
+          "rotation": 180
+        }
+      }
+    },
+    {
+      "from": [
+        3,
+        4,
+        8
+      ],
+      "to": [
+        13,
+        14,
+        13
+      ],
+      "rotation": {
+        "origin": [
+          8,
+          4,
+          8
+        ],
+        "axis": "x",
+        "angle": 22.5
+      },
+      "faces": {
+        "down": {
+          "texture": "#side",
+          "uv": [
+            5.0,
+            3.0,
+            10.0,
+            13.0
+          ],
+          "rotation": 90
+        },
+        "up": {
+          "texture": "#side",
+          "uv": [
+            5.0,
+            3.0,
+            10.0,
+            13.0
+          ],
+          "rotation": 270
+        },
+        "north": {
+          "texture": "#inside",
+          "uv": [
+            3.0,
+            3.0,
+            13.0,
+            13.0
+          ]
+        },
+        "south": {
+          "texture": "#back",
+          "uv": [
+            3.0,
+            3.0,
+            13.0,
+            13.0
+          ]
+        },
+        "west": {
+          "texture": "#side",
+          "uv": [
+            5.0,
+            3.0,
+            10.0,
+            13.0
+          ],
+          "rotation": 180
+        },
+        "east": {
+          "texture": "#side",
+          "uv": [
+            5.0,
+            3.0,
+            10.0,
+            13.0
+          ]
+        }
+      }
+    }
+  ]
+}

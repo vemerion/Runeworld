@@ -5,19 +5,23 @@ import java.util.List;
 
 import mod.vemerion.runeworld.Main;
 import mod.vemerion.runeworld.block.FireRootBlock;
+import mod.vemerion.runeworld.block.FleshEatingPlantBlock;
 import mod.vemerion.runeworld.block.complex.StoneMaterial;
 import mod.vemerion.runeworld.init.ModBlocks;
 import mod.vemerion.runeworld.init.ModItems;
 import net.minecraft.advancements.critereon.StatePropertiesPredicate;
-import net.minecraft.world.level.block.Block;
 import net.minecraft.data.loot.BlockLoot;
 import net.minecraft.world.item.enchantment.Enchantments;
-import net.minecraft.world.level.storage.loot.entries.LootItem;
+import net.minecraft.world.level.ItemLike;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.state.properties.BooleanProperty;
 import net.minecraft.world.level.storage.loot.LootPool;
 import net.minecraft.world.level.storage.loot.LootTable;
+import net.minecraft.world.level.storage.loot.entries.LootItem;
+import net.minecraft.world.level.storage.loot.functions.ApplyBonusCount;
 import net.minecraft.world.level.storage.loot.predicates.LootItemBlockStatePropertyCondition;
 import net.minecraft.world.level.storage.loot.predicates.LootItemCondition;
-import net.minecraft.world.level.storage.loot.functions.ApplyBonusCount;
+import net.minecraft.world.level.storage.loot.providers.number.ConstantValue;
 import net.minecraftforge.registries.ForgeRegistries;
 
 public class ModBlockLootTables extends BlockLoot {
@@ -57,6 +61,16 @@ public class ModBlockLootTables extends BlockLoot {
 		stoneMaterial(ModBlocks.BLOOD_ROCK_MATERIAL);
 
 		fireRoot();
+		
+		addFromBooleanProp(ModBlocks.FLESH_EATING_PLANT_STEM.get(), ModBlocks.FLESH_EATING_PLANT_FLOWER.get(), FleshEatingPlantBlock.BASE, true);
+		addFromBooleanProp(ModBlocks.FLESH_EATING_PLANT_FLOWER.get(), ModBlocks.FLESH_EATING_PLANT_FLOWER.get(), FleshEatingPlantBlock.BASE, true);
+	}
+	
+	private void addFromBooleanProp(Block block, ItemLike loot, BooleanProperty property, boolean value) {
+		add(block, LootTable.lootTable().withPool(applyExplosionCondition(loot,
+				LootPool.lootPool().setRolls(ConstantValue.exactly(1)).add(LootItem.lootTableItem(loot)
+						.when(LootItemBlockStatePropertyCondition.hasBlockStateProperties(block).setProperties(
+								StatePropertiesPredicate.Builder.properties().hasProperty(property, value)))))));
 	}
 
 	private void fireRoot() {
