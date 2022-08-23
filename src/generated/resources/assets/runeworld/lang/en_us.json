@@ -28,6 +28,8 @@
   "block.runeworld.sparkstone_slab": "Sparkstone Slab",
   "block.runeworld.sparkstone_stairs": "Sparkstone Stairs",
   "block.runeworld.sparkstone_wall": "Sparkstone Wall",
+  "death.attack.runeworld.flesh_eating_plant": "%s was eaten by a plant",
+  "death.attack.runeworld.flesh_eating_plant.player": "%s was eaten by a plant whilst trying to escape %s",
   "effect.runeworld.blood_drained": "Blood Drained",
   "entity.runeworld.blood_bat": "Blood Bat",
   "entity.runeworld.blood_gorilla": "Blood Gorilla",

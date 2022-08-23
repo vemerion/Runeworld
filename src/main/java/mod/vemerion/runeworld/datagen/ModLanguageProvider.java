@@ -1,6 +1,8 @@
 package mod.vemerion.runeworld.datagen;
 
 import mod.vemerion.runeworld.Main;
+import mod.vemerion.runeworld.block.FleshEatingPlantBlock;
+import mod.vemerion.runeworld.block.FleshEatingPlantFlowerBlock;
 import mod.vemerion.runeworld.block.complex.StoneMaterial;
 import mod.vemerion.runeworld.init.ModBiomes;
 import mod.vemerion.runeworld.init.ModBlocks;
@@ -8,6 +10,7 @@ import mod.vemerion.runeworld.init.ModEffects;
 import mod.vemerion.runeworld.init.ModEntities;
 import mod.vemerion.runeworld.init.ModItems;
 import net.minecraft.data.DataGenerator;
+import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.level.biome.Biome;
 import net.minecraftforge.common.data.LanguageProvider;
 
@@ -63,6 +66,9 @@ public class ModLanguageProvider extends LanguageProvider {
 		add(ModEntities.FIRE_ELEMENTAL_PROJECTILE.get(), "Fire Elemental Projectile");
 		add(ModEntities.BLOOD_GORILLA.get(), "Blood Gorilla");
 		add(ModEntities.TICK.get(), "Tick");
+		
+		addDamageSource(FleshEatingPlantFlowerBlock.DAMAGE_SOURCE, "%s was eaten by a plant");
+		addDamageSourcePlayer(FleshEatingPlantFlowerBlock.DAMAGE_SOURCE, "%s was eaten by a plant whilst trying to escape %s");
 
 		add("itemGroup." + Main.MODID, "Runeworld");
 		add("item." + Main.MODID + "." + ModItems.BLOOD_CROWN.getId().getPath() + ".description", "Majestic");
@@ -74,6 +80,14 @@ public class ModLanguageProvider extends LanguageProvider {
 
 		// Guide
 		guide();
+	}
+	
+	private void addDamageSource(DamageSource source, String text) {
+		add("death.attack." + source.getMsgId(), text);
+	}
+	
+	private void addDamageSourcePlayer(DamageSource source, String text) {
+		add("death.attack." + source.getMsgId() + ".player", text);
 	}
 
 	private void stoneMaterial(StoneMaterial material, String name) {
