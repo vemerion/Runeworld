@@ -75,6 +75,7 @@ public class ClientModEventSubscriber {
 		ItemBlockRenderTypes.setRenderLayer(ModBlocks.FLESH_EATING_PLANT_STEM.get(), RenderType.cutout());
 		ItemBlockRenderTypes.setRenderLayer(ModBlocks.FLESH_EATING_PLANT_FLOWER.get(), RenderType.cutout());
 		ItemBlockRenderTypes.setRenderLayer(ModBlocks.HIDEABLE_BLOOD_ROCK.get(), RenderType.cutout());
+		ItemBlockRenderTypes.setRenderLayer(ModBlocks.HIDEABLE_BLOOD_ROCK_BRICKS.get(), RenderType.cutout());
 		ItemBlockRenderTypes.setRenderLayer(ModFluids.BLOOD.get(), RenderType.translucent());
 		ItemBlockRenderTypes.setRenderLayer(ModFluids.BLOOD_FLOWING.get(), RenderType.translucent());
 

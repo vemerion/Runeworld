@@ -38,6 +38,7 @@ public class ModBlockStateProvider extends BlockStateProvider {
 		directionalBlock(ModBlocks.BLOOD_CRYSTAL.get(),
 				models().singleTexture("blood_crystal", mcLoc("block/cross"), "cross", modLoc("block/blood_crystal")));
 		simpleBlockWithItem(ModBlocks.HIDEABLE_BLOOD_ROCK.get());
+		simpleBlockWithItem(ModBlocks.HIDEABLE_BLOOD_ROCK_BRICKS.get());
 		simpleBlockWithItem(ModBlocks.CHARRED_DIRT.get());
 		ResourceLocation bloodPillar = modLoc("block/blood_pillar");
 		pillar(ModBlocks.BLOOD_PILLAR_LARGE.get(), 12, bloodPillar, bloodPillar);

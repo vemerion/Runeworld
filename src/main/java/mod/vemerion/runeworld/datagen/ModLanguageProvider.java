@@ -27,6 +27,7 @@ public class ModLanguageProvider extends LanguageProvider {
 		add(ModBlocks.BLOOD_PILLAR_MEDIUM.get(), "Blood Pillar Medium");
 		add(ModBlocks.BLOOD_PILLAR_SMALL.get(), "Blood Pillar Small");
 		add(ModBlocks.HIDEABLE_BLOOD_ROCK.get(), "Hideable Blood Rock");
+		add(ModBlocks.HIDEABLE_BLOOD_ROCK_BRICKS.get(), "Hideable Blood Rock Bricks");
 		add(ModBlocks.BLOOD_MOSS.get(), "Blood Moss");
 		add(ModBlocks.BLOOD_CRYSTAL.get(), "Blood Crystal");
 		add(ModBlocks.BLOOD_LEECH.get(), "Blood Leech");
