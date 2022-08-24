@@ -6,6 +6,7 @@ import mod.vemerion.runeworld.block.BloodPillarBlock;
 import mod.vemerion.runeworld.entity.BloodMonkeyEntity;
 import mod.vemerion.runeworld.init.ModEntities;
 import net.minecraft.core.BlockPos;
+import net.minecraft.world.entity.MobSpawnType;
 import net.minecraft.world.level.WorldGenLevel;
 import net.minecraft.world.level.levelgen.feature.Feature;
 import net.minecraft.world.level.levelgen.feature.FeaturePlaceContext;
@@ -45,7 +46,8 @@ public class BloodPillarClusterFeature extends Feature<NoneFeatureConfiguration>
 		BloodMonkeyEntity monkey = ModEntities.BLOOD_MONKEY.get().create(reader.getLevel());
 		Vec3 position = Vec3.atBottomCenterOf(p);
 		monkey.absMoveTo(position.x, position.y, position.z, rand.nextFloat() * 360, 0);
-		reader.addFreshEntity(monkey);
+		monkey.finalizeSpawn(reader, reader.getCurrentDifficultyAt(p), MobSpawnType.STRUCTURE, null, null);
+		reader.addFreshEntityWithPassengers(monkey);
 	}
 
 	private BlockPos findGround(WorldGenLevel reader, BlockPos p) {

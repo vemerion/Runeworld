@@ -86,12 +86,6 @@ public class BloodMonkeyEntity extends Monster implements RangedAttackMob {
 	}
 
 	@Override
-	protected void addPassenger(Entity pPassenger) {
-		super.addPassenger(pPassenger);
-		positionRider(pPassenger);
-	}
-
-	@Override
 	public SpawnGroupData finalizeSpawn(ServerLevelAccessor pLevel, DifficultyInstance pDifficulty,
 			MobSpawnType pReason, SpawnGroupData pSpawnData, CompoundTag pDataTag) {
 

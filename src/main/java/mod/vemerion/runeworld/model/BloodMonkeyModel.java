@@ -152,7 +152,7 @@ public class BloodMonkeyModel extends EntityModel<BloodMonkeyEntity> implements 
 	@Override
 	public void translateToHand(HumanoidArm pSide, PoseStack pPoseStack) {
 		getArmParts(pSide).forEach(p -> p.translateAndRotate(pPoseStack));
-		pPoseStack.translate(0.05, -0.05, 0);
+		pPoseStack.translate((pSide == HumanoidArm.RIGHT ? 1 : -1) * 0.05, -0.05, 0);
 		pPoseStack.scale(0.75f, 0.75f, 0.75f);
 	}
 
