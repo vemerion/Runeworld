@@ -78,7 +78,8 @@ public class ModBlockStateProvider extends BlockStateProvider {
 
 		return models().withExistingParent(name + suffix, mcLoc("block/block"))
 				.texture("side", modLoc("block/" + name + "_side")).texture("back", modLoc("block/" + name + "_back"))
-				.texture("inside", modLoc("block/" + name + "_inside")).texture("particle", "#side")
+				.texture("inside", modLoc("block/" + name + "_inside"))
+				.texture("bottom", modLoc("block/" + name + "_bottom")).texture("particle", "#side")
 				.texture("stem_side", modLoc("block/" + stemName + "_side"))
 				.texture("stem_end", modLoc("block/" + stemName + "_end"))
 				// Stem
@@ -93,7 +94,7 @@ public class ModBlockStateProvider extends BlockStateProvider {
 				.element().from(3, 4, 3).to(13, 14, 8).rotation().origin(8, 4, 8).axis(Axis.X).angle(-rotation).end()
 				.face(Direction.NORTH).texture("#back").uvs(3, 3, 13, 13).end().face(Direction.SOUTH).texture("#inside")
 				.uvs(3, 3, 13, 13).end().face(Direction.UP).texture("#side").uvs(5, 3, 10, 13)
-				.rotation(FaceRotation.CLOCKWISE_90).end().face(Direction.DOWN).texture("#side").uvs(5, 3, 10, 13)
+				.rotation(FaceRotation.CLOCKWISE_90).end().face(Direction.DOWN).texture("#bottom").uvs(5, 3, 10, 13)
 				.rotation(FaceRotation.COUNTERCLOCKWISE_90).end().face(Direction.EAST).texture("#side")
 				.uvs(5, 3, 10, 13).rotation(FaceRotation.UPSIDE_DOWN).end().face(Direction.WEST).texture("#side")
 				.uvs(5, 3, 10, 13).rotation(FaceRotation.ZERO).end().end()
@@ -101,7 +102,7 @@ public class ModBlockStateProvider extends BlockStateProvider {
 				.element().from(3, 4, 8).to(13, 14, 13).rotation().origin(8, 4, 8).axis(Axis.X).angle(rotation).end()
 				.face(Direction.SOUTH).texture("#back").uvs(3, 3, 13, 13).end().face(Direction.NORTH).texture("#inside")
 				.uvs(3, 3, 13, 13).end().face(Direction.UP).texture("#side").uvs(5, 3, 10, 13)
-				.rotation(FaceRotation.COUNTERCLOCKWISE_90).end().face(Direction.DOWN).texture("#side")
+				.rotation(FaceRotation.COUNTERCLOCKWISE_90).end().face(Direction.DOWN).texture("#bottom")
 				.uvs(5, 3, 10, 13).rotation(FaceRotation.CLOCKWISE_90).end().face(Direction.EAST).texture("#side")
 				.uvs(5, 3, 10, 13).rotation(FaceRotation.ZERO).end().face(Direction.WEST).texture("#side")
 				.uvs(5, 3, 10, 13).rotation(FaceRotation.UPSIDE_DOWN).end().end();

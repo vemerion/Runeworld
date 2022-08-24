@@ -28,4 +28,5 @@ public class ModSounds {
 	public static final RegistryObject<SoundEvent> BLOOD_GORILLA_GRUNT = SOUNDS.register("blood_gorilla_grunt", () -> new SoundEvent(new ResourceLocation(Main.MODID, "blood_gorilla_grunt")));
 	public static final RegistryObject<SoundEvent> TICK = SOUNDS.register("tick", () -> new SoundEvent(new ResourceLocation(Main.MODID, "tick")));
 	public static final RegistryObject<SoundEvent> TICK_EXPLOSION = SOUNDS.register("tick_explosion", () -> new SoundEvent(new ResourceLocation(Main.MODID, "tick_explosion")));
+	public static final RegistryObject<SoundEvent> CHOMP = SOUNDS.register("chomp", () -> new SoundEvent(new ResourceLocation(Main.MODID, "chomp")));
 }

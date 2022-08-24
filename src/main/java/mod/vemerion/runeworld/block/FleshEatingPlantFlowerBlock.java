@@ -5,7 +5,9 @@ import java.util.Collections;
 import java.util.Random;
 
 import mod.vemerion.runeworld.Main;
+import mod.vemerion.runeworld.helpers.Helper;
 import mod.vemerion.runeworld.init.ModBlocks;
+import mod.vemerion.runeworld.init.ModSounds;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.server.level.ServerLevel;
@@ -44,9 +46,14 @@ public class FleshEatingPlantFlowerBlock extends FleshEatingPlantBlock {
 
 	@Override
 	public void entityInside(BlockState pState, Level pLevel, BlockPos pPos, Entity pEntity) {
-		if (pLevel.isClientSide || !pState.getValue(OPEN) || !(pEntity instanceof LivingEntity))
+		if (!pState.getValue(OPEN) || !(pEntity instanceof LivingEntity))
 			return;
-
+		
+		pEntity.playSound(ModSounds.CHOMP.get(), 1, Helper.soundPitch(pLevel.random));
+		
+		if (pLevel.isClientSide)
+			return;
+		
 		pEntity.hurt(DAMAGE_SOURCE, DAMAGE);
 		pLevel.setBlock(pPos, pState.setValue(OPEN, false), 2);
 

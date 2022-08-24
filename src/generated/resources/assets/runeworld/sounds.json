@@ -83,5 +83,10 @@
     "sounds": [
       "runeworld:tick_explosion"
     ]
+  },
+  "chomp": {
+    "sounds": [
+      "runeworld:chomp"
+    ]
   }
 }

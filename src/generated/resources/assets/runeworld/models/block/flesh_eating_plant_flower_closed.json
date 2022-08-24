@@ -4,6 +4,7 @@
     "side": "runeworld:block/flesh_eating_plant_flower_side",
     "back": "runeworld:block/flesh_eating_plant_flower_back",
     "inside": "runeworld:block/flesh_eating_plant_flower_inside",
+    "bottom": "runeworld:block/flesh_eating_plant_flower_bottom",
     "particle": "#side",
     "stem_side": "runeworld:block/flesh_eating_plant_stem_side",
     "stem_end": "runeworld:block/flesh_eating_plant_stem_end"
@@ -87,7 +88,7 @@
       },
       "faces": {
         "down": {
-          "texture": "#side",
+          "texture": "#bottom",
           "uv": [
             5.0,
             3.0,
@@ -167,7 +168,7 @@
       },
       "faces": {
         "down": {
-          "texture": "#side",
+          "texture": "#bottom",
           "uv": [
             5.0,
             3.0,
