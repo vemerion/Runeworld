@@ -20,5 +20,6 @@ public class ModBiomeTagsProvider extends BiomeTagsProvider {
 		tag(ModConfiguredStructures.HAS_BLOOD_BAT_LAIR).add(ModBiomes.BLOOD_PLAINS);
 		tag(ModConfiguredStructures.HAS_FIRE_RITUAL).add(ModBiomes.FIRE_PLAINS);
 		tag(ModConfiguredStructures.HAS_BLOOD_GORILLA_THRONE).add(ModBiomes.BLOOD_PLAINS);
+		tag(ModConfiguredStructures.HAS_BLOOD_MONKEY_TUNNELS).add(ModBiomes.BLOOD_PLAINS);
 	}
 }

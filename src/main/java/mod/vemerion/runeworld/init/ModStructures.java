@@ -3,9 +3,11 @@ package mod.vemerion.runeworld.init;
 import mod.vemerion.runeworld.Main;
 import mod.vemerion.runeworld.structure.BloodBatLairStructure;
 import mod.vemerion.runeworld.structure.BloodGorillaThroneStructure;
+import mod.vemerion.runeworld.structure.BloodMonkeyTunnelsStructure;
 import mod.vemerion.runeworld.structure.FireRitualStructure;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.level.levelgen.feature.StructureFeature;
+import net.minecraft.world.level.levelgen.feature.configurations.JigsawConfiguration;
 import net.minecraft.world.level.levelgen.feature.configurations.NoneFeatureConfiguration;
 import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
@@ -23,6 +25,7 @@ public class ModStructures {
 	public static StructureFeature<NoneFeatureConfiguration> BLOOD_BAT_LAIR;
 	public static StructureFeature<NoneFeatureConfiguration> FIRE_RITUAL;
 	public static StructureFeature<NoneFeatureConfiguration> BLOOD_GORILLA_THRONE;
+	public static StructureFeature<JigsawConfiguration> BLOOD_MONKEY_TUNNELS;
 
 	public static void init() {
 		if (init) {
@@ -31,6 +34,7 @@ public class ModStructures {
 			BLOOD_BAT_LAIR = new BloodBatLairStructure(NoneFeatureConfiguration.CODEC);
 			FIRE_RITUAL = new FireRitualStructure(NoneFeatureConfiguration.CODEC);
 			BLOOD_GORILLA_THRONE = new BloodGorillaThroneStructure(NoneFeatureConfiguration.CODEC);
+			BLOOD_MONKEY_TUNNELS = new BloodMonkeyTunnelsStructure(JigsawConfiguration.CODEC);
 
 			ModConfiguredStructures.register();
 			
@@ -47,6 +51,7 @@ public class ModStructures {
 		reg.register(Init.setup(BLOOD_BAT_LAIR, new ResourceLocation(Main.MODID, "blood_bat_lair")));
 		reg.register(Init.setup(FIRE_RITUAL, new ResourceLocation(Main.MODID, "fire_ritual")));
 		reg.register(Init.setup(BLOOD_GORILLA_THRONE, new ResourceLocation(Main.MODID, "blood_gorilla_throne")));
+		reg.register(Init.setup(BLOOD_MONKEY_TUNNELS, new ResourceLocation(Main.MODID, "blood_monkey_tunnels")));
 
 		ModStructurePieces.register();
 	}
