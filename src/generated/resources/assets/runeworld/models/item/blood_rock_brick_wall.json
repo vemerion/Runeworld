@@ -1,0 +1,6 @@
+{
+  "parent": "minecraft:block/wall_inventory",
+  "textures": {
+    "wall": "runeworld:block/blood_rock_bricks"
+  }
+}

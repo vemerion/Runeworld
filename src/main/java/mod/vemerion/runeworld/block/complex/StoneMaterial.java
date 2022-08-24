@@ -12,13 +12,20 @@ public class StoneMaterial {
 	private final RegistryObject<StairBlock> stair;
 	private final RegistryObject<SlabBlock> slab;
 	private final RegistryObject<WallBlock> wall;
+	private final RegistryObject<Block> base; // Ex: Stone is base of stone bricks
 
 	public StoneMaterial(RegistryObject<Block> block, RegistryObject<StairBlock> stair, RegistryObject<SlabBlock> slab,
 			RegistryObject<WallBlock> wall) {
+		this(block, stair, slab, wall, null);
+	}
+
+	public StoneMaterial(RegistryObject<Block> block, RegistryObject<StairBlock> stair, RegistryObject<SlabBlock> slab,
+			RegistryObject<WallBlock> wall, RegistryObject<Block> base) {
 		this.block = block;
 		this.stair = stair;
 		this.slab = slab;
 		this.wall = wall;
+		this.base = base;
 	}
 
 	public Block block() {
@@ -35,6 +42,14 @@ public class StoneMaterial {
 
 	public WallBlock wall() {
 		return wall.get();
+	}
+	
+	public boolean hasBase() {
+		return base != null;
+	}
+	
+	public Block base() {
+		return base.get();
 	}
 
 	public String getName() {

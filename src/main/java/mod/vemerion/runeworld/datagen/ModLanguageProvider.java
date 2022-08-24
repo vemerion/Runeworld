@@ -1,7 +1,6 @@
 package mod.vemerion.runeworld.datagen;
 
 import mod.vemerion.runeworld.Main;
-import mod.vemerion.runeworld.block.FleshEatingPlantBlock;
 import mod.vemerion.runeworld.block.FleshEatingPlantFlowerBlock;
 import mod.vemerion.runeworld.block.complex.StoneMaterial;
 import mod.vemerion.runeworld.init.ModBiomes;
@@ -77,6 +76,7 @@ public class ModLanguageProvider extends LanguageProvider {
 		stoneMaterial(ModBlocks.SPARKSTONE_MATERIAL, "Sparkstone");
 		stoneMaterial(ModBlocks.CHARRED_STONE_MATERIAL, "Charred Stone");
 		stoneMaterial(ModBlocks.BLOOD_ROCK_MATERIAL, "Blood Rock");
+		stoneMaterial(ModBlocks.BLOOD_ROCK_BRICKS_MATERIAL, "Blood Rock Bricks");
 
 		// Guide
 		guide();

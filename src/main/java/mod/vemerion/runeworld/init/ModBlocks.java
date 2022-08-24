@@ -60,6 +60,11 @@ public class ModBlocks {
 	public static final RegistryObject<StairBlock> BLOOD_ROCK_STAIRS = BLOCKS.register("blood_rock_stairs", () -> withItem(new StairBlock(() -> BLOOD_ROCK.get().defaultBlockState(), BlockBehaviour.Properties.copy(Blocks.COBBLESTONE))));
 	public static final RegistryObject<SlabBlock> BLOOD_ROCK_SLAB = BLOCKS.register("blood_rock_slab", () -> withItem(new SlabBlock(BlockBehaviour.Properties.copy(Blocks.COBBLESTONE))));
 	public static final RegistryObject<WallBlock> BLOOD_ROCK_WALL = BLOCKS.register("blood_rock_wall", () -> withItem(new WallBlock(BlockBehaviour.Properties.copy(Blocks.COBBLESTONE))));
+	
+	public static final RegistryObject<Block> BLOOD_ROCK_BRICKS = BLOCKS.register("blood_rock_bricks", () -> withItem(new Block(BlockBehaviour.Properties.of(Material.STONE, MaterialColor.COLOR_BLACK).requiresCorrectToolForDrops().strength(1.5f, 6))));
+	public static final RegistryObject<StairBlock> BLOOD_ROCK_BRICK_STAIRS = BLOCKS.register("blood_rock_brick_stairs", () -> withItem(new StairBlock(() -> BLOOD_ROCK_BRICKS.get().defaultBlockState(), BlockBehaviour.Properties.of(Material.STONE, MaterialColor.COLOR_BLACK).requiresCorrectToolForDrops().strength(1.5f, 6))));
+	public static final RegistryObject<SlabBlock> BLOOD_ROCK_BRICK_SLAB = BLOCKS.register("blood_rock_brick_slab", () -> withItem(new SlabBlock(BlockBehaviour.Properties.of(Material.STONE, MaterialColor.COLOR_BLACK).requiresCorrectToolForDrops().strength(1.5f, 6))));
+	public static final RegistryObject<WallBlock> BLOOD_ROCK_BRICK_WALL = BLOCKS.register("blood_rock_brick_wall", () -> withItem(new WallBlock(BlockBehaviour.Properties.of(Material.STONE, MaterialColor.COLOR_BLACK).requiresCorrectToolForDrops().strength(1.5f, 6))));
 
 	
 	public static final RegistryObject<Block> SPARKSTONE = BLOCKS.register("sparkstone", () -> withItem(new Block(BlockBehaviour.Properties.of(Material.STONE, MaterialColor.STONE).requiresCorrectToolForDrops().strength(1.5f, 6))));
@@ -75,6 +80,7 @@ public class ModBlocks {
 	public static StoneMaterial SPARKSTONE_MATERIAL = new StoneMaterial(SPARKSTONE, SPARKSTONE_STAIRS, SPARKSTONE_SLAB, SPARKSTONE_WALL);
 	public static StoneMaterial CHARRED_STONE_MATERIAL = new StoneMaterial(CHARRED_STONE, CHARRED_STONE_STAIRS, CHARRED_STONE_SLAB, CHARRED_STONE_WALL);
 	public static StoneMaterial BLOOD_ROCK_MATERIAL = new StoneMaterial(BLOOD_ROCK, BLOOD_ROCK_STAIRS, BLOOD_ROCK_SLAB, BLOOD_ROCK_WALL);
+	public static StoneMaterial BLOOD_ROCK_BRICKS_MATERIAL = new StoneMaterial(BLOOD_ROCK_BRICKS, BLOOD_ROCK_BRICK_STAIRS, BLOOD_ROCK_BRICK_SLAB, BLOOD_ROCK_BRICK_WALL, BLOOD_ROCK);
 	
 	public static final RegistryObject<Block> BLOOD_RUNE_PORTAL = BLOCKS.register("blood_rune_portal", () -> createRunePortal(ModDimensions.BLOOD, () -> Runesword.BLOOD_RUNE, 170, 0, 0));
 	public static final RegistryObject<Block> FIRE_RUNE_PORTAL = BLOCKS.register("fire_rune_portal", () -> createRunePortal(ModDimensions.FIRE, () -> Runesword.FIRE_RUNE, 255, 100, 0));

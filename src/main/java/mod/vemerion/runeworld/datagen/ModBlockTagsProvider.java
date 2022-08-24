@@ -24,6 +24,7 @@ public class ModBlockTagsProvider extends BlockTagsProvider {
 		stoneMaterial(ModBlocks.CHARRED_STONE_MATERIAL);
 		stoneMaterial(ModBlocks.SPARKSTONE_MATERIAL);
 		stoneMaterial(ModBlocks.BLOOD_ROCK_MATERIAL);
+		stoneMaterial(ModBlocks.BLOOD_ROCK_BRICKS_MATERIAL);
 	}
 	
 	private void stoneMaterial(StoneMaterial material) {

@@ -60,6 +60,7 @@ public class ModBlockStateProvider extends BlockStateProvider {
 		stoneMaterial(ModBlocks.SPARKSTONE_MATERIAL);
 		stoneMaterial(ModBlocks.CHARRED_STONE_MATERIAL);
 		stoneMaterial(ModBlocks.BLOOD_ROCK_MATERIAL);
+		stoneMaterial(ModBlocks.BLOOD_ROCK_BRICKS_MATERIAL);
 	}
 
 	private void fleshEatingPlantFlower() {

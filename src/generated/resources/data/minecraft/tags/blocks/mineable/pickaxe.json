@@ -19,6 +19,10 @@
     "runeworld:blood_rock",
     "runeworld:blood_rock_stairs",
     "runeworld:blood_rock_slab",
-    "runeworld:blood_rock_wall"
+    "runeworld:blood_rock_wall",
+    "runeworld:blood_rock_bricks",
+    "runeworld:blood_rock_brick_stairs",
+    "runeworld:blood_rock_brick_slab",
+    "runeworld:blood_rock_brick_wall"
   ]
 }

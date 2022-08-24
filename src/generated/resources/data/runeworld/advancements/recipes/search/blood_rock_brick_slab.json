@@ -1,0 +1,34 @@
+{
+  "parent": "minecraft:recipes/root",
+  "rewards": {
+    "recipes": [
+      "runeworld:blood_rock_brick_slab"
+    ]
+  },
+  "criteria": {
+    "has_blood_rock_bricks": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "runeworld:blood_rock_bricks"
+            ]
+          }
+        ]
+      }
+    },
+    "has_the_recipe": {
+      "trigger": "minecraft:recipe_unlocked",
+      "conditions": {
+        "recipe": "runeworld:blood_rock_brick_slab"
+      }
+    }
+  },
+  "requirements": [
+    [
+      "has_blood_rock_bricks",
+      "has_the_recipe"
+    ]
+  ]
+}
