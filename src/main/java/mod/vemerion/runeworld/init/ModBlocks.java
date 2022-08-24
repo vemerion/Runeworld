@@ -49,7 +49,7 @@ public class ModBlocks {
 	public static final RegistryObject<Block> BLOOD_CRYSTAL = BLOCKS.register("blood_crystal", () -> withItem(new BloodCrystalBlock()));
 	public static final RegistryObject<Block> BLOOD_LEECH = BLOCKS.register("blood_leech", () -> withItem(new BloodLeechBlock()));
 	public static final RegistryObject<Block> FLESH_EATING_PLANT_STEM = BLOCKS.register("flesh_eating_plant_stem", () -> new FleshEatingPlantStemBlock());
-	public static final RegistryObject<Block> FLESH_EATING_PLANT_FLOWER = BLOCKS.register("flesh_eating_plant_flower", () -> withItem(new FleshEatingPlantFlowerBlock()));
+	public static final RegistryObject<FleshEatingPlantFlowerBlock> FLESH_EATING_PLANT_FLOWER = BLOCKS.register("flesh_eating_plant_flower", () -> withItem(new FleshEatingPlantFlowerBlock()));
 	public static final RegistryObject<Block> CHARRED_DIRT = BLOCKS.register("charred_dirt", () -> withItem(new CharredDirtBlock()));
 	public static final RegistryObject<Block> BURNT_DIRT = BLOCKS.register("burnt_dirt", () -> withItem(new FireGroundBlock(BlockBehaviour.Properties.of(Material.GRASS, MaterialColor.COLOR_ORANGE)
 			.strength(0.6F).sound(SoundType.GRASS))));

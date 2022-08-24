@@ -51,10 +51,10 @@ public class FleshEatingPlantFlowerBlock extends FleshEatingPlantBlock {
 		pLevel.setBlock(pPos, pState.setValue(OPEN, false), 2);
 
 		if (!pEntity.isAlive())
-			expand(pState, pLevel, pPos, pEntity);
+			expand(pState, pLevel, pPos);
 	}
 
-	private void expand(BlockState pState, Level pLevel, BlockPos pPos, Entity pEntity) {
+	public BlockPos expand(BlockState state, LevelAccessor pLevel, BlockPos pPos) {
 		var directions = new ArrayList<Direction>();
 		for (var direction : Direction.values()) {
 			directions.add(direction);
@@ -66,9 +66,18 @@ public class FleshEatingPlantFlowerBlock extends FleshEatingPlantBlock {
 			if (pLevel.getBlockState(adjacent).isAir()) {
 				pLevel.setBlock(adjacent,
 						ModBlocks.FLESH_EATING_PLANT_FLOWER.get().defaultBlockState().setValue(FACING, direction), 2);
-				return;
+
+				// Convert flower block to stem
+				pLevel.setBlock(pPos,
+						ModBlocks.FLESH_EATING_PLANT_STEM.get().defaultBlockState()
+								.setValue(FACING, state.getValue(FACING)).setValue(ATTACHMENT, direction.getOpposite())
+								.setValue(BASE, state.getValue(BASE)),
+						2);
+				return adjacent;
 			}
 		}
+
+		return pPos;
 	}
 
 	@Override

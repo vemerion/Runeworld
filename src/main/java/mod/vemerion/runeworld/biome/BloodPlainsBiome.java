@@ -30,6 +30,8 @@ public class BloodPlainsBiome extends ModBiome {
 		generation.addFeature(GenerationStep.Decoration.SURFACE_STRUCTURES, ModPlacedFeatures.BLOOD_BAT_TREE);
 		generation.addFeature(GenerationStep.Decoration.SURFACE_STRUCTURES,
 				ModPlacedFeatures.BLOOD_RUNE_PORTAL_FEATURE);
+		generation.addFeature(GenerationStep.Decoration.SURFACE_STRUCTURES,
+				ModPlacedFeatures.FLESH_EATING_PLANT);
 
 		mobs.addSpawn(MobCategory.MONSTER, new SpawnerData(ModEntities.MOSQUITO.get(), 10, 1, 2));
 

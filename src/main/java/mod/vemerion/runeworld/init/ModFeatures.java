@@ -6,6 +6,7 @@ import mod.vemerion.runeworld.feature.BloodPillarClusterFeature;
 import mod.vemerion.runeworld.feature.BloodPillarSingleFeature;
 import mod.vemerion.runeworld.feature.BloodPoolFeature;
 import mod.vemerion.runeworld.feature.BloodRockPatchFeature;
+import mod.vemerion.runeworld.feature.FleshEatingPlantFeature;
 import mod.vemerion.runeworld.feature.RunePortalFeature;
 import net.minecraft.world.level.levelgen.feature.Feature;
 import net.minecraft.world.level.levelgen.feature.configurations.BlockStateConfiguration;
@@ -28,6 +29,7 @@ public class ModFeatures {
 	public static Feature<NoneFeatureConfiguration> BLOOD_ROCK_PATCH;
 	public static Feature<NoneFeatureConfiguration> BLOOD_BAT_TREE;
 	public static Feature<BlockStateConfiguration> RUNE_PORTAL_FEATURE;
+	public static Feature<NoneFeatureConfiguration> FLESH_EATING_PLANT;
 
 	public static void init() {
 		if (init) {
@@ -39,6 +41,7 @@ public class ModFeatures {
 			BLOOD_ROCK_PATCH = new BloodRockPatchFeature();
 			BLOOD_BAT_TREE = new BloodBatTreeFeature();
 			RUNE_PORTAL_FEATURE = new RunePortalFeature();
+			FLESH_EATING_PLANT = new FleshEatingPlantFeature();
 			
 			ModConfiguredFeatures.onRegisterConfiguredFeature();
 		}
@@ -54,6 +57,7 @@ public class ModFeatures {
 		event.getRegistry().register(Init.setup(BLOOD_ROCK_PATCH, "blood_rock_patch"));
 		event.getRegistry().register(Init.setup(BLOOD_BAT_TREE, "blood_bat_tree"));
 		event.getRegistry().register(Init.setup(RUNE_PORTAL_FEATURE, "rune_portal_feature"));
+		event.getRegistry().register(Init.setup(FLESH_EATING_PLANT, "flesh_eating_plant"));
 
 	}
 }
