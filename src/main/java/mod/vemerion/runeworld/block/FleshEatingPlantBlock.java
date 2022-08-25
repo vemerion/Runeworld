@@ -22,7 +22,7 @@ public abstract class FleshEatingPlantBlock extends FacingBlock {
 	public static final BooleanProperty BASE = BooleanProperty.create("base");
 
 	public FleshEatingPlantBlock(VoxelShape[] shapes) {
-		super(BlockBehaviour.Properties.of(Material.BAMBOO, MaterialColor.PLANT).strength(1, 1).sound(SoundType.BAMBOO)
+		super(BlockBehaviour.Properties.of(Material.BAMBOO, MaterialColor.COLOR_LIGHT_GRAY).strength(1, 1).sound(SoundType.BAMBOO)
 				.noOcclusion().dynamicShape(), shapes);
 		registerDefaultState(defaultBlockState().setValue(BASE, false));
 	}

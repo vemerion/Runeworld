@@ -22,7 +22,6 @@ import net.minecraft.resources.ResourceKey;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
-import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.LiquidBlock;
 import net.minecraft.world.level.block.SlabBlock;
 import net.minecraft.world.level.block.SoundType;
@@ -44,9 +43,9 @@ public class ModBlocks {
 	public static final RegistryObject<BloodPillarBlock> BLOOD_PILLAR_LARGE = BLOCKS.register("blood_pillar_large", () -> withItem(new BloodPillarBlock(BloodPillarBlock.LARGE)));
 	public static final RegistryObject<BloodPillarBlock> BLOOD_PILLAR_MEDIUM = BLOCKS.register("blood_pillar_medium", () -> withItem(new BloodPillarBlock(BloodPillarBlock.MEDIUM)));
 	public static final RegistryObject<BloodPillarBlock> BLOOD_PILLAR_SMALL = BLOCKS.register("blood_pillar_small", () -> withItem(new BloodPillarBlock(BloodPillarBlock.SMALL)));
-	public static final RegistryObject<Block> HIDEABLE_BLOOD_ROCK = BLOCKS.register("hideable_blood_rock", () -> withItem(new Block(BlockBehaviour.Properties.of(Material.STONE, MaterialColor.COLOR_BLACK).requiresCorrectToolForDrops().strength(1.5f, 6).noOcclusion().noDrops())));
-	public static final RegistryObject<Block> HIDEABLE_BLOOD_ROCK_BRICKS = BLOCKS.register("hideable_blood_rock_bricks", () -> withItem(new Block(BlockBehaviour.Properties.copy(Blocks.COBBLESTONE).noOcclusion().noDrops())));
-	public static final RegistryObject<Block> BLOOD_MOSS = BLOCKS.register("blood_moss", () -> withItem(new Block(BlockBehaviour.Properties.copy(Blocks.COBBLESTONE))));
+	public static final RegistryObject<Block> HIDEABLE_BLOOD_ROCK = BLOCKS.register("hideable_blood_rock", () -> withItem(new Block(BlockBehaviour.Properties.of(Material.STONE, MaterialColor.TERRACOTTA_BLUE).requiresCorrectToolForDrops().strength(1.5f, 6).noOcclusion().noDrops())));
+	public static final RegistryObject<Block> HIDEABLE_BLOOD_ROCK_BRICKS = BLOCKS.register("hideable_blood_rock_bricks", () -> withItem(new Block(BlockBehaviour.Properties.of(Material.STONE, MaterialColor.TERRACOTTA_BLUE).strength(2, 6).noOcclusion().noDrops())));
+	public static final RegistryObject<Block> BLOOD_MOSS = BLOCKS.register("blood_moss", () -> withItem(new Block(BlockBehaviour.Properties.of(Material.STONE, MaterialColor.COLOR_RED).requiresCorrectToolForDrops().strength(2, 6))));
 	public static final RegistryObject<Block> BLOOD_CRYSTAL = BLOCKS.register("blood_crystal", () -> withItem(new BloodCrystalBlock()));
 	public static final RegistryObject<Block> BLOOD_LEECH = BLOCKS.register("blood_leech", () -> withItem(new BloodLeechBlock()));
 	public static final RegistryObject<Block> FLESH_EATING_PLANT_STEM = BLOCKS.register("flesh_eating_plant_stem", () -> new FleshEatingPlantStemBlock());
@@ -57,15 +56,15 @@ public class ModBlocks {
 	public static final RegistryObject<Block> FIRE_RITUAL_STONE = BLOCKS.register("fire_ritual_stone", () -> withItem(new FireRitualStoneBlock(), noFire()));
 	public static final RegistryObject<Block> FIRE_ROOT = BLOCKS.register("fire_root", FireRootBlock::new);
 	
-	public static final RegistryObject<Block> BLOOD_ROCK = BLOCKS.register("blood_rock", () -> withItem(new Block(BlockBehaviour.Properties.copy(Blocks.COBBLESTONE))));
-	public static final RegistryObject<StairBlock> BLOOD_ROCK_STAIRS = BLOCKS.register("blood_rock_stairs", () -> withItem(new StairBlock(() -> BLOOD_ROCK.get().defaultBlockState(), BlockBehaviour.Properties.copy(Blocks.COBBLESTONE))));
-	public static final RegistryObject<SlabBlock> BLOOD_ROCK_SLAB = BLOCKS.register("blood_rock_slab", () -> withItem(new SlabBlock(BlockBehaviour.Properties.copy(Blocks.COBBLESTONE))));
-	public static final RegistryObject<WallBlock> BLOOD_ROCK_WALL = BLOCKS.register("blood_rock_wall", () -> withItem(new WallBlock(BlockBehaviour.Properties.copy(Blocks.COBBLESTONE))));
+	public static final RegistryObject<Block> BLOOD_ROCK = BLOCKS.register("blood_rock", () -> withItem(new Block(BlockBehaviour.Properties.of(Material.STONE, MaterialColor.TERRACOTTA_BLUE).requiresCorrectToolForDrops().strength(2, 6))));
+	public static final RegistryObject<StairBlock> BLOOD_ROCK_STAIRS = BLOCKS.register("blood_rock_stairs", () -> withItem(new StairBlock(() -> BLOOD_ROCK.get().defaultBlockState(), BlockBehaviour.Properties.of(Material.STONE, MaterialColor.TERRACOTTA_BLUE).requiresCorrectToolForDrops().strength(2, 6))));
+	public static final RegistryObject<SlabBlock> BLOOD_ROCK_SLAB = BLOCKS.register("blood_rock_slab", () -> withItem(new SlabBlock(BlockBehaviour.Properties.of(Material.STONE, MaterialColor.TERRACOTTA_BLUE).requiresCorrectToolForDrops().strength(2, 6))));
+	public static final RegistryObject<WallBlock> BLOOD_ROCK_WALL = BLOCKS.register("blood_rock_wall", () -> withItem(new WallBlock(BlockBehaviour.Properties.of(Material.STONE, MaterialColor.TERRACOTTA_BLUE).requiresCorrectToolForDrops().strength(2, 6))));
 	
-	public static final RegistryObject<Block> BLOOD_ROCK_BRICKS = BLOCKS.register("blood_rock_bricks", () -> withItem(new Block(BlockBehaviour.Properties.of(Material.STONE, MaterialColor.COLOR_BLACK).requiresCorrectToolForDrops().strength(1.5f, 6))));
-	public static final RegistryObject<StairBlock> BLOOD_ROCK_BRICK_STAIRS = BLOCKS.register("blood_rock_brick_stairs", () -> withItem(new StairBlock(() -> BLOOD_ROCK_BRICKS.get().defaultBlockState(), BlockBehaviour.Properties.of(Material.STONE, MaterialColor.COLOR_BLACK).requiresCorrectToolForDrops().strength(1.5f, 6))));
-	public static final RegistryObject<SlabBlock> BLOOD_ROCK_BRICK_SLAB = BLOCKS.register("blood_rock_brick_slab", () -> withItem(new SlabBlock(BlockBehaviour.Properties.of(Material.STONE, MaterialColor.COLOR_BLACK).requiresCorrectToolForDrops().strength(1.5f, 6))));
-	public static final RegistryObject<WallBlock> BLOOD_ROCK_BRICK_WALL = BLOCKS.register("blood_rock_brick_wall", () -> withItem(new WallBlock(BlockBehaviour.Properties.of(Material.STONE, MaterialColor.COLOR_BLACK).requiresCorrectToolForDrops().strength(1.5f, 6))));
+	public static final RegistryObject<Block> BLOOD_ROCK_BRICKS = BLOCKS.register("blood_rock_bricks", () -> withItem(new Block(BlockBehaviour.Properties.of(Material.STONE, MaterialColor.TERRACOTTA_BLUE).requiresCorrectToolForDrops().strength(1.5f, 6))));
+	public static final RegistryObject<StairBlock> BLOOD_ROCK_BRICK_STAIRS = BLOCKS.register("blood_rock_brick_stairs", () -> withItem(new StairBlock(() -> BLOOD_ROCK_BRICKS.get().defaultBlockState(), BlockBehaviour.Properties.of(Material.STONE, MaterialColor.TERRACOTTA_BLUE).requiresCorrectToolForDrops().strength(1.5f, 6))));
+	public static final RegistryObject<SlabBlock> BLOOD_ROCK_BRICK_SLAB = BLOCKS.register("blood_rock_brick_slab", () -> withItem(new SlabBlock(BlockBehaviour.Properties.of(Material.STONE, MaterialColor.TERRACOTTA_BLUE).requiresCorrectToolForDrops().strength(1.5f, 6))));
+	public static final RegistryObject<WallBlock> BLOOD_ROCK_BRICK_WALL = BLOCKS.register("blood_rock_brick_wall", () -> withItem(new WallBlock(BlockBehaviour.Properties.of(Material.STONE, MaterialColor.TERRACOTTA_BLUE).requiresCorrectToolForDrops().strength(1.5f, 6))));
 
 	
 	public static final RegistryObject<Block> SPARKSTONE = BLOCKS.register("sparkstone", () -> withItem(new Block(BlockBehaviour.Properties.of(Material.STONE, MaterialColor.STONE).requiresCorrectToolForDrops().strength(1.5f, 6))));

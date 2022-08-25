@@ -26,6 +26,7 @@ import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.level.block.state.properties.BooleanProperty;
 import net.minecraft.world.level.material.FluidState;
 import net.minecraft.world.level.material.Material;
+import net.minecraft.world.level.material.MaterialColor;
 import net.minecraft.world.phys.shapes.VoxelShape;
 
 public class BloodLeechBlock extends FacingBlock implements IBloodLoggable, EntityBlock {
@@ -36,7 +37,7 @@ public class BloodLeechBlock extends FacingBlock implements IBloodLoggable, Enti
 			Block.box(0, 0, 0, 4, 16, 16) };
 
 	public BloodLeechBlock() {
-		super(Block.Properties.of(Material.GRASS).sound(SoundType.SLIME_BLOCK).instabreak().noOcclusion()
+		super(Block.Properties.of(Material.GRASS, MaterialColor.NONE).sound(SoundType.SLIME_BLOCK).instabreak().noOcclusion()
 				.noCollission(), SHAPES);
 		this.registerDefaultState(defaultBlockState().setValue(WATERLOGGED, false));
 	}
