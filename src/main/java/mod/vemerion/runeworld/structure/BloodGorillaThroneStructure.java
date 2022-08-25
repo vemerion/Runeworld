@@ -57,12 +57,12 @@ public class BloodGorillaThroneStructure extends StructureFeature<NoneFeatureCon
 		private static final ResourceLocation TEMPLATE = new ResourceLocation(Main.MODID, "blood_gorilla_throne");
 
 		public Piece(StructureManager structureManager, BlockPos pos) {
-			super(ModStructurePieces.BLOOD_GORILLA_THRONE_PIECE, 0, structureManager, TEMPLATE, TEMPLATE.toString(),
+			super(ModStructurePieces.BLOOD_GORILLA_THRONE_PIECE.get(), 0, structureManager, TEMPLATE, TEMPLATE.toString(),
 					new StructurePlaceSettings().addProcessor(BlockIgnoreProcessor.STRUCTURE_BLOCK), pos);
 		}
 
 		public Piece(StructurePieceSerializationContext context, CompoundTag nbt) {
-			super(ModStructurePieces.BLOOD_GORILLA_THRONE_PIECE, nbt, context.structureManager(),
+			super(ModStructurePieces.BLOOD_GORILLA_THRONE_PIECE.get(), nbt, context.structureManager(),
 					a -> new StructurePlaceSettings().addProcessor(BlockIgnoreProcessor.STRUCTURE_BLOCK));
 		}
 

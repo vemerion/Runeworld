@@ -18,8 +18,8 @@ public class FirePlainsBiome extends ModBiome {
 		BiomeGenerationSettings.Builder generation = new BiomeGenerationSettings.Builder();
 
 		generation.addFeature(GenerationStep.Decoration.LAKES, MiscOverworldPlacements.LAKE_LAVA_SURFACE);
-		generation.addFeature(GenerationStep.Decoration.VEGETAL_DECORATION, ModPlacedFeatures.FIRE_ROOT_PATCH);
-		generation.addFeature(GenerationStep.Decoration.VEGETAL_DECORATION, ModPlacedFeatures.FIRE_PATCH);
+		generation.addFeature(GenerationStep.Decoration.VEGETAL_DECORATION, ModPlacedFeatures.FIRE_ROOT_PATCH.getHolder().get());
+		generation.addFeature(GenerationStep.Decoration.VEGETAL_DECORATION, ModPlacedFeatures.FIRE_PATCH.getHolder().get());
 
 		int waterColor = Helper.color(200, 100, 0, 100);
 		int skyColor = Helper.color(255, 155, 85, 255);

@@ -3,6 +3,7 @@ package mod.vemerion.runeworld.datagen;
 import mod.vemerion.runeworld.Main;
 import mod.vemerion.runeworld.init.ModBiomes;
 import mod.vemerion.runeworld.init.ModConfiguredStructures;
+import mod.vemerion.runeworld.init.ModStructures;
 import net.minecraft.data.DataGenerator;
 import net.minecraft.data.tags.BiomeTagsProvider;
 import net.minecraft.data.tags.BlockTagsProvider;
@@ -17,9 +18,9 @@ public class ModBiomeTagsProvider extends BiomeTagsProvider {
 
 	@Override
 	protected void addTags() {
-		tag(ModConfiguredStructures.HAS_BLOOD_BAT_LAIR).add(ModBiomes.BLOOD_PLAINS);
-		tag(ModConfiguredStructures.HAS_FIRE_RITUAL).add(ModBiomes.FIRE_PLAINS);
-		tag(ModConfiguredStructures.HAS_BLOOD_GORILLA_THRONE).add(ModBiomes.BLOOD_PLAINS);
-		tag(ModConfiguredStructures.HAS_BLOOD_MONKEY_TUNNELS).add(ModBiomes.BLOOD_PLAINS);
+		tag(ModConfiguredStructures.hasStructure(ModStructures.BLOOD_BAT_LAIR)).add(ModBiomes.BLOOD_PLAINS.get());
+		tag(ModConfiguredStructures.hasStructure(ModStructures.FIRE_RITUAL)).add(ModBiomes.FIRE_PLAINS.get());
+		tag(ModConfiguredStructures.hasStructure(ModStructures.BLOOD_GORILLA_THRONE)).add(ModBiomes.BLOOD_PLAINS.get());
+		tag(ModConfiguredStructures.hasStructure(ModStructures.BLOOD_MONKEY_TUNNELS)).add(ModBiomes.BLOOD_PLAINS.get());
 	}
 }

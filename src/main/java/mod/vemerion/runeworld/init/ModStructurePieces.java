@@ -5,24 +5,15 @@ import mod.vemerion.runeworld.structure.BloodBatLairStructure;
 import mod.vemerion.runeworld.structure.BloodGorillaThroneStructure;
 import mod.vemerion.runeworld.structure.FireRitualStructure;
 import net.minecraft.core.Registry;
-import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.level.levelgen.structure.pieces.StructurePieceType;
+import net.minecraftforge.registries.DeferredRegister;
+import net.minecraftforge.registries.RegistryObject;
 
 public class ModStructurePieces {
+	
+	public static final DeferredRegister<StructurePieceType> STRUCTURE_PIECES = DeferredRegister.create(Registry.STRUCTURE_PIECE_REGISTRY, Main.MODID);
 
-	public static StructurePieceType BLOOD_BAT_LAIR_PIECE;
-	public static StructurePieceType FIRE_RITUAL_PIECE;
-	public static StructurePieceType BLOOD_GORILLA_THRONE_PIECE;
-
-	public static void register() {
-		Registry<StructurePieceType> reg = Registry.STRUCTURE_PIECE;
-
-		BLOOD_BAT_LAIR_PIECE = BloodBatLairStructure.Piece::new;
-		FIRE_RITUAL_PIECE = FireRitualStructure.Piece::new;
-		BLOOD_GORILLA_THRONE_PIECE = BloodGorillaThroneStructure.Piece::new;
-
-		Registry.register(reg, new ResourceLocation(Main.MODID, "blood_bat_lair_piece"), BLOOD_BAT_LAIR_PIECE);
-		Registry.register(reg, new ResourceLocation(Main.MODID, "fire_ritual_piece"), FIRE_RITUAL_PIECE);
-		Registry.register(reg, new ResourceLocation(Main.MODID, "blood_gorilla_throne_piece"), BLOOD_GORILLA_THRONE_PIECE);
-	}
+	public static final RegistryObject<StructurePieceType> BLOOD_BAT_LAIR_PIECE = STRUCTURE_PIECES.register("blood_bat_lair_piece", () -> BloodBatLairStructure.Piece::new);
+	public static final RegistryObject<StructurePieceType> FIRE_RITUAL_PIECE = STRUCTURE_PIECES.register("fire_ritual_piece", () -> FireRitualStructure.Piece::new);
+	public static final RegistryObject<StructurePieceType> BLOOD_GORILLA_THRONE_PIECE = STRUCTURE_PIECES.register("blood_gorilla_throne_piece", () -> BloodGorillaThroneStructure.Piece::new);
 }

@@ -1,23 +1,29 @@
 package mod.vemerion.runeworld.init;
 
-import net.minecraft.core.Holder;
+import java.util.List;
+
+import mod.vemerion.runeworld.Main;
+import net.minecraft.core.Registry;
 import net.minecraft.data.worldgen.placement.PlacementUtils;
 import net.minecraft.world.level.levelgen.placement.BiomeFilter;
 import net.minecraft.world.level.levelgen.placement.InSquarePlacement;
 import net.minecraft.world.level.levelgen.placement.PlacedFeature;
 import net.minecraft.world.level.levelgen.placement.RarityFilter;
+import net.minecraftforge.registries.DeferredRegister;
+import net.minecraftforge.registries.RegistryObject;
 
 public class ModPlacedFeatures {
+	public static final DeferredRegister<PlacedFeature> PLACED_FEATURES = DeferredRegister.create(Registry.PLACED_FEATURE_REGISTRY, Main.MODID);
 	
-	   public static final Holder<PlacedFeature> BLOOD_POOL = PlacementUtils.register("blood_pool", ModConfiguredFeatures.BLOOD_POOL, RarityFilter.onAverageOnceEvery(200), InSquarePlacement.spread(), PlacementUtils.HEIGHTMAP_WORLD_SURFACE, BiomeFilter.biome());
-	   public static final Holder<PlacedFeature> BLOOD_PILLAR_SINGLE = PlacementUtils.register("blood_pillar_single", ModConfiguredFeatures.BLOOD_PILLAR_SINGLE, RarityFilter.onAverageOnceEvery(6), InSquarePlacement.spread(), PlacementUtils.HEIGHTMAP_WORLD_SURFACE, BiomeFilter.biome());
-	   public static final Holder<PlacedFeature> BLOOD_PILLAR_CLUSTER = PlacementUtils.register("blood_pillar_cluster", ModConfiguredFeatures.BLOOD_PILLAR_CLUSTER, RarityFilter.onAverageOnceEvery(10), InSquarePlacement.spread(), PlacementUtils.HEIGHTMAP_WORLD_SURFACE, BiomeFilter.biome());
-	   public static final Holder<PlacedFeature> BLOOD_ROCK_PATCH = PlacementUtils.register("blood_rock_patch", ModConfiguredFeatures.BLOOD_ROCK_PATCH, RarityFilter.onAverageOnceEvery(10), InSquarePlacement.spread(), PlacementUtils.HEIGHTMAP_WORLD_SURFACE, BiomeFilter.biome());
-	   public static final Holder<PlacedFeature> BLOOD_CRYSTAL = PlacementUtils.register("blood_crystal", ModConfiguredFeatures.BLOOD_CRYSTAL, RarityFilter.onAverageOnceEvery(4), PlacementUtils.HEIGHTMAP_WORLD_SURFACE, BiomeFilter.biome());
-	   public static final Holder<PlacedFeature> BLOOD_BAT_TREE = PlacementUtils.register("blood_bat_tree", ModConfiguredFeatures.BLOOD_BAT_TREE, RarityFilter.onAverageOnceEvery(300), InSquarePlacement.spread(), PlacementUtils.HEIGHTMAP_WORLD_SURFACE, BiomeFilter.biome());
-	   public static final Holder<PlacedFeature> BLOOD_RUNE_PORTAL_FEATURE = PlacementUtils.register("blood_rune_portal_feature", ModConfiguredFeatures.BLOOD_RUNE_PORTAL_FEATURE, RarityFilter.onAverageOnceEvery(400), InSquarePlacement.spread(), PlacementUtils.HEIGHTMAP_WORLD_SURFACE, BiomeFilter.biome());
-	   public static final Holder<PlacedFeature> FLESH_EATING_PLANT = PlacementUtils.register("flesh_eating_plant", ModConfiguredFeatures.FLESH_EATING_PLANT, RarityFilter.onAverageOnceEvery(40), InSquarePlacement.spread(), PlacementUtils.HEIGHTMAP_WORLD_SURFACE, BiomeFilter.biome());
-	   
-	   public static final Holder<PlacedFeature> FIRE_ROOT_PATCH = PlacementUtils.register("fire_root_patch", ModConfiguredFeatures.FIRE_ROOT_PATCH, RarityFilter.onAverageOnceEvery(150), InSquarePlacement.spread(), PlacementUtils.HEIGHTMAP_WORLD_SURFACE, BiomeFilter.biome());
-	   public static final Holder<PlacedFeature> FIRE_PATCH = PlacementUtils.register("fire_patch", ModConfiguredFeatures.FIRE_PATCH, RarityFilter.onAverageOnceEvery(50), InSquarePlacement.spread(), PlacementUtils.HEIGHTMAP_WORLD_SURFACE, BiomeFilter.biome());
+	public static final RegistryObject<PlacedFeature> BLOOD_POOL = PLACED_FEATURES.register("blood_pool", () -> new PlacedFeature(ModConfiguredFeatures.BLOOD_POOL.getHolder().get(), List.of(RarityFilter.onAverageOnceEvery(200), InSquarePlacement.spread(), PlacementUtils.HEIGHTMAP_WORLD_SURFACE, BiomeFilter.biome())));
+	public static final RegistryObject<PlacedFeature> BLOOD_PILLAR_SINGLE = PLACED_FEATURES.register("blood_pillar_single", () -> new PlacedFeature(ModConfiguredFeatures.BLOOD_PILLAR_SINGLE.getHolder().get(), List.of(RarityFilter.onAverageOnceEvery(6), InSquarePlacement.spread(), PlacementUtils.HEIGHTMAP_WORLD_SURFACE, BiomeFilter.biome())));
+	public static final RegistryObject<PlacedFeature> BLOOD_PILLAR_CLUSTER = PLACED_FEATURES.register("blood_pillar_cluster", () -> new PlacedFeature(ModConfiguredFeatures.BLOOD_PILLAR_CLUSTER.getHolder().get(), List.of(RarityFilter.onAverageOnceEvery(10), InSquarePlacement.spread(), PlacementUtils.HEIGHTMAP_WORLD_SURFACE, BiomeFilter.biome())));
+	public static final RegistryObject<PlacedFeature> BLOOD_ROCK_PATCH = PLACED_FEATURES.register("blood_rock_patch", () -> new PlacedFeature(ModConfiguredFeatures.BLOOD_ROCK_PATCH.getHolder().get(), List.of(RarityFilter.onAverageOnceEvery(10), InSquarePlacement.spread(), PlacementUtils.HEIGHTMAP_WORLD_SURFACE, BiomeFilter.biome())));
+	public static final RegistryObject<PlacedFeature> BLOOD_CRYSTAL = PLACED_FEATURES.register("blood_crystal", () -> new PlacedFeature(ModConfiguredFeatures.BLOOD_CRYSTAL.getHolder().get(), List.of(RarityFilter.onAverageOnceEvery(4), PlacementUtils.HEIGHTMAP_WORLD_SURFACE, BiomeFilter.biome())));
+	public static final RegistryObject<PlacedFeature> BLOOD_BAT_TREE = PLACED_FEATURES.register("blood_bat_tree", () -> new PlacedFeature(ModConfiguredFeatures.BLOOD_BAT_TREE.getHolder().get(), List.of(RarityFilter.onAverageOnceEvery(300), InSquarePlacement.spread(), PlacementUtils.HEIGHTMAP_WORLD_SURFACE, BiomeFilter.biome())));
+	public static final RegistryObject<PlacedFeature> BLOOD_RUNE_PORTAL_FEATURE = PLACED_FEATURES.register("blood_rune_portal_feature", () -> new PlacedFeature(ModConfiguredFeatures.BLOOD_RUNE_PORTAL_FEATURE.getHolder().get(), List.of(RarityFilter.onAverageOnceEvery(400), InSquarePlacement.spread(), PlacementUtils.HEIGHTMAP_WORLD_SURFACE, BiomeFilter.biome())));
+	public static final RegistryObject<PlacedFeature> FLESH_EATING_PLANT = PLACED_FEATURES.register("flesh_eating_plant", () -> new PlacedFeature(ModConfiguredFeatures.FLESH_EATING_PLANT.getHolder().get(), List.of(RarityFilter.onAverageOnceEvery(40), InSquarePlacement.spread(), PlacementUtils.HEIGHTMAP_WORLD_SURFACE, BiomeFilter.biome())));
+	
+	public static final RegistryObject<PlacedFeature> FIRE_ROOT_PATCH = PLACED_FEATURES.register("fire_root_patch", () -> new PlacedFeature(ModConfiguredFeatures.FIRE_ROOT_PATCH.getHolder().get(), List.of(RarityFilter.onAverageOnceEvery(150), InSquarePlacement.spread(), PlacementUtils.HEIGHTMAP_WORLD_SURFACE, BiomeFilter.biome())));
+	public static final RegistryObject<PlacedFeature> FIRE_PATCH = PLACED_FEATURES.register("fire_patch", () -> new PlacedFeature(ModConfiguredFeatures.FIRE_PATCH.getHolder().get(), List.of(RarityFilter.onAverageOnceEvery(50), InSquarePlacement.spread(), PlacementUtils.HEIGHTMAP_WORLD_SURFACE, BiomeFilter.biome())));
 }

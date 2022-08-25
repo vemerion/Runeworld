@@ -19,19 +19,19 @@ public class BloodPlainsBiome extends ModBiome {
 		MobSpawnSettings.Builder mobs = new MobSpawnSettings.Builder();
 		BiomeGenerationSettings.Builder generation = new BiomeGenerationSettings.Builder();
 
-		generation.addFeature(GenerationStep.Decoration.LAKES, ModPlacedFeatures.BLOOD_POOL);
+		generation.addFeature(GenerationStep.Decoration.LAKES, ModPlacedFeatures.BLOOD_POOL.getHolder().get());
 		generation.addFeature(GenerationStep.Decoration.VEGETAL_DECORATION,
-				ModPlacedFeatures.BLOOD_PILLAR_SINGLE);
+				ModPlacedFeatures.BLOOD_PILLAR_SINGLE.getHolder().get());
 		generation.addFeature(GenerationStep.Decoration.VEGETAL_DECORATION,
-				ModPlacedFeatures.BLOOD_PILLAR_CLUSTER);
-		generation.addFeature(GenerationStep.Decoration.VEGETAL_DECORATION, ModPlacedFeatures.BLOOD_CRYSTAL);
+				ModPlacedFeatures.BLOOD_PILLAR_CLUSTER.getHolder().get());
+		generation.addFeature(GenerationStep.Decoration.VEGETAL_DECORATION, ModPlacedFeatures.BLOOD_CRYSTAL.getHolder().get());
 		generation.addFeature(GenerationStep.Decoration.TOP_LAYER_MODIFICATION,
-				ModPlacedFeatures.BLOOD_ROCK_PATCH);
-		generation.addFeature(GenerationStep.Decoration.SURFACE_STRUCTURES, ModPlacedFeatures.BLOOD_BAT_TREE);
+				ModPlacedFeatures.BLOOD_ROCK_PATCH.getHolder().get());
+		generation.addFeature(GenerationStep.Decoration.SURFACE_STRUCTURES, ModPlacedFeatures.BLOOD_BAT_TREE.getHolder().get());
 		generation.addFeature(GenerationStep.Decoration.SURFACE_STRUCTURES,
-				ModPlacedFeatures.BLOOD_RUNE_PORTAL_FEATURE);
+				ModPlacedFeatures.BLOOD_RUNE_PORTAL_FEATURE.getHolder().get());
 		generation.addFeature(GenerationStep.Decoration.SURFACE_STRUCTURES,
-				ModPlacedFeatures.FLESH_EATING_PLANT);
+				ModPlacedFeatures.FLESH_EATING_PLANT.getHolder().get());
 
 		mobs.addSpawn(MobCategory.MONSTER, new SpawnerData(ModEntities.MOSQUITO.get(), 10, 1, 2));
 

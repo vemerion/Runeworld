@@ -78,7 +78,7 @@ public class BloodBatLairStructure extends StructureFeature<NoneFeatureConfigura
 		private int randSeed;
 
 		public Piece(BlockPos center, int a, int b, int randSeed) {
-			super(ModStructurePieces.BLOOD_BAT_LAIR_PIECE, 0, createBoundingBox(center, a, b));
+			super(ModStructurePieces.BLOOD_BAT_LAIR_PIECE.get(), 0, createBoundingBox(center, a, b));
 			this.center = center;
 			this.a = a;
 			this.b = b;
@@ -86,7 +86,7 @@ public class BloodBatLairStructure extends StructureFeature<NoneFeatureConfigura
 		}
 
 		public Piece(StructurePieceSerializationContext pContext, CompoundTag nbt) {
-			super(ModStructurePieces.BLOOD_BAT_LAIR_PIECE, nbt);
+			super(ModStructurePieces.BLOOD_BAT_LAIR_PIECE.get(), nbt);
 			this.center = NbtUtils.readBlockPos(nbt.getCompound("center"));
 			this.a = nbt.getInt("a");
 			this.b = nbt.getInt("b");

@@ -11,53 +11,19 @@ import mod.vemerion.runeworld.feature.RunePortalFeature;
 import net.minecraft.world.level.levelgen.feature.Feature;
 import net.minecraft.world.level.levelgen.feature.configurations.BlockStateConfiguration;
 import net.minecraft.world.level.levelgen.feature.configurations.NoneFeatureConfiguration;
-import net.minecraftforge.event.RegistryEvent;
-import net.minecraftforge.eventbus.api.SubscribeEvent;
-import net.minecraftforge.fml.common.Mod.EventBusSubscriber;
-import net.minecraftforge.fml.common.Mod.EventBusSubscriber.Bus;
-import net.minecraftforge.registries.ObjectHolder;
+import net.minecraftforge.registries.DeferredRegister;
+import net.minecraftforge.registries.ForgeRegistries;
+import net.minecraftforge.registries.RegistryObject;
 
-@ObjectHolder(value = Main.MODID)
-@EventBusSubscriber(bus = Bus.MOD, modid = Main.MODID)
 public class ModFeatures {
-
-	private static boolean init = true;
-
-	public static Feature<NoneFeatureConfiguration> BLOOD_POOL;
-	public static Feature<NoneFeatureConfiguration> BLOOD_PILLAR_SINGLE;
-	public static Feature<NoneFeatureConfiguration> BLOOD_PILLAR_CLUSTER;
-	public static Feature<NoneFeatureConfiguration> BLOOD_ROCK_PATCH;
-	public static Feature<NoneFeatureConfiguration> BLOOD_BAT_TREE;
-	public static Feature<BlockStateConfiguration> RUNE_PORTAL_FEATURE;
-	public static Feature<NoneFeatureConfiguration> FLESH_EATING_PLANT;
-
-	public static void init() {
-		if (init) {
-			init = false;
-
-			BLOOD_POOL = new BloodPoolFeature();
-			BLOOD_PILLAR_SINGLE = new BloodPillarSingleFeature();
-			BLOOD_PILLAR_CLUSTER = new BloodPillarClusterFeature();
-			BLOOD_ROCK_PATCH = new BloodRockPatchFeature();
-			BLOOD_BAT_TREE = new BloodBatTreeFeature();
-			RUNE_PORTAL_FEATURE = new RunePortalFeature();
-			FLESH_EATING_PLANT = new FleshEatingPlantFeature();
-			
-			ModConfiguredFeatures.onRegisterConfiguredFeature();
-		}
-	}
-
-	@SubscribeEvent
-	public static void onRegisterFeature(RegistryEvent.Register<Feature<?>> event) {
-		init();
-		
-		event.getRegistry().register(Init.setup(BLOOD_POOL, "blood_pool"));
-		event.getRegistry().register(Init.setup(BLOOD_PILLAR_SINGLE, "blood_pillar_single"));
-		event.getRegistry().register(Init.setup(BLOOD_PILLAR_CLUSTER, "blood_pillar_cluster"));
-		event.getRegistry().register(Init.setup(BLOOD_ROCK_PATCH, "blood_rock_patch"));
-		event.getRegistry().register(Init.setup(BLOOD_BAT_TREE, "blood_bat_tree"));
-		event.getRegistry().register(Init.setup(RUNE_PORTAL_FEATURE, "rune_portal_feature"));
-		event.getRegistry().register(Init.setup(FLESH_EATING_PLANT, "flesh_eating_plant"));
-
-	}
+	
+	public static final DeferredRegister<Feature<?>> FEATURES = DeferredRegister.create(ForgeRegistries.FEATURES, Main.MODID);
+	
+	public static final RegistryObject<Feature<NoneFeatureConfiguration>> BLOOD_POOL = FEATURES.register("blood_pool", BloodPoolFeature::new);
+	public static final RegistryObject<Feature<NoneFeatureConfiguration>> BLOOD_PILLAR_SINGLE = FEATURES.register("blood_pillar_single", BloodPillarSingleFeature::new);
+	public static final RegistryObject<Feature<NoneFeatureConfiguration>> BLOOD_PILLAR_CLUSTER = FEATURES.register("blood_pillar_cluster", BloodPillarClusterFeature::new);
+	public static final RegistryObject<Feature<NoneFeatureConfiguration>> BLOOD_ROCK_PATCH = FEATURES.register("blood_rock_patch", BloodRockPatchFeature::new);
+	public static final RegistryObject<Feature<NoneFeatureConfiguration>> BLOOD_BAT_TREE = FEATURES.register("blood_bat_tree", BloodBatTreeFeature::new);
+	public static final RegistryObject<Feature<BlockStateConfiguration>> RUNE_PORTAL_FEATURE = FEATURES.register("rune_portal_feature", RunePortalFeature::new);
+	public static final RegistryObject<Feature<NoneFeatureConfiguration>> FLESH_EATING_PLANT = FEATURES.register("flesh_eating_plant", FleshEatingPlantFeature::new);
 }

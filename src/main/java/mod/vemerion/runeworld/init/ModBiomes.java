@@ -4,25 +4,14 @@ import mod.vemerion.runeworld.Main;
 import mod.vemerion.runeworld.biome.BloodPlainsBiome;
 import mod.vemerion.runeworld.biome.FirePlainsBiome;
 import net.minecraft.world.level.biome.Biome;
-import net.minecraftforge.event.RegistryEvent;
-import net.minecraftforge.eventbus.api.SubscribeEvent;
-import net.minecraftforge.fml.common.Mod.EventBusSubscriber;
-import net.minecraftforge.fml.common.Mod.EventBusSubscriber.Bus;
-import net.minecraftforge.registries.ObjectHolder;
+import net.minecraftforge.registries.DeferredRegister;
+import net.minecraftforge.registries.ForgeRegistries;
+import net.minecraftforge.registries.RegistryObject;
 
-@ObjectHolder(value = Main.MODID)
-@EventBusSubscriber(bus = Bus.MOD, modid = Main.MODID)
 public class ModBiomes {
+	
+	public static final DeferredRegister<Biome> BIOMES = DeferredRegister.create(ForgeRegistries.BIOMES, Main.MODID);
 
-	public static final Biome BLOOD_PLAINS = null;
-	public static final Biome FIRE_PLAINS = null;
-
-	@SubscribeEvent
-	public static void onRegisterBiome(RegistryEvent.Register<Biome> event) {
-		ModFeatures.init();
-		ModStructures.init();
-		
-		event.getRegistry().register(Init.setup(new BloodPlainsBiome().create(), "blood_plains"));
-		event.getRegistry().register(Init.setup(new FirePlainsBiome().create(), "fire_plains"));
-	}
+	public static final RegistryObject<Biome> BLOOD_PLAINS = BIOMES.register("blood_plains", () -> new BloodPlainsBiome().create());
+	public static final RegistryObject<Biome> FIRE_PLAINS = BIOMES.register("fire_plains", () -> new FirePlainsBiome().create());
 }

@@ -57,12 +57,12 @@ public class FireRitualStructure extends StructureFeature<NoneFeatureConfigurati
 		private static final ResourceLocation TEMPLATE = new ResourceLocation(Main.MODID, "fire_ritual");
 
 		public Piece(StructureManager structureManager, BlockPos pos) {
-			super(ModStructurePieces.FIRE_RITUAL_PIECE, 0, structureManager, TEMPLATE, TEMPLATE.toString(),
+			super(ModStructurePieces.FIRE_RITUAL_PIECE.get(), 0, structureManager, TEMPLATE, TEMPLATE.toString(),
 					new StructurePlaceSettings().addProcessor(BlockIgnoreProcessor.STRUCTURE_BLOCK), pos);
 		}
 
 		public Piece(StructurePieceSerializationContext context, CompoundTag nbt) {
-			super(ModStructurePieces.FIRE_RITUAL_PIECE, nbt, context.structureManager(),
+			super(ModStructurePieces.FIRE_RITUAL_PIECE.get(), nbt, context.structureManager(),
 					a -> new StructurePlaceSettings().addProcessor(BlockIgnoreProcessor.STRUCTURE_BLOCK));
 		}
 
