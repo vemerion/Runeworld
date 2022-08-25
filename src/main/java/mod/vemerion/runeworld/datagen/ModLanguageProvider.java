@@ -54,6 +54,7 @@ public class ModLanguageProvider extends LanguageProvider {
 		add(ModItems.BLOOD_GORILLA_SPAWN_EGG.get(), "Blood Gorilla Spawn Egg");
 		add(ModItems.TICK_SPAWN_EGG.get(), "Tick Spawn Egg");
 		add(ModItems.BLOOD_CROWN.get(), "Blood Crown");
+		add(ModItems.MONKEY_PAW.get(), "Monkey's Paw");
 		add(ModEffects.BLOOD_DRAINED.get(), "Blood Drained");
 		add(ModBiomes.BLOOD_PLAINS.get(), "Blood Plains");
 		add(ModBiomes.FIRE_PLAINS.get(), "Fire Plains");

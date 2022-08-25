@@ -6,7 +6,6 @@ import com.mojang.blaze3d.shaders.FogShape;
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.BufferBuilder;
 import com.mojang.blaze3d.vertex.DefaultVertexFormat;
-import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.Tesselator;
 import com.mojang.blaze3d.vertex.VertexFormat.Mode;
 import com.mojang.math.Quaternion;
@@ -15,20 +14,19 @@ import mod.vemerion.runeworld.Main;
 import mod.vemerion.runeworld.block.RunePortalBlock;
 import mod.vemerion.runeworld.init.ModFluids;
 import mod.vemerion.runeworld.item.DislocatorItem;
+import mod.vemerion.runeworld.item.MonkeyPawItem;
 import net.minecraft.client.Camera;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.player.AbstractClientPlayer;
 import net.minecraft.client.renderer.GameRenderer;
 import net.minecraft.client.renderer.block.model.BakedQuad;
 import net.minecraft.client.renderer.block.model.ItemTransforms.TransformType;
 import net.minecraft.client.renderer.texture.OverlayTexture;
 import net.minecraft.client.renderer.texture.TextureAtlas;
 import net.minecraft.client.renderer.texture.TextureAtlasSprite;
+import net.minecraft.util.Mth;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.entity.HumanoidArm;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.item.Item;
-import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraftforge.api.distmarker.Dist;
@@ -120,30 +118,46 @@ public class ClientForgeEventSubscriber {
 		RenderSystem.enableDepthTest();
 		RenderSystem.setShaderColor(1, 1, 1, 1);
 	}
-
+	
 	@SubscribeEvent
-	public static void dislocatorAnimation(RenderHandEvent event) {
+	public static void itemAnimations(RenderHandEvent event) {
 		var mc = Minecraft.getInstance();
-		AbstractClientPlayer player = mc.player;
-		ItemStack stack = event.getItemStack();
-		Item item = stack.getItem();
-		if (item instanceof DislocatorItem && player.getUseItem().equals(stack)) {
+		var player = mc.player;
+		var stack = event.getItemStack();
+		var item = stack.getItem();
+		if (player.getUseItem().equals(stack)) {
+			if (!(item instanceof DislocatorItem) && !(item instanceof MonkeyPawItem))
+				return;
+
 			event.setCanceled(true);
-			PoseStack matrix = event.getPoseStack();
+			var poseStack = event.getPoseStack();
 			float partialTicks = event.getPartialTicks();
 			float count = player.getTicksUsingItem();
 			float time = count + partialTicks;
 			float progress = count / item.getUseDuration(stack);
-			HumanoidArm side = event.getHand() == InteractionHand.MAIN_HAND ? player.getMainArm()
+			var side = event.getHand() == InteractionHand.MAIN_HAND ? player.getMainArm()
 					: player.getMainArm().getOpposite();
-			TransformType transform = side == HumanoidArm.RIGHT ? TransformType.FIRST_PERSON_RIGHT_HAND
+			var transform = side == HumanoidArm.RIGHT ? TransformType.FIRST_PERSON_RIGHT_HAND
 					: TransformType.FIRST_PERSON_LEFT_HAND;
-			matrix.pushPose();
-			matrix.translate(side == HumanoidArm.RIGHT ? 0.7 : -0.7, -0.4, -0.7);
-			matrix.mulPose(new Quaternion(0, time * 360 * progress * 2 / 20, 0, true));
-			mc.getItemRenderer().renderStatic(player, stack, transform, false, event.getPoseStack(),
-					event.getMultiBufferSource(), player.level, event.getPackedLight(), OverlayTexture.NO_OVERLAY, 0);
-			matrix.popPose();
+
+			if (item instanceof DislocatorItem) {
+				poseStack.pushPose();
+				poseStack.translate(side == HumanoidArm.RIGHT ? 0.7 : -0.7, -0.4, -0.7);
+				poseStack.mulPose(new Quaternion(0, time * 360 * progress * 2 / 20, 0, true));
+				mc.getItemRenderer().renderStatic(player, stack, transform, false, event.getPoseStack(),
+						event.getMultiBufferSource(), player.level, event.getPackedLight(), OverlayTexture.NO_OVERLAY,
+						0);
+				poseStack.popPose();
+			} else if (item instanceof MonkeyPawItem) {
+				poseStack.pushPose();
+				poseStack.translate(side == HumanoidArm.RIGHT ? 0.55 : -0.55, -0.4, -0.7);
+				float size = Mth.sin(time * 0.7f) * 0.4f + 1;
+				poseStack.scale(size, size, size);
+				mc.getItemRenderer().renderStatic(player, stack, transform, false, event.getPoseStack(),
+						event.getMultiBufferSource(), player.level, event.getPackedLight(), OverlayTexture.NO_OVERLAY,
+						0);
+				poseStack.popPose();
+			}
 		}
 	}
 }

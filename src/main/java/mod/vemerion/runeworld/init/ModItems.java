@@ -16,6 +16,7 @@ import mod.vemerion.runeworld.item.BloodPuddingItem;
 import mod.vemerion.runeworld.item.DislocatorItem;
 import mod.vemerion.runeworld.item.FireRootItem;
 import mod.vemerion.runeworld.item.GuideItem;
+import mod.vemerion.runeworld.item.MonkeyPawItem;
 import mod.vemerion.runeworld.item.ThrowableItem;
 import net.minecraft.core.NonNullList;
 import net.minecraft.world.food.FoodProperties;
@@ -62,6 +63,7 @@ public class ModItems {
 				ModDimensions.FIRE));
 		public static final RegistryObject<Item> FIRE_ROOT = ITEMS.register("fire_root", FireRootItem::new);
 		public static final RegistryObject<Item> BLOOD_CROWN = ITEMS.register("blood_crown", BloodCrownItem::new);
+		public static final RegistryObject<Item> MONKEY_PAW = ITEMS.register("monkey_paw", MonkeyPawItem::new);
 
 	static final CreativeModeTab ITEM_GROUP = new RuneworldItemGroup();
 

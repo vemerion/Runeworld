@@ -39,7 +39,7 @@ public class BloodCrownItem extends ArmorItem {
 
 	@Override
 	public void appendHoverText(ItemStack stack, Level level, List<Component> tooltip, TooltipFlag flagIn) {
-		tooltip.add(new TranslatableComponent("item." + Main.MODID + "." + ModItems.BLOOD_CROWN.getId().getPath() + ".description", "Majestic").withStyle(ChatFormatting.GOLD)
+		tooltip.add(new TranslatableComponent("item." + Main.MODID + "." + ModItems.BLOOD_CROWN.getId().getPath() + ".description").withStyle(ChatFormatting.GOLD)
 				.withStyle(ChatFormatting.ITALIC));
 		super.appendHoverText(stack, level, tooltip, flagIn);
 	}
