@@ -4,14 +4,17 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import mod.vemerion.runeworld.init.ModBiomes;
+import mod.vemerion.runeworld.init.ModBlockEntities;
 import mod.vemerion.runeworld.init.ModBlocks;
 import mod.vemerion.runeworld.init.ModConfiguredFeatures;
 import mod.vemerion.runeworld.init.ModConfiguredStructures;
+import mod.vemerion.runeworld.init.ModEffects;
 import mod.vemerion.runeworld.init.ModEntities;
 import mod.vemerion.runeworld.init.ModFeatures;
 import mod.vemerion.runeworld.init.ModFluids;
 import mod.vemerion.runeworld.init.ModItems;
 import mod.vemerion.runeworld.init.ModLootModifiers;
+import mod.vemerion.runeworld.init.ModParticles;
 import mod.vemerion.runeworld.init.ModPlacedFeatures;
 import mod.vemerion.runeworld.init.ModSounds;
 import mod.vemerion.runeworld.init.ModStructurePieces;
@@ -44,9 +47,8 @@ public class Main {
 		ModStructures.STRUCTURES.register(bus);
 		ModStructureSets.STRUCTURE_SETS.register(bus);
 		ModTemplatePools.TEMPLATE_POOLS.register(bus);
+		ModBlockEntities.BLOCK_ENTITIES.register(bus);
+		ModEffects.EFFECTS.register(bus);
+		ModParticles.PARTICLES.register(bus);
 	}
-    
-    /*
-     * TODO: Use DeferredRegisters
-     */
 }

@@ -85,7 +85,7 @@ public class BloodLeechBlock extends FacingBlock implements IBloodLoggable, Enti
 		if (!entityIn.isOnGround() && entityIn.fallDistance > 1 && entityIn instanceof Player) {
 			worldIn.destroyBlock(pos, true, entityIn);
 		} else if (RANDOM.nextDouble() < 0.01 && entityIn instanceof LivingEntity) {
-			((LivingEntity) entityIn).addEffect(new MobEffectInstance(ModEffects.BLOOD_DRAINED, 20 * 20));
+			((LivingEntity) entityIn).addEffect(new MobEffectInstance(ModEffects.BLOOD_DRAINED.get(), 20 * 20));
 		}
 	}
 
@@ -97,7 +97,7 @@ public class BloodLeechBlock extends FacingBlock implements IBloodLoggable, Enti
 	@Override
 	public <T extends BlockEntity> BlockEntityTicker<T> getTicker(Level pLevel, BlockState pState,
 			BlockEntityType<T> pBlockEntityType) {
-		return pBlockEntityType == ModBlockEntities.BLOOD_LEECH
+		return pBlockEntityType == ModBlockEntities.BLOOD_LEECH.get()
 				? (level, pos, state, tileEntity) -> ((BloodLeechBlockEntity) tileEntity).tick()
 				: null;
 	}

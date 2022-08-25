@@ -160,7 +160,7 @@ public class TickEntity extends Monster {
 					var direction = new Vec3(1, 0, 0).xRot(random.nextFloat() * Mth.TWO_PI)
 							.yRot(random.nextFloat() * Mth.TWO_PI).zRot(random.nextFloat() * Mth.TWO_PI).normalize()
 							.scale(0.3);
-					level.addParticle(ModParticles.BLOOD_DROP, pos.x, pos.y, pos.z, direction.x, direction.y,
+					level.addParticle(ModParticles.BLOOD_DROP.get(), pos.x, pos.y, pos.z, direction.x, direction.y,
 							direction.z);
 				}
 			}

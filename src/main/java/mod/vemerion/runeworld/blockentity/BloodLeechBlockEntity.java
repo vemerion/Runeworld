@@ -17,7 +17,7 @@ public class BloodLeechBlockEntity extends BlockEntity {
 	private int direction;
 
 	public BloodLeechBlockEntity(BlockPos pWorldPosition, BlockState pBlockState) {
-		super(ModBlockEntities.BLOOD_LEECH, pWorldPosition, pBlockState);
+		super(ModBlockEntities.BLOOD_LEECH.get(), pWorldPosition, pBlockState);
 		offset = (float) Math.toRadians(rand.nextDouble() * 360);
 		direction = rand.nextBoolean() ? 1 : -1;
 	}

@@ -114,7 +114,7 @@ public class BloodSpecialEffects extends OverworldEffects {
 			var pos = camera.getPosition();
 			var rand = level.random;
 			for (int i = 0; i < COUNT; i++) {
-				level.addParticle(ModParticles.BLOOD_DROP, pos.x + rand.nextDouble(-DISTANCE, DISTANCE),
+				level.addParticle(ModParticles.BLOOD_DROP.get(), pos.x + rand.nextDouble(-DISTANCE, DISTANCE),
 						pos.y + rand.nextDouble(-DISTANCE, DISTANCE), pos.z + rand.nextDouble(-DISTANCE, DISTANCE), 0,
 						rand.nextDouble(-0.6, -0.4), 0);
 			}

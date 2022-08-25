@@ -92,7 +92,7 @@ public class BloodBatEntity extends PathfinderMob implements FlyingAnimal {
 			Vec3 offset = new Vec3((getRandom().nextDouble() - 0.5) * 0.2, 0.15,
 					(getRandom().nextDouble() - 0.5) * 0.2);
 			Vec3 pos = position().add(Vec3.directionFromRotation(0, getYRot()).scale(0.7)).add(offset);
-			level.addParticle(ModParticles.DRIPPING_BLOOD, pos.x, pos.y, pos.z, 0, 0, 0);
+			level.addParticle(ModParticles.DRIPPING_BLOOD.get(), pos.x, pos.y, pos.z, 0, 0, 0);
 		}
 	}
 
@@ -212,7 +212,7 @@ public class BloodBatEntity extends PathfinderMob implements FlyingAnimal {
 	public boolean doHurtTarget(Entity entityIn) {
 		if (super.doHurtTarget(entityIn)) {
 			if (random.nextDouble() < 0.15 && entityIn instanceof Player)
-				((Player) entityIn).addEffect(new MobEffectInstance(ModEffects.BLOOD_DRAINED, 20 * 60));
+				((Player) entityIn).addEffect(new MobEffectInstance(ModEffects.BLOOD_DRAINED.get(), 20 * 60));
 			return true;
 		}
 		return false;

@@ -34,7 +34,7 @@ public class RunePortalParticleData implements ParticleOptions {
 
 	@Override
 	public ParticleType<?> getType() {
-		return ModParticles.RUNE_PORTAL;
+		return ModParticles.RUNE_PORTAL.get();
 	}
 
 	@Override

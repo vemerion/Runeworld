@@ -29,7 +29,7 @@ public class BloodDropParticle extends TextureSheetParticle {
 		super.tick();
 
 		if (onGround) {
-			level.addParticle(ModParticles.BLOOD_SPLASH, x, y + 1, z, 0, 0, 0);
+			level.addParticle(ModParticles.BLOOD_SPLASH.get(), x, y + 1, z, 0, 0, 0);
 			remove();
 		}
 	}

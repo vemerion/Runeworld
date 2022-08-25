@@ -61,10 +61,10 @@ public class ClientModEventSubscriber {
 	public static void onRegisterParticleFactory(ParticleFactoryRegisterEvent event) {
 		Minecraft mc = Minecraft.getInstance();
 
-		mc.particleEngine.register(ModParticles.DRIPPING_BLOOD, (s) -> new DrippingBloodProvider(s));
-		mc.particleEngine.register(ModParticles.RUNE_PORTAL, (s) -> new RunePortalParticle.Provider(s));
-		mc.particleEngine.register(ModParticles.BLOOD_DROP, (s) -> new BloodDropParticle.Provider(s));
-		mc.particleEngine.register(ModParticles.BLOOD_SPLASH, (s) -> new BloodSplashParticle.Provider(s));
+		mc.particleEngine.register(ModParticles.DRIPPING_BLOOD.get(), (s) -> new DrippingBloodProvider(s));
+		mc.particleEngine.register(ModParticles.RUNE_PORTAL.get(), (s) -> new RunePortalParticle.Provider(s));
+		mc.particleEngine.register(ModParticles.BLOOD_DROP.get(), (s) -> new BloodDropParticle.Provider(s));
+		mc.particleEngine.register(ModParticles.BLOOD_SPLASH.get(), (s) -> new BloodSplashParticle.Provider(s));
 	}
 
 	@SubscribeEvent
@@ -112,7 +112,7 @@ public class ClientModEventSubscriber {
 	
 	@SubscribeEvent
 	public static void onRegisterEntityRenderers(EntityRenderersEvent.RegisterRenderers event) {
-		event.registerBlockEntityRenderer(ModBlockEntities.BLOOD_LEECH, BloodLeechBlockEntityRenderer::new);
+		event.registerBlockEntityRenderer(ModBlockEntities.BLOOD_LEECH.get(), BloodLeechBlockEntityRenderer::new);
 		
 		event.registerEntityRenderer(ModEntities.MOSQUITO.get(), MosquitoRenderer::new);
 		event.registerEntityRenderer(ModEntities.BLOOD_BAT.get(), BloodBatRenderer::new);

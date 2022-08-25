@@ -132,7 +132,7 @@ public class MosquitoEntity extends PathfinderMob implements FlyingAnimal {
 	public boolean doHurtTarget(Entity entityIn) {
 		if (super.doHurtTarget(entityIn)) {
 			if (random.nextDouble() < 0.1 && entityIn instanceof Player)
-				((Player) entityIn).addEffect(new MobEffectInstance(ModEffects.BLOOD_DRAINED, 20 * 45));
+				((Player) entityIn).addEffect(new MobEffectInstance(ModEffects.BLOOD_DRAINED.get(), 20 * 45));
 			return true;
 		}
 		return false;

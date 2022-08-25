@@ -41,7 +41,7 @@ public class BloodFluid {
 
 		@Override
 		protected ParticleOptions getDripParticle() {
-			return ModParticles.DRIPPING_BLOOD;
+			return ModParticles.DRIPPING_BLOOD.get();
 		}
 	}
 
@@ -52,7 +52,7 @@ public class BloodFluid {
 
 		@Override
 		protected ParticleOptions getDripParticle() {
-			return ModParticles.DRIPPING_BLOOD;
+			return ModParticles.DRIPPING_BLOOD.get();
 		}
 
 		@Override

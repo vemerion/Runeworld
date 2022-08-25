@@ -16,7 +16,7 @@ public class BloodBatToothItem extends Item {
 
 	@Override
 	public boolean hurtEnemy(ItemStack stack, LivingEntity target, LivingEntity attacker) {
-		target.addEffect(new MobEffectInstance(ModEffects.BLOOD_DRAINED, 20 * 60));
+		target.addEffect(new MobEffectInstance(ModEffects.BLOOD_DRAINED.get(), 20 * 60));
 		stack.hurtAndBreak(1, attacker, (entity) -> {
 			entity.broadcastBreakEvent(EquipmentSlot.MAINHAND);
 		});
