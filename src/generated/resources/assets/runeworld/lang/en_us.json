@@ -105,5 +105,6 @@
   "item.runeworld.mosquito_eggs": "Mosquito Eggs",
   "item.runeworld.mosquito_spawn_egg": "Mosquito Spawn Egg",
   "item.runeworld.tick_spawn_egg": "Tick Spawn Egg",
-  "itemGroup.runeworld": "Runeworld"
+  "itemGroup.runeworld": "Runeworld",
+  "runeworld.filled_map.blood_monkey_tunnels": "Blood Monkey Tunnels Explorer Map"
 }

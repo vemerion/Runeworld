@@ -8,6 +8,7 @@ import mod.vemerion.runeworld.init.ModBlocks;
 import mod.vemerion.runeworld.init.ModEffects;
 import mod.vemerion.runeworld.init.ModEntities;
 import mod.vemerion.runeworld.init.ModItems;
+import mod.vemerion.runeworld.structure.BloodMonkeyTunnelsStructure;
 import net.minecraft.data.DataGenerator;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.level.biome.Biome;
@@ -70,6 +71,8 @@ public class ModLanguageProvider extends LanguageProvider {
 		
 		addDamageSource(FleshEatingPlantFlowerBlock.DAMAGE_SOURCE, "%s was eaten by a plant");
 		addDamageSourcePlayer(FleshEatingPlantFlowerBlock.DAMAGE_SOURCE, "%s was eaten by a plant whilst trying to escape %s");
+		
+		add(BloodMonkeyTunnelsStructure.translationKey(), "Blood Monkey Tunnels Explorer Map");
 
 		add("itemGroup." + Main.MODID, "Runeworld");
 		add("item." + Main.MODID + "." + ModItems.BLOOD_CROWN.getId().getPath() + ".description", "Majestic");

@@ -43,14 +43,15 @@ public class EventSubscriber {
 			dataGenerator.addProvider(new ModSoundProvider(dataGenerator, existingFileHelper));
 		}
 		if (event.includeServer()) {
-			BlockTagsProvider blockTagsProvider = new ModBlockTagsProvider(dataGenerator, existingFileHelper);
+			BlockTagsProvider blockTagsProvider = new ModTagsProviders.ModBlockTagsProvider(dataGenerator, existingFileHelper);
 
 			dataGenerator.addProvider(new ModRecipeProvider(dataGenerator));
 			dataGenerator.addProvider(new ModLootModifierProvider(dataGenerator));
-			dataGenerator.addProvider(new ModFluidTagsProvider(dataGenerator, existingFileHelper));
+			dataGenerator.addProvider(new ModTagsProviders.ModFluidTagsProvider(dataGenerator, existingFileHelper));
 			dataGenerator.addProvider(blockTagsProvider);
-			dataGenerator.addProvider(new ModItemTagsProvider(dataGenerator, blockTagsProvider, existingFileHelper));
-			dataGenerator.addProvider(new ModBiomeTagsProvider(dataGenerator, blockTagsProvider, existingFileHelper));
+			dataGenerator.addProvider(new ModTagsProviders.ModItemTagsProvider(dataGenerator, blockTagsProvider, existingFileHelper));
+			dataGenerator.addProvider(new ModTagsProviders.ModBiomeTagsProvider(dataGenerator, existingFileHelper));
+			dataGenerator.addProvider(new ModTagsProviders.ModStructureTagsProvider(dataGenerator, existingFileHelper));
 			dataGenerator.addProvider(RuneswordAPI.guide.guideProvider(dataGenerator, Main.MODID, "guide", ModGuide.getStartChapter()));
 			dataGenerator.addProvider(new LootTableProvider(dataGenerator) {
 				@Override
