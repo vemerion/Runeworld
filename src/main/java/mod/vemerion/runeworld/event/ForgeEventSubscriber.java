@@ -7,9 +7,15 @@ import mod.vemerion.runeworld.helpers.Helper;
 import mod.vemerion.runeworld.init.ModSounds;
 import mod.vemerion.runeworld.init.Runesword;
 import net.minecraft.core.BlockPos;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.sounds.SoundSource;
+import net.minecraft.world.InteractionHand;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
+import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.block.JigsawBlock;
+import net.minecraft.world.level.block.entity.JigsawBlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraftforge.common.Tags;
 import net.minecraftforge.event.TickEvent.Phase;
@@ -27,6 +33,41 @@ public class ForgeEventSubscriber {
 //	public static void onBiomeLoad(BiomeLoadingEvent event) {
 //		event.getGeneration().withFeature(GenerationStage.Decoration.LAKES, ModConfiguredFeatures.BLOOD_POOL);
 //	}
+
+	// Quickly set jigsaw values
+	// TODO: Remove before release
+	@SubscribeEvent
+	public static void quickUpdateJigsaw(PlayerInteractEvent.RightClickBlock event) {
+		var level = event.getPlayer().level;
+		var pos = event.getHitVec().getBlockPos();
+		var state = level.getBlockState(pos);
+		if (state.getBlock() == Blocks.JIGSAW) {
+			if (level.getBlockEntity(pos) instanceof JigsawBlockEntity jigsaw) {
+				var item = event.getPlayer().getItemInHand(InteractionHand.MAIN_HAND).getItem();
+				boolean handled = false;
+				if (item == Items.DIRT) {
+					setJigsawProperties(jigsaw, null, "bottom", "bottom", "runeworld:blood_pillar_small");
+					handled = true;
+				} else if (item == Items.STONE) {
+					setJigsawProperties(jigsaw, "blood_monkey_tunnels/rooms", "connection", "connection", "minecraft:air");
+					handled = true;
+				} else if (item == Items.COBBLESTONE) {
+					level.setBlock(pos, state.cycle(JigsawBlock.ORIENTATION), 3);
+					handled = true;
+				}
+				event.setCanceled(handled);
+			}
+		}
+	}
+
+	private static void setJigsawProperties(JigsawBlockEntity jigsaw, String pool, String name, String target, String finalState) {
+		if (pool != null)
+			jigsaw.setPool(new ResourceLocation(Main.MODID, pool));
+		jigsaw.setName(new ResourceLocation(Main.MODID, name));
+		jigsaw.setTarget(new ResourceLocation(Main.MODID, target));
+		jigsaw.setFinalState(finalState);
+		jigsaw.setChanged();
+	}
 
 	@SubscribeEvent
 	public static void createPortal(PlayerInteractEvent.RightClickBlock event) {

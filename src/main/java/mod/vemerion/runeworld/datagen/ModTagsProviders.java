@@ -66,6 +66,7 @@ public class ModTagsProviders {
 		@Override
 		protected void addTags() {
 			tag(FluidTags.WATER).add(ModFluids.BLOOD.get(), ModFluids.BLOOD_FLOWING.get());
+			tag(ModFluids.BLOOD_TAG).add(ModFluids.BLOOD.get(), ModFluids.BLOOD_FLOWING.get());
 		}
 
 	}

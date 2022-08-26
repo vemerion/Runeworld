@@ -62,6 +62,9 @@ public class FleshEatingPlantFlowerBlock extends FleshEatingPlantBlock {
 	}
 
 	public BlockPos expand(BlockState state, LevelAccessor pLevel, BlockPos pPos) {
+		if (!(state.getBlock() instanceof FleshEatingPlantBlock))
+			return pPos;
+		
 		var directions = new ArrayList<Direction>();
 		for (var direction : Direction.values()) {
 			directions.add(direction);

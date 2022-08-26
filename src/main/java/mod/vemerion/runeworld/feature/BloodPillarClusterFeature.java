@@ -46,7 +46,7 @@ public class BloodPillarClusterFeature extends Feature<NoneFeatureConfiguration>
 		BloodMonkeyEntity monkey = ModEntities.BLOOD_MONKEY.get().create(reader.getLevel());
 		Vec3 position = Vec3.atBottomCenterOf(p);
 		monkey.absMoveTo(position.x, position.y, position.z, rand.nextFloat() * 360, 0);
-		monkey.finalizeSpawn(reader, reader.getCurrentDifficultyAt(p), MobSpawnType.STRUCTURE, null, null);
+		monkey.finalizeSpawn(reader, reader.getCurrentDifficultyAt(p), MobSpawnType.NATURAL, null, null);
 		reader.addFreshEntityWithPassengers(monkey);
 	}
 

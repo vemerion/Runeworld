@@ -89,11 +89,15 @@ public class BloodMonkeyEntity extends Monster implements RangedAttackMob {
 	public SpawnGroupData finalizeSpawn(ServerLevelAccessor pLevel, DifficultyInstance pDifficulty,
 			MobSpawnType pReason, SpawnGroupData pSpawnData, CompoundTag pDataTag) {
 
-		if (random.nextDouble() < 0.1) {
+		if (pReason != MobSpawnType.STRUCTURE && random.nextDouble() < 0.1) {
 			setItemSlot(EquipmentSlot.MAINHAND, new ItemStack(Items.IRON_SWORD));
 		}
-
-		if (random.nextDouble() < TICK_CHANCE) {
+		
+		var tickChance = TICK_CHANCE;
+		if (pReason == MobSpawnType.STRUCTURE)
+			tickChance *= 5;
+		
+		if (random.nextDouble() < tickChance) {
 			for (int i = 0; i <= random.nextInt(MAX_PASSENGER_COUNT); i++) {
 				var tick = new TickEntity(ModEntities.TICK.get(), level);
 				tick.setPos(position());

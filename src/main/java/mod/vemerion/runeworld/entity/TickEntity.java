@@ -1,6 +1,7 @@
 package mod.vemerion.runeworld.entity;
 
 import mod.vemerion.runeworld.helpers.Helper;
+import mod.vemerion.runeworld.init.ModFluids;
 import mod.vemerion.runeworld.init.ModParticles;
 import mod.vemerion.runeworld.init.ModSounds;
 import net.minecraft.nbt.CompoundTag;
@@ -60,6 +61,11 @@ public class TickEntity extends Monster {
 		goalSelector.addGoal(1, new RandomLookAroundGoal(this));
 		targetSelector.addGoal(0, new HurtByTargetGoal(this));
 		targetSelector.addGoal(1, new NearestAttackableTargetGoal<>(this, Player.class, true));
+	}
+	
+	@Override
+	public boolean canBreatheUnderwater() {
+		return isEyeInFluid(ModFluids.BLOOD_TAG);
 	}
 	
 	@Override
