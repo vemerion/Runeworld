@@ -86,6 +86,11 @@ public class TickEntity extends Monster {
 	public boolean onClimbable() {
 		return true;
 	}
+	
+	@Override
+	public boolean isIgnoringBlockTriggers() {
+		return true;
+	}
 
 	@Override
 	protected void defineSynchedData() {

@@ -46,7 +46,7 @@ public class ForgeEventSubscriber {
 				var item = event.getPlayer().getItemInHand(InteractionHand.MAIN_HAND).getItem();
 				boolean handled = false;
 				if (item == Items.DIRT) {
-					setJigsawProperties(jigsaw, null, "bottom", "bottom", "runeworld:blood_pillar_small");
+					setJigsawProperties(jigsaw, "blood_monkey_tunnels/mobs/mosquito", "bottom", "bottom", "minecraft:air");
 					handled = true;
 				} else if (item == Items.STONE) {
 					setJigsawProperties(jigsaw, "blood_monkey_tunnels/rooms", "connection", "connection", "minecraft:air");

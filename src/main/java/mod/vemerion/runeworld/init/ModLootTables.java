@@ -10,4 +10,5 @@ public class ModLootTables {
 	public static final ResourceLocation BLOOD_FISHING_JUNK = new ResourceLocation(Main.MODID, "gameplay/fishing/blood_junk");
 	public static final ResourceLocation BLOOD_FISHING_TREASURE = new ResourceLocation(Main.MODID, "gameplay/fishing/blood_treasure");
 	public static final ResourceLocation CHEST_BLOOD_BAT_LAIR = new ResourceLocation(Main.MODID, "chests/blood_bat_lair");
+	public static final ResourceLocation BLOOD_MONKEY_TUNNELS_TREASURE = new ResourceLocation(Main.MODID, "chests/blood_monkey_tunnels/treasure");
 }

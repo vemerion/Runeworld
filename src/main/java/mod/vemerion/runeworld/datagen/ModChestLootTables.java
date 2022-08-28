@@ -41,5 +41,7 @@ public class ModChestLootTables extends ChestLoot {
 										.apply(SetItemCountFunction.setCount(UniformGenerator.between(2, 4))))
 								.add(LootItem.lootTableItem(ModBlocks.BLOOD_CRYSTAL.get()).setWeight(10)
 										.apply(SetItemCountFunction.setCount(UniformGenerator.between(4, 6))))));
+
+		consumer.accept(ModLootTables.BLOOD_MONKEY_TUNNELS_TREASURE, LootTable.lootTable().withPool(LootPool.lootPool().setRolls(ConstantValue.exactly(1)).add(LootItem.lootTableItem(Items.DIAMOND))));
 	}
 }
