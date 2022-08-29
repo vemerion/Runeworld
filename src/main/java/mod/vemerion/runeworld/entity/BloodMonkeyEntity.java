@@ -6,6 +6,7 @@ import mod.vemerion.runeworld.init.ModEntities;
 import mod.vemerion.runeworld.init.ModSounds;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.util.Mth;
 import net.minecraft.world.DifficultyInstance;
@@ -58,6 +59,13 @@ public class BloodMonkeyEntity extends Monster implements RangedAttackMob {
 	public static AttributeSupplier.Builder attributes() {
 		return Mob.createMobAttributes().add(Attributes.MAX_HEALTH, 20).add(Attributes.MOVEMENT_SPEED, 0.25)
 				.add(Attributes.FOLLOW_RANGE, 16).add(Attributes.ATTACK_DAMAGE, 3);
+	}
+	
+	public static void spawn(ServerLevel level, Vec3 pos, MobSpawnType reason) {
+		var monkey = new BloodMonkeyEntity(ModEntities.BLOOD_MONKEY.get(), level);
+		monkey.setPos(pos);
+		monkey.finalizeSpawn(level, level.getCurrentDifficultyAt(monkey.blockPosition()), reason, null, null);
+		level.addFreshEntityWithPassengers(monkey);
 	}
 
 	@Override

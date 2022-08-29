@@ -2,15 +2,21 @@ package mod.vemerion.runeworld.item;
 
 import com.google.common.collect.ImmutableList;
 
+import mod.vemerion.runeworld.Main;
+import mod.vemerion.runeworld.entity.BloodMonkeyEntity;
 import mod.vemerion.runeworld.init.ModConfiguredStructures;
+import mod.vemerion.runeworld.init.ModEffects;
 import mod.vemerion.runeworld.structure.BloodMonkeyTunnelsStructure;
 import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.util.Mth;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResultHolder;
+import net.minecraft.world.damagesource.DamageSource;
+import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.entity.ExperienceOrb;
 import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.MobSpawnType;
 import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.CreativeModeTab;
@@ -26,6 +32,9 @@ import net.minecraft.world.level.saveddata.maps.MapItemSavedData;
 import net.minecraft.world.phys.Vec3;
 
 public class MonkeyPawItem extends Item {
+
+	public static final DamageSource DAMAGE_SOURCE = new DamageSource(Main.MODID + ".monkey_paw");
+	private static final int CURSE_DURATION = 20 * 60 * 15;
 
 	public MonkeyPawItem() {
 		super(new Item.Properties().tab(CreativeModeTab.TAB_SEARCH).durability(3).rarity(Rarity.UNCOMMON)
@@ -61,9 +70,20 @@ public class MonkeyPawItem extends Item {
 		var serverLevel = (ServerLevel) level;
 
 		switch (rand.nextInt(6)) {
-		case 0:
-		case 1:
-		case 2:
+		case 0: // Monkey curse
+			entity.addEffect(new MobEffectInstance(ModEffects.MONKEY_CURSE.get(), CURSE_DURATION, 0));
+			break;
+		case 1: // Instant death
+			entity.hurt(DAMAGE_SOURCE, Float.MAX_VALUE);
+			break;
+		case 2: {// Spawn monkeys
+			for (int i = 0; i < 20; i++) {
+				var pos = entity.position()
+						.add(new Vec3(1, 0, 0).yRot(rand.nextFloat() * Mth.TWO_PI).scale(rand.nextDouble() * 10));
+				BloodMonkeyEntity.spawn(serverLevel, pos, MobSpawnType.MOB_SUMMONED);
+			}
+			break;
+		}
 		case 3: { // Create treasure map to blood monkey tunnels
 			var pos = serverLevel.findNearestMapFeature(ModConfiguredStructures.BLOOD_MONKEY_TUNNELS_TAG,
 					entity.blockPosition(), 100, true);

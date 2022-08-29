@@ -8,6 +8,7 @@ import mod.vemerion.runeworld.init.ModBlocks;
 import mod.vemerion.runeworld.init.ModEffects;
 import mod.vemerion.runeworld.init.ModEntities;
 import mod.vemerion.runeworld.init.ModItems;
+import mod.vemerion.runeworld.item.MonkeyPawItem;
 import mod.vemerion.runeworld.structure.BloodMonkeyTunnelsStructure;
 import net.minecraft.data.DataGenerator;
 import net.minecraft.world.damagesource.DamageSource;
@@ -57,6 +58,7 @@ public class ModLanguageProvider extends LanguageProvider {
 		add(ModItems.BLOOD_CROWN.get(), "Blood Crown");
 		add(ModItems.MONKEY_PAW.get(), "Monkey's Paw");
 		add(ModEffects.BLOOD_DRAINED.get(), "Blood Drained");
+		add(ModEffects.MONKEY_CURSE.get(), "Monkey's Curse");
 		add(ModBiomes.BLOOD_PLAINS.get(), "Blood Plains");
 		add(ModBiomes.FIRE_PLAINS.get(), "Fire Plains");
 		add(ModEntities.MOSQUITO.get(), "Mosquito");
@@ -71,6 +73,8 @@ public class ModLanguageProvider extends LanguageProvider {
 		
 		addDamageSource(FleshEatingPlantFlowerBlock.DAMAGE_SOURCE, "%s was eaten by a plant");
 		addDamageSourcePlayer(FleshEatingPlantFlowerBlock.DAMAGE_SOURCE, "%s was eaten by a plant whilst trying to escape %s");
+		addDamageSource(MonkeyPawItem.DAMAGE_SOURCE, "%s got the short end of the stick when using the Monkey's Paw");
+		addDamageSourcePlayer(MonkeyPawItem.DAMAGE_SOURCE, "%s was cursed to death whilst trying to escape %s");
 		
 		add(BloodMonkeyTunnelsStructure.translationKey(), "Blood Monkey Tunnels Explorer Map");
 

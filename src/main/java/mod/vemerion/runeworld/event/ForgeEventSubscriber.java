@@ -4,6 +4,7 @@ import mod.vemerion.runeworld.Main;
 import mod.vemerion.runeworld.block.RunePortalBlock;
 import mod.vemerion.runeworld.capability.RuneTeleport;
 import mod.vemerion.runeworld.helpers.Helper;
+import mod.vemerion.runeworld.init.ModEffects;
 import mod.vemerion.runeworld.init.ModSounds;
 import mod.vemerion.runeworld.init.Runesword;
 import net.minecraft.core.BlockPos;
@@ -20,6 +21,7 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraftforge.common.Tags;
 import net.minecraftforge.event.TickEvent.Phase;
 import net.minecraftforge.event.TickEvent.PlayerTickEvent;
+import net.minecraftforge.event.entity.player.PlayerEvent;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod.EventBusSubscriber;
@@ -95,5 +97,13 @@ public class ForgeEventSubscriber {
 		if (player.level.isClientSide || event.phase == Phase.END)
 			return;
 		RuneTeleport.getRuneTeleport(player).ifPresent(tp -> tp.tick(player));
+	}
+	
+	@SubscribeEvent
+	public static void persistMonkeyCurse(PlayerEvent.Clone event) {
+		Player original = event.getOriginal();
+		Player player = event.getPlayer();
+		if (original.hasEffect(ModEffects.MONKEY_CURSE.get()))
+			player.addEffect(original.getEffect(ModEffects.MONKEY_CURSE.get()));
 	}
 }
