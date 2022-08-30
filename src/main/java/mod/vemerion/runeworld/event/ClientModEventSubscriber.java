@@ -128,6 +128,10 @@ public class ClientModEventSubscriber {
 	private static void registerItemProperties() {
 		registerDislocator(ModItems.BLOOD_DISLOCATOR.get());
 		registerDislocator(ModItems.FIRE_DISLOCATOR.get());
+		ItemProperties.register(ModItems.SLINGSHOT.get(), new ResourceLocation(Main.MODID, "shooting"),
+				(stack, level, entity, seed) -> {
+					return entity == null || entity.getUseItem() != stack ? 0 : 0.5f;
+				});
 	}
 
 	private static void registerDislocator(DislocatorItem dislocator) {

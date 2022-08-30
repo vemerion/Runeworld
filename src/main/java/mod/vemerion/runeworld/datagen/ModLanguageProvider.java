@@ -57,6 +57,7 @@ public class ModLanguageProvider extends LanguageProvider {
 		add(ModItems.TICK_SPAWN_EGG.get(), "Tick Spawn Egg");
 		add(ModItems.BLOOD_CROWN.get(), "Blood Crown");
 		add(ModItems.MONKEY_PAW.get(), "Monkey's Paw");
+		add(ModItems.SLINGSHOT.get(), "Slingshot");
 		add(ModEffects.BLOOD_DRAINED.get(), "Blood Drained");
 		add(ModEffects.MONKEY_CURSE.get(), "Monkey's Curse");
 		add(ModBiomes.BLOOD_PLAINS.get(), "Blood Plains");

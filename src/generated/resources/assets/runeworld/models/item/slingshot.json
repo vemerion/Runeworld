@@ -1,0 +1,15 @@
+{
+  "parent": "minecraft:item/generated",
+  "textures": {
+    "layer0": "runeworld:item/slingshot_band",
+    "layer1": "runeworld:item/slingshot_handle"
+  },
+  "overrides": [
+    {
+      "predicate": {
+        "runeworld:shooting": 0.5
+      },
+      "model": "runeworld:item/slingshot_shooting"
+    }
+  ]
+}

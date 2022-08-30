@@ -1,0 +1,7 @@
+{
+  "parent": "minecraft:item/generated",
+  "textures": {
+    "layer0": "runeworld:item/slingshot_band_shooting",
+    "layer1": "runeworld:item/slingshot_handle"
+  }
+}

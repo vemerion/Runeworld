@@ -15,6 +15,7 @@ import mod.vemerion.runeworld.block.RunePortalBlock;
 import mod.vemerion.runeworld.init.ModFluids;
 import mod.vemerion.runeworld.item.DislocatorItem;
 import mod.vemerion.runeworld.item.MonkeyPawItem;
+import mod.vemerion.runeworld.item.SlingshotItem;
 import net.minecraft.client.Camera;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.GameRenderer;
@@ -41,11 +42,12 @@ import net.minecraftforge.fml.common.Mod.EventBusSubscriber.Bus;
 
 @EventBusSubscriber(bus = Bus.FORGE, modid = Main.MODID, value = Dist.CLIENT)
 public class ClientForgeEventSubscriber {
-	
+
 	private static boolean inBlood(Camera camera, Level level) {
 		var state = camera.getBlockAtCamera().getFluidState();
-		return state.getType().isSame(ModFluids.BLOOD.get()) && camera.getPosition().y < camera.getBlockPosition().getY()
-				+ state.getHeight(level, camera.getBlockPosition());
+		return state.getType().isSame(ModFluids.BLOOD.get())
+				&& camera.getPosition().y < camera.getBlockPosition().getY()
+						+ state.getHeight(level, camera.getBlockPosition());
 	}
 
 	@SubscribeEvent
@@ -118,7 +120,7 @@ public class ClientForgeEventSubscriber {
 		RenderSystem.enableDepthTest();
 		RenderSystem.setShaderColor(1, 1, 1, 1);
 	}
-	
+
 	@SubscribeEvent
 	public static void itemAnimations(RenderHandEvent event) {
 		var mc = Minecraft.getInstance();
@@ -126,7 +128,8 @@ public class ClientForgeEventSubscriber {
 		var stack = event.getItemStack();
 		var item = stack.getItem();
 		if (player.getUseItem().equals(stack)) {
-			if (!(item instanceof DislocatorItem) && !(item instanceof MonkeyPawItem))
+			if (!(item instanceof DislocatorItem) && !(item instanceof MonkeyPawItem)
+					&& !(item instanceof SlingshotItem))
 				return;
 
 			event.setCanceled(true);
@@ -134,7 +137,7 @@ public class ClientForgeEventSubscriber {
 			float partialTicks = event.getPartialTicks();
 			float count = player.getTicksUsingItem();
 			float time = count + partialTicks;
-			float progress = count / item.getUseDuration(stack);
+			float progress = time / item.getUseDuration(stack);
 			var side = event.getHand() == InteractionHand.MAIN_HAND ? player.getMainArm()
 					: player.getMainArm().getOpposite();
 			var transform = side == HumanoidArm.RIGHT ? TransformType.FIRST_PERSON_RIGHT_HAND
@@ -153,6 +156,14 @@ public class ClientForgeEventSubscriber {
 				poseStack.translate(side == HumanoidArm.RIGHT ? 0.55 : -0.55, -0.4, -0.7);
 				float size = Mth.sin(time * 0.7f) * 0.4f + 1;
 				poseStack.scale(size, size, size);
+				mc.getItemRenderer().renderStatic(player, stack, transform, false, event.getPoseStack(),
+						event.getMultiBufferSource(), player.level, event.getPackedLight(), OverlayTexture.NO_OVERLAY,
+						0);
+				poseStack.popPose();
+			} else if (item instanceof SlingshotItem) {
+				poseStack.pushPose();
+				poseStack.translate(side == HumanoidArm.RIGHT ? 0.55 : -0.55, -0.4, -1.0 + progress * 0.5);
+				poseStack.mulPose(new Quaternion(0, -70, -20, true));
 				mc.getItemRenderer().renderStatic(player, stack, transform, false, event.getPoseStack(),
 						event.getMultiBufferSource(), player.level, event.getPackedLight(), OverlayTexture.NO_OVERLAY,
 						0);

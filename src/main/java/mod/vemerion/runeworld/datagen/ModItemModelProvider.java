@@ -40,12 +40,14 @@ public class ModItemModelProvider extends ItemModelProvider {
 		simpleItem(ModItems.MONKEY_PAW.get());
 		dislocator(ModItems.BLOOD_DISLOCATOR.get());
 		dislocator(ModItems.FIRE_DISLOCATOR.get());
-		
+
 		ModItems.ITEMS.getEntries().forEach(item -> {
 			if (item.get() instanceof SpawnEggItem egg)
 				spawnEgg(egg);
 		});
-		
+
+		slingshot();
+
 		// Complex
 		stoneMaterial(ModBlocks.SPARKSTONE_MATERIAL);
 		stoneMaterial(ModBlocks.CHARRED_STONE_MATERIAL);
@@ -73,12 +75,26 @@ public class ModItemModelProvider extends ItemModelProvider {
 				modLoc(ITEM_FOLDER + "/" + name + "_dimension"));
 		ModelFile overworld = singleTexture(name + "_overworld", mcLoc(ITEM_FOLDER + "/generated"), "layer0",
 				modLoc(ITEM_FOLDER + "/" + name + "_overworld"));
-		singleTexture(name, mcLoc(ITEM_FOLDER + "/generated"), "layer0", modLoc(ITEM_FOLDER + "/" + name + "_dimension"))
-				.override().model(dim).predicate(property, 0).end().override().model(overworld).predicate(property, 0.75f)
-				.end();
+		singleTexture(name, mcLoc(ITEM_FOLDER + "/generated"), "layer0",
+				modLoc(ITEM_FOLDER + "/" + name + "_dimension")).override().model(dim).predicate(property, 0).end()
+				.override().model(overworld).predicate(property, 0.75f).end();
 	}
-	
+
+	private void slingshot() {
+		var name = ModItems.SLINGSHOT.get().getRegistryName().getPath();
+
+		var property = new ResourceLocation(Main.MODID, "shooting");
+		var shooting = withExistingParent(name + "_shooting", mcLoc(ITEM_FOLDER + "/generated"))
+				.texture("layer0", modLoc(ITEM_FOLDER + "/" + name + "_band_shooting"))
+				.texture("layer1", modLoc(ITEM_FOLDER + "/" + name + "_handle"));
+		withExistingParent(name, mcLoc(ITEM_FOLDER + "/generated"))
+				.texture("layer0", modLoc(ITEM_FOLDER + "/" + name + "_band"))
+				.texture("layer1", modLoc(ITEM_FOLDER + "/" + name + "_handle")).override().model(shooting)
+				.predicate(property, 0.5f).end();
+	}
+
 	private void stoneMaterial(StoneMaterial material) {
-		wallInventory(material.wall().getRegistryName().getPath(), modLoc(ModelProvider.BLOCK_FOLDER + "/" + material.getName()));
+		wallInventory(material.wall().getRegistryName().getPath(),
+				modLoc(ModelProvider.BLOCK_FOLDER + "/" + material.getName()));
 	}
 }
