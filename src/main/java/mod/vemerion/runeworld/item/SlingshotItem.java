@@ -2,6 +2,7 @@ package mod.vemerion.runeworld.item;
 
 import java.util.function.Predicate;
 
+import mod.vemerion.runeworld.init.ModEnchantments;
 import mod.vemerion.runeworld.init.ModEntities;
 import mod.vemerion.runeworld.init.ModItems;
 import net.minecraft.world.InteractionHand;
@@ -14,6 +15,7 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.ProjectileWeaponItem;
 import net.minecraft.world.item.UseAnim;
+import net.minecraft.world.item.enchantment.EnchantmentHelper;
 import net.minecraft.world.level.Level;
 
 public class SlingshotItem extends ProjectileWeaponItem {
@@ -59,9 +61,19 @@ public class SlingshotItem extends ProjectileWeaponItem {
 				pebbles = ModItems.BLOOD_PEBBLE.get().getDefaultInstance();
 
 			float duration = getUseDuration(pStack);
-			float power = (duration - pTimeCharged) / duration + 0.3f;
+			float progress = (duration - pTimeCharged) / duration;
+			float power = progress + 0.3f;
 
 			var projectile = ModEntities.BLOOD_PEBBLE.get().create(pLevel);
+
+			var damage = Math.max(1, (int) (progress
+					* (2 + EnchantmentHelper.getItemEnchantmentLevel(ModEnchantments.ELASTIC.get(), pStack))));
+			projectile.setDamage(damage);
+			projectile.setBreakChance(
+					0.5f - EnchantmentHelper.getItemEnchantmentLevel(ModEnchantments.HARDNESS.get(), pStack) * 0.1f);
+			projectile.setReturnChance(
+					EnchantmentHelper.getItemEnchantmentLevel(ModEnchantments.RETENTION.get(), pStack) * 0.1f);
+
 			projectile.setOwner(player);
 			projectile.setPos(player.getX(), player.getEyeY() - 0.1f, player.getZ());
 			projectile.setItem(pebbles);
@@ -89,7 +101,7 @@ public class SlingshotItem extends ProjectileWeaponItem {
 	}
 
 	public int getUseDuration(ItemStack pStack) {
-		return MAX_DURATION;
+		return MAX_DURATION - EnchantmentHelper.getItemEnchantmentLevel(ModEnchantments.QUICK_DRAW.get(), pStack) * 2;
 	}
 
 	public UseAnim getUseAnimation(ItemStack pStack) {

@@ -9,6 +9,7 @@ import mod.vemerion.runeworld.init.ModBlocks;
 import mod.vemerion.runeworld.init.ModConfiguredFeatures;
 import mod.vemerion.runeworld.init.ModConfiguredStructures;
 import mod.vemerion.runeworld.init.ModEffects;
+import mod.vemerion.runeworld.init.ModEnchantments;
 import mod.vemerion.runeworld.init.ModEntities;
 import mod.vemerion.runeworld.init.ModFeatures;
 import mod.vemerion.runeworld.init.ModFluids;
@@ -50,5 +51,6 @@ public class Main {
 		ModBlockEntities.BLOCK_ENTITIES.register(bus);
 		ModEffects.EFFECTS.register(bus);
 		ModParticles.PARTICLES.register(bus);
+		ModEnchantments.ENCHANTMENTS.register(bus);
 	}
 }

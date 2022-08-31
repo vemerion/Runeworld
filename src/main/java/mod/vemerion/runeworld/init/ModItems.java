@@ -23,9 +23,11 @@ import net.minecraft.core.NonNullList;
 import net.minecraft.world.food.FoodProperties;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.CreativeModeTab;
+import net.minecraft.world.item.EnchantedBookItem;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Rarity;
+import net.minecraft.world.item.enchantment.EnchantmentInstance;
 import net.minecraft.world.level.block.Block;
 import net.minecraftforge.common.ForgeSpawnEggItem;
 import net.minecraftforge.event.RegistryEvent;
@@ -39,33 +41,53 @@ import net.minecraftforge.registries.RegistryObject;
 
 @EventBusSubscriber(bus = Bus.MOD, modid = Main.MODID)
 public class ModItems {
-	
-		public static final DeferredRegister<Item> ITEMS = DeferredRegister.create(ForgeRegistries.ITEMS, Main.MODID);
-		
-		public static final RegistryObject<Item> MOSQUITO_SPAWN_EGG = ITEMS.register("mosquito_spawn_egg", () -> new ForgeSpawnEggItem(ModEntities.MOSQUITO, Helper.color(100, 50, 0, 255), Helper.color(255, 0, 0, 255), (new Item.Properties()).tab(CreativeModeTab.TAB_SEARCH)));
-		public static final RegistryObject<Item> BLOOD_BAT_SPAWN_EGG = ITEMS.register("blood_bat_spawn_egg", () -> new ForgeSpawnEggItem(ModEntities.BLOOD_BAT, Helper.color(40, 40, 40, 255), Helper.color(255, 0, 0, 255), (new Item.Properties()).tab(CreativeModeTab.TAB_SEARCH)));
-		public static final RegistryObject<Item> BLOOD_MONKEY_SPAWN_EGG = ITEMS.register("blood_monkey_spawn_egg", () -> new ForgeSpawnEggItem(ModEntities.BLOOD_MONKEY, Helper.color(70, 30, 10, 255), Helper.color(215, 70, 70, 255), (new Item.Properties()).tab(CreativeModeTab.TAB_SEARCH)));
-		public static final RegistryObject<Item> BLOOD_GORILLA_SPAWN_EGG = ITEMS.register("blood_gorilla_spawn_egg", () -> new ForgeSpawnEggItem(ModEntities.BLOOD_GORILLA, 0x864141, 0x2a2a2a, (new Item.Properties()).tab(CreativeModeTab.TAB_SEARCH)));
-		public static final RegistryObject<Item> TICK_SPAWN_EGG = ITEMS.register("tick_spawn_egg", () -> new ForgeSpawnEggItem(ModEntities.TICK, 0xc9a160, 0x4d3d22, (new Item.Properties()).tab(CreativeModeTab.TAB_SEARCH)));
 
-		public static final RegistryObject<Item> BLOOD_BUCKET = ITEMS.register("blood_bucket", BloodBucketItem::new);
-		public static final RegistryObject<Item> BLOOD_PUDDING = ITEMS.register("blood_pudding", BloodPuddingItem::new);
-		public static final RegistryObject<Item> BLOOD_FLOWER = ITEMS.register("blood_flower", BloodFlowerItem::new);
-		public static final RegistryObject<Item> MOSQUITO_EGGS = ITEMS.register("mosquito_eggs", () -> new ThrowableItem(ModEntities.MOSQUITO_EGGS, 0.5));
-		public static final RegistryObject<Item> BLOOD_BAT_TOOTH = ITEMS.register("blood_bat_tooth", BloodBatToothItem::new);
-		public static final RegistryObject<Item> GUIDE = ITEMS.register("guide", () -> new GuideItem(new Item.Properties().tab(CreativeModeTab.TAB_SEARCH)));
-		public static final RegistryObject<Item> BLOOD_CRYSTALLITE = ITEMS.register("blood_crystallite", BloodCrystalliteItem::new);
-		public static final RegistryObject<DislocatorItem> BLOOD_DISLOCATOR = ITEMS.register("blood_dislocator", () -> new DislocatorItem(new Item.Properties().tab(CreativeModeTab.TAB_SEARCH), ModDimensions.BLOOD));
-		public static final RegistryObject<ThrowableItem> BLOOD_PEBBLE = ITEMS.register("blood_pebble", () -> new ThrowableItem(ModEntities.BLOOD_PEBBLE, 0.75));
-		public static final RegistryObject<Item> GRILLED_BLOOD_LEECH = ITEMS.register("grilled_blood_leech", () -> new Item(new Item.Properties().tab(CreativeModeTab.TAB_SEARCH)
-				.food(new FoodProperties.Builder().nutrition(4).saturationMod(0.4f).meat().build())));
-		public static final RegistryObject<Item> FIRE_HEART = ITEMS.register("fire_heart", () -> new Item(new Item.Properties().tab(CreativeModeTab.TAB_SEARCH).rarity(Rarity.UNCOMMON).fireResistant()));
-		public static final RegistryObject<DislocatorItem> FIRE_DISLOCATOR = ITEMS.register("fire_dislocator", () -> new DislocatorItem(new Item.Properties().tab(CreativeModeTab.TAB_SEARCH).durability(16).fireResistant(),
-				ModDimensions.FIRE));
-		public static final RegistryObject<Item> FIRE_ROOT = ITEMS.register("fire_root", FireRootItem::new);
-		public static final RegistryObject<Item> BLOOD_CROWN = ITEMS.register("blood_crown", BloodCrownItem::new);
-		public static final RegistryObject<Item> MONKEY_PAW = ITEMS.register("monkey_paw", MonkeyPawItem::new);
-		public static final RegistryObject<Item> SLINGSHOT = ITEMS.register("slingshot", SlingshotItem::new);
+	public static final DeferredRegister<Item> ITEMS = DeferredRegister.create(ForgeRegistries.ITEMS, Main.MODID);
+
+	public static final RegistryObject<Item> MOSQUITO_SPAWN_EGG = ITEMS.register("mosquito_spawn_egg",
+			() -> new ForgeSpawnEggItem(ModEntities.MOSQUITO, Helper.color(100, 50, 0, 255),
+					Helper.color(255, 0, 0, 255), (new Item.Properties()).tab(CreativeModeTab.TAB_SEARCH)));
+	public static final RegistryObject<Item> BLOOD_BAT_SPAWN_EGG = ITEMS.register("blood_bat_spawn_egg",
+			() -> new ForgeSpawnEggItem(ModEntities.BLOOD_BAT, Helper.color(40, 40, 40, 255),
+					Helper.color(255, 0, 0, 255), (new Item.Properties()).tab(CreativeModeTab.TAB_SEARCH)));
+	public static final RegistryObject<Item> BLOOD_MONKEY_SPAWN_EGG = ITEMS.register("blood_monkey_spawn_egg",
+			() -> new ForgeSpawnEggItem(ModEntities.BLOOD_MONKEY, Helper.color(70, 30, 10, 255),
+					Helper.color(215, 70, 70, 255), (new Item.Properties()).tab(CreativeModeTab.TAB_SEARCH)));
+	public static final RegistryObject<Item> BLOOD_GORILLA_SPAWN_EGG = ITEMS.register("blood_gorilla_spawn_egg",
+			() -> new ForgeSpawnEggItem(ModEntities.BLOOD_GORILLA, 0x864141, 0x2a2a2a,
+					(new Item.Properties()).tab(CreativeModeTab.TAB_SEARCH)));
+	public static final RegistryObject<Item> TICK_SPAWN_EGG = ITEMS.register("tick_spawn_egg",
+			() -> new ForgeSpawnEggItem(ModEntities.TICK, 0xc9a160, 0x4d3d22,
+					(new Item.Properties()).tab(CreativeModeTab.TAB_SEARCH)));
+
+	public static final RegistryObject<Item> BLOOD_BUCKET = ITEMS.register("blood_bucket", BloodBucketItem::new);
+	public static final RegistryObject<Item> BLOOD_PUDDING = ITEMS.register("blood_pudding", BloodPuddingItem::new);
+	public static final RegistryObject<Item> BLOOD_FLOWER = ITEMS.register("blood_flower", BloodFlowerItem::new);
+	public static final RegistryObject<Item> MOSQUITO_EGGS = ITEMS.register("mosquito_eggs",
+			() -> new ThrowableItem(ModEntities.MOSQUITO_EGGS, 0.5));
+	public static final RegistryObject<Item> BLOOD_BAT_TOOTH = ITEMS.register("blood_bat_tooth",
+			BloodBatToothItem::new);
+	public static final RegistryObject<Item> GUIDE = ITEMS.register("guide",
+			() -> new GuideItem(new Item.Properties().tab(CreativeModeTab.TAB_SEARCH)));
+	public static final RegistryObject<Item> BLOOD_CRYSTALLITE = ITEMS.register("blood_crystallite",
+			BloodCrystalliteItem::new);
+	public static final RegistryObject<DislocatorItem> BLOOD_DISLOCATOR = ITEMS.register("blood_dislocator",
+			() -> new DislocatorItem(new Item.Properties().tab(CreativeModeTab.TAB_SEARCH), ModDimensions.BLOOD));
+	public static final RegistryObject<ThrowableItem> BLOOD_PEBBLE = ITEMS.register("blood_pebble",
+			() -> new ThrowableItem(() -> ModEntities.BLOOD_PEBBLE.get(), 0.75));
+	public static final RegistryObject<Item> GRILLED_BLOOD_LEECH = ITEMS.register("grilled_blood_leech",
+			() -> new Item(new Item.Properties().tab(CreativeModeTab.TAB_SEARCH)
+					.food(new FoodProperties.Builder().nutrition(4).saturationMod(0.4f).meat().build())));
+	public static final RegistryObject<Item> FIRE_HEART = ITEMS.register("fire_heart", () -> new Item(
+			new Item.Properties().tab(CreativeModeTab.TAB_SEARCH).rarity(Rarity.UNCOMMON).fireResistant()));
+	public static final RegistryObject<DislocatorItem> FIRE_DISLOCATOR = ITEMS.register("fire_dislocator",
+			() -> new DislocatorItem(
+					new Item.Properties().tab(CreativeModeTab.TAB_SEARCH).durability(16).fireResistant(),
+					ModDimensions.FIRE));
+	public static final RegistryObject<Item> FIRE_ROOT = ITEMS.register("fire_root", FireRootItem::new);
+	public static final RegistryObject<Item> BLOOD_CROWN = ITEMS.register("blood_crown", BloodCrownItem::new);
+	public static final RegistryObject<Item> MONKEY_PAW = ITEMS.register("monkey_paw", MonkeyPawItem::new);
+	public static final RegistryObject<Item> SLINGSHOT = ITEMS.register("slingshot", SlingshotItem::new);
 
 	static final CreativeModeTab ITEM_GROUP = new RuneworldItemGroup();
 
@@ -110,6 +132,11 @@ public class ModItems {
 					if (item.getRegistryName().getNamespace().equals(Main.MODID)) {
 						item.fillItemCategory(CreativeModeTab.TAB_SEARCH, items);
 					}
+			}
+
+			for (var enchantment : ModEnchantments.ENCHANTMENTS.getEntries()) {
+				items.add(EnchantedBookItem.createForEnchantment(
+						new EnchantmentInstance(enchantment.get(), enchantment.get().getMaxLevel())));
 			}
 		}
 	}

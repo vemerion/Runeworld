@@ -11,17 +11,22 @@ import net.minecraft.world.item.Item;
 import net.minecraft.network.protocol.Packet;
 import net.minecraft.core.particles.ItemParticleOption;
 import net.minecraft.core.particles.ParticleTypes;
+import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.EntityHitResult;
 import net.minecraft.world.phys.HitResult;
 import net.minecraft.world.phys.Vec3;
+import net.minecraftforge.items.ItemHandlerHelper;
 import net.minecraftforge.network.NetworkHooks;
 import net.minecraft.world.level.Level;
 
 public class BloodPebbleEntity extends ThrowableItemProjectile {
 
 	private boolean prevInWater;
+	private float breakChance = 0.5f;
+	private float returnChance = 0;
+	private int damage = 1;
 
 	public BloodPebbleEntity(LivingEntity livingEntityIn, Level worldIn) {
 		super(ModEntities.BLOOD_PEBBLE.get(), livingEntityIn, worldIn);
@@ -29,6 +34,21 @@ public class BloodPebbleEntity extends ThrowableItemProjectile {
 
 	public BloodPebbleEntity(EntityType<? extends BloodPebbleEntity> type, Level world) {
 		super(type, world);
+	}
+
+	public BloodPebbleEntity setDamage(int damage) {
+		this.damage = damage;
+		return this;
+	}
+
+	public BloodPebbleEntity setBreakChance(float breakChance) {
+		this.breakChance = breakChance;
+		return this;
+	}
+
+	public BloodPebbleEntity setReturnChance(float returnChance) {
+		this.returnChance = returnChance;
+		return this;
 	}
 
 	@Override
@@ -76,9 +96,6 @@ public class BloodPebbleEntity extends ThrowableItemProjectile {
 	protected void onHitEntity(EntityHitResult result) {
 		Entity target = result.getEntity();
 		if (!level.isClientSide) {
-			int damage = 4;
-			if (getOwner() instanceof Player)
-				damage = 1;
 			target.hurt(DamageSource.thrown(this, getOwner()), damage);
 		}
 	}
@@ -86,10 +103,34 @@ public class BloodPebbleEntity extends ThrowableItemProjectile {
 	private void drop() {
 		if (!level.isClientSide) {
 			discard();
-			if (random.nextDouble() < 0.9 && getOwner() instanceof Player) {
-				spawnAtLocation(getItem());
+			if (random.nextDouble() > breakChance) {
+				if (random.nextDouble() < returnChance && getOwner() instanceof Player player) {
+					ItemHandlerHelper.giveItemToPlayer(player, getItem());
+				} else {
+					spawnAtLocation(getItem());
+				}
 			}
 		}
+	}
+
+	@Override
+	public void addAdditionalSaveData(CompoundTag pCompound) {
+		super.addAdditionalSaveData(pCompound);
+		pCompound.putFloat("breakChance", breakChance);
+		pCompound.putFloat("returnChance", returnChance);
+		pCompound.putInt("damage", damage);
+	}
+
+	@Override
+	public void readAdditionalSaveData(CompoundTag pCompound) {
+		super.readAdditionalSaveData(pCompound);
+		if (pCompound.contains("breakChance"))
+			breakChance = pCompound.getFloat("breakChance");
+		if (pCompound.contains("returnChance"))
+			returnChance = pCompound.getFloat("returnChance");
+		if (pCompound.contains("damage"))
+			damage = pCompound.getInt("damage");
+
 	}
 
 	@Override

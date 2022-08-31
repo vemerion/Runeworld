@@ -60,7 +60,7 @@ public class BloodMonkeyEntity extends Monster implements RangedAttackMob {
 		return Mob.createMobAttributes().add(Attributes.MAX_HEALTH, 20).add(Attributes.MOVEMENT_SPEED, 0.25)
 				.add(Attributes.FOLLOW_RANGE, 16).add(Attributes.ATTACK_DAMAGE, 3);
 	}
-	
+
 	public static void spawn(ServerLevel level, Vec3 pos, MobSpawnType reason) {
 		var monkey = new BloodMonkeyEntity(ModEntities.BLOOD_MONKEY.get(), level);
 		monkey.setPos(pos);
@@ -100,11 +100,11 @@ public class BloodMonkeyEntity extends Monster implements RangedAttackMob {
 		if (pReason != MobSpawnType.STRUCTURE && random.nextDouble() < 0.1) {
 			setItemSlot(EquipmentSlot.MAINHAND, new ItemStack(Items.IRON_SWORD));
 		}
-		
+
 		var tickChance = TICK_CHANCE;
 		if (pReason == MobSpawnType.STRUCTURE)
 			tickChance *= 5;
-		
+
 		if (random.nextDouble() < tickChance) {
 			for (int i = 0; i <= random.nextInt(MAX_PASSENGER_COUNT); i++) {
 				var tick = new TickEntity(ModEntities.TICK.get(), level);
@@ -211,7 +211,7 @@ public class BloodMonkeyEntity extends Monster implements RangedAttackMob {
 	public void performRangedAttack(LivingEntity target, float distanceFactor) {
 		swing(InteractionHand.MAIN_HAND);
 		ThrowableItemProjectile projectile = random.nextDouble() < 0.1 ? new MosquitoEggsEntity(this, level)
-				: new BloodPebbleEntity(this, level);
+				: new BloodPebbleEntity(this, level).setBreakChance(1).setDamage(4).setReturnChance(0);
 		double x = target.getX() - getX();
 		double y = target.getEyeY() - 1.1f - projectile.getY();
 		double z = target.getZ() - getZ();

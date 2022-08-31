@@ -48,7 +48,7 @@ public class ModEntities {
 			() -> EntityType.Builder.<BloodMonkeyEntity>of(BloodMonkeyEntity::new, MobCategory.MONSTER).sized(1f, 1.6f)
 					.build(""));
 
-	public static final Supplier<EntityType<? extends ThrowableItemProjectile>> BLOOD_PEBBLE = ENTITIES.register("blood_pebble",
+	public static final Supplier<EntityType<BloodPebbleEntity>> BLOOD_PEBBLE = ENTITIES.register("blood_pebble",
 			() -> EntityType.Builder.<BloodPebbleEntity>of(BloodPebbleEntity::new, MobCategory.MISC).sized(0.25F, 0.25F)
 					.clientTrackingRange(4).updateInterval(10).build(""));
 

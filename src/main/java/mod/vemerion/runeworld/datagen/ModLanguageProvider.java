@@ -6,6 +6,7 @@ import mod.vemerion.runeworld.block.complex.StoneMaterial;
 import mod.vemerion.runeworld.init.ModBiomes;
 import mod.vemerion.runeworld.init.ModBlocks;
 import mod.vemerion.runeworld.init.ModEffects;
+import mod.vemerion.runeworld.init.ModEnchantments;
 import mod.vemerion.runeworld.init.ModEntities;
 import mod.vemerion.runeworld.init.ModItems;
 import mod.vemerion.runeworld.item.MonkeyPawItem;
@@ -71,6 +72,10 @@ public class ModLanguageProvider extends LanguageProvider {
 		add(ModEntities.FIRE_ELEMENTAL_PROJECTILE.get(), "Fire Elemental Projectile");
 		add(ModEntities.BLOOD_GORILLA.get(), "Blood Gorilla");
 		add(ModEntities.TICK.get(), "Tick");
+		add(ModEnchantments.ELASTIC.get(), "Elastic");
+		add(ModEnchantments.HARDNESS.get(), "Hardness");
+		add(ModEnchantments.QUICK_DRAW.get(), "Quick Draw");
+		add(ModEnchantments.RETENTION.get(), "Retention");
 		
 		addDamageSource(FleshEatingPlantFlowerBlock.DAMAGE_SOURCE, "%s was eaten by a plant");
 		addDamageSourcePlayer(FleshEatingPlantFlowerBlock.DAMAGE_SOURCE, "%s was eaten by a plant whilst trying to escape %s");
