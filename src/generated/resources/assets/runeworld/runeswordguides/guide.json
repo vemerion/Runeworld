@@ -187,6 +187,66 @@
             }
           ],
           "children": []
+        },
+        {
+          "image_icon": "runeworld:textures/mob_effect/monkey_curse.png",
+          "title": {
+            "type": "header",
+            "key": "guide.runeworld.blood_world.blood_monkey_tunnels"
+          },
+          "components": [
+            {
+              "type": "paragraph",
+              "key": "guide.runeworld.blood_world.blood_monkey_tunnels.text1"
+            },
+            {
+              "type": "paragraph",
+              "key": "guide.runeworld.blood_world.blood_monkey_tunnels.text2"
+            }
+          ],
+          "children": []
+        },
+        {
+          "item_icon": "minecraft:enchanted_book",
+          "title": {
+            "type": "header",
+            "key": "guide.runeworld.blood_world.blood_enchantments"
+          },
+          "components": [
+            {
+              "type": "header",
+              "key": "guide.runeworld.blood_world.blood_enchantments.quick_draw"
+            },
+            {
+              "type": "paragraph",
+              "key": "guide.runeworld.blood_world.blood_enchantments.quick_draw.text"
+            },
+            {
+              "type": "header",
+              "key": "guide.runeworld.blood_world.blood_enchantments.retention"
+            },
+            {
+              "type": "paragraph",
+              "key": "guide.runeworld.blood_world.blood_enchantments.retention.text"
+            },
+            {
+              "type": "header",
+              "key": "guide.runeworld.blood_world.blood_enchantments.hardness"
+            },
+            {
+              "type": "paragraph",
+              "key": "guide.runeworld.blood_world.blood_enchantments.hardness.text"
+            },
+            {
+              "type": "header",
+              "key": "guide.runeworld.blood_world.blood_enchantments.elastic"
+            },
+            {
+              "type": "paragraph",
+              "key": "guide.runeworld.blood_world.blood_enchantments.elastic.text"
+            }
+          ],
+          "children": []
         }
       ]
     },

@@ -43,5 +43,6 @@ public class ModChestLootTables extends ChestLoot {
 										.apply(SetItemCountFunction.setCount(UniformGenerator.between(4, 6))))));
 
 		consumer.accept(ModLootTables.BLOOD_MONKEY_TUNNELS_TREASURE, LootTable.lootTable().withPool(LootPool.lootPool().setRolls(ConstantValue.exactly(1)).add(LootItem.lootTableItem(Items.DIAMOND))));
+		consumer.accept(ModLootTables.BLOOD_MONKEY_TUNNELS_COMMON, LootTable.lootTable().withPool(LootPool.lootPool().setRolls(ConstantValue.exactly(2)).add(LootItem.lootTableItem(Items.DIAMOND))));
 	}
 }

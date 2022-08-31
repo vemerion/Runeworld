@@ -76,12 +76,13 @@ public class ModLanguageProvider extends LanguageProvider {
 		add(ModEnchantments.HARDNESS.get(), "Hardness");
 		add(ModEnchantments.QUICK_DRAW.get(), "Quick Draw");
 		add(ModEnchantments.RETENTION.get(), "Retention");
-		
+
 		addDamageSource(FleshEatingPlantFlowerBlock.DAMAGE_SOURCE, "%s was eaten by a plant");
-		addDamageSourcePlayer(FleshEatingPlantFlowerBlock.DAMAGE_SOURCE, "%s was eaten by a plant whilst trying to escape %s");
+		addDamageSourcePlayer(FleshEatingPlantFlowerBlock.DAMAGE_SOURCE,
+				"%s was eaten by a plant whilst trying to escape %s");
 		addDamageSource(MonkeyPawItem.DAMAGE_SOURCE, "%s got the short end of the stick when using the Monkey's Paw");
 		addDamageSourcePlayer(MonkeyPawItem.DAMAGE_SOURCE, "%s was cursed to death whilst trying to escape %s");
-		
+
 		add(BloodMonkeyTunnelsStructure.translationKey(), "Blood Monkey Tunnels Explorer Map");
 
 		add("itemGroup." + Main.MODID, "Runeworld");
@@ -96,11 +97,11 @@ public class ModLanguageProvider extends LanguageProvider {
 		// Guide
 		guide();
 	}
-	
+
 	private void addDamageSource(DamageSource source, String text) {
 		add("death.attack." + source.getMsgId(), text);
 	}
-	
+
 	private void addDamageSourcePlayer(DamageSource source, String text) {
 		add("death.attack." + source.getMsgId() + ".player", text);
 	}
@@ -159,7 +160,7 @@ public class ModLanguageProvider extends LanguageProvider {
 				"When killed, they drop their pesky blood pebbles. They can be used to skip stones. Fun!");
 		addGuide("blood_world.mobs.blood_gorilla", "Blood Gorilla");
 		addGuide("blood_world.mobs.blood_gorilla.text1",
-				"The blood gorilla is a menacing type of ape, towering above most other creatures. They reside on giant thrones found throughout the blood world, and will remain calm unless provoked. Adventurers should be prepared before picking a fight with a blood gorilla, since they are both very resilient and hard-hitting.");
+				"The blood gorilla is a menacing type of ape, towering above most other creatures. They reside on giant thrones found deep down in the blood monkey tunnels, and will remain calm unless provoked. Adventurers should be prepared before picking a fight with a blood gorilla, since they are both very resilient and hard-hitting.");
 		addGuide("blood_world.mobs.blood_gorilla.text2",
 				"When killed, they drop their crown, which when worn, will allow the player to 'open their eyes'.");
 		addGuide("blood_world.mobs.tick", "Tick");
@@ -177,6 +178,26 @@ public class ModLanguageProvider extends LanguageProvider {
 				"The blood can be washed of the crystallite in a cauldron, revealing a diamond underneath.");
 		addGuide("blood_world.blood_crystallite.text5",
 				"It can be used to craft a blood translocator item, which functions like a portable rune portal to and from the blood world. Unfortunately, it is consumed after it is used once.");
+
+		addGuide("blood_world.blood_monkey_tunnels", "Blood Monkey Tunnels");
+		addGuide("blood_world.blood_monkey_tunnels.text1",
+				"The Blood Monkey Tunnels is a sprawling structure that can be found deep underground. The only trace of these tunnels on the surface are small entraces, with long vines leading down into the structure. These tunnels, home to the blood monkeys, are dark and dangerous, but also holds many treasures, such as the potent ranged slingshot weapon (which uses blood pebbles as ammunition).");
+		addGuide("blood_world.blood_monkey_tunnels.text2",
+				"A cursed item, the Monkey's Paw, can also be founds hidden in the deepest depths of the tunnels. This items can be used exactly three times, either granting immesurable fortune, or unimaginable terror. Are you brave enough to use it?");
+
+		addGuide("blood_world.blood_enchantments", "Enchantments");
+		addGuide("blood_world.blood_enchantments.quick_draw", "Quick Draw");
+		addGuide("blood_world.blood_enchantments.quick_draw.text",
+				"This enchantment can be applied to slingshots, and will reduce the time it takes for the slingshot to reach full power.");
+		addGuide("blood_world.blood_enchantments.retention", "Retention");
+		addGuide("blood_world.blood_enchantments.retention.text",
+				"Another slingshot enchantment, which will give the slingshot a small chance to return the blood pebbles upon impact.");
+		addGuide("blood_world.blood_enchantments.hardness", "Hardness");
+		addGuide("blood_world.blood_enchantments.hardness.text",
+				"Another slingshot enchantment, which reduces the risk of pebbles getting destroyed upon impact.");
+		addGuide("blood_world.blood_enchantments.elastic", "Elastic");
+		addGuide("blood_world.blood_enchantments.elastic.text",
+				"Yet another slingshot enchantment, which increases the damage of the slingshot.");
 
 		addGuide("fire_world", "Fire World");
 		addGuide("fire_world.text1",
