@@ -31,7 +31,6 @@ public class ModTagsProviders {
 		protected void addTags() {
 			tag(ModConfiguredStructures.hasStructure(ModStructures.BLOOD_BAT_LAIR)).add(ModBiomes.BLOOD_PLAINS.get());
 			tag(ModConfiguredStructures.hasStructure(ModStructures.FIRE_RITUAL)).add(ModBiomes.FIRE_PLAINS.get());
-			tag(ModConfiguredStructures.hasStructure(ModStructures.BLOOD_GORILLA_THRONE)).add(ModBiomes.BLOOD_PLAINS.get());
 			tag(ModConfiguredStructures.hasStructure(ModStructures.BLOOD_MONKEY_TUNNELS)).add(ModBiomes.BLOOD_PLAINS.get());
 		}
 	}

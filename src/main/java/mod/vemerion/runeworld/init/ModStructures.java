@@ -2,7 +2,6 @@ package mod.vemerion.runeworld.init;
 
 import mod.vemerion.runeworld.Main;
 import mod.vemerion.runeworld.structure.BloodBatLairStructure;
-import mod.vemerion.runeworld.structure.BloodGorillaThroneStructure;
 import mod.vemerion.runeworld.structure.BloodMonkeyTunnelsStructure;
 import mod.vemerion.runeworld.structure.FireRitualStructure;
 import net.minecraft.world.level.levelgen.feature.StructureFeature;
@@ -18,6 +17,5 @@ public class ModStructures {
 
 	public static final RegistryObject<StructureFeature<NoneFeatureConfiguration>> BLOOD_BAT_LAIR = STRUCTURES.register("blood_bat_lair", () -> new BloodBatLairStructure(NoneFeatureConfiguration.CODEC));
 	public static final RegistryObject<StructureFeature<NoneFeatureConfiguration>> FIRE_RITUAL = STRUCTURES.register("fire_ritual", () -> new FireRitualStructure(NoneFeatureConfiguration.CODEC));
-	public static final RegistryObject<StructureFeature<NoneFeatureConfiguration>> BLOOD_GORILLA_THRONE = STRUCTURES.register("blood_gorilla_throne", () -> new BloodGorillaThroneStructure(NoneFeatureConfiguration.CODEC));
 	public static final RegistryObject<StructureFeature<JigsawConfiguration>> BLOOD_MONKEY_TUNNELS = STRUCTURES.register("blood_monkey_tunnels", () -> new BloodMonkeyTunnelsStructure(JigsawConfiguration.CODEC));
 }
