@@ -44,7 +44,8 @@ public class BloodBatLairStructure extends StructureFeature<NoneFeatureConfigura
 	private static final int MIN_RADIUS = 6;
 
 	public BloodBatLairStructure(Codec<NoneFeatureConfiguration> codec) {
-		super(codec, PieceGeneratorSupplier.simple(c -> c.validBiomeOnTop(Heightmap.Types.WORLD_SURFACE_WG), BloodBatLairStructure::generatePieces));
+		super(codec, PieceGeneratorSupplier.simple(c -> c.validBiomeOnTop(Heightmap.Types.WORLD_SURFACE_WG),
+				BloodBatLairStructure::generatePieces));
 	}
 
 	private static void generatePieces(StructurePiecesBuilder builder,
