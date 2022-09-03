@@ -40,6 +40,7 @@ public class ModLanguageProvider extends LanguageProvider {
 		add(ModBlocks.FIRE_ROOT.get(), "Fire Root");
 		add(ModBlocks.FLESH_EATING_PLANT_STEM.get(), "Carnivorous Plant");
 		add(ModBlocks.FLESH_EATING_PLANT_FLOWER.get(), "Carnivorous Plant");
+		add(ModBlocks.TOPAZ.get(), "Topaz");
 		add(ModItems.BLOOD_BUCKET.get(), "Blood Bucket");
 		add(ModItems.BLOOD_PUDDING.get(), "Blood Pudding");
 		add(ModItems.MOSQUITO_EGGS.get(), "Mosquito Eggs");

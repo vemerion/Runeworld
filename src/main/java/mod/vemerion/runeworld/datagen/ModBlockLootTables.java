@@ -49,6 +49,7 @@ public class ModBlockLootTables extends BlockLoot {
 		dropSelf(ModBlocks.BLOOD_LEECH.get());
 		dropSelf(ModBlocks.CHARRED_DIRT.get());
 		dropSelf(ModBlocks.FIRE_RITUAL_STONE.get());
+		dropSelf(ModBlocks.TOPAZ.get());
 		add(ModBlocks.BURNT_DIRT.get(), block -> {
 			return createSingleItemTableWithSilkTouch(block, ModBlocks.CHARRED_DIRT.get());
 		});

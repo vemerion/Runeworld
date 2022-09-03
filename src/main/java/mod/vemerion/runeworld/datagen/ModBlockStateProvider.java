@@ -8,8 +8,10 @@ import mod.vemerion.runeworld.block.FleshEatingPlantFlowerBlock;
 import mod.vemerion.runeworld.block.RunePortalBlock;
 import mod.vemerion.runeworld.block.complex.StoneMaterial;
 import mod.vemerion.runeworld.init.ModBlocks;
+import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.Direction.Axis;
+import net.minecraft.core.Vec3i;
 import net.minecraft.data.DataGenerator;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.level.block.Block;
@@ -54,6 +56,8 @@ public class ModBlockStateProvider extends BlockStateProvider {
 		fleshEatingPlantFlower();
 		fleshEatingPlantStem();
 
+		topaz();
+
 		for (Block portal : ModBlocks.getRunePortals())
 			runePortal(portal);
 
@@ -62,6 +66,37 @@ public class ModBlockStateProvider extends BlockStateProvider {
 		stoneMaterial(ModBlocks.CHARRED_STONE_MATERIAL);
 		stoneMaterial(ModBlocks.BLOOD_ROCK_MATERIAL);
 		stoneMaterial(ModBlocks.BLOOD_ROCK_BRICKS_MATERIAL);
+	}
+
+	private void topaz() {
+		var topaz = ModBlocks.TOPAZ.get();
+		var name = topaz.getRegistryName().getPath();
+
+		var model = models().withExistingParent(name, mcLoc("block/block")).texture("tex", modLoc("block/" + name))
+				.texture("particle", "#tex");
+
+		addTopazElement(model, new Vec3i(7, 1, 6), new Vec3i(11, 9, 10), Direction.Axis.Z, -22.5f);
+		addTopazElement(model, new Vec3i(6, 1, 5), new Vec3i(10, 9, 9), Direction.Axis.X, -22.5f);
+		addTopazElement(model, new Vec3i(6, 0, 6), new Vec3i(10, 11, 10), Direction.Axis.Z, 0);
+		addTopazElement(model, new Vec3i(5, 1, 6), new Vec3i(9, 9, 10), Direction.Axis.Z, 22.5f);
+		addTopazElement(model, new Vec3i(6, 1, 7), new Vec3i(10, 9, 11), Direction.Axis.X, 22.5f);
+
+		directionalBlock(topaz, model);
+		
+		itemModelFromBlock(topaz);
+	}
+
+	private void addTopazElement(BlockModelBuilder model, Vec3i from, Vec3i to, Direction.Axis axis, float angle) {
+		var origin = from.offset((to.getX() - from.getX()) / 2, from.getY(), (to.getZ() - from.getZ()) / 2);
+		model.element().from(from.getX(), from.getY(), from.getZ()).to(to.getX(), to.getY(), to.getZ()).rotation()
+				.axis(axis).angle(angle).origin(origin.getX(), origin.getY(), origin.getZ()).end()
+				.allFaces((direction, builder) -> {
+					if (direction == Direction.UP || direction == Direction.DOWN) {
+						builder.texture("#tex").uvs(12, 0, 16, 4);
+					} else {
+						builder.texture("#tex").uvs(0, 0, 4, 8);
+					}
+				}).end();
 	}
 
 	private void fleshEatingPlantFlower() {
