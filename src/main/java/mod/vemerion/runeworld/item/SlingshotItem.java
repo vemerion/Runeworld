@@ -2,9 +2,12 @@ package mod.vemerion.runeworld.item;
 
 import java.util.function.Predicate;
 
+import mod.vemerion.runeworld.Main;
 import mod.vemerion.runeworld.init.ModEnchantments;
 import mod.vemerion.runeworld.init.ModEntities;
 import mod.vemerion.runeworld.init.ModItems;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.tags.TagKey;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResultHolder;
 import net.minecraft.world.entity.LivingEntity;
@@ -17,8 +20,12 @@ import net.minecraft.world.item.ProjectileWeaponItem;
 import net.minecraft.world.item.UseAnim;
 import net.minecraft.world.item.enchantment.EnchantmentHelper;
 import net.minecraft.world.level.Level;
+import net.minecraftforge.registries.ForgeRegistries;
 
 public class SlingshotItem extends ProjectileWeaponItem {
+
+	public static final TagKey<Item> SUPPORTED_PROJECTILES = TagKey.create(ForgeRegistries.ITEMS.getRegistryKey(),
+			new ResourceLocation(Main.MODID, "slingshot_projectiles"));
 
 	private static final int MAX_DURATION = 16;
 	private static final int RANGE = 15;
@@ -64,7 +71,7 @@ public class SlingshotItem extends ProjectileWeaponItem {
 			float progress = (duration - pTimeCharged) / duration;
 			float power = progress + 0.3f;
 
-			var projectile = ModEntities.BLOOD_PEBBLE.get().create(pLevel);
+			var projectile = ModEntities.SLINGSHOT_PROJECTILE.get().create(pLevel);
 
 			var damage = Math.max(1, (int) (progress
 					* (2 + EnchantmentHelper.getItemEnchantmentLevel(ModEnchantments.ELASTIC.get(), pStack))));
@@ -92,7 +99,7 @@ public class SlingshotItem extends ProjectileWeaponItem {
 
 	@Override
 	public Predicate<ItemStack> getAllSupportedProjectiles() {
-		return s -> s.is(ModItems.BLOOD_PEBBLE.get());
+		return s -> s.is(SUPPORTED_PROJECTILES);
 	}
 
 	@Override

@@ -74,7 +74,7 @@ public class ModItems {
 	public static final RegistryObject<DislocatorItem> BLOOD_DISLOCATOR = ITEMS.register("blood_dislocator",
 			() -> new DislocatorItem(new Item.Properties().tab(CreativeModeTab.TAB_SEARCH), ModDimensions.BLOOD));
 	public static final RegistryObject<ThrowableItem> BLOOD_PEBBLE = ITEMS.register("blood_pebble",
-			() -> new ThrowableItem(() -> ModEntities.BLOOD_PEBBLE.get(), 0.75));
+			() -> new ThrowableItem(() -> ModEntities.SLINGSHOT_PROJECTILE.get(), 0.75));
 	public static final RegistryObject<Item> GRILLED_BLOOD_LEECH = ITEMS.register("grilled_blood_leech",
 			() -> new Item(new Item.Properties().tab(CreativeModeTab.TAB_SEARCH)
 					.food(new FoodProperties.Builder().nutrition(4).saturationMod(0.4f).meat().build())));

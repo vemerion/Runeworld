@@ -6,7 +6,7 @@ import mod.vemerion.runeworld.Main;
 import mod.vemerion.runeworld.entity.BloodBatEntity;
 import mod.vemerion.runeworld.entity.BloodGorillaEntity;
 import mod.vemerion.runeworld.entity.BloodMonkeyEntity;
-import mod.vemerion.runeworld.entity.BloodPebbleEntity;
+import mod.vemerion.runeworld.entity.SlingshotProjectileEntity;
 import mod.vemerion.runeworld.entity.FireElementalEntity;
 import mod.vemerion.runeworld.entity.FireElementalProjectileEntity;
 import mod.vemerion.runeworld.entity.MosquitoEggsEntity;
@@ -48,8 +48,8 @@ public class ModEntities {
 			() -> EntityType.Builder.<BloodMonkeyEntity>of(BloodMonkeyEntity::new, MobCategory.MONSTER).sized(1f, 1.6f)
 					.build(""));
 
-	public static final Supplier<EntityType<BloodPebbleEntity>> BLOOD_PEBBLE = ENTITIES.register("blood_pebble",
-			() -> EntityType.Builder.<BloodPebbleEntity>of(BloodPebbleEntity::new, MobCategory.MISC).sized(0.25F, 0.25F)
+	public static final Supplier<EntityType<SlingshotProjectileEntity>> SLINGSHOT_PROJECTILE = ENTITIES.register("slingshot_projectile",
+			() -> EntityType.Builder.<SlingshotProjectileEntity>of(SlingshotProjectileEntity::new, MobCategory.MISC).sized(0.25F, 0.25F)
 					.clientTrackingRange(4).updateInterval(10).build(""));
 
 	public static final RegistryObject<EntityType<FireElementalEntity>> FIRE_ELEMENTAL = ENTITIES.register(

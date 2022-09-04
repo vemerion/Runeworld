@@ -211,7 +211,7 @@ public class BloodMonkeyEntity extends Monster implements RangedAttackMob {
 	public void performRangedAttack(LivingEntity target, float distanceFactor) {
 		swing(InteractionHand.MAIN_HAND);
 		ThrowableItemProjectile projectile = random.nextDouble() < 0.1 ? new MosquitoEggsEntity(this, level)
-				: new BloodPebbleEntity(this, level).setBreakChance(1).setDamage(4).setReturnChance(0);
+				: new SlingshotProjectileEntity(this, level).setBreakChance(1).setDamage(4).setReturnChance(0);
 		double x = target.getX() - getX();
 		double y = target.getEyeY() - 1.1f - projectile.getY();
 		double z = target.getZ() - getZ();

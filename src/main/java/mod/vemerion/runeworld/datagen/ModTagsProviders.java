@@ -8,7 +8,9 @@ import mod.vemerion.runeworld.init.ModBiomes;
 import mod.vemerion.runeworld.init.ModBlocks;
 import mod.vemerion.runeworld.init.ModConfiguredStructures;
 import mod.vemerion.runeworld.init.ModFluids;
+import mod.vemerion.runeworld.init.ModItems;
 import mod.vemerion.runeworld.init.ModStructures;
+import mod.vemerion.runeworld.item.SlingshotItem;
 import net.minecraft.data.DataGenerator;
 import net.minecraft.data.tags.BiomeTagsProvider;
 import net.minecraft.data.tags.BlockTagsProvider;
@@ -45,6 +47,7 @@ public class ModTagsProviders {
 		@Override
 		protected void addTags() {
 			stoneCraftingTools();
+			tag(SlingshotItem.SUPPORTED_PROJECTILES).add(ModItems.BLOOD_PEBBLE.get(), ModItems.TOPAZ_SHARD.get());
 		}
 
 		private void stoneCraftingTools() {

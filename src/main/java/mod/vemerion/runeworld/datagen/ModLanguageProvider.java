@@ -70,7 +70,7 @@ public class ModLanguageProvider extends LanguageProvider {
 		add(ModEntities.MOSQUITO_EGGS.get(), "Mosquito Eggs");
 		add(ModEntities.BLOOD_BAT.get(), "Blood Bat");
 		add(ModEntities.BLOOD_MONKEY.get(), "Blood Monkey");
-		add(ModEntities.BLOOD_PEBBLE.get(), "Blood Pebble");
+		add(ModEntities.SLINGSHOT_PROJECTILE.get(), "Slingshot Projectile");
 		add(ModEntities.FIRE_ELEMENTAL.get(), "Fire Elemental");
 		add(ModEntities.FIRE_ELEMENTAL_PROJECTILE.get(), "Fire Elemental Projectile");
 		add(ModEntities.BLOOD_GORILLA.get(), "Blood Gorilla");
