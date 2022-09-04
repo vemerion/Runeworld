@@ -8,6 +8,7 @@ import mod.vemerion.runeworld.init.ModBlockEntities;
 import mod.vemerion.runeworld.init.ModBlocks;
 import mod.vemerion.runeworld.init.ModConfiguredFeatures;
 import mod.vemerion.runeworld.init.ModConfiguredStructures;
+import mod.vemerion.runeworld.init.ModConfiguredWorldCarvers;
 import mod.vemerion.runeworld.init.ModEffects;
 import mod.vemerion.runeworld.init.ModEnchantments;
 import mod.vemerion.runeworld.init.ModEntities;
@@ -22,6 +23,7 @@ import mod.vemerion.runeworld.init.ModStructurePieces;
 import mod.vemerion.runeworld.init.ModStructureSets;
 import mod.vemerion.runeworld.init.ModStructures;
 import mod.vemerion.runeworld.init.ModTemplatePools;
+import mod.vemerion.runeworld.init.ModWorldCarvers;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 
@@ -52,5 +54,7 @@ public class Main {
 		ModEffects.EFFECTS.register(bus);
 		ModParticles.PARTICLES.register(bus);
 		ModEnchantments.ENCHANTMENTS.register(bus);
+		ModWorldCarvers.WORLD_CARVERS.register(bus);
+		ModConfiguredWorldCarvers.CONFIGURED_WORLD_CARVERS.register(bus);
 	}
 }

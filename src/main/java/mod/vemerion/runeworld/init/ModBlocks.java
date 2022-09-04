@@ -56,7 +56,7 @@ public class ModBlocks {
 			.strength(0.6F).sound(SoundType.GRASS))));
 	public static final RegistryObject<Block> FIRE_RITUAL_STONE = BLOCKS.register("fire_ritual_stone", () -> withItem(new FireRitualStoneBlock(), noFire()));
 	public static final RegistryObject<Block> FIRE_ROOT = BLOCKS.register("fire_root", FireRootBlock::new);
-	public static final RegistryObject<Block> TOPAZ = BLOCKS.register("topaz", () -> withItem(new TopazBlock(BlockBehaviour.Properties.of(Material.STONE, MaterialColor.COLOR_ORANGE).requiresCorrectToolForDrops().strength(3, 3).noOcclusion()), noFire()));
+	public static final RegistryObject<Block> TOPAZ = BLOCKS.register("topaz", () -> withItem(new TopazBlock(BlockBehaviour.Properties.of(Material.STONE, MaterialColor.COLOR_ORANGE).requiresCorrectToolForDrops().strength(3, 3).noOcclusion().lightLevel(s -> 10)), noFire()));
 	
 	public static final RegistryObject<Block> BLOOD_ROCK = BLOCKS.register("blood_rock", () -> withItem(new Block(BlockBehaviour.Properties.of(Material.STONE, MaterialColor.TERRACOTTA_BLUE).requiresCorrectToolForDrops().strength(2, 6))));
 	public static final RegistryObject<StairBlock> BLOOD_ROCK_STAIRS = BLOCKS.register("blood_rock_stairs", () -> withItem(new StairBlock(() -> BLOOD_ROCK.get().defaultBlockState(), BlockBehaviour.Properties.of(Material.STONE, MaterialColor.TERRACOTTA_BLUE).requiresCorrectToolForDrops().strength(2, 6))));

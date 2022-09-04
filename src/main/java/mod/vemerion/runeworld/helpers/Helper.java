@@ -1,5 +1,8 @@
 package mod.vemerion.runeworld.helpers;
 
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 import java.util.Random;
 
 import net.minecraft.core.BlockPos;
@@ -32,6 +35,15 @@ public class Helper {
 
 	public static float soundPitch(Random rand) {
 		return 0.8f + rand.nextFloat() * 0.4f;
+	}
+	
+	public static List<Direction> shuffledDirections() {
+		var directions = new ArrayList<Direction>();
+		for (var direction : Direction.values()) {
+			directions.add(direction);
+		}
+		Collections.shuffle(directions);
+		return directions;
 	}
 
 	public static Vec3 randomInEntity(Entity entity, Random rand) {

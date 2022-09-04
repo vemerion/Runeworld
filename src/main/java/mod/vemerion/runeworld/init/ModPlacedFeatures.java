@@ -6,6 +6,7 @@ import mod.vemerion.runeworld.Main;
 import net.minecraft.core.Registry;
 import net.minecraft.data.worldgen.placement.PlacementUtils;
 import net.minecraft.world.level.levelgen.placement.BiomeFilter;
+import net.minecraft.world.level.levelgen.placement.CountPlacement;
 import net.minecraft.world.level.levelgen.placement.InSquarePlacement;
 import net.minecraft.world.level.levelgen.placement.PlacedFeature;
 import net.minecraft.world.level.levelgen.placement.RarityFilter;
@@ -26,4 +27,5 @@ public class ModPlacedFeatures {
 	
 	public static final RegistryObject<PlacedFeature> FIRE_ROOT_PATCH = PLACED_FEATURES.register("fire_root_patch", () -> new PlacedFeature(ModConfiguredFeatures.FIRE_ROOT_PATCH.getHolder().get(), List.of(RarityFilter.onAverageOnceEvery(150), InSquarePlacement.spread(), PlacementUtils.HEIGHTMAP_WORLD_SURFACE, BiomeFilter.biome())));
 	public static final RegistryObject<PlacedFeature> FIRE_PATCH = PLACED_FEATURES.register("fire_patch", () -> new PlacedFeature(ModConfiguredFeatures.FIRE_PATCH.getHolder().get(), List.of(RarityFilter.onAverageOnceEvery(50), InSquarePlacement.spread(), PlacementUtils.HEIGHTMAP_WORLD_SURFACE, BiomeFilter.biome())));
+	public static final RegistryObject<PlacedFeature> TOPAZ = PLACED_FEATURES.register("topaz", () -> new PlacedFeature(ModConfiguredFeatures.TOPAZ.getHolder().get(), List.of(CountPlacement.of(90), InSquarePlacement.spread(), PlacementUtils.RANGE_BOTTOM_TO_MAX_TERRAIN_HEIGHT, BiomeFilter.biome())));
 }

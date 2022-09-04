@@ -1,7 +1,5 @@
 package mod.vemerion.runeworld.block;
 
-import java.util.ArrayList;
-import java.util.Collections;
 import java.util.Random;
 
 import mod.vemerion.runeworld.Main;
@@ -65,11 +63,7 @@ public class FleshEatingPlantFlowerBlock extends FleshEatingPlantBlock {
 		if (!(state.getBlock() instanceof FleshEatingPlantBlock))
 			return pPos;
 		
-		var directions = new ArrayList<Direction>();
-		for (var direction : Direction.values()) {
-			directions.add(direction);
-		}
-		Collections.shuffle(directions);
+		var directions = Helper.shuffledDirections();
 
 		for (var direction : directions) {
 			var adjacent = pPos.relative(direction);

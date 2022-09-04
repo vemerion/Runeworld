@@ -2,6 +2,7 @@ package mod.vemerion.runeworld.init;
 
 import mod.vemerion.runeworld.Main;
 import mod.vemerion.runeworld.block.FireRootBlock;
+import mod.vemerion.runeworld.feature.TopazFeature;
 import net.minecraft.core.Registry;
 import net.minecraft.data.worldgen.placement.PlacementUtils;
 import net.minecraft.util.random.SimpleWeightedRandomList;
@@ -32,4 +33,5 @@ public class ModConfiguredFeatures {
 	public static final RegistryObject<ConfiguredFeature<?, ?>> FIRE_ROOT_PATCH = CONFIGURED_FEATURES.register("fire_root_patch", () -> new ConfiguredFeature<>(Feature.RANDOM_PATCH, new RandomPatchConfiguration(32, 6, 2, PlacementUtils.onlyWhenEmpty(Feature.SIMPLE_BLOCK, new SimpleBlockConfiguration(new WeightedStateProvider(SimpleWeightedRandomList.<BlockState>builder().add(ModBlocks.FIRE_ROOT.get().defaultBlockState(), 20).add(ModBlocks.FIRE_ROOT.get().defaultBlockState().setValue(FireRootBlock.AGE, 3), 10).add(ModBlocks.FIRE_ROOT.get().defaultBlockState().setValue(FireRootBlock.AGE, 6), 5)))))));
 	public static final RegistryObject<ConfiguredFeature<?, ?>> FIRE_PATCH = CONFIGURED_FEATURES.register("fire_patch", () -> new ConfiguredFeature<>(Feature.RANDOM_PATCH, new RandomPatchConfiguration(64, 6, 2, PlacementUtils.onlyWhenEmpty(Feature.SIMPLE_BLOCK, new SimpleBlockConfiguration(BlockStateProvider.simple(Blocks.FIRE.defaultBlockState()))))));
 	public static final RegistryObject<ConfiguredFeature<?, ?>> FLESH_EATING_PLANT = CONFIGURED_FEATURES.register("flesh_eating_plant", () -> new ConfiguredFeature<>(ModFeatures.FLESH_EATING_PLANT.get(), FeatureConfiguration.NONE));
+	public static final RegistryObject<ConfiguredFeature<?, ?>> TOPAZ = CONFIGURED_FEATURES.register("topaz", () -> new ConfiguredFeature<>(ModFeatures.TOPAZ.get(), FeatureConfiguration.NONE));
 }

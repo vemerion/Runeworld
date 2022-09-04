@@ -106,7 +106,7 @@ public class ModItems {
 		for (Pair<Block, Item.Properties> p : withItem) {
 			Block b = p.getLeft();
 			Item.Properties properties = p.getRight().tab(CreativeModeTab.TAB_SEARCH);
-			registry.register(Init.setup(new BlockItem(b, properties), b.getRegistryName()));
+			registry.register(new BlockItem(b, properties).setRegistryName(b.getRegistryName()));
 		}
 	}
 

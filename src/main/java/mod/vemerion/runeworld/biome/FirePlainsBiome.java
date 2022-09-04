@@ -1,6 +1,7 @@
 package mod.vemerion.runeworld.biome;
 
 import mod.vemerion.runeworld.helpers.Helper;
+import mod.vemerion.runeworld.init.ModConfiguredWorldCarvers;
 import mod.vemerion.runeworld.init.ModPlacedFeatures;
 import net.minecraft.data.worldgen.placement.MiscOverworldPlacements;
 import net.minecraft.world.level.biome.AmbientMoodSettings;
@@ -20,6 +21,9 @@ public class FirePlainsBiome extends ModBiome {
 		generation.addFeature(GenerationStep.Decoration.LAKES, MiscOverworldPlacements.LAKE_LAVA_SURFACE);
 		generation.addFeature(GenerationStep.Decoration.VEGETAL_DECORATION, ModPlacedFeatures.FIRE_ROOT_PATCH.getHolder().get());
 		generation.addFeature(GenerationStep.Decoration.VEGETAL_DECORATION, ModPlacedFeatures.FIRE_PATCH.getHolder().get());
+		generation.addFeature(GenerationStep.Decoration.UNDERGROUND_ORES, ModPlacedFeatures.TOPAZ.getHolder().get());
+		
+		generation.addCarver(GenerationStep.Carving.AIR, ModConfiguredWorldCarvers.WORLD_CARVER.getHolder().get());
 
 		int waterColor = Helper.color(200, 100, 0, 100);
 		int skyColor = Helper.color(255, 155, 85, 255);

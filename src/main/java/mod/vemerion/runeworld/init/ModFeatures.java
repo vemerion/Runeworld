@@ -8,6 +8,7 @@ import mod.vemerion.runeworld.feature.BloodPoolFeature;
 import mod.vemerion.runeworld.feature.BloodRockPatchFeature;
 import mod.vemerion.runeworld.feature.FleshEatingPlantFeature;
 import mod.vemerion.runeworld.feature.RunePortalFeature;
+import mod.vemerion.runeworld.feature.TopazFeature;
 import net.minecraft.world.level.levelgen.feature.Feature;
 import net.minecraft.world.level.levelgen.feature.configurations.BlockStateConfiguration;
 import net.minecraft.world.level.levelgen.feature.configurations.NoneFeatureConfiguration;
@@ -26,4 +27,5 @@ public class ModFeatures {
 	public static final RegistryObject<Feature<NoneFeatureConfiguration>> BLOOD_BAT_TREE = FEATURES.register("blood_bat_tree", BloodBatTreeFeature::new);
 	public static final RegistryObject<Feature<BlockStateConfiguration>> RUNE_PORTAL_FEATURE = FEATURES.register("rune_portal_feature", RunePortalFeature::new);
 	public static final RegistryObject<Feature<NoneFeatureConfiguration>> FLESH_EATING_PLANT = FEATURES.register("flesh_eating_plant", FleshEatingPlantFeature::new);
+	public static final RegistryObject<Feature<NoneFeatureConfiguration>> TOPAZ = FEATURES.register("topaz", TopazFeature::new);
 }
