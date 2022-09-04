@@ -6,6 +6,7 @@ import mod.vemerion.runeworld.Main;
 import mod.vemerion.runeworld.biome.dimensionrenderer.BloodSpecialEffects;
 import mod.vemerion.runeworld.biome.dimensionrenderer.FireSpecialEffects;
 import mod.vemerion.runeworld.block.RunePortalBlock;
+import mod.vemerion.runeworld.block.TopazBlock;
 import mod.vemerion.runeworld.init.ModBlockEntities;
 import mod.vemerion.runeworld.init.ModBlocks;
 import mod.vemerion.runeworld.init.ModDimensions;
@@ -85,21 +86,23 @@ public class ClientModEventSubscriber {
 
 		event.enqueueWork(() -> registerItemProperties());
 		event.enqueueWork(ClientModEventSubscriber::registerDimensionSpecialEffects);
-		
-		MinecraftForgeClient.registerTextureAtlasSpriteLoader(new ResourceLocation(Main.MODID, "hideable_tas_loader"), new HideableTextureAtlasSprite.Loader());
+
+		MinecraftForgeClient.registerTextureAtlasSpriteLoader(new ResourceLocation(Main.MODID, "hideable_tas_loader"),
+				new HideableTextureAtlasSprite.Loader());
 	}
-	
+
 	private static void registerDimensionSpecialEffects() {
 		try {
 			@SuppressWarnings("unchecked")
-			var effects = (Map<ResourceLocation, DimensionSpecialEffects>) ObfuscationReflectionHelper.findField(DimensionSpecialEffects.class, "f_108857_").get(null);
+			var effects = (Map<ResourceLocation, DimensionSpecialEffects>) ObfuscationReflectionHelper
+					.findField(DimensionSpecialEffects.class, "f_108857_").get(null);
 			effects.put(ModDimensions.BLOOD.location(), new BloodSpecialEffects());
 			effects.put(ModDimensions.FIRE.location(), new FireSpecialEffects());
 		} catch (Exception e) {
 			Main.LOGGER.warn("Unable to register dimension special effects " + e);
 		}
 	}
-	
+
 	@SubscribeEvent
 	public static void onRegisterEntityRendererLayerDefinitions(EntityRenderersEvent.RegisterLayerDefinitions event) {
 		event.registerLayerDefinition(ModLayerLocations.BLOOD_BAT, BloodBatModel::createLayer);
@@ -110,11 +113,11 @@ public class ClientModEventSubscriber {
 		event.registerLayerDefinition(ModLayerLocations.BLOOD_CROWN, BloodCrownModel::createBodyLayer);
 		event.registerLayerDefinition(ModLayerLocations.TICK, TickModel::createBodyLayer);
 	}
-	
+
 	@SubscribeEvent
 	public static void onRegisterEntityRenderers(EntityRenderersEvent.RegisterRenderers event) {
 		event.registerBlockEntityRenderer(ModBlockEntities.BLOOD_LEECH.get(), BloodLeechBlockEntityRenderer::new);
-		
+
 		event.registerEntityRenderer(ModEntities.MOSQUITO.get(), MosquitoRenderer::new);
 		event.registerEntityRenderer(ModEntities.BLOOD_BAT.get(), BloodBatRenderer::new);
 		event.registerEntityRenderer(ModEntities.BLOOD_MONKEY.get(), BloodMonkeyRenderer::new);
@@ -150,8 +153,15 @@ public class ClientModEventSubscriber {
 	}
 
 	@SubscribeEvent
+	public static void onRegisterItemColor(ColorHandlerEvent.Item event) {
+		event.getItemColors().register((stack, tint) -> TopazBlock.getColor(null, tint), ModBlocks.TOPAZ.get());
+	}
+
+	@SubscribeEvent
 	public static void onRegisterBlockColor(ColorHandlerEvent.Block event) {
-		event.getBlockColors().register((state, reader, pos, color) -> ((RunePortalBlock) state.getBlock()).getColor(),
+		event.getBlockColors().register((state, reader, pos, tint) -> ((RunePortalBlock) state.getBlock()).getColor(),
 				ModBlocks.getRunePortals().toArray(new RunePortalBlock[0]));
+		event.getBlockColors().register((state, reader, pos, tint) -> TopazBlock.getColor(pos, tint),
+				ModBlocks.TOPAZ.get());
 	}
 }

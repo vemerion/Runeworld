@@ -8,7 +8,6 @@ import mod.vemerion.runeworld.block.FleshEatingPlantFlowerBlock;
 import mod.vemerion.runeworld.block.RunePortalBlock;
 import mod.vemerion.runeworld.block.complex.StoneMaterial;
 import mod.vemerion.runeworld.init.ModBlocks;
-import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.Direction.Axis;
 import net.minecraft.core.Vec3i;
@@ -91,10 +90,11 @@ public class ModBlockStateProvider extends BlockStateProvider {
 		model.element().from(from.getX(), from.getY(), from.getZ()).to(to.getX(), to.getY(), to.getZ()).rotation()
 				.axis(axis).angle(angle).origin(origin.getX(), origin.getY(), origin.getZ()).end()
 				.allFaces((direction, builder) -> {
+					builder.texture("#tex").tintindex(0);
 					if (direction == Direction.UP || direction == Direction.DOWN) {
-						builder.texture("#tex").uvs(12, 0, 16, 4);
+						builder.uvs(12, 0, 16, 4);
 					} else {
-						builder.texture("#tex").uvs(0, 0, 4, 8);
+						builder.uvs(0, 0, 4, 8);
 					}
 				}).end();
 	}
