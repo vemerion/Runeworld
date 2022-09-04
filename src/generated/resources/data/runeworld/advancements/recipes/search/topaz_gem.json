@@ -1,0 +1,34 @@
+{
+  "parent": "minecraft:recipes/root",
+  "rewards": {
+    "recipes": [
+      "runeworld:topaz_gem"
+    ]
+  },
+  "criteria": {
+    "has_topaz_shard": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "runeworld:topaz_shard"
+            ]
+          }
+        ]
+      }
+    },
+    "has_the_recipe": {
+      "trigger": "minecraft:recipe_unlocked",
+      "conditions": {
+        "recipe": "runeworld:topaz_gem"
+      }
+    }
+  },
+  "requirements": [
+    [
+      "has_topaz_shard",
+      "has_the_recipe"
+    ]
+  ]
+}

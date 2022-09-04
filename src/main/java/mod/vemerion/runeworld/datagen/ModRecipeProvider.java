@@ -38,6 +38,8 @@ public class ModRecipeProvider extends RecipeProvider {
 				.save(consumer, new ResourceLocation(Main.MODID, "blood_flower_to_dye"));
 		pillar(ModBlocks.BLOOD_PILLAR_LARGE.get(), ModBlocks.BLOOD_PILLAR_MEDIUM.get(), consumer);
 		pillar(ModBlocks.BLOOD_PILLAR_MEDIUM.get(), ModBlocks.BLOOD_PILLAR_SMALL.get(), consumer);
+		nineBlockStorageRecipes(consumer, ModItems.TOPAZ_SHARD.get(), ModItems.TOPAZ_GEM.get(),
+				ModItems.TOPAZ_GEM.getId().toString(), null, ModItems.TOPAZ_SHARD.getId().toString(), null);
 
 		var runes = TagKey.create(Registry.ITEM_REGISTRY, new ResourceLocation(Runesword.MODID, "runes"));
 

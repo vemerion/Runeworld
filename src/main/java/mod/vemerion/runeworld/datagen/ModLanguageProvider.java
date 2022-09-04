@@ -60,6 +60,8 @@ public class ModLanguageProvider extends LanguageProvider {
 		add(ModItems.BLOOD_CROWN.get(), "Blood Crown");
 		add(ModItems.MONKEY_PAW.get(), "Monkey's Paw");
 		add(ModItems.SLINGSHOT.get(), "Slingshot");
+		add(ModItems.TOPAZ_GEM.get(), "Topaz Gem");
+		add(ModItems.TOPAZ_SHARD.get(), "Topaz Shard");
 		add(ModEffects.BLOOD_DRAINED.get(), "Blood Drained");
 		add(ModEffects.MONKEY_CURSE.get(), "Monkey's Curse");
 		add(ModBiomes.BLOOD_PLAINS.get(), "Blood Plains");

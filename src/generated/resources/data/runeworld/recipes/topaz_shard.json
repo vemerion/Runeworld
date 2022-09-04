@@ -1,0 +1,12 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "ingredients": [
+    {
+      "item": "runeworld:topaz_gem"
+    }
+  ],
+  "result": {
+    "item": "runeworld:topaz_shard",
+    "count": 9
+  }
+}

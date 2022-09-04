@@ -33,63 +33,71 @@ public class FireRitual {
 		this.positions = positions;
 	}
 
-	public void performRitual(Level world, BlockPos pos) {
+	public void performRitual(Level level, BlockPos pos) {
 		if (!positions.contains(pos))
 			return;
 
 		// Blood Leech
 		for (int i = 0; i < 4; i++) {
-			Direction d = Direction.from2DDataValue(i);
-			BlockPos p = pos.relative(d);
-			if (world.getBlockState(p).getBlock() == ModBlocks.BLOOD_LEECH.get()) {
-				world.setBlockAndUpdate(p, Blocks.AIR.defaultBlockState());
+			var d = Direction.from2DDataValue(i);
+			var p = pos.relative(d);
+			var block = level.getBlockState(p).getBlock();
+			if (block == ModBlocks.BLOOD_LEECH.get()) {
+				level.setBlockAndUpdate(p, Blocks.AIR.defaultBlockState());
 				Vec3 itemPos = Vec3.atCenterOf(p);
-				ItemEntity grilledLeech = new ItemEntity(world, itemPos.x, itemPos.y, itemPos.z,
+				ItemEntity grilledLeech = new ItemEntity(level, itemPos.x, itemPos.y, itemPos.z,
 						ModItems.GRILLED_BLOOD_LEECH.get().getDefaultInstance());
-				world.addFreshEntity(grilledLeech);
-				world.playSound(null, p, ModSounds.SIZZLE.get(), SoundSource.BLOCKS, 1, Helper.soundPitch(world.random));
+				level.addFreshEntity(grilledLeech);
+				level.playSound(null, p, ModSounds.SIZZLE.get(), SoundSource.BLOCKS, 1,
+						Helper.soundPitch(level.random));
+			} else if (block == ModBlocks.TOPAZ.get()) {
+				level.setBlockAndUpdate(p, Blocks.AIR.defaultBlockState());
+				var itemPos = Vec3.atCenterOf(p);
+				var shard = new ItemEntity(level, itemPos.x, itemPos.y, itemPos.z,
+						ModItems.TOPAZ_SHARD.get().getDefaultInstance());
+				level.addFreshEntity(shard);
 			}
 		}
 
-		summonFireElemental(world, pos);
+		summonFireElemental(level, pos);
 	}
 
-	private void summonFireElemental(Level world, BlockPos pos) {
-		if (!world.isStateAtPosition(pos, s -> s.getValue(FireRitualStoneBlock.BLOODIED)))
+	private void summonFireElemental(Level level, BlockPos pos) {
+		if (!level.isStateAtPosition(pos, s -> s.getValue(FireRitualStoneBlock.BLOODIED)))
 			return;
 
 		int bloodied = 0;
-		for (BlockPos p : positions)
-			if (world.isStateAtPosition(p, s -> s.getValue(FireRitualStoneBlock.BLOODIED)))
+		for (var p : positions)
+			if (level.isStateAtPosition(p, s -> s.getValue(FireRitualStoneBlock.BLOODIED)))
 				bloodied++;
 
 		if (bloodied > 3) {
-			for (BlockPos p : positions)
-				world.destroyBlock(p, false);
-			world.explode(null, pos.getX(), pos.getY(), pos.getZ(), 5, BlockInteraction.DESTROY);
+			for (var p : positions)
+				level.destroyBlock(p, false);
+			level.explode(null, pos.getX(), pos.getY(), pos.getZ(), 5, BlockInteraction.DESTROY);
 
-			FireElementalEntity elemental = new FireElementalEntity(ModEntities.FIRE_ELEMENTAL.get(), world);
+			var elemental = new FireElementalEntity(ModEntities.FIRE_ELEMENTAL.get(), level);
 			elemental.setPos(pos.getX(), pos.getY(), pos.getZ());
-			world.addFreshEntity(elemental);
+			level.addFreshEntity(elemental);
 		}
 	}
 
-	public static Optional<FireRitual> createRitual(Level world, BlockPos pos) {
-		if (!isRitualBlock(world, pos))
+	public static Optional<FireRitual> createRitual(Level level, BlockPos pos) {
+		if (!isRitualBlock(level, pos))
 			return Optional.empty();
 		Set<BlockPos> positions = new HashSet<>();
 		List<BlockPos> worklist = new ArrayList<>();
 		worklist.add(pos);
 
 		while (!worklist.isEmpty()) {
-			BlockPos p = worklist.remove(0);
-			if (positions.size() > RITUAL_SIZE || countNearbyRitual(world, p) != 2)
+			var p = worklist.remove(0);
+			if (positions.size() > RITUAL_SIZE || countNearbyRitual(level, p) != 2)
 				return Optional.empty();
 			positions.add(p);
 
-			for (Direction d : Direction.values()) {
-				BlockPos nearby = p.relative(d);
-				if (isRitualBlock(world, nearby) && !positions.contains(nearby))
+			for (var d : Direction.values()) {
+				var nearby = p.relative(d);
+				if (isRitualBlock(level, nearby) && !positions.contains(nearby))
 					worklist.add(nearby);
 
 			}
@@ -101,20 +109,20 @@ public class FireRitual {
 		return Optional.of(new FireRitual(positions));
 	}
 
-	private static int countNearbyRitual(Level world, BlockPos pos) {
+	private static int countNearbyRitual(Level level, BlockPos pos) {
 		int count = 0;
 
 		for (int i = 0; i < 4; i++) {
-			Direction d = Direction.from2DDataValue(i);
-			if (isRitualBlock(world, pos.relative(d)))
+			var d = Direction.from2DDataValue(i);
+			if (isRitualBlock(level, pos.relative(d)))
 				count++;
 		}
 
 		return count;
 	}
 
-	private static boolean isRitualBlock(Level world, BlockPos pos) {
-		return world.getBlockState(pos).getBlock() == RITUAL;
+	private static boolean isRitualBlock(Level level, BlockPos pos) {
+		return level.getBlockState(pos).getBlock() == RITUAL;
 	}
 
 }

@@ -88,6 +88,10 @@ public class ModItems {
 	public static final RegistryObject<Item> BLOOD_CROWN = ITEMS.register("blood_crown", BloodCrownItem::new);
 	public static final RegistryObject<Item> MONKEY_PAW = ITEMS.register("monkey_paw", MonkeyPawItem::new);
 	public static final RegistryObject<Item> SLINGSHOT = ITEMS.register("slingshot", SlingshotItem::new);
+	public static final RegistryObject<Item> TOPAZ_GEM = ITEMS.register("topaz_gem", () -> new Item(
+			new Item.Properties().tab(CreativeModeTab.TAB_SEARCH).fireResistant()));
+	public static final RegistryObject<Item> TOPAZ_SHARD = ITEMS.register("topaz_shard", () -> new Item(
+			new Item.Properties().tab(CreativeModeTab.TAB_SEARCH).fireResistant()));
 
 	static final CreativeModeTab ITEM_GROUP = new RuneworldItemGroup();
 

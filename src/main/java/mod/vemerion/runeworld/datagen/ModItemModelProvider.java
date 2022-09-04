@@ -38,6 +38,8 @@ public class ModItemModelProvider extends ItemModelProvider {
 		simpleItem(ModBlocks.BLOOD_CRYSTAL.get(), BLOCK_FOLDER);
 		simpleItem(ModBlocks.FLESH_EATING_PLANT_FLOWER.get());
 		simpleItem(ModItems.MONKEY_PAW.get());
+		simpleItem(ModItems.TOPAZ_GEM.get());
+		simpleItem(ModItems.TOPAZ_SHARD.get());
 		dislocator(ModItems.BLOOD_DISLOCATOR.get());
 		dislocator(ModItems.FIRE_DISLOCATOR.get());
 
