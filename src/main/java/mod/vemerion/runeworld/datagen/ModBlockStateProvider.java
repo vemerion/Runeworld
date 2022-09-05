@@ -18,6 +18,7 @@ import net.minecraftforge.client.model.generators.BlockModelBuilder;
 import net.minecraftforge.client.model.generators.BlockStateProvider;
 import net.minecraftforge.client.model.generators.ConfiguredModel;
 import net.minecraftforge.client.model.generators.ModelBuilder.FaceRotation;
+import net.minecraftforge.client.model.generators.ModelBuilder.Perspective;
 import net.minecraftforge.client.model.generators.ModelFile;
 import net.minecraftforge.client.model.generators.ModelProvider;
 import net.minecraftforge.client.model.generators.MultiPartBlockStateBuilder.PartBuilder;
@@ -56,6 +57,7 @@ public class ModBlockStateProvider extends BlockStateProvider {
 		fleshEatingPlantStem();
 
 		topaz();
+		mirror();
 
 		for (Block portal : ModBlocks.getRunePortals())
 			runePortal(portal);
@@ -65,6 +67,32 @@ public class ModBlockStateProvider extends BlockStateProvider {
 		stoneMaterial(ModBlocks.CHARRED_STONE_MATERIAL);
 		stoneMaterial(ModBlocks.BLOOD_ROCK_MATERIAL);
 		stoneMaterial(ModBlocks.BLOOD_ROCK_BRICKS_MATERIAL);
+	}
+
+	private void mirror() {
+		var mirror = ModBlocks.MIRROR.get();
+		var name = mirror.getRegistryName().getPath();
+
+		var model = models().withExistingParent(name, mcLoc("block/block"))
+				.texture("front", modLoc("block/" + name + "_front")).texture("back", modLoc("block/" + name + "_back"))
+				.texture("side", modLoc("block/" + name + "_side")).texture("particle", "#front").element()
+				.from(0, 0, 15).to(16, 16, 16).allFaces((direction, builder) -> {
+					if (direction == Direction.NORTH)
+						builder.texture("#front").uvs(0, 0, 16, 16);
+					else if (direction == Direction.SOUTH)
+						builder.texture("#back").uvs(0, 0, 16, 16).tintindex(0);
+					else {
+						builder.texture("#side").uvs(0, 0, 16, 1).tintindex(0);
+						if (direction == Direction.WEST || direction == Direction.EAST)
+							builder.rotation(FaceRotation.CLOCKWISE_90);
+					}
+				}).end();
+		horizontalBlock(mirror, model);
+
+		model.transforms().transform(Perspective.GUI).translation(4, -2, 0).rotation(30, 225, 0)
+				.scale(0.75f, 0.75f, 0.75f).end().end();
+
+		simpleBlockItem(mirror, model);
 	}
 
 	private void topaz() {
@@ -81,7 +109,6 @@ public class ModBlockStateProvider extends BlockStateProvider {
 		addTopazElement(model, new Vec3i(6, 1, 7), new Vec3i(10, 9, 11), Direction.Axis.X, 22.5f);
 
 		directionalBlock(topaz, model);
-		
 		itemModelFromBlock(topaz);
 	}
 

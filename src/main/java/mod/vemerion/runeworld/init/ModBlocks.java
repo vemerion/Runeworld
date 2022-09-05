@@ -16,6 +16,7 @@ import mod.vemerion.runeworld.block.FireRitualStoneBlock;
 import mod.vemerion.runeworld.block.FireRootBlock;
 import mod.vemerion.runeworld.block.FleshEatingPlantFlowerBlock;
 import mod.vemerion.runeworld.block.FleshEatingPlantStemBlock;
+import mod.vemerion.runeworld.block.MirrorBlock;
 import mod.vemerion.runeworld.block.RunePortalBlock;
 import mod.vemerion.runeworld.block.TopazBlock;
 import mod.vemerion.runeworld.block.complex.StoneMaterial;
@@ -57,6 +58,7 @@ public class ModBlocks {
 	public static final RegistryObject<Block> FIRE_RITUAL_STONE = BLOCKS.register("fire_ritual_stone", () -> withItem(new FireRitualStoneBlock(), noFire()));
 	public static final RegistryObject<Block> FIRE_ROOT = BLOCKS.register("fire_root", FireRootBlock::new);
 	public static final RegistryObject<Block> TOPAZ = BLOCKS.register("topaz", () -> withItem(new TopazBlock(BlockBehaviour.Properties.of(Material.STONE, MaterialColor.COLOR_ORANGE).requiresCorrectToolForDrops().strength(3, 3).noOcclusion().lightLevel(s -> 10)), noFire()));
+	public static final RegistryObject<Block> MIRROR = BLOCKS.register("mirror", () -> withItem(new MirrorBlock(BlockBehaviour.Properties.of(Material.STONE, MaterialColor.COLOR_ORANGE).requiresCorrectToolForDrops().strength(1.5f, 1.5f).noOcclusion())));
 	
 	public static final RegistryObject<Block> BLOOD_ROCK = BLOCKS.register("blood_rock", () -> withItem(new Block(BlockBehaviour.Properties.of(Material.STONE, MaterialColor.TERRACOTTA_BLUE).requiresCorrectToolForDrops().strength(2, 6))));
 	public static final RegistryObject<StairBlock> BLOOD_ROCK_STAIRS = BLOCKS.register("blood_rock_stairs", () -> withItem(new StairBlock(() -> BLOOD_ROCK.get().defaultBlockState(), BlockBehaviour.Properties.of(Material.STONE, MaterialColor.TERRACOTTA_BLUE).requiresCorrectToolForDrops().strength(2, 6))));

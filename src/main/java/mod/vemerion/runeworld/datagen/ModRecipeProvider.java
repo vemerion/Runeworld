@@ -20,6 +20,7 @@ import net.minecraft.world.item.Items;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.level.ItemLike;
 import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.Blocks;
 import net.minecraftforge.common.Tags;
 
 public class ModRecipeProvider extends RecipeProvider {
@@ -40,6 +41,10 @@ public class ModRecipeProvider extends RecipeProvider {
 		pillar(ModBlocks.BLOOD_PILLAR_MEDIUM.get(), ModBlocks.BLOOD_PILLAR_SMALL.get(), consumer);
 		nineBlockStorageRecipes(consumer, ModItems.TOPAZ_SHARD.get(), ModItems.TOPAZ_GEM.get(),
 				ModItems.TOPAZ_GEM.getId().toString(), null, ModItems.TOPAZ_SHARD.getId().toString(), null);
+		ShapedRecipeBuilder.shaped(ModBlocks.MIRROR.get()).pattern(" # ").pattern("#G#").pattern(" # ")
+				.define('#', ModItems.TOPAZ_GEM.get()).define('G', Blocks.GLASS)
+				.unlockedBy("has_" + ModBlocks.TOPAZ.get().getRegistryName().getPath(), has(ModBlocks.TOPAZ.get()))
+				.save(consumer);
 
 		var runes = TagKey.create(Registry.ITEM_REGISTRY, new ResourceLocation(Runesword.MODID, "runes"));
 

@@ -22,6 +22,7 @@ import net.minecraft.world.level.storage.loot.functions.ApplyBonusCount;
 import net.minecraft.world.level.storage.loot.predicates.LootItemBlockStatePropertyCondition;
 import net.minecraft.world.level.storage.loot.predicates.LootItemCondition;
 import net.minecraft.world.level.storage.loot.providers.number.ConstantValue;
+import net.minecraft.world.level.storage.loot.providers.number.UniformGenerator;
 import net.minecraftforge.registries.ForgeRegistries;
 
 public class ModBlockLootTables extends BlockLoot {
@@ -50,6 +51,7 @@ public class ModBlockLootTables extends BlockLoot {
 		dropSelf(ModBlocks.CHARRED_DIRT.get());
 		dropSelf(ModBlocks.FIRE_RITUAL_STONE.get());
 		dropSelf(ModBlocks.TOPAZ.get());
+		add(ModBlocks.MIRROR.get(), createSingleItemTableWithSilkTouch(ModBlocks.MIRROR.get(), ModItems.TOPAZ_SHARD.get(), UniformGenerator.between(1, 3)));
 		add(ModBlocks.BURNT_DIRT.get(), block -> {
 			return createSingleItemTableWithSilkTouch(block, ModBlocks.CHARRED_DIRT.get());
 		});

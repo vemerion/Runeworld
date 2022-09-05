@@ -1,0 +1,19 @@
+{
+  "variants": {
+    "facing=north": {
+      "model": "runeworld:block/mirror"
+    },
+    "facing=south": {
+      "model": "runeworld:block/mirror",
+      "y": 180
+    },
+    "facing=west": {
+      "model": "runeworld:block/mirror",
+      "y": 270
+    },
+    "facing=east": {
+      "model": "runeworld:block/mirror",
+      "y": 90
+    }
+  }
+}

@@ -1,6 +1,7 @@
 {
   "replace": false,
   "values": [
-    "runeworld:topaz"
+    "runeworld:topaz",
+    "runeworld:mirror"
   ]
 }

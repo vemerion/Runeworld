@@ -1,0 +1,87 @@
+{
+  "parent": "minecraft:block/block",
+  "display": {
+    "gui": {
+      "rotation": [
+        30,
+        225,
+        0
+      ],
+      "translation": [
+        4,
+        -2,
+        0
+      ],
+      "scale": [
+        0.75,
+        0.75,
+        0.75
+      ]
+    }
+  },
+  "textures": {
+    "front": "runeworld:block/mirror_front",
+    "back": "runeworld:block/mirror_back",
+    "side": "runeworld:block/mirror_side",
+    "particle": "#front"
+  },
+  "elements": [
+    {
+      "from": [
+        0,
+        0,
+        15
+      ],
+      "to": [
+        16,
+        16,
+        16
+      ],
+      "faces": {
+        "down": {
+          "texture": "#side",
+          "tintindex": 0
+        },
+        "up": {
+          "texture": "#side",
+          "uv": [
+            0.0,
+            0.0,
+            16.0,
+            1.0
+          ],
+          "tintindex": 0
+        },
+        "north": {
+          "texture": "#front"
+        },
+        "south": {
+          "texture": "#back",
+          "tintindex": 0
+        },
+        "west": {
+          "texture": "#side",
+          "uv": [
+            0.0,
+            0.0,
+            16.0,
+            1.0
+          ],
+          "rotation": 90,
+          "tintindex": 0
+        },
+        "east": {
+          "texture": "#side",
+          "uv": [
+            0.0,
+            0.0,
+            16.0,
+            1.0
+          ],
+          "rotation": 90,
+          "tintindex": 0
+        }
+      }
+    }
+  ]
+}

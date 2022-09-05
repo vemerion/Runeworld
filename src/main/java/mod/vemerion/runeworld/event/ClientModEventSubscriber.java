@@ -154,9 +154,8 @@ public class ClientModEventSubscriber {
 
 	@SubscribeEvent
 	public static void onRegisterItemColor(ColorHandlerEvent.Item event) {
-		event.getItemColors().register((stack, tint) -> TopazBlock.getColor(null, tint), ModBlocks.TOPAZ.get());
-		event.getItemColors().register((stack, tint) -> TopazBlock.getColor(null, tint), ModItems.TOPAZ_GEM.get());
-		event.getItemColors().register((stack, tint) -> TopazBlock.getColor(null, tint), ModItems.TOPAZ_SHARD.get());
+		event.getItemColors().register((stack, tint) -> TopazBlock.getColor(null, tint), ModBlocks.TOPAZ.get(),
+				ModItems.TOPAZ_GEM.get(), ModItems.TOPAZ_SHARD.get(), ModBlocks.MIRROR.get());
 	}
 
 	@SubscribeEvent
@@ -164,6 +163,6 @@ public class ClientModEventSubscriber {
 		event.getBlockColors().register((state, reader, pos, tint) -> ((RunePortalBlock) state.getBlock()).getColor(),
 				ModBlocks.getRunePortals().toArray(new RunePortalBlock[0]));
 		event.getBlockColors().register((state, reader, pos, tint) -> TopazBlock.getColor(pos, tint),
-				ModBlocks.TOPAZ.get());
+				ModBlocks.TOPAZ.get(), ModBlocks.MIRROR.get());
 	}
 }
