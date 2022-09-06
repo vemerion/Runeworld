@@ -16,6 +16,7 @@ import mod.vemerion.runeworld.init.ModFluids;
 import mod.vemerion.runeworld.item.DislocatorItem;
 import mod.vemerion.runeworld.item.MonkeyPawItem;
 import mod.vemerion.runeworld.item.SlingshotItem;
+import mod.vemerion.runeworld.renderer.MirrorBlockEntityRenderer;
 import net.minecraft.client.Camera;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.GameRenderer;
@@ -36,6 +37,7 @@ import net.minecraftforge.client.event.RenderGameOverlayEvent;
 import net.minecraftforge.client.event.RenderGameOverlayEvent.ElementType;
 import net.minecraftforge.client.event.RenderHandEvent;
 import net.minecraftforge.client.model.data.EmptyModelData;
+import net.minecraftforge.event.TickEvent.ClientTickEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod.EventBusSubscriber;
 import net.minecraftforge.fml.common.Mod.EventBusSubscriber.Bus;
@@ -170,5 +172,10 @@ public class ClientForgeEventSubscriber {
 				poseStack.popPose();
 			}
 		}
+	}
+	
+	@SubscribeEvent
+	public static void tickMirrors(ClientTickEvent event) {
+		MirrorBlockEntityRenderer.tick();
 	}
 }

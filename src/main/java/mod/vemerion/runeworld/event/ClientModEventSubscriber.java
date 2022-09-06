@@ -33,6 +33,7 @@ import mod.vemerion.runeworld.renderer.BloodLeechBlockEntityRenderer;
 import mod.vemerion.runeworld.renderer.BloodMonkeyRenderer;
 import mod.vemerion.runeworld.renderer.FireElementalProjectileRenderer;
 import mod.vemerion.runeworld.renderer.FireElementalRenderer;
+import mod.vemerion.runeworld.renderer.MirrorBlockEntityRenderer;
 import mod.vemerion.runeworld.renderer.MosquitoRenderer;
 import mod.vemerion.runeworld.renderer.TickRenderer;
 import mod.vemerion.runeworld.renderer.textureatlas.HideableTextureAtlasSprite;
@@ -117,6 +118,7 @@ public class ClientModEventSubscriber {
 	@SubscribeEvent
 	public static void onRegisterEntityRenderers(EntityRenderersEvent.RegisterRenderers event) {
 		event.registerBlockEntityRenderer(ModBlockEntities.BLOOD_LEECH.get(), BloodLeechBlockEntityRenderer::new);
+		event.registerBlockEntityRenderer(ModBlockEntities.MIRROR.get(), MirrorBlockEntityRenderer::new);
 
 		event.registerEntityRenderer(ModEntities.MOSQUITO.get(), MosquitoRenderer::new);
 		event.registerEntityRenderer(ModEntities.BLOOD_BAT.get(), BloodBatRenderer::new);
