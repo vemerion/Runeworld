@@ -63,6 +63,7 @@ public class ModLanguageProvider extends LanguageProvider {
 		add(ModItems.SLINGSHOT.get(), "Slingshot");
 		add(ModItems.TOPAZ_GEM.get(), "Topaz Gem");
 		add(ModItems.TOPAZ_SHARD.get(), "Topaz Shard");
+		add(ModItems.HAND_MIRROR.get(), "Hand Mirror");
 		add(ModEffects.BLOOD_DRAINED.get(), "Blood Drained");
 		add(ModEffects.MONKEY_CURSE.get(), "Monkey's Curse");
 		add(ModBiomes.BLOOD_PLAINS.get(), "Blood Plains");

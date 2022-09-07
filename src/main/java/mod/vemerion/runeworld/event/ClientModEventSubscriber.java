@@ -156,8 +156,10 @@ public class ClientModEventSubscriber {
 
 	@SubscribeEvent
 	public static void onRegisterItemColor(ColorHandlerEvent.Item event) {
-		event.getItemColors().register((stack, tint) -> TopazBlock.getColor(null, tint), ModBlocks.TOPAZ.get(),
+		var colors = event.getItemColors();
+		colors.register((stack, tint) -> TopazBlock.getColor(null, tint), ModBlocks.TOPAZ.get(),
 				ModItems.TOPAZ_GEM.get(), ModItems.TOPAZ_SHARD.get(), ModBlocks.MIRROR.get());
+		colors.register((stack, tint) -> tint > 0 ? -1 : TopazBlock.getColor(null, tint), ModItems.HAND_MIRROR.get());
 	}
 
 	@SubscribeEvent

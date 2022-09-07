@@ -42,6 +42,7 @@ public class ModItemModelProvider extends ItemModelProvider {
 		simpleItem(ModItems.TOPAZ_SHARD.get());
 		dislocator(ModItems.BLOOD_DISLOCATOR.get());
 		dislocator(ModItems.FIRE_DISLOCATOR.get());
+		handMirror();
 
 		ModItems.ITEMS.getEntries().forEach(item -> {
 			if (item.get() instanceof SpawnEggItem egg)
@@ -68,6 +69,14 @@ public class ModItemModelProvider extends ItemModelProvider {
 	private void simpleItem(ItemLike item, String folder) {
 		String name = item.asItem().getRegistryName().getPath();
 		singleTexture(name, mcLoc(ITEM_FOLDER + "/generated"), "layer0", modLoc(folder + "/" + name));
+	}
+
+	private void handMirror() {
+		var mirror = ModItems.HAND_MIRROR.get();
+		var name = mirror.asItem().getRegistryName().getPath();
+		withExistingParent(name, mcLoc(ITEM_FOLDER + "/generated"))
+				.texture("layer0", modLoc(folder + "/" + name + "_handle"))
+				.texture("layer1", modLoc(folder + "/" + name + "_glass"));
 	}
 
 	private void dislocator(ItemLike dislocator) {

@@ -45,6 +45,10 @@ public class ModRecipeProvider extends RecipeProvider {
 				.define('#', ModItems.TOPAZ_GEM.get()).define('G', Blocks.GLASS)
 				.unlockedBy("has_" + ModBlocks.TOPAZ.get().getRegistryName().getPath(), has(ModBlocks.TOPAZ.get()))
 				.save(consumer);
+		ShapedRecipeBuilder.shaped(ModItems.HAND_MIRROR.get()).pattern("#").pattern("T").pattern("T")
+		.define('#', ModBlocks.MIRROR.get()).define('T', ModItems.TOPAZ_GEM.get())
+		.unlockedBy("has_" + ModBlocks.TOPAZ.get().getRegistryName().getPath(), has(ModBlocks.TOPAZ.get()))
+		.save(consumer);
 
 		var runes = TagKey.create(Registry.ITEM_REGISTRY, new ResourceLocation(Runesword.MODID, "runes"));
 

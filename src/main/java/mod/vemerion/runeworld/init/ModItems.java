@@ -16,6 +16,7 @@ import mod.vemerion.runeworld.item.BloodPuddingItem;
 import mod.vemerion.runeworld.item.DislocatorItem;
 import mod.vemerion.runeworld.item.FireRootItem;
 import mod.vemerion.runeworld.item.GuideItem;
+import mod.vemerion.runeworld.item.HandMirrorItem;
 import mod.vemerion.runeworld.item.MonkeyPawItem;
 import mod.vemerion.runeworld.item.SlingshotItem;
 import mod.vemerion.runeworld.item.ThrowableItem;
@@ -92,6 +93,7 @@ public class ModItems {
 			new Item.Properties().tab(CreativeModeTab.TAB_SEARCH).fireResistant()));
 	public static final RegistryObject<Item> TOPAZ_SHARD = ITEMS.register("topaz_shard", () -> new Item(
 			new Item.Properties().tab(CreativeModeTab.TAB_SEARCH).fireResistant()));
+	public static final RegistryObject<Item> HAND_MIRROR = ITEMS.register("hand_mirror", HandMirrorItem::new);
 
 	static final CreativeModeTab ITEM_GROUP = new RuneworldItemGroup();
 

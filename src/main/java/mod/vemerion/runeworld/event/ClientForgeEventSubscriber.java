@@ -14,6 +14,7 @@ import mod.vemerion.runeworld.Main;
 import mod.vemerion.runeworld.block.RunePortalBlock;
 import mod.vemerion.runeworld.init.ModFluids;
 import mod.vemerion.runeworld.item.DislocatorItem;
+import mod.vemerion.runeworld.item.HandMirrorItem;
 import mod.vemerion.runeworld.item.MonkeyPawItem;
 import mod.vemerion.runeworld.item.SlingshotItem;
 import mod.vemerion.runeworld.renderer.MirrorBlockEntityRenderer;
@@ -131,7 +132,7 @@ public class ClientForgeEventSubscriber {
 		var item = stack.getItem();
 		if (player.getUseItem().equals(stack)) {
 			if (!(item instanceof DislocatorItem) && !(item instanceof MonkeyPawItem)
-					&& !(item instanceof SlingshotItem))
+					&& !(item instanceof SlingshotItem) && !(item instanceof HandMirrorItem))
 				return;
 
 			event.setCanceled(true);
@@ -164,8 +165,18 @@ public class ClientForgeEventSubscriber {
 				poseStack.popPose();
 			} else if (item instanceof SlingshotItem) {
 				poseStack.pushPose();
-				poseStack.translate(side == HumanoidArm.RIGHT ? 0.55 : -0.55, -0.4, -1.0 + progress * 0.5);
-				poseStack.mulPose(new Quaternion(0, -70, -20, true));
+				var right = side == HumanoidArm.RIGHT;
+				poseStack.translate(right ? 0.55 : -0.55, -0.4, -1.0 + progress * 0.5);
+				poseStack.mulPose(new Quaternion(0, -70 * (right ? 1 : -1), -20 * (right ? 1 : -1), true));
+				mc.getItemRenderer().renderStatic(player, stack, transform, false, event.getPoseStack(),
+						event.getMultiBufferSource(), player.level, event.getPackedLight(), OverlayTexture.NO_OVERLAY,
+						0);
+				poseStack.popPose();
+			} else if (item instanceof HandMirrorItem) {
+				poseStack.pushPose();
+				var right = side == HumanoidArm.RIGHT;
+				poseStack.translate(right ? 0.55 : -0.55, -0.4, -1.0);
+				poseStack.mulPose(new Quaternion(-20, -70 * (right ? 1 : -1), -20 * (right ? 1 : -1), true));
 				mc.getItemRenderer().renderStatic(player, stack, transform, false, event.getPoseStack(),
 						event.getMultiBufferSource(), player.level, event.getPackedLight(), OverlayTexture.NO_OVERLAY,
 						0);

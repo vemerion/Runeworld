@@ -1,0 +1,19 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "#",
+    "T",
+    "T"
+  ],
+  "key": {
+    "#": {
+      "item": "runeworld:mirror"
+    },
+    "T": {
+      "item": "runeworld:topaz_gem"
+    }
+  },
+  "result": {
+    "item": "runeworld:hand_mirror"
+  }
+}

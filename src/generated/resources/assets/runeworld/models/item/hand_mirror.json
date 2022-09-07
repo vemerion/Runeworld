@@ -1,0 +1,7 @@
+{
+  "parent": "minecraft:item/generated",
+  "textures": {
+    "layer0": "runeworld:item/hand_mirror_handle",
+    "layer1": "runeworld:item/hand_mirror_glass"
+  }
+}
