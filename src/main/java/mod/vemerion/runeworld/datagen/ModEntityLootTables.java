@@ -62,6 +62,7 @@ public class ModEntityLootTables extends EntityLoot {
 						.add(LootItem.lootTableItem(ModItems.BLOOD_CRYSTALLITE.get()))));
 		
 		add(ModEntities.TICK.get(), LootTable.lootTable());
+		add(ModEntities.TOPAZ_CREATURE.get(), LootTable.lootTable());
 	}
 
 	@Override

@@ -6,6 +6,7 @@ import java.util.Set;
 import org.apache.commons.lang3.tuple.Pair;
 
 import mod.vemerion.runeworld.Main;
+import mod.vemerion.runeworld.block.TopazBlock;
 import mod.vemerion.runeworld.helpers.Helper;
 import mod.vemerion.runeworld.item.BloodBatToothItem;
 import mod.vemerion.runeworld.item.BloodBucketItem;
@@ -20,6 +21,7 @@ import mod.vemerion.runeworld.item.HandMirrorItem;
 import mod.vemerion.runeworld.item.MonkeyPawItem;
 import mod.vemerion.runeworld.item.SlingshotItem;
 import mod.vemerion.runeworld.item.ThrowableItem;
+import net.minecraft.core.BlockPos;
 import net.minecraft.core.NonNullList;
 import net.minecraft.world.food.FoodProperties;
 import net.minecraft.world.item.BlockItem;
@@ -59,6 +61,10 @@ public class ModItems {
 					(new Item.Properties()).tab(CreativeModeTab.TAB_SEARCH)));
 	public static final RegistryObject<Item> TICK_SPAWN_EGG = ITEMS.register("tick_spawn_egg",
 			() -> new ForgeSpawnEggItem(ModEntities.TICK, 0xc9a160, 0x4d3d22,
+					(new Item.Properties()).tab(CreativeModeTab.TAB_SEARCH)));
+	public static final RegistryObject<Item> TOPAZ_CREATURE_SPAWN_EGG = ITEMS.register("topaz_creature_spawn_egg",
+			() -> new ForgeSpawnEggItem(ModEntities.TOPAZ_CREATURE, TopazBlock.getColor(new BlockPos(0, 0, 0), 0),
+					TopazBlock.getColor(new BlockPos(1, 0, 0), 0),
 					(new Item.Properties()).tab(CreativeModeTab.TAB_SEARCH)));
 
 	public static final RegistryObject<Item> BLOOD_BUCKET = ITEMS.register("blood_bucket", BloodBucketItem::new);

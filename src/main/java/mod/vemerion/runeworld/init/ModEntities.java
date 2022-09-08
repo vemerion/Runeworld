@@ -6,12 +6,13 @@ import mod.vemerion.runeworld.Main;
 import mod.vemerion.runeworld.entity.BloodBatEntity;
 import mod.vemerion.runeworld.entity.BloodGorillaEntity;
 import mod.vemerion.runeworld.entity.BloodMonkeyEntity;
-import mod.vemerion.runeworld.entity.SlingshotProjectileEntity;
 import mod.vemerion.runeworld.entity.FireElementalEntity;
 import mod.vemerion.runeworld.entity.FireElementalProjectileEntity;
 import mod.vemerion.runeworld.entity.MosquitoEggsEntity;
 import mod.vemerion.runeworld.entity.MosquitoEntity;
+import mod.vemerion.runeworld.entity.SlingshotProjectileEntity;
 import mod.vemerion.runeworld.entity.TickEntity;
+import mod.vemerion.runeworld.entity.TopazCreatureEntity;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.MobCategory;
 import net.minecraft.world.entity.SpawnPlacements;
@@ -70,6 +71,10 @@ public class ModEntities {
 	public static final RegistryObject<EntityType<TickEntity>> TICK = ENTITIES
 			.register("tick", () -> EntityType.Builder
 					.<TickEntity>of(TickEntity::new, MobCategory.MONSTER).sized(0.6f, 0.6f).build(""));
+	
+	public static final RegistryObject<EntityType<TopazCreatureEntity>> TOPAZ_CREATURE = ENTITIES
+			.register("topaz_creature", () -> EntityType.Builder
+					.<TopazCreatureEntity>of(TopazCreatureEntity::new, MobCategory.CREATURE).sized(0.8f, 0.8f).build(""));
 
 	@SubscribeEvent
 	public static void setupEntities(ParallelDispatchEvent event) {
@@ -84,6 +89,7 @@ public class ModEntities {
 		event.put(FIRE_ELEMENTAL.get(), FireElementalEntity.attributes().build());
 		event.put(BLOOD_GORILLA.get(), BloodGorillaEntity.attributes().build());
 		event.put(TICK.get(), TickEntity.attributes().build());
+		event.put(TOPAZ_CREATURE.get(), TopazCreatureEntity.attributes().build());
 	}
 
 	private static void setEntitySpawns() {
