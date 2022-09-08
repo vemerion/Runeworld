@@ -25,7 +25,7 @@ repositories {
 	}
 }
 
-version = '1.18.2-0.3.3'
+version = '1.18.2-0.3.4'
 group = 'mod.vemerion.runeworld' // http://maven.apache.org/guides/mini/guide-naming-conventions.html
 archivesBaseName = 'runeworld'
 

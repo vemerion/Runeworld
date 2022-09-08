@@ -212,6 +212,12 @@ public class ModLanguageProvider extends LanguageProvider {
 				"The fire ritual is a structure that can be founds while exploring the fire world. It is made up of a single pillar of a rare type of stone, which will at random intervals convert certain blocks placed adjacent to the pillar.");
 		addGuide("fire_world.fire_ritual.text2",
 				"Another, forbidden and dangerous ritual exists. A blood crystallite can be used to coat a single fire ritual block with blood. If four fire ritual blocks are coated in blood, a terrible and deadly creature will spawn! But beware, as this will permanently destroy the ritual pillar...");
+		addGuide("fire_world.topaz", "Topaz");
+		addGuide("fire_world.topaz.text1",
+				"Topaz is a fiery gem that can be found in the caves of the fire world. When placed on a fire ritual, it will eventually turn into a topaz shard, which can in turn be crafted into topaz gems.");
+		addGuide("fire_world.topaz.text2",
+				"Topaz shards can be used as an alternate ammunition to the slingshot, and will set the entity it hits on fire. Topaz gems can be used to craft mirror blocks (which will reflect the player), which can in turn be crafted into hand mirrors, which will reflect projectiles when used.");
+
 	}
 
 	private void addGuide(String suffix, String text) {

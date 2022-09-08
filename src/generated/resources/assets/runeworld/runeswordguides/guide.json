@@ -280,6 +280,24 @@
             }
           ],
           "children": []
+        },
+        {
+          "item_icon": "runeworld:topaz",
+          "title": {
+            "type": "header",
+            "key": "guide.runeworld.fire_world.topaz"
+          },
+          "components": [
+            {
+              "type": "paragraph",
+              "key": "guide.runeworld.fire_world.topaz.text1"
+            },
+            {
+              "type": "paragraph",
+              "key": "guide.runeworld.fire_world.topaz.text2"
+            }
+          ],
+          "children": []
         }
       ]
     }

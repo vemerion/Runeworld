@@ -21,6 +21,7 @@ public class ModGuide {
 	private static IGuideChapter bloodEnchantments;
 	private static IGuideChapter fireWorld;
 	private static IGuideChapter fireRitual;
+	private static IGuideChapter topaz;
 
 	public static IGuideChapter getStartChapter() {
 		if (start == null) {
@@ -44,6 +45,8 @@ public class ModGuide {
 					new TranslatableComponent(transKey("fire_world")));
 			fireRitual = guide.createGuideChapter(ModBlocks.FIRE_RITUAL_STONE.get(),
 					new TranslatableComponent(transKey("fire_world.fire_ritual")));
+			topaz = guide.createGuideChapter(ModBlocks.TOPAZ.get(),
+					new TranslatableComponent(transKey("fire_world.topaz")));
 
 			portal.addText(transKey("portal.text1")).addText(transKey("portal.text2"))
 					.addImage(image("portal1"), 1536, 864).addImage(image("portal2"), 1536, 864)
@@ -81,9 +84,10 @@ public class ModGuide {
 					.addText(transKey("blood_world.blood_enchantments.hardness.text"))
 					.addHeader(transKey("blood_world.blood_enchantments.elastic"))
 					.addText(transKey("blood_world.blood_enchantments.elastic.text"));
-			fireWorld.addChild(fireRitual).addText(transKey("fire_world.text1"));
+			fireWorld.addChild(fireRitual).addChild(topaz).addText(transKey("fire_world.text1"));
 			fireRitual.addText(transKey("fire_world.fire_ritual.text1"))
 					.addText(transKey("fire_world.fire_ritual.text2"));
+			topaz.addText(transKey("fire_world.topaz.text1")).addText(transKey("fire_world.topaz.text2"));
 			start.addChild(portal).addChild(bloodWorld).addChild(fireWorld).addText(transKey("intro"));
 		}
 		return start;
