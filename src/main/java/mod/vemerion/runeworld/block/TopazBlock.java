@@ -2,13 +2,22 @@ package mod.vemerion.runeworld.block;
 
 import java.util.Random;
 
+import mod.vemerion.runeworld.init.ModEntities;
+import mod.vemerion.runeworld.init.ModItems;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Vec3i;
 import net.minecraft.util.FastColor;
 import net.minecraft.util.Mth;
+import net.minecraft.world.InteractionHand;
+import net.minecraft.world.InteractionResult;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LevelReader;
 import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.phys.BlockHitResult;
+import net.minecraft.world.phys.Vec3;
 import net.minecraft.world.phys.shapes.VoxelShape;
 
 public class TopazBlock extends FacingBlock {
@@ -35,5 +44,26 @@ public class TopazBlock extends FacingBlock {
 	@Override
 	public boolean canSurvive(BlockState state, LevelReader worldIn, BlockPos pos) {
 		return true;
+	}
+
+	@Override
+	public InteractionResult use(BlockState pState, Level pLevel, BlockPos pPos, Player pPlayer, InteractionHand pHand,
+			BlockHitResult pHit) {
+		var stack = pPlayer.getItemInHand(pHand);
+		if (stack.is(ModItems.FIRE_HEART.get())) {
+			pLevel.setBlock(pPos, Blocks.AIR.defaultBlockState(), 2);
+
+			if (!pPlayer.isCreative())
+				stack.shrink(1);
+
+			var topazCreature = ModEntities.TOPAZ_CREATURE.get().create(pLevel);
+			topazCreature.setPos(Vec3.atBottomCenterOf(pPos));
+			topazCreature.tame(pPlayer);
+			pLevel.addFreshEntity(topazCreature);
+
+			return InteractionResult.sidedSuccess(pLevel.isClientSide);
+		}
+
+		return InteractionResult.PASS;
 	}
 }

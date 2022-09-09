@@ -74,7 +74,7 @@ public class ModEntities {
 	
 	public static final RegistryObject<EntityType<TopazCreatureEntity>> TOPAZ_CREATURE = ENTITIES
 			.register("topaz_creature", () -> EntityType.Builder
-					.<TopazCreatureEntity>of(TopazCreatureEntity::new, MobCategory.CREATURE).sized(0.8f, 0.8f).build(""));
+					.<TopazCreatureEntity>of(TopazCreatureEntity::new, MobCategory.CREATURE).sized(0.8f, 0.8f).fireImmune().build(""));
 
 	@SubscribeEvent
 	public static void setupEntities(ParallelDispatchEvent event) {

@@ -7,12 +7,14 @@ import net.minecraft.world.entity.Mob;
 import net.minecraft.world.entity.TamableAnimal;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
+import net.minecraft.world.entity.monster.Enemy;
 import net.minecraft.world.level.Level;
 
 public class TopazCreatureEntity extends TamableAnimal {
 
 	public TopazCreatureEntity(EntityType<? extends TopazCreatureEntity> type, Level worldIn) {
 		super(type, worldIn);
+		this.xpReward = Enemy.XP_REWARD_SMALL;
 	}
 
 	public static AttributeSupplier.Builder attributes() {

@@ -24,45 +24,48 @@ public class ModEntityLootTables extends EntityLoot {
 	@Override
 	protected void addTables() {
 		add(ModEntities.MOSQUITO.get(),
-				LootTable.lootTable()
-						.withPool(LootPool.lootPool().setRolls(ConstantValue.exactly(1))
-								.add(LootItem.lootTableItem(ModItems.MOSQUITO_EGGS.get()))
-								.when(LootItemKilledByPlayerCondition.killedByPlayer())
-								.when(LootItemRandomChanceWithLootingCondition.randomChanceAndLootingBoost(0.05f, 0.02f))));
+				LootTable.lootTable().withPool(LootPool.lootPool().setRolls(ConstantValue.exactly(1))
+						.add(LootItem.lootTableItem(ModItems.MOSQUITO_EGGS.get()))
+						.when(LootItemKilledByPlayerCondition.killedByPlayer())
+						.when(LootItemRandomChanceWithLootingCondition.randomChanceAndLootingBoost(0.05f, 0.02f))));
 		add(ModEntities.BLOOD_BAT.get(),
-				LootTable.lootTable()
-						.withPool(LootPool.lootPool().setRolls(ConstantValue.exactly(1))
-								.add(LootItem.lootTableItem(ModItems.BLOOD_BAT_TOOTH.get()))
-								.when(LootItemKilledByPlayerCondition.killedByPlayer())
-								.when(LootItemRandomChanceWithLootingCondition.randomChanceAndLootingBoost(0.05f, 0.02f))));
+				LootTable.lootTable().withPool(LootPool.lootPool().setRolls(ConstantValue.exactly(1))
+						.add(LootItem.lootTableItem(ModItems.BLOOD_BAT_TOOTH.get()))
+						.when(LootItemKilledByPlayerCondition.killedByPlayer())
+						.when(LootItemRandomChanceWithLootingCondition.randomChanceAndLootingBoost(0.05f, 0.02f))));
 		add(ModEntities.BLOOD_MONKEY.get(),
-				LootTable.lootTable()
-						.withPool(LootPool.lootPool().setRolls(ConstantValue.exactly(1))
-								.add(LootItem.lootTableItem(ModItems.BLOOD_PEBBLE.get())
-										.apply(SetItemCountFunction.setCount(UniformGenerator.between(0, 1)))
-										.apply(LootingEnchantFunction.lootingMultiplier(UniformGenerator.between(0, 1)))))
+				LootTable.lootTable().withPool(LootPool.lootPool().setRolls(ConstantValue.exactly(1))
+						.add(LootItem.lootTableItem(ModItems.BLOOD_PEBBLE.get())
+								.apply(SetItemCountFunction.setCount(UniformGenerator.between(0, 1)))
+								.apply(LootingEnchantFunction.lootingMultiplier(UniformGenerator.between(0, 1)))))
 						.withPool(LootPool.lootPool().setRolls(ConstantValue.exactly(1))
 								.add(LootItem.lootTableItem(ModItems.MOSQUITO_EGGS.get()))
 								.when(LootItemKilledByPlayerCondition.killedByPlayer())
-								.when(LootItemRandomChanceWithLootingCondition.randomChanceAndLootingBoost(0.04f, 0.01f))));
+								.when(LootItemRandomChanceWithLootingCondition.randomChanceAndLootingBoost(0.04f,
+										0.01f))));
 
-		add(ModEntities.FIRE_ELEMENTAL.get(),
+		add(ModEntities.FIRE_ELEMENTAL.get(), LootTable.lootTable()
+				.withPool(LootPool.lootPool().setRolls(ConstantValue.exactly(1))
+						.add(LootItem.lootTableItem(ModItems.FIRE_HEART.get())))
+				.withPool(LootPool.lootPool().setRolls(ConstantValue.exactly(1))
+						.add(LootItem.lootTableItem(ModBlocks.FIRE_RITUAL_STONE.get())
+								.apply(SetItemCountFunction.setCount(UniformGenerator.between(0, 2)))
+								.apply(LootingEnchantFunction.lootingMultiplier(UniformGenerator.between(0, 1))))));
+
+		add(ModEntities.BLOOD_GORILLA.get(),
 				LootTable.lootTable()
 						.withPool(LootPool.lootPool().setRolls(ConstantValue.exactly(1))
-								.add(LootItem.lootTableItem(ModItems.FIRE_HEART.get())))
+								.add(LootItem.lootTableItem(ModItems.BLOOD_CROWN.get())))
 						.withPool(LootPool.lootPool().setRolls(ConstantValue.exactly(1))
-								.add(LootItem.lootTableItem(ModBlocks.FIRE_RITUAL_STONE.get())
-										.apply(SetItemCountFunction.setCount(UniformGenerator.between(0, 2)))
-										.apply(LootingEnchantFunction.lootingMultiplier(UniformGenerator.between(0, 1))))));
-		
-		add(ModEntities.BLOOD_GORILLA.get(), LootTable.lootTable()
-				.withPool(LootPool.lootPool().setRolls(ConstantValue.exactly(1))
-						.add(LootItem.lootTableItem(ModItems.BLOOD_CROWN.get())))
-				.withPool(LootPool.lootPool().setRolls(ConstantValue.exactly(1))
-						.add(LootItem.lootTableItem(ModItems.BLOOD_CRYSTALLITE.get()))));
-		
+								.add(LootItem.lootTableItem(ModItems.BLOOD_CRYSTALLITE.get()))));
+
 		add(ModEntities.TICK.get(), LootTable.lootTable());
-		add(ModEntities.TOPAZ_CREATURE.get(), LootTable.lootTable());
+
+		add(ModEntities.TOPAZ_CREATURE.get(),
+				LootTable.lootTable()
+						.withPool(LootPool.lootPool().setRolls(ConstantValue.exactly(1))
+								.add(LootItem.lootTableItem(ModItems.TOPAZ_SHARD.get())
+										.apply(SetItemCountFunction.setCount(UniformGenerator.between(1, 5))))));
 	}
 
 	@Override
