@@ -4,6 +4,7 @@ import com.google.common.collect.ImmutableList;
 
 import mod.vemerion.runeworld.Main;
 import mod.vemerion.runeworld.block.complex.StoneMaterial;
+import mod.vemerion.runeworld.entity.TopazCreatureEntity;
 import mod.vemerion.runeworld.init.ModBiomes;
 import mod.vemerion.runeworld.init.ModBlocks;
 import mod.vemerion.runeworld.init.ModConfiguredStructures;
@@ -48,6 +49,7 @@ public class ModTagsProviders {
 		protected void addTags() {
 			stoneCraftingTools();
 			tag(SlingshotItem.SUPPORTED_PROJECTILES).add(ModItems.BLOOD_PEBBLE.get(), ModItems.TOPAZ_SHARD.get());
+			tag(TopazCreatureEntity.FOOD).add(ModBlocks.TOPAZ.get().asItem(), ModItems.TOPAZ_SHARD.get());
 		}
 
 		private void stoneCraftingTools() {

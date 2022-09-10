@@ -7,8 +7,10 @@ import mod.vemerion.runeworld.Main;
 import mod.vemerion.runeworld.init.ModBlocks;
 import mod.vemerion.runeworld.init.ModEntities;
 import mod.vemerion.runeworld.init.ModItems;
+import mod.vemerion.runeworld.init.ModLootTables;
 import net.minecraft.data.loot.EntityLoot;
 import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.item.Items;
 import net.minecraft.world.level.storage.loot.LootPool;
 import net.minecraft.world.level.storage.loot.LootTable;
 import net.minecraft.world.level.storage.loot.entries.LootItem;
@@ -66,6 +68,15 @@ public class ModEntityLootTables extends EntityLoot {
 						.withPool(LootPool.lootPool().setRolls(ConstantValue.exactly(1))
 								.add(LootItem.lootTableItem(ModItems.TOPAZ_SHARD.get())
 										.apply(SetItemCountFunction.setCount(UniformGenerator.between(1, 5))))));
+
+		add(ModLootTables.TOPAZ_CREATURE_POOP,
+				LootTable.lootTable()
+						.withPool(LootPool.lootPool().setRolls(ConstantValue.exactly(1))
+								.add(LootItem.lootTableItem(ModItems.BLOOD_PEBBLE.get()).setWeight(10))
+								.add(LootItem.lootTableItem(Items.RAW_COPPER).setWeight(10))
+								.add(LootItem.lootTableItem(Items.RAW_IRON).setWeight(10))
+								.add(LootItem.lootTableItem(Items.DIAMOND).setWeight(1))
+								.add(LootItem.lootTableItem(Items.EMERALD).setWeight(2))));
 	}
 
 	@Override
