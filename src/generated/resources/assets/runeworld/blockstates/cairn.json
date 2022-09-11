@@ -1,0 +1,68 @@
+{
+  "multipart": [
+    {
+      "when": {
+        "level": "0|1|2|3|4|5|6|7"
+      },
+      "apply": {
+        "model": "runeworld:block/cairn_0"
+      }
+    },
+    {
+      "when": {
+        "level": "1|2|3|4|5|6|7"
+      },
+      "apply": {
+        "model": "runeworld:block/cairn_1"
+      }
+    },
+    {
+      "when": {
+        "level": "2|3|4|5|6|7"
+      },
+      "apply": {
+        "model": "runeworld:block/cairn_2"
+      }
+    },
+    {
+      "when": {
+        "level": "3|4|5|6|7"
+      },
+      "apply": {
+        "model": "runeworld:block/cairn_3"
+      }
+    },
+    {
+      "when": {
+        "level": "4|5|6|7"
+      },
+      "apply": {
+        "model": "runeworld:block/cairn_4"
+      }
+    },
+    {
+      "when": {
+        "level": "5|6|7"
+      },
+      "apply": {
+        "model": "runeworld:block/cairn_5"
+      }
+    },
+    {
+      "when": {
+        "level": "6|7"
+      },
+      "apply": {
+        "model": "runeworld:block/cairn_6"
+      }
+    },
+    {
+      "when": {
+        "level": "7"
+      },
+      "apply": {
+        "model": "runeworld:block/cairn_7"
+      }
+    }
+  ]
+}

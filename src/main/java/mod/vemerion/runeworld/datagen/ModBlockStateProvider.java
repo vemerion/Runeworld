@@ -1,6 +1,9 @@
 package mod.vemerion.runeworld.datagen;
 
+import java.util.function.Function;
+
 import mod.vemerion.runeworld.Main;
+import mod.vemerion.runeworld.block.CairnBlock;
 import mod.vemerion.runeworld.block.FireRitualStoneBlock;
 import mod.vemerion.runeworld.block.FireRootBlock;
 import mod.vemerion.runeworld.block.FleshEatingPlantBlock;
@@ -58,6 +61,7 @@ public class ModBlockStateProvider extends BlockStateProvider {
 
 		topaz();
 		mirror();
+		cairn();
 
 		for (Block portal : ModBlocks.getRunePortals())
 			runePortal(portal);
@@ -67,6 +71,54 @@ public class ModBlockStateProvider extends BlockStateProvider {
 		stoneMaterial(ModBlocks.CHARRED_STONE_MATERIAL);
 		stoneMaterial(ModBlocks.BLOOD_ROCK_MATERIAL);
 		stoneMaterial(ModBlocks.BLOOD_ROCK_BRICKS_MATERIAL);
+	}
+
+	private void cairn() {
+		var cairn = ModBlocks.CAIRN.get();
+		var name = cairn.getRegistryName().getPath();
+
+		var builder = getMultipartBuilder(cairn);
+
+		Function<Integer, Integer[]> levelCondition = level -> {
+			var levels = new Integer[CairnBlock.MAX_LEVEL + 1 - level];
+			for (int i = level; i <= CairnBlock.MAX_LEVEL; i++)
+				levels[i - level] = i;
+			return levels;
+		};
+
+		builder.part().modelFile(cairnPart(name, "0", new Vec3i(5, 0, 5), new Vec3i(11, 3, 11), 0)).addModel()
+				.condition(CairnBlock.LEVEL, levelCondition.apply(0)).end();
+		builder.part().modelFile(cairnPart(name, "1", new Vec3i(5, 3, 5), new Vec3i(10, 6, 10), 45)).addModel()
+				.condition(CairnBlock.LEVEL, levelCondition.apply(1)).end();
+		builder.part().modelFile(cairnPart(name, "2", new Vec3i(5, 6, 6), new Vec3i(10, 8, 11), 22.5f)).addModel()
+				.condition(CairnBlock.LEVEL, levelCondition.apply(2)).end();
+		builder.part().modelFile(cairnPart(name, "3", new Vec3i(5, 8, 5), new Vec3i(9, 10, 9), 0)).addModel()
+				.condition(CairnBlock.LEVEL, levelCondition.apply(3)).end();
+		builder.part().modelFile(cairnPart(name, "4", new Vec3i(6, 10, 6), new Vec3i(10, 12, 10), -45)).addModel()
+				.condition(CairnBlock.LEVEL, levelCondition.apply(4)).end();
+		builder.part().modelFile(cairnPart(name, "5", new Vec3i(6, 12, 6), new Vec3i(10, 13, 10), 0)).addModel()
+				.condition(CairnBlock.LEVEL, levelCondition.apply(5)).end();
+		builder.part().modelFile(cairnPart(name, "6", new Vec3i(6, 13, 6), new Vec3i(9, 14, 9), -22.5f)).addModel()
+				.condition(CairnBlock.LEVEL, levelCondition.apply(6)).end();
+		builder.part().modelFile(cairnPart(name, "7", new Vec3i(7, 14, 7), new Vec3i(9, 15, 9), 22.5f)).addModel()
+				.condition(CairnBlock.LEVEL, levelCondition.apply(7)).end();
+	}
+
+	private BlockModelBuilder cairnPart(String name, String suffix, Vec3i from, Vec3i to, float rot) {
+		var origin = from.offset((to.getX() - from.getX()) / 2, from.getY(), (to.getZ() - from.getZ()) / 2);
+		return models().withExistingParent(name + "_" + suffix, mcLoc("block/block"))
+				.texture("tex", modLoc("block/" + name)).texture("particle", "#tex").element()
+				.from(from.getX(), from.getY(), from.getZ()).to(to.getX(), to.getY(), to.getZ())
+				.allFaces((direction, builder) -> {
+					builder.texture("#tex");
+					if (direction.getAxis() == Direction.Axis.Y) {
+						builder.uvs(0, 0, to.getX() - from.getX(), to.getZ() - from.getZ()).end();
+					} else {
+						builder.uvs(0, 0, to.getX() - from.getX(), to.getY() - from.getY()).end();
+					}
+
+				}).rotation().axis(Direction.Axis.Y).origin(origin.getX(), origin.getY(), origin.getZ()).angle(rot)
+				.end().end();
 	}
 
 	private void mirror() {

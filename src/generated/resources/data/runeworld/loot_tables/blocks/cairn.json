@@ -1,0 +1,132 @@
+{
+  "type": "minecraft:block",
+  "pools": [
+    {
+      "rolls": 1.0,
+      "bonus_rolls": 0.0,
+      "entries": [
+        {
+          "type": "minecraft:item",
+          "functions": [
+            {
+              "function": "minecraft:set_count",
+              "conditions": [
+                {
+                  "condition": "minecraft:block_state_property",
+                  "block": "runeworld:cairn",
+                  "properties": {
+                    "level": "0"
+                  }
+                }
+              ],
+              "count": 1.0,
+              "add": false
+            },
+            {
+              "function": "minecraft:set_count",
+              "conditions": [
+                {
+                  "condition": "minecraft:block_state_property",
+                  "block": "runeworld:cairn",
+                  "properties": {
+                    "level": "1"
+                  }
+                }
+              ],
+              "count": 2.0,
+              "add": false
+            },
+            {
+              "function": "minecraft:set_count",
+              "conditions": [
+                {
+                  "condition": "minecraft:block_state_property",
+                  "block": "runeworld:cairn",
+                  "properties": {
+                    "level": "2"
+                  }
+                }
+              ],
+              "count": 3.0,
+              "add": false
+            },
+            {
+              "function": "minecraft:set_count",
+              "conditions": [
+                {
+                  "condition": "minecraft:block_state_property",
+                  "block": "runeworld:cairn",
+                  "properties": {
+                    "level": "3"
+                  }
+                }
+              ],
+              "count": 4.0,
+              "add": false
+            },
+            {
+              "function": "minecraft:set_count",
+              "conditions": [
+                {
+                  "condition": "minecraft:block_state_property",
+                  "block": "runeworld:cairn",
+                  "properties": {
+                    "level": "4"
+                  }
+                }
+              ],
+              "count": 5.0,
+              "add": false
+            },
+            {
+              "function": "minecraft:set_count",
+              "conditions": [
+                {
+                  "condition": "minecraft:block_state_property",
+                  "block": "runeworld:cairn",
+                  "properties": {
+                    "level": "5"
+                  }
+                }
+              ],
+              "count": 6.0,
+              "add": false
+            },
+            {
+              "function": "minecraft:set_count",
+              "conditions": [
+                {
+                  "condition": "minecraft:block_state_property",
+                  "block": "runeworld:cairn",
+                  "properties": {
+                    "level": "6"
+                  }
+                }
+              ],
+              "count": 7.0,
+              "add": false
+            },
+            {
+              "function": "minecraft:set_count",
+              "conditions": [
+                {
+                  "condition": "minecraft:block_state_property",
+                  "block": "runeworld:cairn",
+                  "properties": {
+                    "level": "7"
+                  }
+                }
+              ],
+              "count": 8.0,
+              "add": false
+            },
+            {
+              "function": "minecraft:explosion_decay"
+            }
+          ],
+          "name": "runeworld:cairn"
+        }
+      ]
+    }
+  ]
+}

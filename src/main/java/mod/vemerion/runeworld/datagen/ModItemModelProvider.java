@@ -40,6 +40,7 @@ public class ModItemModelProvider extends ItemModelProvider {
 		simpleItem(ModItems.MONKEY_PAW.get());
 		simpleItem(ModItems.TOPAZ_GEM.get());
 		simpleItem(ModItems.TOPAZ_SHARD.get());
+		simpleItem(ModBlocks.CAIRN.get());
 		dislocator(ModItems.BLOOD_DISLOCATOR.get());
 		dislocator(ModItems.FIRE_DISLOCATOR.get());
 		handMirror();

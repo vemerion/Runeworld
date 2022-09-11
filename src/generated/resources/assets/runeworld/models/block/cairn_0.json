@@ -1,0 +1,86 @@
+{
+  "parent": "minecraft:block/block",
+  "textures": {
+    "tex": "runeworld:block/cairn",
+    "particle": "#tex"
+  },
+  "elements": [
+    {
+      "from": [
+        5,
+        0,
+        5
+      ],
+      "to": [
+        11,
+        3,
+        11
+      ],
+      "rotation": {
+        "origin": [
+          8,
+          0,
+          8
+        ],
+        "axis": "y",
+        "angle": 0.0
+      },
+      "faces": {
+        "down": {
+          "texture": "#tex",
+          "uv": [
+            0.0,
+            0.0,
+            6.0,
+            6.0
+          ]
+        },
+        "up": {
+          "texture": "#tex",
+          "uv": [
+            0.0,
+            0.0,
+            6.0,
+            6.0
+          ]
+        },
+        "north": {
+          "texture": "#tex",
+          "uv": [
+            0.0,
+            0.0,
+            6.0,
+            3.0
+          ]
+        },
+        "south": {
+          "texture": "#tex",
+          "uv": [
+            0.0,
+            0.0,
+            6.0,
+            3.0
+          ]
+        },
+        "west": {
+          "texture": "#tex",
+          "uv": [
+            0.0,
+            0.0,
+            6.0,
+            3.0
+          ]
+        },
+        "east": {
+          "texture": "#tex",
+          "uv": [
+            0.0,
+            0.0,
+            6.0,
+            3.0
+          ]
+        }
+      }
+    }
+  ]
+}
