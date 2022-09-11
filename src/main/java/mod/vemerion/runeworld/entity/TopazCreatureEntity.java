@@ -1,11 +1,13 @@
 package mod.vemerion.runeworld.entity;
 
 import mod.vemerion.runeworld.Main;
+import mod.vemerion.runeworld.helpers.Helper;
 import mod.vemerion.runeworld.init.ModLootTables;
 import mod.vemerion.runeworld.init.ModSounds;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.tags.TagKey;
+import net.minecraft.util.Mth;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.AgeableMob;
@@ -34,8 +36,13 @@ import net.minecraftforge.registries.ForgeRegistries;
 
 public class TopazCreatureEntity extends TamableAnimal {
 
+	private static final int EAT_DURATION = 20 * 1;
+
 	public static final TagKey<Item> FOOD = TagKey.create(ForgeRegistries.ITEMS.getRegistryKey(),
 			new ResourceLocation(Main.MODID, "topaz_creature_food"));
+
+	private float jawRot, jawRot0;
+	private int eatTimer;
 
 	public TopazCreatureEntity(EntityType<? extends TopazCreatureEntity> type, Level worldIn) {
 		super(type, worldIn);
@@ -55,6 +62,25 @@ public class TopazCreatureEntity extends TamableAnimal {
 		goalSelector.addGoal(4, new FollowMobGoal(this, 1, 3, 7));
 	}
 
+	@Override
+	public void tick() {
+		super.tick();
+
+		if (level.isClientSide) {
+			jawRot0 = jawRot;
+			if (eatTimer > 0) {
+				eatTimer--;
+				jawRot += 0.8;
+			} else {
+				jawRot += 0.1;
+			}
+		}
+	}
+
+	public float getJawRot(float partialTicks) {
+		return Mth.cos(Mth.lerp(partialTicks, jawRot0, jawRot)) * Helper.toRad(15) + Helper.toRad(15);
+	}
+
 	public InteractionResult mobInteract(Player pPlayer, InteractionHand pHand) {
 		var stack = pPlayer.getItemInHand(pHand);
 
@@ -64,6 +90,9 @@ public class TopazCreatureEntity extends TamableAnimal {
 
 			if (!level.isClientSide) {
 				poop();
+				heal(2);
+			} else {
+				eatTimer = EAT_DURATION;
 			}
 			return InteractionResult.sidedSuccess(level.isClientSide);
 		} else if (isOwnedBy(pPlayer) && isTame()) {
