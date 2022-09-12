@@ -3,12 +3,18 @@ package mod.vemerion.runeworld.init;
 import java.util.List;
 
 import mod.vemerion.runeworld.Main;
+import net.minecraft.core.Direction;
 import net.minecraft.core.Registry;
+import net.minecraft.core.Vec3i;
 import net.minecraft.data.worldgen.placement.PlacementUtils;
+import net.minecraft.util.valueproviders.ConstantInt;
+import net.minecraft.world.level.levelgen.blockpredicates.BlockPredicate;
 import net.minecraft.world.level.levelgen.placement.BiomeFilter;
 import net.minecraft.world.level.levelgen.placement.CountPlacement;
+import net.minecraft.world.level.levelgen.placement.EnvironmentScanPlacement;
 import net.minecraft.world.level.levelgen.placement.InSquarePlacement;
 import net.minecraft.world.level.levelgen.placement.PlacedFeature;
+import net.minecraft.world.level.levelgen.placement.RandomOffsetPlacement;
 import net.minecraft.world.level.levelgen.placement.RarityFilter;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.RegistryObject;
@@ -28,4 +34,5 @@ public class ModPlacedFeatures {
 	public static final RegistryObject<PlacedFeature> FIRE_ROOT_PATCH = PLACED_FEATURES.register("fire_root_patch", () -> new PlacedFeature(ModConfiguredFeatures.FIRE_ROOT_PATCH.getHolder().get(), List.of(RarityFilter.onAverageOnceEvery(150), InSquarePlacement.spread(), PlacementUtils.HEIGHTMAP_WORLD_SURFACE, BiomeFilter.biome())));
 	public static final RegistryObject<PlacedFeature> FIRE_PATCH = PLACED_FEATURES.register("fire_patch", () -> new PlacedFeature(ModConfiguredFeatures.FIRE_PATCH.getHolder().get(), List.of(RarityFilter.onAverageOnceEvery(50), InSquarePlacement.spread(), PlacementUtils.HEIGHTMAP_WORLD_SURFACE, BiomeFilter.biome())));
 	public static final RegistryObject<PlacedFeature> TOPAZ = PLACED_FEATURES.register("topaz", () -> new PlacedFeature(ModConfiguredFeatures.TOPAZ.getHolder().get(), List.of(CountPlacement.of(90), InSquarePlacement.spread(), PlacementUtils.RANGE_BOTTOM_TO_MAX_TERRAIN_HEIGHT, BiomeFilter.biome())));
+	public static final RegistryObject<PlacedFeature> CAIRN = PLACED_FEATURES.register("cairn", () -> new PlacedFeature(ModConfiguredFeatures.CAIRN.getHolder().get(), List.of(CountPlacement.of(90), InSquarePlacement.spread(), PlacementUtils.RANGE_BOTTOM_TO_MAX_TERRAIN_HEIGHT, EnvironmentScanPlacement.scanningFor(Direction.DOWN, BlockPredicate.matchesBlock(ModBlocks.CHARRED_STONE.get(), Vec3i.ZERO), BlockPredicate.ONLY_IN_AIR_PREDICATE, 12), RandomOffsetPlacement.vertical(ConstantInt.of(1)), BiomeFilter.biome())));
 }

@@ -22,6 +22,7 @@ public class FirePlainsBiome extends ModBiome {
 		generation.addFeature(GenerationStep.Decoration.VEGETAL_DECORATION, ModPlacedFeatures.FIRE_ROOT_PATCH.getHolder().get());
 		generation.addFeature(GenerationStep.Decoration.VEGETAL_DECORATION, ModPlacedFeatures.FIRE_PATCH.getHolder().get());
 		generation.addFeature(GenerationStep.Decoration.UNDERGROUND_ORES, ModPlacedFeatures.TOPAZ.getHolder().get());
+		generation.addFeature(GenerationStep.Decoration.UNDERGROUND_DECORATION, ModPlacedFeatures.CAIRN.getHolder().get());
 		
 		generation.addCarver(GenerationStep.Carving.AIR, ModConfiguredWorldCarvers.WORLD_CARVER.getHolder().get());
 

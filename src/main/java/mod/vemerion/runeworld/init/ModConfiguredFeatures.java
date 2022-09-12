@@ -1,11 +1,12 @@
 package mod.vemerion.runeworld.init;
 
 import mod.vemerion.runeworld.Main;
+import mod.vemerion.runeworld.block.CairnBlock;
 import mod.vemerion.runeworld.block.FireRootBlock;
-import mod.vemerion.runeworld.feature.TopazFeature;
 import net.minecraft.core.Registry;
 import net.minecraft.data.worldgen.placement.PlacementUtils;
 import net.minecraft.util.random.SimpleWeightedRandomList;
+import net.minecraft.util.valueproviders.UniformInt;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.levelgen.feature.ConfiguredFeature;
@@ -15,6 +16,7 @@ import net.minecraft.world.level.levelgen.feature.configurations.FeatureConfigur
 import net.minecraft.world.level.levelgen.feature.configurations.RandomPatchConfiguration;
 import net.minecraft.world.level.levelgen.feature.configurations.SimpleBlockConfiguration;
 import net.minecraft.world.level.levelgen.feature.stateproviders.BlockStateProvider;
+import net.minecraft.world.level.levelgen.feature.stateproviders.RandomizedIntStateProvider;
 import net.minecraft.world.level.levelgen.feature.stateproviders.WeightedStateProvider;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.RegistryObject;
@@ -34,4 +36,5 @@ public class ModConfiguredFeatures {
 	public static final RegistryObject<ConfiguredFeature<?, ?>> FIRE_PATCH = CONFIGURED_FEATURES.register("fire_patch", () -> new ConfiguredFeature<>(Feature.RANDOM_PATCH, new RandomPatchConfiguration(64, 6, 2, PlacementUtils.onlyWhenEmpty(Feature.SIMPLE_BLOCK, new SimpleBlockConfiguration(BlockStateProvider.simple(Blocks.FIRE.defaultBlockState()))))));
 	public static final RegistryObject<ConfiguredFeature<?, ?>> FLESH_EATING_PLANT = CONFIGURED_FEATURES.register("flesh_eating_plant", () -> new ConfiguredFeature<>(ModFeatures.FLESH_EATING_PLANT.get(), FeatureConfiguration.NONE));
 	public static final RegistryObject<ConfiguredFeature<?, ?>> TOPAZ = CONFIGURED_FEATURES.register("topaz", () -> new ConfiguredFeature<>(ModFeatures.TOPAZ.get(), FeatureConfiguration.NONE));
+	public static final RegistryObject<ConfiguredFeature<?, ?>> CAIRN = CONFIGURED_FEATURES.register("cairn", () -> new ConfiguredFeature<>(Feature.SIMPLE_BLOCK, new SimpleBlockConfiguration(new RandomizedIntStateProvider(BlockStateProvider.simple(ModBlocks.CAIRN.get()), CairnBlock.LEVEL, UniformInt.of(CairnBlock.MIN_LEVEL, CairnBlock.MAX_LEVEL)))));
 }
