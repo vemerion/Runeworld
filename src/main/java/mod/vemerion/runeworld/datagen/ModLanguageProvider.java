@@ -220,7 +220,8 @@ public class ModLanguageProvider extends LanguageProvider {
 				"Topaz is a fiery gem that can be found in the caves of the fire world. When placed on a fire ritual, it will eventually turn into a topaz shard, which can in turn be crafted into topaz gems.");
 		addGuide("fire_world.topaz.text2",
 				"Topaz shards can be used as an alternate ammunition to the slingshot, and will set the entity it hits on fire. Topaz gems can be used to craft mirror blocks (which will reflect the player), which can in turn be crafted into hand mirrors, which will reflect projectiles when used.");
-
+		addGuide("fire_world.topaz.text3",
+				"The Topaz Creature can be summoned by right-clicking a topaz with a fire heart. This creature will follow the player around, and can be fed topaz to poop out a random item. A great way to get rid of excess topaz!");
 	}
 
 	private void addGuide(String suffix, String text) {

@@ -87,7 +87,8 @@ public class ModGuide {
 			fireWorld.addChild(fireRitual).addChild(topaz).addText(transKey("fire_world.text1"));
 			fireRitual.addText(transKey("fire_world.fire_ritual.text1"))
 					.addText(transKey("fire_world.fire_ritual.text2"));
-			topaz.addText(transKey("fire_world.topaz.text1")).addText(transKey("fire_world.topaz.text2"));
+			topaz.addText(transKey("fire_world.topaz.text1")).addText(transKey("fire_world.topaz.text2"))
+					.addText(transKey("fire_world.topaz.text3"));
 			start.addChild(portal).addChild(bloodWorld).addChild(fireWorld).addText(transKey("intro"));
 		}
 		return start;

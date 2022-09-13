@@ -295,6 +295,10 @@
             {
               "type": "paragraph",
               "key": "guide.runeworld.fire_world.topaz.text2"
+            },
+            {
+              "type": "paragraph",
+              "key": "guide.runeworld.fire_world.topaz.text3"
             }
           ],
           "children": []
