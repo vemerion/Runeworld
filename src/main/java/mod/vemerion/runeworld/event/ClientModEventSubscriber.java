@@ -19,6 +19,7 @@ import mod.vemerion.runeworld.item.DislocatorItem;
 import mod.vemerion.runeworld.model.BloodBatModel;
 import mod.vemerion.runeworld.model.BloodCrownModel;
 import mod.vemerion.runeworld.model.BloodGorillaModel;
+import mod.vemerion.runeworld.model.BloodKnightModel;
 import mod.vemerion.runeworld.model.BloodLeechModel;
 import mod.vemerion.runeworld.model.BloodMonkeyModel;
 import mod.vemerion.runeworld.model.MosquitoModel;
@@ -30,6 +31,7 @@ import mod.vemerion.runeworld.particle.DrippingBloodProvider;
 import mod.vemerion.runeworld.particle.RunePortalParticle;
 import mod.vemerion.runeworld.renderer.BloodBatRenderer;
 import mod.vemerion.runeworld.renderer.BloodGorillaRenderer;
+import mod.vemerion.runeworld.renderer.BloodKnightRenderer;
 import mod.vemerion.runeworld.renderer.BloodLeechBlockEntityRenderer;
 import mod.vemerion.runeworld.renderer.BloodMonkeyRenderer;
 import mod.vemerion.runeworld.renderer.FireElementalProjectileRenderer;
@@ -116,6 +118,7 @@ public class ClientModEventSubscriber {
 		event.registerLayerDefinition(ModLayerLocations.BLOOD_CROWN, BloodCrownModel::createBodyLayer);
 		event.registerLayerDefinition(ModLayerLocations.TICK, TickModel::createBodyLayer);
 		event.registerLayerDefinition(ModLayerLocations.TOPAZ_CREATURE, TopazCreatureModel::createBodyLayer);
+		event.registerLayerDefinition(ModLayerLocations.BLOOD_KNIGHT, BloodKnightModel::createBodyLayer);
 	}
 
 	@SubscribeEvent
@@ -133,6 +136,8 @@ public class ClientModEventSubscriber {
 		event.registerEntityRenderer(ModEntities.BLOOD_GORILLA.get(), BloodGorillaRenderer::new);
 		event.registerEntityRenderer(ModEntities.TICK.get(), TickRenderer::new);
 		event.registerEntityRenderer(ModEntities.TOPAZ_CREATURE.get(), TopazCreatureRenderer::new);
+		event.registerEntityRenderer(ModEntities.BLOOD_KNIGHT_CLUB.get(), BloodKnightRenderer::new);
+		event.registerEntityRenderer(ModEntities.BLOOD_KNIGHT_SPEAR.get(), BloodKnightRenderer::new);
 	}
 
 	private static void registerItemProperties() {

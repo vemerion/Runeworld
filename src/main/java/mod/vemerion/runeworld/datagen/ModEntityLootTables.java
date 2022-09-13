@@ -77,6 +77,9 @@ public class ModEntityLootTables extends EntityLoot {
 								.add(LootItem.lootTableItem(Items.RAW_IRON).setWeight(10))
 								.add(LootItem.lootTableItem(Items.DIAMOND).setWeight(1))
 								.add(LootItem.lootTableItem(Items.EMERALD).setWeight(2))));
+		
+		add(ModEntities.BLOOD_KNIGHT_CLUB.get(), LootTable.lootTable());
+		add(ModEntities.BLOOD_KNIGHT_SPEAR.get(), LootTable.lootTable());
 	}
 
 	@Override

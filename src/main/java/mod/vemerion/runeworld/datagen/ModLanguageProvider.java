@@ -60,6 +60,8 @@ public class ModLanguageProvider extends LanguageProvider {
 		add(ModItems.BLOOD_GORILLA_SPAWN_EGG.get(), "Blood Gorilla Spawn Egg");
 		add(ModItems.TICK_SPAWN_EGG.get(), "Tick Spawn Egg");
 		add(ModItems.TOPAZ_CREATURE_SPAWN_EGG.get(), "Topaz Creature Spawn Egg");
+		add(ModItems.BLOOD_KNIGHT_CLUB_SPAWN_EGG.get(), "Club wielding Blood Knight Spawn Egg");
+		add(ModItems.BLOOD_KNIGHT_SPEAR_SPAWN_EGG.get(), "Spear wielding Blood Knight Spawn Egg");
 		add(ModItems.BLOOD_CROWN.get(), "Blood Crown");
 		add(ModItems.MONKEY_PAW.get(), "Monkey's Paw");
 		add(ModItems.SLINGSHOT.get(), "Slingshot");
@@ -80,6 +82,8 @@ public class ModLanguageProvider extends LanguageProvider {
 		add(ModEntities.BLOOD_GORILLA.get(), "Blood Gorilla");
 		add(ModEntities.TICK.get(), "Tick");
 		add(ModEntities.TOPAZ_CREATURE.get(), "Topaz Creature");
+		add(ModEntities.BLOOD_KNIGHT_CLUB.get(), "Club wielding Blood Knight");
+		add(ModEntities.BLOOD_KNIGHT_SPEAR.get(), "Spear wielding Blood Knight");
 		add(ModEnchantments.ELASTIC.get(), "Elastic");
 		add(ModEnchantments.HARDNESS.get(), "Hardness");
 		add(ModEnchantments.QUICK_DRAW.get(), "Quick Draw");

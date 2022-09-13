@@ -66,6 +66,12 @@ public class ModItems {
 			() -> new ForgeSpawnEggItem(ModEntities.TOPAZ_CREATURE, TopazBlock.getColor(new BlockPos(0, 0, 0), 0),
 					TopazBlock.getColor(new BlockPos(1, 0, 0), 0),
 					(new Item.Properties()).tab(CreativeModeTab.TAB_SEARCH)));
+	public static final RegistryObject<Item> BLOOD_KNIGHT_CLUB_SPAWN_EGG = ITEMS.register("blood_knight_club_spawn_egg",
+			() -> new ForgeSpawnEggItem(ModEntities.BLOOD_KNIGHT_CLUB, 0x252525, 0x3e3d3d,
+					(new Item.Properties()).tab(CreativeModeTab.TAB_SEARCH)));
+	public static final RegistryObject<Item> BLOOD_KNIGHT_SPEAR_SPAWN_EGG = ITEMS.register("blood_knight_spear_spawn_egg",
+			() -> new ForgeSpawnEggItem(ModEntities.BLOOD_KNIGHT_SPEAR, 0x252525, 0x512f13,
+					(new Item.Properties()).tab(CreativeModeTab.TAB_SEARCH)));
 
 	public static final RegistryObject<Item> BLOOD_BUCKET = ITEMS.register("blood_bucket", BloodBucketItem::new);
 	public static final RegistryObject<Item> BLOOD_PUDDING = ITEMS.register("blood_pudding", BloodPuddingItem::new);
