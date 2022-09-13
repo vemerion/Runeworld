@@ -5,7 +5,8 @@ import java.util.function.Supplier;
 import mod.vemerion.runeworld.Main;
 import mod.vemerion.runeworld.entity.BloodBatEntity;
 import mod.vemerion.runeworld.entity.BloodGorillaEntity;
-import mod.vemerion.runeworld.entity.BloodKnightEntity;
+import mod.vemerion.runeworld.entity.BloodKnightClubEntity;
+import mod.vemerion.runeworld.entity.BloodKnightSpearEntity;
 import mod.vemerion.runeworld.entity.BloodMonkeyEntity;
 import mod.vemerion.runeworld.entity.FireElementalEntity;
 import mod.vemerion.runeworld.entity.FireElementalProjectileEntity;
@@ -76,14 +77,17 @@ public class ModEntities {
 	public static final RegistryObject<EntityType<TopazCreatureEntity>> TOPAZ_CREATURE = ENTITIES
 			.register("topaz_creature", () -> EntityType.Builder
 					.<TopazCreatureEntity>of(TopazCreatureEntity::new, MobCategory.CREATURE).sized(0.8f, 0.8f).fireImmune().build(""));
-	
-	public static final RegistryObject<EntityType<BloodKnightEntity>> BLOOD_KNIGHT_CLUB = ENTITIES
-			.register("blood_knight_club", () -> EntityType.Builder
-					.<BloodKnightEntity>of(BloodKnightEntity::new, MobCategory.CREATURE).sized(2, 3.75f).build(""));
-	
-	public static final RegistryObject<EntityType<BloodKnightEntity>> BLOOD_KNIGHT_SPEAR = ENTITIES
-			.register("blood_knight_spear", () -> EntityType.Builder
-					.<BloodKnightEntity>of(BloodKnightEntity::new, MobCategory.CREATURE).sized(2, 3.75f).build(""));
+
+	public static final RegistryObject<EntityType<BloodKnightClubEntity>> BLOOD_KNIGHT_CLUB = ENTITIES.register(
+			"blood_knight_club",
+			() -> EntityType.Builder.<BloodKnightClubEntity>of(BloodKnightClubEntity::new, MobCategory.CREATURE)
+					.sized(2, 3.75f).build(""));
+
+	public static final RegistryObject<EntityType<? extends BloodKnightSpearEntity>> BLOOD_KNIGHT_SPEAR = ENTITIES
+			.register("blood_knight_spear",
+					() -> EntityType.Builder
+							.<BloodKnightSpearEntity>of(BloodKnightSpearEntity::new, MobCategory.CREATURE)
+							.sized(2, 3.75f).build(""));
 
 	@SubscribeEvent
 	public static void setupEntities(ParallelDispatchEvent event) {
@@ -99,8 +103,8 @@ public class ModEntities {
 		event.put(BLOOD_GORILLA.get(), BloodGorillaEntity.attributes().build());
 		event.put(TICK.get(), TickEntity.attributes().build());
 		event.put(TOPAZ_CREATURE.get(), TopazCreatureEntity.attributes().build());
-		event.put(BLOOD_KNIGHT_CLUB.get(), BloodKnightEntity.attributes().build());
-		event.put(BLOOD_KNIGHT_SPEAR.get(), BloodKnightEntity.attributes().build());
+		event.put(BLOOD_KNIGHT_CLUB.get(), BloodKnightClubEntity.attributes().build());
+		event.put(BLOOD_KNIGHT_SPEAR.get(), BloodKnightSpearEntity.attributes().build());
 	}
 
 	private static void setEntitySpawns() {
