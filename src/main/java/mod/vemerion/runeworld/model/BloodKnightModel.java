@@ -139,48 +139,78 @@ public class BloodKnightModel extends EntityModel<BloodKnightEntity> {
 	@Override
 	public void setupAnim(BloodKnightEntity entity, float limbSwing, float limbSwingAmount, float ageInTicks,
 			float netHeadYaw, float headPitch) {
+		float partialTicks = ageInTicks - entity.tickCount;
+
 		var hasClub = entity.getType() == ModEntities.BLOOD_KNIGHT_CLUB.get();
+		var isSpecialAttack = entity.isSpecialAttack();
+		float spAtkTimer = entity.getSpecialAttackTimer(partialTicks);
 
 		club1.visible = hasClub;
 		shield.visible = !hasClub;
 		spear1.visible = !hasClub;
-		
+
 		reset();
 
 		neck.yRot = Helper.toRad(netHeadYaw);
+
+		leftLeg1.xRot = Mth.cos(limbSwing * 0.7f + Mth.PI) * 0.9f * limbSwingAmount;
+		leftLeg2.xRot = (Mth.cos(limbSwing * 0.7f) + 1) * 0.9f * limbSwingAmount;
+		rightLeg1.xRot = Mth.cos(limbSwing * 0.7f) * 0.9f * limbSwingAmount;
+		rightLeg2.xRot = (Mth.cos(limbSwing * 0.7f + Mth.PI) + 1) * 0.9f * limbSwingAmount;
 
 		if (hasClub) {
 			rightArm1.xRot = Helper.toRad(-20) + Mth.cos(limbSwing * 0.3f) * 0.3f * limbSwingAmount;
 			rightArm2.xRot = Helper.toRad(-10);
 			rightArm2.yRot = Helper.toRad(-60);
 			leftArm1.xRot = Helper.toRad(-32) + Mth.cos(limbSwing * 0.3f) * 0.3f * limbSwingAmount;
-			
-			if (attackTime > 0) {
+
+			if (isSpecialAttack) {
+				rightArm2.xRot = -0.31f;
+				rightArm2.yRot = 0;
+				rightArm1.xRot = Helper.toRad(-40) - Mth.sin(spAtkTimer * Mth.PI * 1.1f) * Helper.toRad(70);
+				rightArm1.yRot = Helper.toRad(-25);
+				leftArm1.xRot = Helper.toRad(-40) - Mth.sin(spAtkTimer * Mth.PI * 1.1f) * Helper.toRad(70);
+				leftArm1.yRot = Helper.toRad(25);
+			} else if (attackTime > 0) {
 				rightArm1.xRot += Mth.sin(attackTime * Mth.TWO_PI) * Helper.toRad(25);
 				leftArm1.xRot += Mth.sin(attackTime * Mth.TWO_PI) * Helper.toRad(25);
 			}
 		} else {
 			rightArm1.xRot = Mth.cos(limbSwing * 0.7f + Mth.PI) * 0.9f * limbSwingAmount;
 			leftArm1.xRot = Mth.cos(limbSwing * 0.7f) * 0.9f * limbSwingAmount;
-			
-			if (attackTime > 0) {
+
+			if (isSpecialAttack) {
+				rightLeg1.xRot = Helper.toRad(-65);
+				rightLeg2.xRot = Helper.toRad(55);
+				leftLeg1.xRot = 0;
+				leftLeg2.xRot = Helper.toRad(90);
+				rightArm1.xRot = Helper.toRad(-140) - Mth.sin(spAtkTimer * Mth.PI * 0.75f) * Helper.toRad(60);
+				rightArm2.xRot = 0;
+				spear1.yRot = Helper.toRad(180);
+				leftArm1.xRot = Helper.toRad(-35);
+				leftArm2.xRot = Helper.toRad(-25);
+				leftArm2.yRot = Helper.toRad(40);
+				leftArm2.zRot = Helper.toRad(70);
+				body.y = 32;
+			} else if (attackTime > 0) {
 				leftArm1.yRot += Mth.sin(attackTime * Mth.PI) * Helper.toRad(70);
 				leftArm1.xRot += -Mth.sin(attackTime * Mth.TWO_PI) * Helper.toRad(40);
 			}
 		}
-
-		leftLeg1.xRot = Mth.cos(limbSwing * 0.7f + Mth.PI) * 0.9f * limbSwingAmount;
-		leftLeg2.xRot = (Mth.cos(limbSwing * 0.7f) + 1) * 0.9f * limbSwingAmount;
-		rightLeg1.xRot = Mth.cos(limbSwing * 0.7f) * 0.9f * limbSwingAmount;
-		rightLeg2.xRot = (Mth.cos(limbSwing * 0.7f + Mth.PI) + 1) * 0.9f * limbSwingAmount;
 	}
 
 	private void reset() {
+		body.y = 24;
+		spear1.yRot = 0;
 		rightArm1.xRot = 0;
+		rightArm1.yRot = 0;
 		rightArm2.xRot = -0.31f;
 		rightArm2.yRot = 0;
 		leftArm1.xRot = 0;
 		leftArm1.yRot = 0;
+		leftArm2.xRot = -0.31f;
+		leftArm2.yRot = 0;
+		leftArm2.zRot = 0;
 	}
 
 	@Override
