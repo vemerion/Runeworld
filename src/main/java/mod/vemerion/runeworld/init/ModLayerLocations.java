@@ -19,4 +19,5 @@ public class ModLayerLocations {
 	public static final ModelLayerLocation TICK = new ModelLayerLocation(new ResourceLocation(Main.MODID, "tick"), "main");
 	public static final ModelLayerLocation TOPAZ_CREATURE = new ModelLayerLocation(new ResourceLocation(Main.MODID, "topaz_creature"), "main");
 	public static final ModelLayerLocation BLOOD_KNIGHT = new ModelLayerLocation(new ResourceLocation(Main.MODID, "blood_knight"), "main");
+	public static final ModelLayerLocation SPEAR = new ModelLayerLocation(new ResourceLocation(Main.MODID, "spear"), "main");
 }

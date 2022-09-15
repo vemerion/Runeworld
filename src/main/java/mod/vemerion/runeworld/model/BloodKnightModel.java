@@ -122,16 +122,7 @@ public class BloodKnightModel extends EntityModel<BloodKnightEntity> {
 						new CubeDeformation(0.0F)),
 				PartPose.offsetAndRotation(0.0F, 0.0F, -35.0F, 0.0F, 0.7854F, 0.0F));
 
-		PartDefinition spear1 = rightArm2.addOrReplaceChild("spear1",
-				CubeListBuilder.create().texOffs(50, 85)
-						.addBox(-1.5F, -1.5F, -31.0F, 3.0F, 3.0F, 36.0F, new CubeDeformation(0.0F)).texOffs(56, 111)
-						.addBox(-5.0F, 0.0F, -41.0F, 10.0F, 0.0F, 10.0F, new CubeDeformation(0.0F)),
-				PartPose.offset(0.0F, 11.5F, 1.0F));
-
-		spear1.addOrReplaceChild("spear3_r1",
-				CubeListBuilder.create().texOffs(56, 111).addBox(-5.0F, 0.0F, -6.0F, 10.0F, 0.0F, 10.0F,
-						new CubeDeformation(0.0F)),
-				PartPose.offsetAndRotation(0.0F, 0.0F, -35.0F, 0.0F, 0.0F, 1.5708F));
+		SpearModel.fillParts(rightArm2, PartPose.offset(0, 12, -8));
 
 		return LayerDefinition.create(meshdefinition, 128, 128);
 	}
@@ -186,7 +177,7 @@ public class BloodKnightModel extends EntityModel<BloodKnightEntity> {
 				leftLeg2.xRot = Helper.toRad(90);
 				rightArm1.xRot = Helper.toRad(-140) - Mth.sin(spAtkTimer * Mth.PI * 0.75f) * Helper.toRad(60);
 				rightArm2.xRot = 0;
-				spear1.yRot = Helper.toRad(180);
+				rightArm2.yRot = Helper.toRad(180);
 				leftArm1.xRot = Helper.toRad(-35);
 				leftArm2.xRot = Helper.toRad(-25);
 				leftArm2.yRot = Helper.toRad(40);
@@ -201,7 +192,6 @@ public class BloodKnightModel extends EntityModel<BloodKnightEntity> {
 
 	private void reset() {
 		body.y = 24;
-		spear1.yRot = 0;
 		rightArm1.xRot = 0;
 		rightArm1.yRot = 0;
 		rightArm2.xRot = -0.31f;

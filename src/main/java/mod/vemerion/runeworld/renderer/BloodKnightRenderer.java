@@ -15,7 +15,7 @@ import net.minecraft.resources.ResourceLocation;
 
 public class BloodKnightRenderer extends MobRenderer<BloodKnightEntity, BloodKnightModel> {
 
-	private static final ResourceLocation TEXTURE = new ResourceLocation(Main.MODID,
+	public static final ResourceLocation TEXTURE = new ResourceLocation(Main.MODID,
 			"textures/entity/blood_knight.png");
 	private static final ResourceLocation OVERLAY = new ResourceLocation(Main.MODID,
 			"textures/entity/blood_knight_overlay.png");

@@ -84,6 +84,7 @@ public class ModLanguageProvider extends LanguageProvider {
 		add(ModEntities.TOPAZ_CREATURE.get(), "Topaz Creature");
 		add(ModEntities.BLOOD_KNIGHT_CLUB.get(), "Club wielding Blood Knight");
 		add(ModEntities.BLOOD_KNIGHT_SPEAR.get(), "Spear wielding Blood Knight");
+		add(ModEntities.SPEAR.get(), "Spear");
 		add(ModEnchantments.ELASTIC.get(), "Elastic");
 		add(ModEnchantments.HARDNESS.get(), "Hardness");
 		add(ModEnchantments.QUICK_DRAW.get(), "Quick Draw");

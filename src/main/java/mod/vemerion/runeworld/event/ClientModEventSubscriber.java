@@ -23,6 +23,7 @@ import mod.vemerion.runeworld.model.BloodKnightModel;
 import mod.vemerion.runeworld.model.BloodLeechModel;
 import mod.vemerion.runeworld.model.BloodMonkeyModel;
 import mod.vemerion.runeworld.model.MosquitoModel;
+import mod.vemerion.runeworld.model.SpearModel;
 import mod.vemerion.runeworld.model.TickModel;
 import mod.vemerion.runeworld.model.TopazCreatureModel;
 import mod.vemerion.runeworld.particle.BloodDropParticle;
@@ -38,6 +39,7 @@ import mod.vemerion.runeworld.renderer.FireElementalProjectileRenderer;
 import mod.vemerion.runeworld.renderer.FireElementalRenderer;
 import mod.vemerion.runeworld.renderer.MirrorBlockEntityRenderer;
 import mod.vemerion.runeworld.renderer.MosquitoRenderer;
+import mod.vemerion.runeworld.renderer.SpearRenderer;
 import mod.vemerion.runeworld.renderer.TickRenderer;
 import mod.vemerion.runeworld.renderer.TopazCreatureRenderer;
 import mod.vemerion.runeworld.renderer.textureatlas.HideableTextureAtlasSprite;
@@ -119,6 +121,7 @@ public class ClientModEventSubscriber {
 		event.registerLayerDefinition(ModLayerLocations.TICK, TickModel::createBodyLayer);
 		event.registerLayerDefinition(ModLayerLocations.TOPAZ_CREATURE, TopazCreatureModel::createBodyLayer);
 		event.registerLayerDefinition(ModLayerLocations.BLOOD_KNIGHT, BloodKnightModel::createBodyLayer);
+		event.registerLayerDefinition(ModLayerLocations.SPEAR, SpearModel::createBodyLayer);
 	}
 
 	@SubscribeEvent
@@ -138,6 +141,7 @@ public class ClientModEventSubscriber {
 		event.registerEntityRenderer(ModEntities.TOPAZ_CREATURE.get(), TopazCreatureRenderer::new);
 		event.registerEntityRenderer(ModEntities.BLOOD_KNIGHT_CLUB.get(), BloodKnightRenderer::new);
 		event.registerEntityRenderer(ModEntities.BLOOD_KNIGHT_SPEAR.get(), BloodKnightRenderer::new);
+		event.registerEntityRenderer(ModEntities.SPEAR.get(), SpearRenderer::new);
 	}
 
 	private static void registerItemProperties() {

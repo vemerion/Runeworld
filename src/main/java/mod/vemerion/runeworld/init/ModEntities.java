@@ -13,6 +13,7 @@ import mod.vemerion.runeworld.entity.FireElementalProjectileEntity;
 import mod.vemerion.runeworld.entity.MosquitoEggsEntity;
 import mod.vemerion.runeworld.entity.MosquitoEntity;
 import mod.vemerion.runeworld.entity.SlingshotProjectileEntity;
+import mod.vemerion.runeworld.entity.SpearEntity;
 import mod.vemerion.runeworld.entity.TickEntity;
 import mod.vemerion.runeworld.entity.TopazCreatureEntity;
 import net.minecraft.world.entity.EntityType;
@@ -88,6 +89,10 @@ public class ModEntities {
 					() -> EntityType.Builder
 							.<BloodKnightSpearEntity>of(BloodKnightSpearEntity::new, MobCategory.CREATURE)
 							.sized(2, 3.75f).build(""));
+
+	public static final Supplier<EntityType<SpearEntity>> SPEAR = ENTITIES.register("spear",
+			() -> EntityType.Builder.<SpearEntity>of(SpearEntity::new, MobCategory.MISC).sized(1, 1)
+					.clientTrackingRange(4).updateInterval(10).build(""));
 
 	@SubscribeEvent
 	public static void setupEntities(ParallelDispatchEvent event) {
