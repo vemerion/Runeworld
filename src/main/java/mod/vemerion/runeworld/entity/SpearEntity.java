@@ -15,13 +15,11 @@ public class SpearEntity extends AbstractArrow {
 
 	public SpearEntity(EntityType<? extends SpearEntity> entityTypeIn, Level level) {
 		super(entityTypeIn, level);
-		this.setBaseDamage(10);
 		this.pickup = Pickup.DISALLOWED;
 	}
 
 	public SpearEntity(double x, double y, double z, Level level) {
 		super(ModEntities.SPEAR.get(), x, y, z, level);
-		this.setBaseDamage(10);
 		this.pickup = Pickup.DISALLOWED;
 	}
 

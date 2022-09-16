@@ -2,12 +2,15 @@ package mod.vemerion.runeworld.entity;
 
 import java.util.EnumSet;
 
+import mod.vemerion.runeworld.init.ModSounds;
 import mod.vemerion.runeworld.network.BloodKnightSpecialAttackMessage;
 import mod.vemerion.runeworld.network.Network;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
+import net.minecraft.sounds.SoundEvent;
+import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.Mob;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
@@ -46,19 +49,32 @@ public abstract class BloodKnightEntity extends Monster {
 	}
 
 	public static AttributeSupplier.Builder attributes() {
-		return Mob.createMobAttributes().add(Attributes.MAX_HEALTH, 10).add(Attributes.MOVEMENT_SPEED, 0.25)
-				.add(Attributes.FOLLOW_RANGE, 16).add(Attributes.ATTACK_DAMAGE, 3)
-				.add(Attributes.KNOCKBACK_RESISTANCE, 1);
+		return Mob.createMobAttributes().add(Attributes.MAX_HEALTH, 50).add(Attributes.MOVEMENT_SPEED, 0.25)
+				.add(Attributes.FOLLOW_RANGE, 32).add(Attributes.ATTACK_DAMAGE, 6)
+				.add(Attributes.KNOCKBACK_RESISTANCE, 1).add(Attributes.ARMOR, 5);
+	}
+
+	@Override
+	protected SoundEvent getAmbientSound() {
+		return ModSounds.BLOOD_KNIGHT_AMBIENT.get();
+	}
+
+	@Override
+	protected SoundEvent getHurtSound(DamageSource pDamageSource) {
+		return ModSounds.BLOOD_KNIGHT_HURT.get();
+	}
+
+	@Override
+	protected SoundEvent getDeathSound() {
+		return ModSounds.BLOOD_KNIGHT_DEATH.get();
 	}
 
 	@Override
 	public void tick() {
 		super.tick();
 
-		if (level.isClientSide) {
-			if (specialAttackTimer < specialAttackDuration) {
-				specialAttackTimer++;
-			}
+		if (specialAttackTimer < specialAttackDuration) {
+			specialAttackTimer++;
 		}
 	}
 
@@ -74,9 +90,8 @@ public abstract class BloodKnightEntity extends Monster {
 		if (!level.isClientSide) {
 			Network.INSTANCE.send(PacketDistributor.TRACKING_ENTITY.with(() -> this),
 					new BloodKnightSpecialAttackMessage(getId()));
-		} else {
-			specialAttackTimer = 0;
 		}
+		specialAttackTimer = 0;
 	}
 
 	@Override
@@ -142,11 +157,12 @@ public abstract class BloodKnightEntity extends Monster {
 
 	private static class SpecialAttackGoal extends Goal {
 
-		private static final int MAX_COOLDOWN = 20 * 5;
+		private static final int MAX_COOLDOWN = 20 * 4;
 
 		private BloodKnightEntity knight;
 		private int cooldown;
 		private int duration;
+		private boolean inUse = false;
 
 		private SpecialAttackGoal(BloodKnightEntity knight) {
 			this.knight = knight;
@@ -168,7 +184,7 @@ public abstract class BloodKnightEntity extends Monster {
 
 		@Override
 		public boolean canContinueToUse() {
-			return duration != 0;
+			return inUse;
 		}
 
 		public boolean requiresUpdateEveryTick() {
@@ -178,11 +194,13 @@ public abstract class BloodKnightEntity extends Monster {
 		@Override
 		public void start() {
 			knight.startSpecialAttack();
+			inUse = true;
 		}
 
 		@Override
 		public void stop() {
 			duration = 0;
+			inUse = false;
 		}
 
 		@Override
@@ -192,6 +210,7 @@ public abstract class BloodKnightEntity extends Monster {
 				duration = 0;
 				cooldown = 0;
 				knight.specialAttack();
+				inUse = false;
 			}
 		}
 

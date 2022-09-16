@@ -10,12 +10,11 @@ import net.minecraftforge.common.data.ExistingFileHelper;
 import net.minecraftforge.common.data.SoundDefinitionsProvider;
 
 public class ModSoundProvider extends SoundDefinitionsProvider {
-	
-	
+
 	protected ModSoundProvider(DataGenerator generator, ExistingFileHelper helper) {
 		super(generator, Main.MODID, helper);
 	}
-	
+
 	@Override
 	public void registerSounds() {
 		addSimple(ModSounds.BLOOD_BAT_DEATH);
@@ -36,6 +35,11 @@ public class ModSoundProvider extends SoundDefinitionsProvider {
 		addSimple(ModSounds.TICK);
 		addSimple(ModSounds.TICK_EXPLOSION);
 		addSimple(ModSounds.CHOMP);
+		addSimple(ModSounds.BLOOD_KNIGHT_AMBIENT);
+		addSimple(ModSounds.BLOOD_KNIGHT_DEATH);
+		addSimple(ModSounds.BLOOD_KNIGHT_HURT);
+		addSimple(ModSounds.BLOOD_KNIGHT_SLAM);
+		addSimple(ModSounds.BLOOD_KNIGHT_THROW);
 	}
 
 	private void addSimple(Supplier<SoundEvent> sound) {

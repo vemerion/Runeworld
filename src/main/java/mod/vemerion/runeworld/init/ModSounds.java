@@ -29,4 +29,9 @@ public class ModSounds {
 	public static final RegistryObject<SoundEvent> TICK = SOUNDS.register("tick", () -> new SoundEvent(new ResourceLocation(Main.MODID, "tick")));
 	public static final RegistryObject<SoundEvent> TICK_EXPLOSION = SOUNDS.register("tick_explosion", () -> new SoundEvent(new ResourceLocation(Main.MODID, "tick_explosion")));
 	public static final RegistryObject<SoundEvent> CHOMP = SOUNDS.register("chomp", () -> new SoundEvent(new ResourceLocation(Main.MODID, "chomp")));
+	public static final RegistryObject<SoundEvent> BLOOD_KNIGHT_AMBIENT = SOUNDS.register("blood_knight_ambient", () -> new SoundEvent(new ResourceLocation(Main.MODID, "blood_knight_ambient")));
+	public static final RegistryObject<SoundEvent> BLOOD_KNIGHT_DEATH = SOUNDS.register("blood_knight_death", () -> new SoundEvent(new ResourceLocation(Main.MODID, "blood_knight_death")));
+	public static final RegistryObject<SoundEvent> BLOOD_KNIGHT_HURT = SOUNDS.register("blood_knight_hurt", () -> new SoundEvent(new ResourceLocation(Main.MODID, "blood_knight_hurt")));
+	public static final RegistryObject<SoundEvent> BLOOD_KNIGHT_SLAM = SOUNDS.register("blood_knight_slam", () -> new SoundEvent(new ResourceLocation(Main.MODID, "blood_knight_slam")));
+	public static final RegistryObject<SoundEvent> BLOOD_KNIGHT_THROW = SOUNDS.register("blood_knight_throw", () -> new SoundEvent(new ResourceLocation(Main.MODID, "blood_knight_throw")));
 }

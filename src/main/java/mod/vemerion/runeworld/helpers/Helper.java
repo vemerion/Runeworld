@@ -36,7 +36,12 @@ public class Helper {
 	public static float soundPitch(Random rand) {
 		return 0.8f + rand.nextFloat() * 0.4f;
 	}
-	
+
+	// Is v1 in front of v2 if v2 is looking in direction dir?
+	public static boolean isInFrontOf(Vec3 v1, Vec3 v2, Vec3 dir, double tolerance) {
+		return v1.subtract(v2).normalize().dot(dir) > tolerance;
+	}
+
 	public static List<Direction> shuffledDirections() {
 		var directions = new ArrayList<Direction>();
 		for (var direction : Direction.values()) {

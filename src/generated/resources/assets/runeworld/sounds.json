@@ -88,5 +88,30 @@
     "sounds": [
       "runeworld:chomp"
     ]
+  },
+  "blood_knight_ambient": {
+    "sounds": [
+      "runeworld:blood_knight_ambient"
+    ]
+  },
+  "blood_knight_death": {
+    "sounds": [
+      "runeworld:blood_knight_death"
+    ]
+  },
+  "blood_knight_hurt": {
+    "sounds": [
+      "runeworld:blood_knight_hurt"
+    ]
+  },
+  "blood_knight_slam": {
+    "sounds": [
+      "runeworld:blood_knight_slam"
+    ]
+  },
+  "blood_knight_throw": {
+    "sounds": [
+      "runeworld:blood_knight_throw"
+    ]
   }
 }

@@ -1,5 +1,6 @@
 package mod.vemerion.runeworld.entity;
 
+import mod.vemerion.runeworld.init.ModSounds;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
@@ -19,6 +20,7 @@ public class BloodKnightClubEntity extends BloodKnightEntity {
 
 	@Override
 	protected void specialAttack() {
+		playSound(ModSounds.BLOOD_KNIGHT_SLAM.get(), getSoundVolume(), getVoicePitch());
 		for (var player : level.getEntitiesOfClass(Player.class, getBoundingBox().inflate(3))) {
 			player.hurt(DamageSource.mobAttack(this), (float) (getAttributeValue(Attributes.ATTACK_DAMAGE) * 3));
 			player.setDeltaMovement(player.getDeltaMovement().add(0, 1, 0));
