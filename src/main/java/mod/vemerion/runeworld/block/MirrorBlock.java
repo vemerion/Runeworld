@@ -4,7 +4,6 @@ import java.util.Map;
 
 import com.google.common.collect.ImmutableMap;
 
-import mod.vemerion.runeworld.blockentity.BloodLeechBlockEntity;
 import mod.vemerion.runeworld.blockentity.MirrorBlockEntity;
 import mod.vemerion.runeworld.init.ModBlockEntities;
 import net.minecraft.core.BlockPos;

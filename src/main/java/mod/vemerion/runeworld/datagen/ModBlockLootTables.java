@@ -53,6 +53,7 @@ public class ModBlockLootTables extends BlockLoot {
 		dropSelf(ModBlocks.CHARRED_DIRT.get());
 		dropSelf(ModBlocks.FIRE_RITUAL_STONE.get());
 		dropSelf(ModBlocks.TOPAZ.get());
+		dropSelf(ModBlocks.CHALICE.get());
 		add(ModBlocks.MIRROR.get(), createSingleItemTableWithSilkTouch(ModBlocks.MIRROR.get(),
 				ModItems.TOPAZ_SHARD.get(), UniformGenerator.between(1, 3)));
 		add(ModBlocks.BURNT_DIRT.get(), block -> {

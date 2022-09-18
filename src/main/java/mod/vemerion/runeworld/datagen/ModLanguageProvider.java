@@ -43,6 +43,7 @@ public class ModLanguageProvider extends LanguageProvider {
 		add(ModBlocks.TOPAZ.get(), "Topaz");
 		add(ModBlocks.MIRROR.get(), "Mirror");
 		add(ModBlocks.CAIRN.get(), "Cairn");
+		add(ModBlocks.CHALICE.get(), "Chalice");
 		add(ModItems.BLOOD_BUCKET.get(), "Blood Bucket");
 		add(ModItems.BLOOD_PUDDING.get(), "Blood Pudding");
 		add(ModItems.MOSQUITO_EGGS.get(), "Mosquito Eggs");

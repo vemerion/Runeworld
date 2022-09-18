@@ -62,6 +62,7 @@ public class ModBlockStateProvider extends BlockStateProvider {
 		topaz();
 		mirror();
 		cairn();
+		chalice();
 
 		for (Block portal : ModBlocks.getRunePortals())
 			runePortal(portal);
@@ -71,6 +72,49 @@ public class ModBlockStateProvider extends BlockStateProvider {
 		stoneMaterial(ModBlocks.CHARRED_STONE_MATERIAL);
 		stoneMaterial(ModBlocks.BLOOD_ROCK_MATERIAL);
 		stoneMaterial(ModBlocks.BLOOD_ROCK_BRICKS_MATERIAL);
+	}
+
+	private void chalice() {
+		var chalice = ModBlocks.CHALICE.get();
+		var name = chalice.getRegistryName().getPath();
+
+		var model = models().withExistingParent(name, mcLoc("block/block")).texture("tex", modLoc("block/" + name))
+				.texture("particle", "#tex").element().from(5, 0, 5).to(11, 1, 11).allFaces((direction, builder) -> {
+					builder.texture("#tex");
+					if (direction == Direction.UP || direction == Direction.DOWN)
+						builder.uvs(0, 0, 6, 6);
+					else
+						builder.uvs(0, 0, 6, 1);
+				}).end().element().from(7, 1, 7).to(9, 7, 9).allFaces((direction, builder) -> {
+					builder.texture("#tex");
+					if (direction == Direction.UP || direction == Direction.DOWN)
+						builder.uvs(0, 0, 2, 2);
+					else
+						builder.uvs(0, 0, 2, 6);
+				}).end();
+		chaliceElement(model, new Vec3i(5, 0, 5), new Vec3i(11, 1, 11));
+		chaliceElement(model, new Vec3i(7, 1, 7), new Vec3i(9, 7, 9));
+		chaliceElement(model, new Vec3i(5, 7, 5), new Vec3i(11, 8, 11));
+
+		chaliceElement(model, new Vec3i(4, 8, 5), new Vec3i(5, 13, 11));
+		chaliceElement(model, new Vec3i(11, 8, 5), new Vec3i(12, 13, 11));
+		chaliceElement(model, new Vec3i(5, 8, 4), new Vec3i(11, 13, 5));
+		chaliceElement(model, new Vec3i(5, 8, 11), new Vec3i(11, 13, 12));
+
+		simpleBlock(chalice, model);
+	}
+
+	private void chaliceElement(BlockModelBuilder model, Vec3i from, Vec3i to) {
+		model.element().from(from.getX(), from.getY(), from.getZ()).to(to.getX(), to.getY(), to.getZ())
+				.allFaces((direction, builder) -> {
+					builder.texture("#tex");
+					if (direction == Direction.UP || direction == Direction.DOWN)
+						builder.uvs(0, 0, to.getX() - from.getX(), to.getZ() - from.getZ());
+					else if (direction == Direction.NORTH || direction == Direction.SOUTH)
+						builder.uvs(0, 0, to.getX() - from.getX(), to.getY() - from.getY());
+					else
+						builder.uvs(0, 0, to.getZ() - from.getZ(), to.getY() - from.getY());
+				}).end();
 	}
 
 	private void cairn() {
